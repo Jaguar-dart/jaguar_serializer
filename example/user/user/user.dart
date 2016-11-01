@@ -2,11 +2,13 @@ library example.model.user;
 
 import 'package:serialize/src/map_serializer/import.dart';
 import 'package:serialize/src/view_serializer/import.dart';
+import '../book/book.dart';
 
 part 'user.g.dart';
 
-@MakeViewSerializer()
+@MakeSerializer()
 @EnDecodeField(#name, fromAndAs: 'N')
+
 class UserViewSerializer extends Object
     with _$UserViewSerializer, JsonMixin
     implements MapSerializer<User> {
@@ -23,6 +25,8 @@ class UserViewSerializer extends Object
 
 class User extends Object
     implements SerializableToView {
+  String id;
+
   String email;
 
   String name;
@@ -30,6 +34,10 @@ class User extends Object
   String get passwordHash => _passwordHash;
 
   String _passwordHash;
+
+  Book book;
+
+  List<Book> books = new List<Book>();
 
   set password(String value) {
     _passwordHash = value;
