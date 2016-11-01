@@ -8,7 +8,9 @@ part 'user.g.dart';
 
 @MakeSerializer()
 @EnDecodeField(#name, fromAndAs: 'N')
-
+@ProvideSerializers(const {
+  Book: BookViewSerializer,
+})
 class UserViewSerializer extends Object
     with _$UserViewSerializer, JsonMixin
     implements MapSerializer<User> {

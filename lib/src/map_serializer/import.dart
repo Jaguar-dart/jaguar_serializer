@@ -62,3 +62,9 @@ abstract class FieldProcessor {
 
   dynamic to(dynamic value);
 }
+
+class ProvideSerializers {
+  final Map<Type, MakeSerializer> serializers;
+
+  const ProvideSerializers(this.serializers);
+}
