@@ -2,18 +2,27 @@ library serializer.map_serializer;
 
 import 'dart:convert';
 
+part 'field_annotations.dart';
+part 'custom_codec.dart';
+
+/// Map serializer interface
 abstract class MapSerializer<ModelType> {
   MapSerializer(ModelType model);
 
+  /// Creates serializer from [Map]
   MapSerializer.FromMap(Map map);
 
+  /// Encodes model to [Map]
   Map toMap();
 
+  /// Decodes model from [Map]
   void fromMap(Map map);
 
+  /// Returns the stored model
   ModelType get model;
 }
 
+/// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
 abstract class JsonMixin implements MapSerializer {
   String toJson() => JSON.encode(toMap());
 
@@ -23,48 +32,15 @@ abstract class JsonMixin implements MapSerializer {
   }
 }
 
-class MakeSerializer {
-  const MakeSerializer();
+/// Annotation used to request generation of serializer
+class GenSerializer {
+  const GenSerializer();
 }
 
-class EncodeField {
-  final String field;
-
-  final String as;
-
-  const EncodeField(this.field, {this.as});
-}
-
-class DecodeField {
-  final String field;
-
-  final String from;
-
-  const DecodeField(this.field, {this.from});
-}
-
-class EnDecodeField {
-  final Symbol field;
-
-  final String fromAndAs;
-
-  const EnDecodeField(this.field, {this.fromAndAs});
-}
-
-class DefineFieldProcessor {
-  const DefineFieldProcessor();
-}
-
-abstract class FieldProcessor {
-  Symbol get field;
-
-  dynamic from(dynamic value);
-
-  dynamic to(dynamic value);
-}
-
+/// Annotation used to provide serializers for specific types
 class ProvideSerializers {
-  final Map<Type, MakeSerializer> serializers;
+  /// A mapping from Type to the serializer used for that Type
+  final Map<Type, MapSerializer> serializers;
 
   const ProvideSerializers(this.serializers);
 }
