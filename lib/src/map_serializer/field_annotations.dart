@@ -3,7 +3,7 @@ part of serializer.map_serializer;
 /// Annotation to ignore a field while encoding or decoding
 class IgnoreField {
   /// Field in the model to ignore
-  final String field;
+  final Symbol field;
 
   /// Should the field be ignored while encoding?
   final bool encode;
@@ -11,11 +11,29 @@ class IgnoreField {
   /// Should the field be ignored while decoding?
   final bool decode;
 
-  const IgnoreField(this.field): encode = false, decode = false;
+  const IgnoreField(this.field): encode = true, decode = true;
 
-  const IgnoreField.Encode(this.field): encode = false, decode = true;
+  const IgnoreField.Encode(this.field): encode = true, decode = false;
 
-  const IgnoreField.Decode(this.field): encode= true, decode = false;
+  const IgnoreField.Decode(this.field): encode= false, decode = true;
+}
+
+/// Annotation to ignore a field while encoding or decoding
+class IgnoreFields {
+  /// Field in the model to ignore
+  final List<Symbol> fields;
+
+  /// Should the field be ignored while encoding?
+  final bool encode;
+
+  /// Should the field be ignored while decoding?
+  final bool decode;
+
+  const IgnoreFields(this.fields): encode = true, decode = true;
+
+  const IgnoreFields.Encode(this.fields): encode = true, decode = false;
+
+  const IgnoreFields.Decode(this.fields): encode= false, decode = true;
 }
 
 /// Annotation used to request encoding of a field in model

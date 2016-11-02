@@ -9,7 +9,9 @@ import 'package:source_gen/source_gen.dart';
 import 'package:jaguar_serializer/serializer.dart';
 
 import 'package:jaguar_serializer/generator/parser/import.dart';
-import 'package:jaguar_serializer/generator/writer/import.dart';
+import 'package:jaguar_serializer/generator/writer/writer.dart';
+
+import 'package:jaguar_serializer/generator/internal/element/element.dart';
 
 /// source_gen hook to generate serializer
 class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
@@ -30,13 +32,13 @@ class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
     ClassElement classElement = element;
     String className = classElement.name;
 
-    String model; //TODO get this
+    print("Generating serializer for $className ...");
 
-    print("Generating serializer $className for model $model ...");
+    SerializerInfo info = parseSerializer(new ClassElementWrap(classElement));
 
-    parseSerializer(classElement);  //TODO
+    SerializerWriter writer = new SerializerWriter(new SerializerWriteInfo.FromInfo(info));
 
-    Writer writer = new Writer(className);
+    writer.generate();
 
     return writer.toString();
   }

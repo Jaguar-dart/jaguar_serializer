@@ -11,6 +11,8 @@ part 'user.g.dart';
 @ProvideSerializers(const {
   Book: BookViewSerializer,
 })
+@IgnoreField(#password)
+@IgnoreFields(const [#passwordHash, #_passwordHash, #viewSerializer])
 class UserViewSerializer extends Object
     with _$UserViewSerializer, JsonMixin
     implements MapSerializer<User> {
@@ -40,6 +42,16 @@ class User extends Object
   Book book;
 
   List<Book> books = new List<Book>();
+
+  List<List<String>> listOfList;
+
+  List<List<Book>> listOfListOfBooks;
+
+  Map<String, Map<String, String>> mapOfMap;
+
+  Map<String, Map<String, Book>> mapOfMapOfBooks;
+
+  List<Map<String, List<Map<String, String>>>> mixed1;
 
   set password(String value) {
     _passwordHash = value;

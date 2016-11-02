@@ -5,8 +5,10 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/generated/utilities_dart.dart';
+import 'package:source_gen/src/annotation.dart';
 
 part 'class.dart';
+part 'dart_type.dart';
 
 /// An element that has a name and library
 abstract class NamedElement {
@@ -15,6 +17,21 @@ abstract class NamedElement {
 
   /// Library the element is in
   String get libraryName;
+}
+
+/// An element that has a name and library
+class NamedElementImpl implements NamedElement {
+  /// Name of the element
+  final String name;
+
+  /// Library the element is in
+  final String libraryName;
+
+  const NamedElementImpl.Make(this.name, this.libraryName);
+
+  bool compareNamedElement(NamedElement other) {
+    return name == other.name && libraryName == other.libraryName;
+  }
 }
 
 class MethodElementWrap {
@@ -99,61 +116,6 @@ class MethodElementWrap {
       new DartTypeWrap(returnType.flattenFutures(_wrapped.context.typeSystem));
 }
 
-class DartTypeWrap {
-  final DartType _wrapped;
-
-  DartTypeWrap(this._wrapped);
-
-  bool get isVoid => _wrapped.isVoid;
-
-  bool get isDartAsyncFuture => _wrapped.isDartAsyncFuture;
-
-  bool get isInt => compare(kIntTypeName, kCoreLibraryName);
-
-  bool get isDouble => compare(kDoubleTypeName, kCoreLibraryName);
-
-  bool get isNum => compare(kNumTypeName, kCoreLibraryName);
-
-  bool get isBool => compare(kBoolTypeName, kCoreLibraryName);
-
-  bool get isString => compare(kStringTypeName, kCoreLibraryName);
-
-  bool get isBuiltin => isInt || isDouble || isNum || isBool || isString;
-
-  String get displayName => _wrapped.displayName;
-
-  String get name => _wrapped.name;
-
-  String get libraryName => _wrapped.element.library.name;
-
-  bool isType(DartTypeWrap other) {
-    if (libraryName != other.libraryName) {
-      return false;
-    }
-
-    if (name != other.name) {
-      return false;
-    }
-
-    return true;
-  }
-
-  static const String kCoreLibraryName = 'dart.core';
-
-  static const String kIntTypeName = 'int';
-
-  static const String kDoubleTypeName = 'double';
-
-  static const String kNumTypeName = 'num';
-
-  static const String kBoolTypeName = 'bool';
-
-  static const String kStringTypeName = 'String';
-
-  bool compare(String aName, String aLibraryName) =>
-      aName == name && aLibraryName == libraryName;
-}
-
 class ParameterElementWrap {
   final ParameterElement _wrapped;
 
@@ -203,5 +165,13 @@ class AnnotationElementWrap {
     String lRet = (_wrapped as ElementAnnotationImpl).annotationAst.toSource();
     lRet = lRet.substring(1);
     return lRet;
+  }
+
+  dynamic get instantiated {
+    try {
+      return instantiateAnnotation(_wrapped);
+    } catch(e) {
+      return null;
+    }
   }
 }
