@@ -1,35 +1,33 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of example.model.user;
 
-abstract class _$UserViewSerializer {
-  User get _model;
+// **************************************************************************
+// Generator: SerializerGenerator
+// Target: class UserViewSerializer
+// **************************************************************************
 
-  Map toMap() => {
-        "id": _model.id,
-        "email": _model.email,
-        "N": _model.name,
-        'book': new BookViewSerializer(_model.book).toMap(),
-        'books': _model.books
-            ?.map((Book element) => new BookViewSerializer(element).toMap())
-            ?.toList() as List<Map>,
-      };
+abstract class _$UserViewSerializer {
+  User get model;
+  Map toMap() {
+    Map ret = new Map();
+    ret["Id"] = model.id;
+    ret["Email"] = model.email;
+    ret["N"] = model.name;
+    ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
+    ret["Book"] = new BookViewSerializer(model.book).toMap();
+    return ret;
+  }
 
   void fromMap(Map map) {
-    if(map is! Map) {
+    if (map is! Map) {
       return;
     }
-
-    _model.id = map["id"];
-    _model.email = map['email'];
-    _model.name = map['N'];
-    _model.book = new BookViewSerializer.FromMap(map['book']).model;
-
-    if (map['books'] is List<Map>) {
-      List<Map> value = map['books'];
-      List<Book> parsed = <Book>[];
-      for (Map element in value) {
-        parsed.add(new BookViewSerializer.FromMap(element).model);
-      }
-      _model.books = parsed;
-    }
+    model.id = map["Id"];
+    model.email = map["Email"];
+    model.name = map["N"];
+    model.dob = new DateTimeSerializer(#dob).from(map["DoB"]);
+    model.book =
+        (new BookViewSerializer(new Book())..fromMap(map["Book"])).model;
   }
 }

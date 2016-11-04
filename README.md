@@ -1,5 +1,5 @@
 # jaguar_serializer
-Agnostic Serializer library for Jaguar.
+Format agnostic Serializer library that can be used in server and client for JSON, mongodb, postgresql, etc
 
 # Design decisions
 

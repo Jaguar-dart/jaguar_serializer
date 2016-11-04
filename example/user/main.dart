@@ -1,14 +1,16 @@
 import 'user/user.dart';
 
 const Map<String, dynamic> kUserMap1 = const {
-  'id': "111111111111111111111111",
+  'Id': "111111111111111111111111",
   "N": "Somebody",
-  "email": "somebody@somebody.com",
-  'book': const {
+  "Email": "somebody@somebody.com",
+  'Book': const {
     'id': '222222222222222222222222',
     'name': 'Universe',
     'publishedYear': 2002,
   },
+  'DoB': '1989-02-21 09:05:00',
+  /*
   'books': const <Map>[
     const {
       'id': '222222222222222222222222',
@@ -20,6 +22,7 @@ const Map<String, dynamic> kUserMap1 = const {
       'publishedYear': 2004,
     },
   ],
+  */
 };
 
 main() {

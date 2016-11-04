@@ -1,6 +1,6 @@
 library serializer.view_serializer;
 
-import 'package:serialize/src/map_serializer/import.dart';
+import 'package:jaguar_serializer/src/map_serializer/import.dart';
 
 abstract class SerializableToView {
   MapSerializer get viewSerializer;

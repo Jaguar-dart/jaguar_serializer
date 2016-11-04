@@ -1,7 +1,7 @@
 library serializer.mongo_serializer;
 
 import 'package:mongo_dart/mongo_dart.dart' as mgo;
-import 'package:serialize/src/map_serializer/import.dart';
+import 'package:jaguar_serializer/src/map_serializer/import.dart';
 
 abstract class SerializableToMongo {
   MapSerializer get mongoSerializer;

@@ -3,11 +3,15 @@ part of example.user.mongo;
 abstract class _$UserMongoSerializer {
   User get _model;
 
-  Map toMap() => {
-    "_id": new MongoId(null).to(_model.id),
-    "email": _model.email,
-    "N": _model.name,
-  };
+  Map toMap() {
+    Map map = new Map();
+
+    map["_id"] = new MongoId(null).to(_model.id);
+    map["email"] = _model.email;
+    map["N"] = _model.name;
+
+    return map;
+  }
 
   void fromMap(Map map) {
     if(map is! Map) {

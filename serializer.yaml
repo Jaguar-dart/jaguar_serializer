@@ -1,0 +1,3 @@
+serializers:
+- example/user/user/user.dart
+#- example/user/book/book.dart

@@ -1,3 +1,5 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
 part of example.model.book;
 
 abstract class _$BookViewSerializer {
