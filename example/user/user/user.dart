@@ -2,12 +2,43 @@ library example.model.user;
 
 import 'package:jaguar_serializer/src/map_serializer/import.dart';
 import 'package:jaguar_serializer/src/view_serializer/import.dart';
+import 'package:intl/intl.dart';
 import '../book/book.dart';
 
 part 'user.g.dart';
 
+@DefineFieldProcessor()
+class DateTimeSerializer implements FieldProcessor {
+  /// Field in the model to be processed
+  final Symbol field;
+
+  final String pattern;
+
+  final String locale;
+
+  const DateTimeSerializer(this.field, {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
+
+  /// Called to process field before decoding
+  DateTime from(String value) {
+    return new DateFormat(pattern, locale).parse(value);
+  }
+
+  /// Called to process field before encoding
+  String to(DateTime value) {
+    return new DateFormat(pattern, locale).format(value);
+  }
+}
+
 @GenSerializer()
-@EnDecodeField(#name, fromAndAs: 'N')
+@DateTimeSerializer(#dob)
+@EncodeField(#id, as: 'Id')
+@DecodeField(#id, from: 'Id')
+@EnDecodeField(#name, asAndFrom: 'N')
+@EnDecodeFields(const {
+  #email: 'Email',
+  #book: 'Book',
+  #dob: 'DoB',
+})
 @ProvideSerializers(const {
   Book: BookViewSerializer,
 })
@@ -35,12 +66,15 @@ class User extends Object
 
   String name;
 
+  DateTime dob;
+
   String get passwordHash => _passwordHash;
 
   String _passwordHash;
 
   Book book;
 
+  /* TODO
   List<Book> books = new List<Book>();
 
   List<List<String>> listOfList;
@@ -52,6 +86,7 @@ class User extends Object
   Map<String, Map<String, Book>> mapOfMapOfBooks;
 
   List<Map<String, List<Map<String, String>>>> mixed1;
+  */
 
   set password(String value) {
     _passwordHash = value;

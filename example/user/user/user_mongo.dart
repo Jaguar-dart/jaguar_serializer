@@ -10,7 +10,7 @@ part 'user_mongo.g.dart';
 
 @GenSerializer()
 @MongoId(#id)
-@EnDecodeField(#name, fromAndAs: 'N')
+@EnDecodeField(#name, asAndFrom: 'N')
 class UserMongoSerializer extends Object
     with _$UserMongoSerializer, JsonMixin
     implements MapSerializer<User> {

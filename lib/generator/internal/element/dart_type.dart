@@ -23,6 +23,8 @@ class DartTypeWrap {
 
   bool get isString => compare(kStringTypeName, kCoreLibraryName);
 
+  bool get isDateTime => compare(kDateTimeTypeName, kCoreLibraryName);
+
   bool get isBuiltin => isInt || isDouble || isNum || isBool || isString;
 
   String get displayName => _wrapped.displayName;
@@ -43,10 +45,6 @@ class DartTypeWrap {
     return true;
   }
 
-  fghfgh() {
-    _wrapped.element;
-  }
-
   static const String kCoreLibraryName = 'dart.core';
 
   static const String kIntTypeName = 'int';
@@ -58,6 +56,8 @@ class DartTypeWrap {
   static const String kBoolTypeName = 'bool';
 
   static const String kStringTypeName = 'String';
+
+  static const String kDateTimeTypeName = 'DateTime';
 
   bool compare(String aName, String aLibraryName) =>
       aName == name && aLibraryName == libraryName;

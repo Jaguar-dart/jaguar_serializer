@@ -6,4 +6,5 @@ packages
 pubspec.lock
 .idea
 .atom
+.dart_tool
 serialize.iml

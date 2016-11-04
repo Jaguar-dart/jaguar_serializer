@@ -39,7 +39,7 @@ class IgnoreFields {
 /// Annotation used to request encoding of a field in model
 class EncodeField {
   /// Field in the model to encode
-  final String field;
+  final Symbol field;
 
   /// Optional. Key used to encode the model in the [Map]
   final String as;
@@ -50,7 +50,7 @@ class EncodeField {
 /// Annotation used to request decoding of a field in model
 class DecodeField {
   /// Field in the model to decode
-  final String field;
+  final Symbol field;
 
   /// Optional. Key used to decode the model from the [Map]
   final String from;
@@ -64,7 +64,31 @@ class EnDecodeField {
   final Symbol field;
 
   /// Optional. Key used to decode and encode the model from and to the [Map]
-  final String fromAndAs;
+  final String asAndFrom;
 
-  const EnDecodeField(this.field, {this.fromAndAs});
+  const EnDecodeField(this.field, {this.asAndFrom});
+}
+
+/// Annotation used to request encoding of a field in model
+class EncodeFields {
+  /// Field in the model to encode
+  final Map<Symbol, String> fields;
+
+  const EncodeFields(this.fields);
+}
+
+/// Annotation used to request decoding of a field in model
+class DecodeFields {
+  /// Field in the model to decode
+  final Map<Symbol, String> fields;
+
+  const DecodeFields(this.fields);
+}
+
+/// Annotation used to request encoding and decoding of a field in model
+class EnDecodeFields {
+  /// Field in the model that should be decoded and encoded
+  final Map<Symbol, String> fields;
+
+  const EnDecodeFields(this.fields);
 }

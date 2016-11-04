@@ -1,7 +1,6 @@
 library jaguar_serializer.generator.parser.model;
 
 import 'package:analyzer/dart/element/element.dart';
-//TODO import 'package:source_gen/src/annotation.dart';
 
 import 'package:jaguar_serializer/generator/internal/element/element.dart';
 

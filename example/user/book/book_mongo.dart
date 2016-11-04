@@ -10,7 +10,7 @@ part 'book_mongo.g.dart';
 
 @GenSerializer()
 @MongoId(#id)
-@EnDecodeField(#name, fromAndAs: 'N')
+@EnDecodeField(#name, asAndFrom: 'N')
 class BookMongoSerializer extends Object
     with _$BookMongoSerializer, JsonMixin
     implements MapSerializer<Book> {

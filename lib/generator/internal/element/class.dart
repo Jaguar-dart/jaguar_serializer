@@ -34,8 +34,8 @@ class ClassElementWrap implements NamedElement {
     return name == other.name && libraryName == other.libraryName;
   }
 
-  bool compareNames(ClassElementWrap first, ClassElementWrap second) {
-    return first.name == second.name && first.libraryName == second.libraryName;
+  bool compareNames(NamedElement first) {
+    return first.name == name && first.libraryName == libraryName;
   }
 
   List<FieldElement> get fields => _wrapped.fields;
