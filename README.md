@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Jaguar-dart/jaguar_serializer.svg?branch=master)](https://travis-ci.org/Jaguar-dart/jaguar_serializer)
+
 # jaguar_serializer
 Format agnostic Serializer library that can be used in server and client for JSON, mongodb, postgresql, etc
 
