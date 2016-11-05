@@ -7,16 +7,11 @@ part 'custom_codec.dart';
 
 /// Map serializer interface
 abstract class MapSerializer<ModelType> {
-  MapSerializer(ModelType model);
-
-  /// Creates serializer from [Map]
-  MapSerializer.FromMap(Map map);
-
   /// Encodes model to [Map]
   Map toMap();
 
   /// Decodes model from [Map]
-  void fromMap(Map map);
+  ModelType fromMap(Map map);
 
   /// Returns the stored model
   ModelType get model;
@@ -49,4 +44,18 @@ class ProvideSerializers {
   final Map<Type, Type> serializers;
 
   const ProvideSerializers(this.serializers);
+}
+
+class MapMaker<KF, VF, KT, VT> {
+  Map<KT, VT> _model = new Map<KT, VT>();
+
+  MapMaker(Map<KF, VF> map, [KT keyMapper(KF from), VT valueMapper(VF from)]) {
+    if (map is Map) {
+      map.forEach((KF key, VF value) {
+        _model[keyMapper(key)] = valueMapper(value);
+      });
+    }
+  }
+
+  Map<KT, VT> get model => _model;
 }

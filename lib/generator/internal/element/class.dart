@@ -42,4 +42,6 @@ class ClassElementWrap implements NamedElement {
 
   Iterable<AnnotationElementWrap> get metadata =>
       _wrapped.metadata.map((annot) => new AnnotationElementWrap(annot));
+
+  List<TypeParameterElement> get typeParameters => _wrapped.typeParameters;
 }

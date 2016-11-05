@@ -20,15 +20,15 @@ abstract class _$UserViewSerializer implements MapSerializer {
     return ret;
   }
 
-  void fromMap(Map map) {
+  User fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
     model.id = map["Id"];
     model.email = map["Email"];
     model.name = map["N"];
     model.dob = new DateTimeSerializer(#dob).from(map["DoB"]);
-    model.book =
-        (new BookViewSerializer(new Book())..fromMap(map["Book"])).model;
+    model.book = new BookViewSerializer().fromMap(map["Book"]);
+    return model;
   }
 }

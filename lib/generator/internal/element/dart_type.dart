@@ -23,9 +23,13 @@ class DartTypeWrap {
 
   bool get isString => compare(kStringTypeName, kCoreLibraryName);
 
+  bool get isBuiltin => isInt || isDouble || isNum || isBool || isString;
+
   bool get isDateTime => compare(kDateTimeTypeName, kCoreLibraryName);
 
-  bool get isBuiltin => isInt || isDouble || isNum || isBool || isString;
+  bool get isList => compare(kListTypeName, kCoreLibraryName);
+
+  bool get isMap => compare(kMapTypeName, kCoreLibraryName);
 
   String get displayName => _wrapped.displayName;
 
@@ -59,10 +63,19 @@ class DartTypeWrap {
 
   static const String kDateTimeTypeName = 'DateTime';
 
+  static const String kListTypeName = 'List';
+
+  static const String kMapTypeName = 'Map';
+
   bool compare(String aName, String aLibraryName) =>
       aName == name && aLibraryName == libraryName;
 
   String toString() => '$libraryName.$name';
 
   ClassElementWrap get clazz => new ClassElementWrap(_wrapped.element);
+
+  InterfaceTypeWrap get interface =>
+      new InterfaceTypeWrap(_wrapped as InterfaceType);
+
+  List<DartTypeWrap> get typeArguments => interface.typeArguments;
 }

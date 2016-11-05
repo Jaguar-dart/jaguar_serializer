@@ -1,25 +1,26 @@
 part of example.user.mongo;
 
 abstract class _$UserMongoSerializer {
-  User get _model;
+  User get model;
 
   Map toMap() {
     Map map = new Map();
 
-    map["_id"] = new MongoId(null).to(_model.id);
-    map["email"] = _model.email;
-    map["N"] = _model.name;
+    map["_id"] = new MongoId(null).to(model.id);
+    map["email"] = model.email;
+    map["N"] = model.name;
 
     return map;
   }
 
-  void fromMap(Map map) {
+  User fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
 
-    _model.id = new MongoId(null).from(map['_id']);
-    _model.email = map['email'];
-    _model.name = map['N'];
+    model.id = new MongoId(null).from(map['_id']);
+    model.email = map['email'];
+    model.name = map['N'];
+    return model;
   }
 }
