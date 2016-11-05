@@ -14,7 +14,7 @@ abstract class _$UserMongoSerializer {
   }
 
   void fromMap(Map map) {
-    if(map is! Map) {
+    if (map is! Map) {
       return;
     }
 

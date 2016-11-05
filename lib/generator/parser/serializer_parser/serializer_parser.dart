@@ -24,11 +24,10 @@ const NamedElementImpl kMapSerializer =
     const NamedElementImpl.Make('MapSerializer', kLibMapSer);
 
 const NamedElementImpl kFieldProcessor =
-const NamedElementImpl.Make('FieldProcessor', kLibMapSer);
+    const NamedElementImpl.Make('FieldProcessor', kLibMapSer);
 
 const NamedElementImpl kDefineFieldProcessor =
-const NamedElementImpl.Make('DefineFieldProcessor', kLibMapSer);
-
+    const NamedElementImpl.Make('DefineFieldProcessor', kLibMapSer);
 
 SerializerInfo parseSerializer(ClassElementWrap clazz) {
   final InterfaceTypeWrap interface = clazz.allSupertypes

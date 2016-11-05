@@ -22,8 +22,14 @@ abstract class MapSerializer<ModelType> {
   ModelType get model;
 }
 
+abstract class Jsonable {
+  String toJson();
+
+  void fromJson(String json);
+}
+
 /// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
-abstract class JsonMixin implements MapSerializer {
+abstract class JsonMixin implements MapSerializer, Jsonable {
   String toJson() => JSON.encode(toMap());
 
   void fromJson(String json) {
@@ -40,7 +46,7 @@ class GenSerializer {
 /// Annotation used to provide serializers for specific types
 class ProvideSerializers {
   /// A mapping from Type to the serializer used for that Type
-  final Map<Type, MapSerializer> serializers;
+  final Map<Type, Type> serializers;
 
   const ProvideSerializers(this.serializers);
 }

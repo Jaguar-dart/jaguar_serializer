@@ -4,13 +4,13 @@ abstract class _$BookMongoSerializer {
   Book get _model;
 
   Map toMap() => {
-    "_id": new MongoId(null).to(_model.id),
-    "name": _model.name,
-    "publishedYear": _model.publishedYear,
-  };
+        "_id": new MongoId(null).to(_model.id),
+        "name": _model.name,
+        "publishedYear": _model.publishedYear,
+      };
 
   void fromMap(Map map) {
-    if(map is! Map) {
+    if (map is! Map) {
       return;
     }
 

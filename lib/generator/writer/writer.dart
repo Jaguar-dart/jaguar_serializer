@@ -12,8 +12,10 @@ class SerializerWriter {
   String toString() => _w.toString();
 
   void generate() {
-    _w.writeln(r'abstract class _$' + info.name + r'{');
-    _w.writeln('User get model;');
+    _w.writeln(
+        r'abstract class _$' + info.name + r' implements MapSerializer {');
+    _w.writeln('${info.modelName} get model;');
+    _w.writeln();
 
     _toWriter();
 

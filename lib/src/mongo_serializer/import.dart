@@ -8,7 +8,7 @@ abstract class SerializableToMongo {
 }
 
 @DefineFieldProcessor()
-class MongoId implements FieldProcessor {
+class MongoId implements FieldProcessor<String, mgo.ObjectId> {
   final Symbol field;
 
   const MongoId(this.field);

@@ -175,7 +175,7 @@ class AnnotationElementWrap {
     _wrapped.computeConstantValue();
     try {
       return instantiateAnnotation(_wrapped);
-    } catch(e) {
+    } catch (e) {
       return null;
     }
   }

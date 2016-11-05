@@ -8,7 +8,7 @@ import '../book/book.dart';
 part 'user.g.dart';
 
 @DefineFieldProcessor()
-class DateTimeSerializer implements FieldProcessor {
+class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   /// Field in the model to be processed
   final Symbol field;
 
@@ -16,7 +16,8 @@ class DateTimeSerializer implements FieldProcessor {
 
   final String locale;
 
-  const DateTimeSerializer(this.field, {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
+  const DateTimeSerializer(this.field,
+      {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
 
   /// Called to process field before decoding
   DateTime from(String value) {
@@ -39,7 +40,7 @@ class DateTimeSerializer implements FieldProcessor {
   #book: 'Book',
   #dob: 'DoB',
 })
-@ProvideSerializers(const {
+@ProvideSerializers(const <Type, Type>{
   Book: BookViewSerializer,
 })
 @IgnoreField(#password)
@@ -58,8 +59,7 @@ class UserViewSerializer extends Object
   User get model => _model;
 }
 
-class User extends Object
-    implements SerializableToView {
+class User extends Object implements SerializableToView {
   String id;
 
   String email;

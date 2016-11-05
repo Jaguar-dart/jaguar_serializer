@@ -11,11 +11,17 @@ class IgnoreField {
   /// Should the field be ignored while decoding?
   final bool decode;
 
-  const IgnoreField(this.field): encode = true, decode = true;
+  const IgnoreField(this.field)
+      : encode = true,
+        decode = true;
 
-  const IgnoreField.Encode(this.field): encode = true, decode = false;
+  const IgnoreField.Encode(this.field)
+      : encode = true,
+        decode = false;
 
-  const IgnoreField.Decode(this.field): encode= false, decode = true;
+  const IgnoreField.Decode(this.field)
+      : encode = false,
+        decode = true;
 }
 
 /// Annotation to ignore a field while encoding or decoding
@@ -29,11 +35,17 @@ class IgnoreFields {
   /// Should the field be ignored while decoding?
   final bool decode;
 
-  const IgnoreFields(this.fields): encode = true, decode = true;
+  const IgnoreFields(this.fields)
+      : encode = true,
+        decode = true;
 
-  const IgnoreFields.Encode(this.fields): encode = true, decode = false;
+  const IgnoreFields.Encode(this.fields)
+      : encode = true,
+        decode = false;
 
-  const IgnoreFields.Decode(this.fields): encode= false, decode = true;
+  const IgnoreFields.Decode(this.fields)
+      : encode = false,
+        decode = true;
 }
 
 /// Annotation used to request encoding of a field in model

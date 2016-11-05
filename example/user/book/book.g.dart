@@ -6,13 +6,13 @@ abstract class _$BookViewSerializer {
   Book get _model;
 
   Map toMap() => {
-    "id": _model.id,
-    "name": _model.name,
-    "publishedYear": _model.publishedYear,
-  };
+        "id": _model.id,
+        "name": _model.name,
+        "publishedYear": _model.publishedYear,
+      };
 
   void fromMap(Map map) {
-    if(map is! Map) {
+    if (map is! Map) {
       return;
     }
 
