@@ -70,13 +70,17 @@ class User extends Object implements SerializableToView {
 
   Book book;
 
-  /* TODO
+  List<String> listStr = new List<String>();
 
-  List<String> list = new List<String>();
+  List<Book> listBook = new List<Book>();
 
   Map<String, String> map;
 
-  Map<String, Map<String, String>> mapOfMap;
+  Map<String, Map<String, String>> mapMap;
+
+  Map<String, Book> mapBook;
+
+  /* TODO
 
   Map<String, Map<String, Book>> mapOfMapOfBooks;
 

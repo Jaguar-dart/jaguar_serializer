@@ -10,13 +10,14 @@ const PropertyTo prop1 = const ListPropertyTo(
     'List<String>');
 
 void main() {
-  group('Builtin', () {
+  group('Gen.Write.ListMap', () {
     setUp(() {});
 
-    test('prop1', () {
+    test('test1', () {
       ToItemWriter item = new ToItemWriter(prop1);
       String str = item.generate('model.tags');
-      print(str);
+      expect(str,
+          'model.tags.map((List<String> val) => val.map((String val) => val).toList()).toList()');
     });
   });
 }
