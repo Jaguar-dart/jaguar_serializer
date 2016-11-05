@@ -26,7 +26,8 @@ class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
   Future<String> generateForAnnotatedElement(
       Element element, GenSerializer api, BuildStep buildStep) async {
     if (element is! ClassElement) {
-      throw new Exception("GenSerializer annotation can only be defined on a class.");
+      throw new Exception(
+          "GenSerializer annotation can only be defined on a class.");
     }
 
     ClassElement classElement = element;
@@ -36,7 +37,8 @@ class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
 
     SerializerInfo info = parseSerializer(new ClassElementWrap(classElement));
 
-    SerializerWriter writer = new SerializerWriter(new SerializerWriteInfo.FromInfo(info));
+    SerializerWriter writer =
+        new SerializerWriter(new SerializerWriteInfo.FromInfo(info));
 
     writer.generate();
 

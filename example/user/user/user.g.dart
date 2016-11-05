@@ -7,8 +7,9 @@ part of example.model.user;
 // Target: class UserViewSerializer
 // **************************************************************************
 
-abstract class _$UserViewSerializer {
+abstract class _$UserViewSerializer implements MapSerializer {
   User get model;
+
   Map toMap() {
     Map ret = new Map();
     ret["Id"] = model.id;

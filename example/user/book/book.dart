@@ -20,8 +20,7 @@ class BookViewSerializer extends Object
   Book get model => _model;
 }
 
-class Book extends Object
-    implements SerializableToView {
+class Book extends Object implements SerializableToView {
   String id;
 
   String name;

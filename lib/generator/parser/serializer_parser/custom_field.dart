@@ -58,12 +58,13 @@ void _parseCustomField(SerializerInfo ret, AnnotationElementWrap annot) {
           (InterfaceTypeWrap interface) => interface.isSame(kFieldProcessor),
           orElse: () => null);
 
-  if(fieldPross is! InterfaceTypeWrap) {
+  if (fieldPross is! InterfaceTypeWrap) {
     return null;
   }
 
   String key = annot.constantValue.getField('field').toSymbolValue();
-  ret.customFieldCodecs[key] = new CustomFieldCodecInfo(annot.instantiationString);
+  ret.customFieldCodecs[key] =
+      new CustomFieldCodecInfo(annot.instantiationString);
 }
 
 void _collectCustomFields(SerializerInfo ret, ClassElementWrap clazz) {

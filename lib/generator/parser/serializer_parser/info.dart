@@ -23,11 +23,14 @@ class SerializerInfo {
 class SerializerWriteInfo {
   final String name;
 
+  final String modelName;
+
   final List<ToField> to;
 
   final List<FromField> from;
 
-  SerializerWriteInfo(this.name, [this.to = const [], this.from = const []]);
+  SerializerWriteInfo(this.name, this.modelName,
+      [this.to = const [], this.from = const []]);
 
   factory SerializerWriteInfo.FromInfo(SerializerInfo info) {
     List<ToField> tos = <ToField>[];
@@ -100,6 +103,7 @@ class SerializerWriteInfo {
       }
     }
 
-    return new SerializerWriteInfo(info.name, tos, froms);
+    return new SerializerWriteInfo(
+        info.name, info.model.model.name, tos, froms);
   }
 }
