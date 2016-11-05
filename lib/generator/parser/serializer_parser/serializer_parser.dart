@@ -11,7 +11,8 @@ import 'package:jaguar_serializer/generator/parser/model_parser/model_parser.dar
 
 import 'package:jaguar_serializer/src/map_serializer/import.dart';
 
-part 'field.dart';
+part 'field_to.dart';
+part 'field_from.dart';
 part 'ignore_field.dart';
 part 'field_metadata.dart';
 part 'info.dart';

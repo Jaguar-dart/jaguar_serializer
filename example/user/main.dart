@@ -26,7 +26,7 @@ const Map<String, dynamic> kUserMap1 = const {
 };
 
 main() {
-  UserViewSerializer serializer = new UserViewSerializer.FromMap(kUserMap1);
+  UserViewSerializer serializer = new UserViewSerializer()..fromMap(kUserMap1);
 
   User user = serializer.model;
 

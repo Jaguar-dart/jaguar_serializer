@@ -11,7 +11,7 @@ class BookViewSerializer extends Object
     implements MapSerializer<Book> {
   final Book _model;
 
-  BookViewSerializer(this._model);
+  BookViewSerializer([Book model]) : _model = model ?? new Book();
 
   BookViewSerializer.FromMap(Map map) : _model = new Book() {
     fromMap(map);

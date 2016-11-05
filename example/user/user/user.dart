@@ -50,11 +50,7 @@ class UserViewSerializer extends Object
     implements MapSerializer<User> {
   final User _model;
 
-  UserViewSerializer(this._model);
-
-  UserViewSerializer.FromMap(Map map) : _model = new User() {
-    fromMap(map);
-  }
+  UserViewSerializer([User model]) : _model = model ?? new User();
 
   User get model => _model;
 }
@@ -74,16 +70,27 @@ class User extends Object implements SerializableToView {
 
   Book book;
 
+  List<String> listStr = new List<String>();
+
+  List<Book> listBook = new List<Book>();
+
+  Map<String, String> map;
+
+  Map<String, Map<String, String>> mapMap;
+
+  Map<String, Book> mapBook;
+
   /* TODO
-  List<Book> books = new List<Book>();
+
+  Map<String, Map<String, Book>> mapOfMapOfBooks;
+
+  Map<String, List<String>> mapList;
 
   List<List<String>> listOfList;
 
   List<List<Book>> listOfListOfBooks;
 
   Map<String, Map<String, String>> mapOfMap;
-
-  Map<String, Map<String, Book>> mapOfMapOfBooks;
 
   List<Map<String, List<Map<String, String>>>> mixed1;
   */
@@ -129,4 +136,23 @@ abstract class _$UserViewSerializer {
     }
   }
 }
+ */
+
+/*
+new Map.fromIterable(model.mapOfMap.keys,
+        key: (String key) => key,
+        value: (String key) => new Map.fromIterable(model.mapOfMap[key].keys,
+            key: (String key) => key,
+            value: (String key) => model.mapOfMap[key][key]));
+
+    new MapMaker<String, Map<String, String>, String, Map<String, String>>(
+        model.mapOfMap, (String key) => key, (Map<String, String> value) {
+      return new MapMaker<String, String, String, String>(
+          value, (String key) => key, (String value) => value).model;
+    }).model;
+
+    new MapMaker<String, List<String>, String, List<String>>(
+        model.mapList, (String key) => key, (List<String> value) {
+      return value.map((String string) => string);
+    }).model;
  */

@@ -1,21 +1,22 @@
 part of example.book.mongo;
 
 abstract class _$BookMongoSerializer {
-  Book get _model;
+  Book get model;
 
   Map toMap() => {
-        "_id": new MongoId(null).to(_model.id),
-        "name": _model.name,
-        "publishedYear": _model.publishedYear,
+        "_id": new MongoId(#_id).to(model.id),
+        "name": model.name,
+        "publishedYear": model.publishedYear,
       };
 
-  void fromMap(Map map) {
+  Book fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
 
-    _model.id = new MongoId(null).from(map['_id']);
-    _model.name = map['name'];
-    _model.publishedYear = map['publishedYear'];
+    model.id = new MongoId(null).from(map['_id']);
+    model.name = map['name'];
+    model.publishedYear = map['publishedYear'];
+    return model;
   }
 }

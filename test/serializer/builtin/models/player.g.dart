@@ -20,15 +20,18 @@ abstract class _$PlayerJsonSerializer implements MapSerializer {
     return ret;
   }
 
-  void fromMap(Map map) {
+  Player fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
+
     model.name = map["name"];
     model.email = map["email"];
     model.age = map["age"];
     model.score = map["score"];
     model.emailConfirmed = map["emailConfirmed"];
+
+    return model;
   }
 }
 
@@ -49,14 +52,17 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer {
     return ret;
   }
 
-  void fromMap(Map map) {
+  Player fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
+
     model.name = map["name"];
     model.email = map["email"];
     model.age = map["age"];
     model.score = map["score"];
+
+    return model;
   }
 }
 
@@ -75,12 +81,13 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer {
     return ret;
   }
 
-  void fromMap(Map map) {
+  Player fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
     model.name = map["name"];
     model.score = map["score"];
+    return model;
   }
 }
 
@@ -102,14 +109,15 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer {
     return ret;
   }
 
-  void fromMap(Map map) {
+  Player fromMap(Map map) {
     if (map is! Map) {
-      return;
+      return null;
     }
     model.name = map["N"];
     model.email = map["E"];
     model.age = map["A"];
     model.score = map["S"];
     model.emailConfirmed = map["emailConfirmed"];
+    return model;
   }
 }

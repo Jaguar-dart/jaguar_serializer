@@ -2,8 +2,6 @@ library serializer.test.builtin.test1;
 
 import 'package:test/test.dart';
 
-import 'package:jaguar_serializer/serializer.dart';
-
 import 'models/player.dart';
 
 void main() {

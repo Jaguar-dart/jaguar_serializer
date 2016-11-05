@@ -18,10 +18,6 @@ class BookMongoSerializer extends Object
 
   BookMongoSerializer(this._model);
 
-  BookMongoSerializer.FromMap(Map map) : _model = new Book() {
-    fromMap(map);
-  }
-
   Book get model => _model;
 }
 

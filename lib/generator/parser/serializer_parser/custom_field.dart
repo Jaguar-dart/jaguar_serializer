@@ -6,32 +6,6 @@ class CustomFieldCodecInfo {
   CustomFieldCodecInfo(this.instantiationString);
 }
 
-class ToFieldCustom implements ToField {
-  final String key;
-
-  final String name;
-
-  /// Type of the field
-  final DartTypeWrap type;
-
-  final String instantiationString;
-
-  ToFieldCustom(this.key, this.name, this.type, this.instantiationString);
-}
-
-class FromFieldCustom implements FromField {
-  final String key;
-
-  final String name;
-
-  /// Type of the field
-  final DartTypeWrap type;
-
-  final String instantiationString;
-
-  FromFieldCustom(this.key, this.name, this.type, this.instantiationString);
-}
-
 void _parseCustomField(SerializerInfo ret, AnnotationElementWrap annot) {
   if (annot.element is! ConstructorElement) {
     return null;

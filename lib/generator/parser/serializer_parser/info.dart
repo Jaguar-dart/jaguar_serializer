@@ -25,15 +25,15 @@ class SerializerWriteInfo {
 
   final String modelName;
 
-  final List<ToField> to;
+  final List<FieldTo> to;
 
-  final List<FromField> from;
+  final List<FieldFrom> from;
 
   SerializerWriteInfo(this.name, this.modelName,
       [this.to = const [], this.from = const []]);
 
   factory SerializerWriteInfo.FromInfo(SerializerInfo info) {
-    List<ToField> tos = <ToField>[];
+    List<FieldTo> tos = <FieldTo>[];
 
     for (ModelField field in info.model.to) {
       if (!info.ignoreFieldsTo.contains(field.name)) {
@@ -44,31 +44,11 @@ class SerializerWriteInfo {
           fieldKey = info.toRename[fieldName];
         }
 
-        if (info.customFieldCodecs.containsKey(fieldName)) {
-          tos.add(new ToFieldCustom(fieldKey, fieldName, field.type,
-              info.customFieldCodecs[fieldName].instantiationString));
-        } else if (field.type.isBuiltin) {
-          tos.add(new ToFieldNormal(fieldKey, fieldName, field.type));
-        } else {
-          DartTypeWrap ser;
-          info.serializationProviders
-              .forEach((DartTypeWrap type, DartTypeWrap serializer) {
-            if (type.compare(field.type.name, field.type.libraryName)) {
-              ser = serializer;
-            }
-          });
-          if (ser is DartTypeWrap) {
-            tos.add(
-                new ToFieldSerialized(fieldKey, fieldName, field.type, ser));
-          } else {
-            throw new Exception(
-                "Cannot find a serializer for ${field.type} ...");
-          }
-        }
+        tos.add(_parseFieldTo(info, field, fieldKey));
       }
     }
 
-    List<FromField> froms = <FromField>[];
+    List<FieldFrom> froms = <FieldFrom>[];
 
     for (ModelField field in info.model.from) {
       if (!info.ignoreFieldsFrom.contains(field.name)) {
@@ -79,27 +59,7 @@ class SerializerWriteInfo {
           fieldKey = info.fromRename[fieldName];
         }
 
-        if (info.customFieldCodecs.containsKey(fieldName)) {
-          froms.add(new FromFieldCustom(fieldKey, fieldName, field.type,
-              info.customFieldCodecs[fieldName].instantiationString));
-        } else if (field.type.isBuiltin) {
-          froms.add(new FromFieldNormal(fieldKey, fieldName, field.type));
-        } else {
-          DartTypeWrap ser;
-          info.serializationProviders
-              .forEach((DartTypeWrap type, DartTypeWrap serializer) {
-            if (type.compare(field.type.name, field.type.libraryName)) {
-              ser = serializer;
-            }
-          });
-          if (ser is DartTypeWrap) {
-            froms.add(
-                new FromFieldSerialized(fieldKey, fieldName, field.type, ser));
-          } else {
-            throw new Exception(
-                "Cannot find a serializer for ${field.type} ...");
-          }
-        }
+        froms.add(_parseFieldFrom(info, field, fieldKey));
       }
     }
 
