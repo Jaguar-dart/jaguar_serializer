@@ -17,7 +17,7 @@ void main() {
       ToItemWriter item = new ToItemWriter(prop1);
       String str = item.generate('model.tags');
       expect(str,
-          'model.tags?.map((List<String> val) => val?.map((String val) => val)?.toList())?.toList()');
+          'model.tags?.map((List<String> val) => val != null?val?.map((String val) => val != null?val:null)?.toList():null)?.toList()');
     });
   });
 }

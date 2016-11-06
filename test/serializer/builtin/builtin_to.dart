@@ -1,4 +1,4 @@
-library serializer.test.builtin.test1;
+library serializer.test.builtin.to;
 
 import 'package:test/test.dart';
 
@@ -17,7 +17,8 @@ void main() {
       player.emailConfirmed = true;
     });
 
-    test('To map 1', () {
+    // Check if toMap converts all fields to Map items
+    test('To map', () {
       PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
       Map result = serializer.toMap();
       expect(result, containsPair('name', 'John'));
@@ -28,7 +29,7 @@ void main() {
     });
 
     test('To map 2', () {
-      player.emailConfirmed = false;
+      player.emailConfirmed = null;
 
       PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
 
@@ -37,7 +38,7 @@ void main() {
       expect(result, containsPair('email', 'john@noemail.com'));
       expect(result, containsPair('age', 25));
       expect(result, containsPair('score', 1000));
-      expect(result, containsPair('emailConfirmed', false));
+      expect(result, containsPair('emailConfirmed', isNull));
     });
 
     test('IgnoreField', () {
@@ -49,7 +50,7 @@ void main() {
       expect(result, containsPair('email', 'john@noemail.com'));
       expect(result, containsPair('age', 25));
       expect(result, containsPair('score', 1000));
-      expect(result['emailConfirmed'], isNull);
+      expect(result, isNot(contains('emailConfirmed')));
     });
 
     test('IgnoreFields', () {

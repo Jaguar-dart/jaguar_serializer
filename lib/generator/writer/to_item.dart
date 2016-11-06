@@ -9,9 +9,9 @@ class ToItemWriter {
     StringBuffer _w = new StringBuffer();
 
     _w.write(reference);
-    _w.write('?.map((${prop.itemTypeStr} val) => ');
+    _w.write('?.map((${prop.itemTypeStr} val) => val != null?');
     _w.write(writeToProperty('val', prop.value));
-    _w.write(')?.toList()');
+    _w.write(':null)?.toList()');
 
     return _w.toString();
   }

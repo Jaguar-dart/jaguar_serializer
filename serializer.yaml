@@ -2,3 +2,5 @@ serializers:
 - example/user/book/book.dart
 - example/user/user/user.dart
 - test/serializer/builtin/models/player.dart
+- test/serializer/list/models/author.dart
+- test/serializer/list/models/book.dart
