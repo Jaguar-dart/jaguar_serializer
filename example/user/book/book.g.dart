@@ -2,24 +2,29 @@
 
 part of example.model.book;
 
-abstract class _$BookViewSerializer {
+// **************************************************************************
+// Generator: SerializerGenerator
+// Target: class BookViewSerializer
+// **************************************************************************
+
+abstract class _$BookViewSerializer implements MapSerializer {
   Book get model;
 
-  Map toMap() => {
-        "id": model.id,
-        "name": model.name,
-        "publishedYear": model.publishedYear,
-      };
+  Map toMap() {
+    Map ret = new Map();
+    ret["id"] = model.id;
+    ret["name"] = model.name;
+    ret["publishedYear"] = model.publishedYear;
+    return ret;
+  }
 
   Book fromMap(Map map) {
     if (map is! Map) {
       return null;
     }
-
     model.id = map["id"];
-    model.name = map['name'];
-    model.publishedYear = map['publishedYear'];
-
+    model.name = map["name"];
+    model.publishedYear = map["publishedYear"];
     return model;
   }
 }
