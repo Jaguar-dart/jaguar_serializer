@@ -8,10 +8,10 @@ class FromItemWriter {
   String writeFromListProperty(String reference, ListPropertyFrom prop) {
     StringBuffer _w = new StringBuffer();
 
-    _w.write('(' + reference + ' as List)');
-    _w.write('.map((val) => ');
+    _w.write('(' + reference + ' as ${prop.inputTypeStr})');
+    _w.write('?.map((${prop.value.inputTypeStr} val) => ');
     _w.write(writeFromProperty('val', prop.value));
-    _w.write(').toList()');
+    _w.write(')?.toList()');
 
     return _w.toString();
   }
@@ -22,9 +22,9 @@ class FromItemWriter {
     _w.write('new MapMaker');
     _w.write('(');
     _w.write(reference);
-    _w.write(' as Map,');
-    _w.write('(key) => key,');
-    _w.write('(value) {');
+    _w.write(' as ${map.inputTypeStr},');
+    _w.write('(${map.key.inputTypeStr} key) => key,');
+    _w.write('(${map.value.inputTypeStr} value) {');
     _w.write('return ');
     _w.write(writeFromProperty('value', map.value));
     _w.write(';}).model');

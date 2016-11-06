@@ -24,13 +24,11 @@ abstract class _$PlayerJsonSerializer implements MapSerializer {
     if (map is! Map) {
       return null;
     }
-
     model.name = map["name"];
     model.email = map["email"];
     model.age = map["age"];
     model.score = map["score"];
     model.emailConfirmed = map["emailConfirmed"];
-
     return model;
   }
 }
@@ -56,12 +54,10 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer {
     if (map is! Map) {
       return null;
     }
-
     model.name = map["name"];
     model.email = map["email"];
     model.age = map["age"];
     model.score = map["score"];
-
     return model;
   }
 }

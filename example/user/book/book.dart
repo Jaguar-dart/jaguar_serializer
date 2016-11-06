@@ -6,6 +6,7 @@ import 'package:jaguar_serializer/src/view_serializer/import.dart';
 part 'book.g.dart';
 
 @GenSerializer()
+@IgnoreField(#viewSerializer)
 class BookViewSerializer extends Object
     with _$BookViewSerializer, JsonMixin
     implements MapSerializer<Book> {

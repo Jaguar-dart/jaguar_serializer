@@ -10,16 +10,20 @@ class FieldFrom {
   FieldFrom(this.key, this.name, this.property);
 }
 
-abstract class PropertyFrom {}
+abstract class PropertyFrom {
+  String get inputTypeStr;
+}
 
 class MapPropertyFrom implements PropertyFrom {
   final PropertyFrom key;
 
-  final String keyTypeStr;
-
   final PropertyFrom value;
 
+  final String keyTypeStr;
+
   final String valueTypeStr;
+
+  String get inputTypeStr => 'Map<${key.inputTypeStr}, ${value.inputTypeStr}>';
 
   const MapPropertyFrom(
       this.key, this.keyTypeStr, this.value, this.valueTypeStr);
@@ -30,23 +34,31 @@ class ListPropertyFrom implements PropertyFrom {
 
   final String itemTypeStr;
 
+  String get inputTypeStr => 'List<${value.inputTypeStr}>';
+
   const ListPropertyFrom(this.value, this.itemTypeStr);
 }
 
-class LeafPropertyFrom implements PropertyFrom {}
+abstract class LeafPropertyFrom implements PropertyFrom {}
 
 class BuiltinLeafPropertyFrom implements LeafPropertyFrom {
-  const BuiltinLeafPropertyFrom();
+  final String inputTypeStr;
+
+  const BuiltinLeafPropertyFrom(this.inputTypeStr);
 }
 
 class CustomPropertyFrom implements LeafPropertyFrom {
   final String instantiationString;
+
+  String get inputTypeStr => 'dynamic';
 
   const CustomPropertyFrom(this.instantiationString);
 }
 
 class SerializedPropertyFrom implements LeafPropertyFrom {
   final String instantiationString;
+
+  String get inputTypeStr => 'Map';
 
   const SerializedPropertyFrom(this.instantiationString);
 }
@@ -83,7 +95,7 @@ PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
     return new MapPropertyFrom(_parsePropertyFrom(info, key), key.displayName,
         _parsePropertyFrom(info, value), value.displayName);
   } else if (type.isBuiltin) {
-    return new BuiltinLeafPropertyFrom();
+    return new BuiltinLeafPropertyFrom(type.displayName);
   } else {
     DartTypeWrap ser;
 
