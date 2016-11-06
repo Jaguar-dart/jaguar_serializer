@@ -9,9 +9,9 @@ class FromItemWriter {
     StringBuffer _w = new StringBuffer();
 
     _w.write('(' + reference + ' as List)');
-    _w.write('.map((val) => ');
+    _w.write('?.map((val) => ');
     _w.write(writeFromProperty('val', prop.value));
-    _w.write(').toList()');
+    _w.write(')?.toList()');
 
     return _w.toString();
   }
