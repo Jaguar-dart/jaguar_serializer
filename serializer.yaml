@@ -1,5 +1,7 @@
 serializers:
-- example/user/book/book.dart
+- example/basic/basic_main.dart
+- example/field_manipulation/field_manipulation_main.dart
+- example/custom_field_processor/custom_field_processor.dart
 - example/user/user/user.dart
 - test/serializer/builtin/models/player.dart
 - test/serializer/list/models/author.dart
