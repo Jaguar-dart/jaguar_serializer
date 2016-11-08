@@ -17,9 +17,11 @@ abstract class _$UserViewSerializer implements MapSerializer {
     ret["N"] = model.name;
     ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
     ret["Book"] = new BookViewSerializer(model.book).toMap();
-    ret["listStr"] = model.listStr?.map((String val) => val)?.toList();
+    ret["listStr"] =
+        model.listStr?.map((String val) => val != null ? val : null)?.toList();
     ret["listBook"] = model.listBook
-        ?.map((Book val) => new BookViewSerializer(val).toMap())
+        ?.map((Book val) =>
+            val != null ? new BookViewSerializer(val).toMap() : null)
         ?.toList();
     ret["map"] = new MapMaker(model.map, (String key) => key, (String value) {
       return value;
