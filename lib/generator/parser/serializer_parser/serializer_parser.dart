@@ -31,10 +31,9 @@ const NamedElementImpl kDefineFieldProcessor =
     const NamedElementImpl.Make('DefineFieldProcessor', kLibMapSer);
 
 SerializerInfo parseSerializer(ClassElementWrap clazz) {
-  final InterfaceTypeWrap interface = clazz.allSupertypes
-      .map((InterfaceType type) => new InterfaceTypeWrap(type))
-      .firstWhere(
-          (InterfaceTypeWrap interface) => interface.isSame(kMapSerializer));
+  final InterfaceTypeWrap interface = clazz.allSupertypes.firstWhere(
+      (InterfaceTypeWrap interface) => interface.isSame(kMapSerializer),
+      orElse: () => null);
 
   if (interface.typeArguments.length != 1) {
     throw new Exception("Should have only one type argument!");

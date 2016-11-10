@@ -26,11 +26,9 @@ void _parseCustomField(SerializerInfo ret, AnnotationElementWrap annot) {
     return null;
   }
 
-  InterfaceTypeWrap fieldPross = clazz.allSupertypes
-      .map((InterfaceType interface) => new InterfaceTypeWrap(interface))
-      .firstWhere(
-          (InterfaceTypeWrap interface) => interface.isSame(kFieldProcessor),
-          orElse: () => null);
+  InterfaceTypeWrap fieldPross = clazz.allSupertypes.firstWhere(
+      (InterfaceTypeWrap interface) => interface.isSame(kFieldProcessor),
+      orElse: () => null);
 
   if (fieldPross is! InterfaceTypeWrap) {
     return null;
