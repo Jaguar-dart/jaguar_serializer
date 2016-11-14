@@ -3,7 +3,7 @@
 # Fast fail the script on failures.
 set -e
 
-chmod -x $(dirname -- "$0")/ensure_dartfmt.sh
+chmod +x $(dirname -- "$0")/ensure_dartfmt.sh
 $(dirname -- "$0")/ensure_dartfmt.sh
 
 # Run the tests.
