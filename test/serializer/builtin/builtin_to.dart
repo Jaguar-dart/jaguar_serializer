@@ -42,8 +42,7 @@ void main() {
     });
 
     test('IgnoreField', () {
-      PlayerJsonSerializerIgnore serializer =
-          new PlayerJsonSerializerIgnore();
+      PlayerJsonSerializerIgnore serializer = new PlayerJsonSerializerIgnore();
 
       Map result = serializer.toMap(player);
       expect(result, containsPair('name', 'John'));
@@ -66,8 +65,7 @@ void main() {
     });
 
     test('Rename key', () {
-      PlayerJsonSerializerRename serializer =
-          new PlayerJsonSerializerRename();
+      PlayerJsonSerializerRename serializer = new PlayerJsonSerializerRename();
       Map result = serializer.toMap(player);
       expect(result, containsPair('N', 'John'));
       expect(result, containsPair('E', 'john@noemail.com'));
