@@ -7,21 +7,19 @@ part of example.model.user;
 // Target: class UserViewSerializer
 // **************************************************************************
 
-abstract class _$UserViewSerializer implements MapSerializer {
-  User get model;
-
-  Map toMap() {
+abstract class _$UserViewSerializer implements MapSerializer<User> {
+  Map toMap(User model) {
     Map ret = new Map();
     ret["Id"] = model.id;
     ret["Email"] = model.email;
     ret["N"] = model.name;
     ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
-    ret["Book"] = new BookViewSerializer(model.book).toMap();
+    ret["Book"] = new BookViewSerializer().toMap(model.book);
     ret["listStr"] =
         model.listStr?.map((String val) => val != null ? val : null)?.toList();
     ret["listBook"] = model.listBook
         ?.map((Book val) =>
-            val != null ? new BookViewSerializer(val).toMap() : null)
+            val != null ? new BookViewSerializer().toMap(val) : null)
         ?.toList();
     ret["map"] = new MapMaker(model.map, (String key) => key, (String value) {
       return value;
@@ -34,14 +32,17 @@ abstract class _$UserViewSerializer implements MapSerializer {
     }).model;
     ret["mapBook"] =
         new MapMaker(model.mapBook, (String key) => key, (Book value) {
-      return new BookViewSerializer(value).toMap();
+      return new BookViewSerializer().toMap(value);
     }).model;
     return ret;
   }
 
-  User fromMap(Map map) {
+  User fromMap(Map map, {User model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! User) {
+      model = createModel();
     }
     model.id = map["Id"];
     model.email = map["Email"];

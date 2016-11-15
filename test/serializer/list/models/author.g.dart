@@ -7,18 +7,19 @@ part of serializer.test.models.Author;
 // Target: class AuthorSerializer
 // **************************************************************************
 
-abstract class _$AuthorSerializer implements MapSerializer {
-  Author get model;
-
-  Map toMap() {
+abstract class _$AuthorSerializer implements MapSerializer<Author> {
+  Map toMap(Author model) {
     Map ret = new Map();
     ret["name"] = model.name;
     return ret;
   }
 
-  Author fromMap(Map map) {
+  Author fromMap(Map map, {Author model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Author) {
+      model = createModel();
     }
     model.name = map["name"];
     return model;

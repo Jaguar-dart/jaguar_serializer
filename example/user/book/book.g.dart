@@ -7,10 +7,8 @@ part of example.model.book;
 // Target: class BookViewSerializer
 // **************************************************************************
 
-abstract class _$BookViewSerializer implements MapSerializer {
-  Book get model;
-
-  Map toMap() {
+abstract class _$BookViewSerializer implements MapSerializer<Book> {
+  Map toMap(Book model) {
     Map ret = new Map();
     ret["id"] = model.id;
     ret["name"] = model.name;
@@ -18,9 +16,12 @@ abstract class _$BookViewSerializer implements MapSerializer {
     return ret;
   }
 
-  Book fromMap(Map map) {
+  Book fromMap(Map map, {Book model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Book) {
+      model = createModel();
     }
     model.id = map["id"];
     model.name = map["name"];

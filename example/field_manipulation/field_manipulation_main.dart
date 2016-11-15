@@ -15,11 +15,9 @@ part 'field_manipulation_main.g.dart';
 class PlayerJsonSerializer extends Object
     with JsonMixin, _$PlayerJsonSerializer
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializer([Player player]) : _player = player ?? new Player();
+  PlayerJsonSerializer();
 }
 
 /// Player model for the game
@@ -64,8 +62,8 @@ void main() {
       ..age = 25
       ..score = 1000
       ..emailConfirmed = true;
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
-    Map map = serializer.toMap();
+    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
+    Map map = serializer.toMap(player);
     // {N: John, E: john@noemail.com, A: 25, S: 1000}
     print(map);
   }

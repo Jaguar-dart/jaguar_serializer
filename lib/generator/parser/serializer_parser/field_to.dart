@@ -86,8 +86,8 @@ PropertyTo _parsePropertyTo(SerializerInfo info, DartTypeWrap type) {
     DartTypeWrap ser;
 
     info.serializationProviders
-        .forEach((DartTypeWrap type, DartTypeWrap serializer) {
-      if (type.compare(type.name, type.libraryName)) {
+        .forEach((DartTypeWrap modelType, DartTypeWrap serializer) {
+      if (type.compare(modelType.name, modelType.libraryName)) {
         ser = serializer;
       }
     });

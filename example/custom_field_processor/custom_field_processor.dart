@@ -26,11 +26,9 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 class PlayerMongoSerializer extends Object
     with JsonMixin, _$PlayerMongoSerializer
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerMongoSerializer([Player player]) : _player = player ?? new Player();
+  PlayerMongoSerializer();
 }
 
 /// Player model for the game
@@ -63,8 +61,8 @@ void main() {
       ..id = '1' * 24
       ..name = 'John'
       ..email = 'john@noemail.com';
-    PlayerMongoSerializer serializer = new PlayerMongoSerializer(player);
-    Map map = serializer.toMap();
+    PlayerMongoSerializer serializer = new PlayerMongoSerializer();
+    Map map = serializer.toMap(player);
     // {_id: ObjectId("111111111111111111111111"), name: John, email: john@noemail.com}
     print(map);
   }

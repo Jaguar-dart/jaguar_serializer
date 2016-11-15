@@ -1,7 +1,6 @@
 library example.model.book;
 
-import 'package:jaguar_serializer/src/map_serializer/import.dart';
-import 'package:jaguar_serializer/src/view_serializer/import.dart';
+import 'package:jaguar_serializer/serializer.dart';
 
 part 'book.g.dart';
 
@@ -10,45 +9,21 @@ part 'book.g.dart';
 class BookViewSerializer extends Object
     with _$BookViewSerializer, JsonMixin
     implements MapSerializer<Book> {
-  final Book _model;
+  Book createModel() => new Book();
 
-  BookViewSerializer([Book model]) : _model = model ?? new Book();
+  BookViewSerializer();
 
-  BookViewSerializer.FromMap(Map map) : _model = new Book() {
+  BookViewSerializer.FromMap(Map map) {
     fromMap(map);
   }
-
-  Book get model => _model;
 }
 
-class Book extends Object implements SerializableToView {
+class Book {
   String id;
 
   String name;
 
   int publishedYear;
 
-  BookViewSerializer get viewSerializer => new BookViewSerializer(this);
+  static BookViewSerializer viewSerializer = new BookViewSerializer();
 }
-
-/*
-abstract class _$BookViewSerializer {
-  Book get _model;
-
-  Map toMap() => {
-    "id": _model.id,
-    "name": _model.name,
-    "publishedYear": _model.publishedYear,
-  };
-
-  void fromMap(Map map) {
-    if(map is! Map) {
-      return;
-    }
-
-    _model.id = map["id"];
-    _model.name = map['name'];
-    _model.publishedYear = map['publishedYear'];
-  }
-}
- */

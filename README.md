@@ -16,17 +16,15 @@ library example.player;
 
 import 'package:jaguar_serializer/serializer.dart';
 
-part 'player_main.g.dart';
+part 'basic_main.g.dart';
 
 @GenSerializer()
 class PlayerJsonSerializer extends Object
     with JsonMixin, _$PlayerJsonSerializer
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializer([Player player]) : _player = player ?? new Player();
+  PlayerJsonSerializer();
 }
 
 /// Player model for the game
@@ -72,8 +70,8 @@ void main() {
       ..age = 25
       ..score = 1000
       ..emailConfirmed = true;
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
-    Map map = serializer.toMap();
+    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
+    Map map = serializer.toMap(player);
     // {name: John, email: john@noemail.com, age: 25, score: 1000, emailConfirmed: true}
     print(map);
   }
@@ -100,11 +98,9 @@ part 'field_manipulation_main.g.dart';
 class PlayerJsonSerializer extends Object
     with JsonMixin, _$PlayerJsonSerializer
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializer([Player player]) : _player = player ?? new Player();
+  PlayerJsonSerializer();
 }
 
 /// Player model for the game
@@ -149,8 +145,8 @@ void main() {
       ..age = 25
       ..score = 1000
       ..emailConfirmed = true;
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
-    Map map = serializer.toMap();
+    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
+    Map map = serializer.toMap(player);
     // {N: John, E: john@noemail.com, A: 25, S: 1000}
     print(map);
   }
@@ -188,11 +184,9 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 class PlayerMongoSerializer extends Object
     with JsonMixin, _$PlayerMongoSerializer
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerMongoSerializer([Player player]) : _player = player ?? new Player();
+  PlayerMongoSerializer();
 }
 
 /// Player model for the game
@@ -225,8 +219,8 @@ void main() {
       ..id = '1' * 24
       ..name = 'John'
       ..email = 'john@noemail.com';
-    PlayerMongoSerializer serializer = new PlayerMongoSerializer(player);
-    Map map = serializer.toMap();
+    PlayerMongoSerializer serializer = new PlayerMongoSerializer();
+    Map map = serializer.toMap(player);
     // {_id: ObjectId("111111111111111111111111"), name: John, email: john@noemail.com}
     print(map);
   }

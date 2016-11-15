@@ -1,6 +1,13 @@
 name: jaguar_serializer
-version: 0.0.2
-description: A simple console application.
+version: 0.1.1
+description: Platform and format agnostic serializer built using source_gen
+authors:
+- Ravi Teja Gudapati <tejainece@gmail.com>
+- Kevin Segaud <segaud.kevin@gmail.com>
+homepage: http://jaguar-dart.github.io
+
+executables:
+  serializer:
 
 dependencies:
   source_gen: ">=0.5.1+3 <0.6.0"

@@ -15,9 +15,9 @@ class SerializerWriter {
   String toString() => _w.toString();
 
   void generate() {
-    _w.writeln(
-        r'abstract class _$' + info.name + r' implements MapSerializer {');
-    _w.writeln('${info.modelName} get model;');
+    _w.writeln('abstract class _\$' +
+        info.name +
+        ' implements MapSerializer<${info.modelName}> {');
     _w.writeln();
 
     _toWriter();
@@ -28,7 +28,7 @@ class SerializerWriter {
   }
 
   void _toWriter() {
-    _w.writeln(r'Map toMap() {');
+    _w.writeln('Map toMap(${info.modelName} model) {');
     _w.writeln(r'Map ret = new Map();');
 
     for (FieldTo item in info.to) {
@@ -47,9 +47,14 @@ class SerializerWriter {
   }
 
   void _fromWriter() {
-    _w.writeln('${info.modelName} fromMap(Map map) {');
+    _w.writeln(
+        '${info.modelName} fromMap(Map map, {${info.modelName} model}) {');
     _w.writeln(r'if(map is! Map) {');
     _w.writeln(r'return null;');
+    _w.writeln(r'}');
+
+    _w.writeln('if(model is! ${info.modelName}) {');
+    _w.writeln(r'model = createModel();');
     _w.writeln(r'}');
 
     for (FieldFrom item in info.from) {

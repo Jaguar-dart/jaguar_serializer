@@ -1,7 +1,6 @@
 library example.model.user;
 
-import 'package:jaguar_serializer/src/map_serializer/import.dart';
-import 'package:jaguar_serializer/src/view_serializer/import.dart';
+import 'package:jaguar_serializer/serializer.dart';
 import 'package:intl/intl.dart';
 import '../book/book.dart';
 
@@ -48,14 +47,12 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 class UserViewSerializer extends Object
     with _$UserViewSerializer, JsonMixin
     implements MapSerializer<User> {
-  final User _model;
+  User createModel() => new User();
 
-  UserViewSerializer([User model]) : _model = model ?? new User();
-
-  User get model => _model;
+  UserViewSerializer();
 }
 
-class User extends Object implements SerializableToView {
+class User {
   String id;
 
   String email;
@@ -99,7 +96,7 @@ class User extends Object implements SerializableToView {
     _passwordHash = value;
   }
 
-  UserViewSerializer get viewSerializer => new UserViewSerializer(this);
+  static UserViewSerializer viewSerializer = new UserViewSerializer();
 }
 
 /*

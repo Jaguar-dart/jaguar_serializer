@@ -19,8 +19,8 @@ void main() {
 
     // Check if toMap converts all fields to Map items
     test('To map', () {
-      PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
-      Map result = serializer.toMap();
+      PlayerJsonSerializer serializer = new PlayerJsonSerializer();
+      Map result = serializer.toMap(player);
       expect(result, containsPair('name', 'John'));
       expect(result, containsPair('email', 'john@noemail.com'));
       expect(result, containsPair('age', 25));
@@ -31,9 +31,9 @@ void main() {
     test('To map 2', () {
       player.emailConfirmed = null;
 
-      PlayerJsonSerializer serializer = new PlayerJsonSerializer(player);
+      PlayerJsonSerializer serializer = new PlayerJsonSerializer();
 
-      Map result = serializer.toMap();
+      Map result = serializer.toMap(player);
       expect(result, containsPair('name', 'John'));
       expect(result, containsPair('email', 'john@noemail.com'));
       expect(result, containsPair('age', 25));
@@ -42,10 +42,9 @@ void main() {
     });
 
     test('IgnoreField', () {
-      PlayerJsonSerializerIgnore serializer =
-          new PlayerJsonSerializerIgnore(player);
+      PlayerJsonSerializerIgnore serializer = new PlayerJsonSerializerIgnore();
 
-      Map result = serializer.toMap();
+      Map result = serializer.toMap(player);
       expect(result, containsPair('name', 'John'));
       expect(result, containsPair('email', 'john@noemail.com'));
       expect(result, containsPair('age', 25));
@@ -55,9 +54,9 @@ void main() {
 
     test('IgnoreFields', () {
       PlayerJsonSerializerIgnores serializer =
-          new PlayerJsonSerializerIgnores(player);
+          new PlayerJsonSerializerIgnores();
 
-      Map result = serializer.toMap();
+      Map result = serializer.toMap(player);
       expect(result, containsPair('name', 'John'));
       expect(result['email'], isNull);
       expect(result['age'], isNull);
@@ -66,9 +65,8 @@ void main() {
     });
 
     test('Rename key', () {
-      PlayerJsonSerializerRename serializer =
-          new PlayerJsonSerializerRename(player);
-      Map result = serializer.toMap();
+      PlayerJsonSerializerRename serializer = new PlayerJsonSerializerRename();
+      Map result = serializer.toMap(player);
       expect(result, containsPair('N', 'John'));
       expect(result, containsPair('E', 'john@noemail.com'));
       expect(result, containsPair('A', 25));
