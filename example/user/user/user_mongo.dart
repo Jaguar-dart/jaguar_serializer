@@ -3,6 +3,7 @@ library example.user.mongo;
 import 'package:jaguar_serializer/src/map_serializer/import.dart';
 import 'package:jaguar_serializer/src/mongo_serializer/import.dart';
 import 'user.dart';
+import '../book/book_mongo.dart';
 
 export 'user.dart' show User;
 
@@ -10,19 +11,22 @@ part 'user_mongo.g.dart';
 
 @GenSerializer()
 @MongoId(#id)
+@DateTimeSerializer(#dob)
 @EnDecodeField(#name, asAndFrom: 'N')
+@ProvideSerializers(const <Type, Type>{
+  Book: BookMongoSerializer,
+})
+@IgnoreFields(const [#viewSerializer, #_passwordHash])
 class UserMongoSerializer extends Object
     with _$UserMongoSerializer, JsonMixin
     implements MapSerializer<User> {
-  final User _model;
+  User createModel() => new User();
 
-  UserMongoSerializer(this._model);
+  UserMongoSerializer();
 
-  UserMongoSerializer.FromMap(Map map) : _model = new User() {
+  UserMongoSerializer.FromMap(Map map) {
     fromMap(map);
   }
-
-  User get model => _model;
 }
 
 /*

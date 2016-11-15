@@ -7,10 +7,8 @@ part of serializer.test.models.book;
 // Target: class BookSerializer
 // **************************************************************************
 
-abstract class _$BookSerializer implements MapSerializer {
-  Book get model;
-
-  Map toMap() {
+abstract class _$BookSerializer implements MapSerializer<Book> {
+  Map toMap(Book model) {
     Map ret = new Map();
     ret["name"] = model.name;
     ret["tags"] =
@@ -21,14 +19,17 @@ abstract class _$BookSerializer implements MapSerializer {
     }).model;
     ret["authors"] = model.authors
         ?.map((Author val) =>
-            val != null ? new AuthorSerializer(val).toMap() : null)
+            val != null ? new AuthorSerializer().toMap(val) : null)
         ?.toList();
     return ret;
   }
 
-  Book fromMap(Map map) {
+  Book fromMap(Map map, {Book model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Book) {
+      model = createModel();
     }
     model.name = map["name"];
     model.tags =

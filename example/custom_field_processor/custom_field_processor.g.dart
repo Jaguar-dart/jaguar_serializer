@@ -7,10 +7,8 @@ part of example.field_manipulation;
 // Target: class PlayerMongoSerializer
 // **************************************************************************
 
-abstract class _$PlayerMongoSerializer implements MapSerializer {
-  Player get model;
-
-  Map toMap() {
+abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
+  Map toMap(Player model) {
     Map ret = new Map();
     ret["_id"] = new MongoId(#id).to(model.id);
     ret["name"] = model.name;
@@ -18,9 +16,12 @@ abstract class _$PlayerMongoSerializer implements MapSerializer {
     return ret;
   }
 
-  Player fromMap(Map map) {
+  Player fromMap(Map map, {Player model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Player) {
+      model = createModel();
     }
     model.id = new MongoId(#id).from(map["_id"]);
     model.name = map["name"];

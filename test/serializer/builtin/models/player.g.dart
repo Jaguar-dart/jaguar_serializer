@@ -7,10 +7,8 @@ part of serializer.test.models.player;
 // Target: class PlayerJsonSerializer
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializer implements MapSerializer {
-  Player get model;
-
-  Map toMap() {
+abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
+  Map toMap(Player model) {
     Map ret = new Map();
     ret["name"] = model.name;
     ret["email"] = model.email;
@@ -20,9 +18,12 @@ abstract class _$PlayerJsonSerializer implements MapSerializer {
     return ret;
   }
 
-  Player fromMap(Map map) {
+  Player fromMap(Map map, {Player model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Player) {
+      model = createModel();
     }
     model.name = map["name"];
     model.email = map["email"];
@@ -38,10 +39,8 @@ abstract class _$PlayerJsonSerializer implements MapSerializer {
 // Target: class PlayerJsonSerializerIgnore
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializerIgnore implements MapSerializer {
-  Player get model;
-
-  Map toMap() {
+abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
+  Map toMap(Player model) {
     Map ret = new Map();
     ret["name"] = model.name;
     ret["email"] = model.email;
@@ -50,9 +49,12 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer {
     return ret;
   }
 
-  Player fromMap(Map map) {
+  Player fromMap(Map map, {Player model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Player) {
+      model = createModel();
     }
     model.name = map["name"];
     model.email = map["email"];
@@ -67,19 +69,20 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer {
 // Target: class PlayerJsonSerializerIgnores
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializerIgnores implements MapSerializer {
-  Player get model;
-
-  Map toMap() {
+abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
+  Map toMap(Player model) {
     Map ret = new Map();
     ret["name"] = model.name;
     ret["score"] = model.score;
     return ret;
   }
 
-  Player fromMap(Map map) {
+  Player fromMap(Map map, {Player model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Player) {
+      model = createModel();
     }
     model.name = map["name"];
     model.score = map["score"];
@@ -92,10 +95,8 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer {
 // Target: class PlayerJsonSerializerRename
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializerRename implements MapSerializer {
-  Player get model;
-
-  Map toMap() {
+abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
+  Map toMap(Player model) {
     Map ret = new Map();
     ret["N"] = model.name;
     ret["E"] = model.email;
@@ -105,9 +106,12 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer {
     return ret;
   }
 
-  Player fromMap(Map map) {
+  Player fromMap(Map map, {Player model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Player) {
+      model = createModel();
     }
     model.name = map["N"];
     model.email = map["E"];

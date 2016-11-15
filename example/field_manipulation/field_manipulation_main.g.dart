@@ -7,10 +7,8 @@ part of example.field_manipulation;
 // Target: class PlayerJsonSerializer
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializer implements MapSerializer {
-  Player get model;
-
-  Map toMap() {
+abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
+  Map toMap(Player model) {
     Map ret = new Map();
     ret["N"] = model.name;
     ret["E"] = model.email;
@@ -19,9 +17,12 @@ abstract class _$PlayerJsonSerializer implements MapSerializer {
     return ret;
   }
 
-  Player fromMap(Map map) {
+  Player fromMap(Map map, {Player model}) {
     if (map is! Map) {
       return null;
+    }
+    if (model is! Player) {
+      model = createModel();
     }
     model.name = map["N"];
     model.email = map["E"];

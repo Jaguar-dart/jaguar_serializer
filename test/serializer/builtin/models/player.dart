@@ -8,11 +8,9 @@ part 'player.g.dart';
 class PlayerJsonSerializer extends Object
     with JsonMixin, _$PlayerJsonSerializer
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializer([Player player]) : _player = player ?? new Player();
+  PlayerJsonSerializer();
 }
 
 @GenSerializer()
@@ -20,12 +18,9 @@ class PlayerJsonSerializer extends Object
 class PlayerJsonSerializerIgnore extends Object
     with JsonMixin, _$PlayerJsonSerializerIgnore
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializerIgnore([Player player])
-      : _player = player ?? new Player();
+  PlayerJsonSerializerIgnore();
 }
 
 @GenSerializer()
@@ -33,12 +28,9 @@ class PlayerJsonSerializerIgnore extends Object
 class PlayerJsonSerializerIgnores extends Object
     with JsonMixin, _$PlayerJsonSerializerIgnores
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializerIgnores([Player player])
-      : _player = player ?? new Player();
+  PlayerJsonSerializerIgnores();
 }
 
 @GenSerializer()
@@ -52,12 +44,9 @@ class PlayerJsonSerializerIgnores extends Object
 class PlayerJsonSerializerRename extends Object
     with JsonMixin, _$PlayerJsonSerializerRename
     implements MapSerializer<Player> {
-  Player _player;
+  Player createModel() => new Player();
 
-  Player get model => _player;
-
-  PlayerJsonSerializerRename([Player player])
-      : _player = player ?? new Player();
+  PlayerJsonSerializerRename();
 }
 
 /// Player model for the game

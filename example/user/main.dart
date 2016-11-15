@@ -26,11 +26,11 @@ const Map<String, dynamic> kUserMap1 = const {
 };
 
 main() {
-  UserViewSerializer serializer = new UserViewSerializer()..fromMap(kUserMap1);
+  UserViewSerializer serializer = new UserViewSerializer();
 
-  User user = serializer.model;
+  User user = serializer.fromMap(kUserMap1);
 
-  print(user.viewSerializer.toMap());
+  print(User.viewSerializer.toMap(user));
 
-  print(user.viewSerializer.toJson());
+  print(User.viewSerializer.toJson(user));
 }

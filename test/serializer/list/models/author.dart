@@ -8,11 +8,9 @@ part 'author.g.dart';
 class AuthorSerializer extends Object
     with JsonMixin, _$AuthorSerializer
     implements MapSerializer<Author> {
-  Author _book;
+  Author createModel() => new Author();
 
-  Author get model => _book;
-
-  AuthorSerializer([Author player]) : _book = player ?? new Author();
+  AuthorSerializer();
 }
 
 /// Author model

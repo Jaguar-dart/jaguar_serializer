@@ -24,8 +24,8 @@ void main() {
     });
 
     test('From', () {
-      BookSerializer serializer = new BookSerializer(book);
-      Map map = serializer.toMap();
+      BookSerializer serializer = new BookSerializer();
+      Map map = serializer.toMap(book);
 
       expect(
           map,
@@ -49,8 +49,8 @@ void main() {
     test('null list field', () {
       book.tags = null;
 
-      BookSerializer serializer = new BookSerializer(book);
-      Map map = serializer.toMap();
+      BookSerializer serializer = new BookSerializer();
+      Map map = serializer.toMap(book);
 
       expect(
           map,
@@ -74,8 +74,8 @@ void main() {
     test('null item in list', () {
       book.authors.add(null);
 
-      BookSerializer serializer = new BookSerializer(book);
-      Map map = serializer.toMap();
+      BookSerializer serializer = new BookSerializer();
+      Map map = serializer.toMap(book);
 
       expect(
           map,

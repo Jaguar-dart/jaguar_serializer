@@ -14,11 +14,9 @@ part 'book.g.dart';
 class BookSerializer extends Object
     with JsonMixin, _$BookSerializer
     implements MapSerializer<Book> {
-  Book _book;
+  Book createModel() => new Book();
 
-  Book get model => _book;
-
-  BookSerializer([Book player]) : _book = player ?? new Book();
+  BookSerializer();
 }
 
 /// Player model for the game
