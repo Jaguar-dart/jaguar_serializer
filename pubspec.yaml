@@ -1,6 +1,6 @@
 name: jaguar_serializer
 version: 0.0.2
-description: A simple console application.
+description: Platform and format agnostic serializer built using source_gen
 
 dependencies:
   source_gen: ">=0.5.1+3 <0.6.0"
