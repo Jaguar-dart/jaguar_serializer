@@ -8,7 +8,7 @@ import 'package:source_gen_help/import.dart';
 
 import 'package:jaguar_serializer/generator/parser/model_parser/model_parser.dart';
 
-import 'package:jaguar_serializer/src/map_serializer/import.dart';
+import 'package:jaguar_serializer/serializer.dart';
 
 part 'field_to.dart';
 part 'field_from.dart';

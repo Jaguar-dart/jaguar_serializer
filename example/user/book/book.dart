@@ -1,6 +1,6 @@
 library example.model.book;
 
-import 'package:jaguar_serializer/src/map_serializer/import.dart';
+import 'package:jaguar_serializer/serializer.dart';
 
 part 'book.g.dart';
 

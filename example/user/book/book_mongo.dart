@@ -1,7 +1,7 @@
 library example.book.mongo;
 
-import 'package:jaguar_serializer/src/map_serializer/import.dart';
-import 'package:jaguar_serializer/src/mongo_serializer/import.dart';
+import 'package:jaguar_serializer/serializer.dart';
+import '../../_common/mongo_serializer/import.dart';
 import 'book.dart';
 
 export 'book.dart' show Book;
