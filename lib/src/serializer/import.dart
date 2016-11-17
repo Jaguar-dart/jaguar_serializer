@@ -1,6 +1,4 @@
-library serializer.map_serializer;
-
-import 'dart:convert';
+library serializer.serializer;
 
 part 'field_annotations.dart';
 part 'custom_codec.dart';
@@ -20,29 +18,6 @@ abstract class MapSerializer<ModelType> {
   }
 
   ModelType createModel();
-}
-
-abstract class Jsonable<ModelType> {
-  String toJson(ModelType model);
-
-  ModelType fromJson(String json, {ModelType model}) {
-    if (model is! ModelType) {
-      model = createModel();
-    }
-
-    return model;
-  }
-
-  ModelType createModel();
-}
-
-/// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
-abstract class JsonMixin<ModelType>
-    implements MapSerializer<ModelType>, Jsonable<ModelType> {
-  String toJson(ModelType model) => JSON.encode(toMap(model));
-
-  ModelType fromJson(String json, {ModelType model}) =>
-      fromMap(JSON.decode(json), model: model);
 }
 
 /// Annotation used to request generation of serializer

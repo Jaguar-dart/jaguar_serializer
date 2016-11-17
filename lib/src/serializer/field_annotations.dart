@@ -1,4 +1,4 @@
-part of serializer.map_serializer;
+part of serializer.serializer;
 
 /// Annotation to ignore a field while encoding or decoding
 class IgnoreField {

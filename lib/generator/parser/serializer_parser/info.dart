@@ -55,7 +55,7 @@ class SerializerWriteInfo {
         String fieldName = field.name;
         String fieldKey = field.name;
 
-        if (info.toRename.containsKey(fieldName)) {
+        if (info.fromRename.containsKey(fieldName)) {
           fieldKey = info.fromRename[fieldName];
         }
 
