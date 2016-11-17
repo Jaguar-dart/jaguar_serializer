@@ -73,8 +73,8 @@ void main() {
       m['N'] = 'John';
       m['E'] = 'john@noemail.com';
       m['A'] = 25;
-      m['S'] = 1000;
-      m['emailConfirmed'] = true;
+      m['score'] = 1000;
+      m['eC'] = true;
     });
 
     test('Rename key', () {

@@ -6,7 +6,7 @@ part 'basic_main.g.dart';
 
 @GenSerializer()
 class PlayerJsonSerializer extends Object
-    with JsonMixin, _$PlayerJsonSerializer
+    with JsonMixin<Player>, _$PlayerJsonSerializer
     implements MapSerializer<Player> {
   Player createModel() => new Player();
 

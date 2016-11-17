@@ -18,7 +18,7 @@ part 'info.dart';
 part 'providers.dart';
 part 'custom_field.dart';
 
-const String kLibMapSer = 'serializer.map_serializer';
+const String kLibMapSer = 'serializer.serializer';
 
 const NamedElementImpl kMapSerializer =
     const NamedElementImpl.Make('MapSerializer', kLibMapSer);
@@ -33,6 +33,10 @@ SerializerInfo parseSerializer(ClassElementWrap clazz) {
   final InterfaceTypeWrap interface = clazz.allSupertypes.firstWhere(
       (InterfaceTypeWrap interface) => interface.isSame(kMapSerializer),
       orElse: () => null);
+
+  if (interface == null) {
+    throw new Exception("Does not implement MapSerializer!");
+  }
 
   if (interface.typeArguments.length != 1) {
     throw new Exception("Should have only one type argument!");

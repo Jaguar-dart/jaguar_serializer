@@ -1,4 +1,4 @@
-part of serializer.map_serializer;
+part of serializer.serializer;
 
 /// Interface specification to add custom field decoders
 abstract class FieldProcessor<FromType, ToType> {

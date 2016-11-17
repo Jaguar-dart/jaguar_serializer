@@ -116,8 +116,8 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
     model.name = map["N"];
     model.email = map["E"];
     model.age = map["A"];
-    model.score = map["S"];
-    model.emailConfirmed = map["emailConfirmed"];
+    model.score = map["score"];
+    model.emailConfirmed = map["eC"];
     return model;
   }
 }

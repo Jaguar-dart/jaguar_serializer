@@ -24,7 +24,7 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 @MongoId(#id)
 @EnDecodeField(#id, asAndFrom: '_id')
 class PlayerMongoSerializer extends Object
-    with JsonMixin, _$PlayerMongoSerializer
+    with JsonMixin<Player>, _$PlayerMongoSerializer
     implements MapSerializer<Player> {
   Player createModel() => new Player();
 
