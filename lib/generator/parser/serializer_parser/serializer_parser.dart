@@ -31,7 +31,8 @@ const NamedElementImpl kDefineFieldProcessor =
 
 SerializerInfo parseSerializer(ClassElementWrap clazz) {
   final InterfaceTypeWrap interface = clazz.allSupertypes.firstWhere(
-      (InterfaceTypeWrap interface) => interface.compareNamedElement(kMapSerializer),
+      (InterfaceTypeWrap interface) =>
+          interface.compareNamedElement(kMapSerializer),
       orElse: () => null);
 
   if (interface == null) {

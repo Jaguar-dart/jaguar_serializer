@@ -1,6 +1,7 @@
 part of jaguar_serializer.generator.parser.serializer;
 
-const NamedElement kTypeProvideSerializers = const NamedElementImpl.Make('ProvideSerializers', kLibMapSer);
+const NamedElement kTypeProvideSerializers =
+    const NamedElementImpl.Make('ProvideSerializers', kLibMapSer);
 
 void _collectProviders(SerializerInfo ret, ClassElementWrap clazz) {
   clazz.metadata.forEach((AnnotationElementWrap annot) {
