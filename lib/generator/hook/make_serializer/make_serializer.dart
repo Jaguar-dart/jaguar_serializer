@@ -11,7 +11,7 @@ import 'package:jaguar_serializer/serializer.dart';
 import 'package:jaguar_serializer/generator/parser/import.dart';
 import 'package:jaguar_serializer/generator/writer/writer.dart';
 
-import 'package:source_gen_help/import.dart';
+import 'package:source_gen_help/source_gen_help.dart';
 
 /// source_gen hook to generate serializer
 class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
