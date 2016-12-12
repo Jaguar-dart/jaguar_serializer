@@ -4,7 +4,7 @@ import 'dart:mirrors' show MirrorSystem;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/constant/value.dart';
 
-import 'package:source_gen_help/import.dart';
+import 'package:source_gen_help/source_gen_help.dart';
 
 import 'package:jaguar_serializer/generator/parser/model_parser/model_parser.dart';
 
