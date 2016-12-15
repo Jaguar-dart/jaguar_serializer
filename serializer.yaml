@@ -6,6 +6,7 @@ serializers:
 - example/user/user/user_mongo.dart
 - example/user/book/book.dart
 - example/user/book/book_mongo.dart
-- test/serializer/builtin/models/player.dart
-- test/serializer/list/models/author.dart
-- test/serializer/list/models/book.dart
+- test/serializer/common/models/player/player.dart
+- test/serializer/common/models/bibliotek/author.dart
+- test/serializer/common/models/bibliotek/book.dart
+- test/serializer/common/models/address_book/address_book.dart

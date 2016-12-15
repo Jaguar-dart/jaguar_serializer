@@ -10,9 +10,17 @@ part of example.book.mongo;
 abstract class _$BookMongoSerializer implements MapSerializer<Book> {
   Map toMap(Book model) {
     Map ret = new Map();
-    ret["id"] = new MongoId(#id).to(model.id);
-    ret["N"] = model.name;
-    ret["publishedYear"] = model.publishedYear;
+    if (model != null) {
+      if (model.id != null) {
+        ret["id"] = new MongoId(#id).to(model.id);
+      }
+      if (model.name != null) {
+        ret["N"] = model.name;
+      }
+      if (model.publishedYear != null) {
+        ret["publishedYear"] = model.publishedYear;
+      }
+    }
     return ret;
   }
 

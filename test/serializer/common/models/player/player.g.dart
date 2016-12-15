@@ -10,11 +10,23 @@ part of serializer.test.models.player;
 abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
   Map toMap(Player model) {
     Map ret = new Map();
-    ret["name"] = model.name;
-    ret["email"] = model.email;
-    ret["age"] = model.age;
-    ret["score"] = model.score;
-    ret["emailConfirmed"] = model.emailConfirmed;
+    if (model != null) {
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.email != null) {
+        ret["email"] = model.email;
+      }
+      if (model.age != null) {
+        ret["age"] = model.age;
+      }
+      if (model.score != null) {
+        ret["score"] = model.score;
+      }
+      if (model.emailConfirmed != null) {
+        ret["emailConfirmed"] = model.emailConfirmed;
+      }
+    }
     return ret;
   }
 
@@ -42,10 +54,20 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
 abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
   Map toMap(Player model) {
     Map ret = new Map();
-    ret["name"] = model.name;
-    ret["email"] = model.email;
-    ret["age"] = model.age;
-    ret["score"] = model.score;
+    if (model != null) {
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.email != null) {
+        ret["email"] = model.email;
+      }
+      if (model.age != null) {
+        ret["age"] = model.age;
+      }
+      if (model.score != null) {
+        ret["score"] = model.score;
+      }
+    }
     return ret;
   }
 
@@ -72,8 +94,14 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
 abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
   Map toMap(Player model) {
     Map ret = new Map();
-    ret["name"] = model.name;
-    ret["score"] = model.score;
+    if (model != null) {
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.score != null) {
+        ret["score"] = model.score;
+      }
+    }
     return ret;
   }
 
@@ -98,11 +126,23 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
 abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
   Map toMap(Player model) {
     Map ret = new Map();
-    ret["N"] = model.name;
-    ret["E"] = model.email;
-    ret["A"] = model.age;
-    ret["S"] = model.score;
-    ret["emailConfirmed"] = model.emailConfirmed;
+    if (model != null) {
+      if (model.name != null) {
+        ret["N"] = model.name;
+      }
+      if (model.email != null) {
+        ret["E"] = model.email;
+      }
+      if (model.age != null) {
+        ret["A"] = model.age;
+      }
+      if (model.score != null) {
+        ret["S"] = model.score;
+      }
+      if (model.emailConfirmed != null) {
+        ret["emailConfirmed"] = model.emailConfirmed;
+      }
+    }
     return ret;
   }
 

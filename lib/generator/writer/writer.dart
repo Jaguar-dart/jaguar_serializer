@@ -31,19 +31,29 @@ class SerializerWriter {
     _w.writeln('Map toMap(${info.modelName} model) {');
     _w.writeln(r'Map ret = new Map();');
 
+    _w.writeln('if(model != null) {');
+
     for (FieldTo item in info.to) {
       _toItemWriter(item);
     }
+
+    _w.writeln('}');
 
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
   }
 
   void _toItemWriter(FieldTo item) {
+    final String itemStr = 'model.${item.name}';
+
+    _w.writeln('if($itemStr != null) {');
+
     _w.write('ret["${item.key}"] = ');
     ToItemWriter writer = new ToItemWriter(item.property);
     _w.write(writer.generate('model.${item.name}'));
     _w.write(';');
+
+    _w.writeln('}');
   }
 
   void _fromWriter() {

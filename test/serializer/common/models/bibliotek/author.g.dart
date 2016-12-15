@@ -10,7 +10,11 @@ part of serializer.test.models.Author;
 abstract class _$AuthorSerializer implements MapSerializer<Author> {
   Map toMap(Author model) {
     Map ret = new Map();
-    ret["name"] = model.name;
+    if (model != null) {
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+    }
     return ret;
   }
 

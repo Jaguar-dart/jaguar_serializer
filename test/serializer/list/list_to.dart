@@ -2,7 +2,7 @@ library serializer.test.list_map.to;
 
 import 'package:test/test.dart';
 
-import 'models/book.dart';
+import '../common/models/bibliotek/book.dart';
 
 void main() {
   group('To.List.Map', () {

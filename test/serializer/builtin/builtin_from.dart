@@ -2,7 +2,7 @@ library serializer.test.builtin.from;
 
 import 'package:test/test.dart';
 
-import 'models/player.dart';
+import '../common/models/player/player.dart';
 
 void main() {
   group('Builtin', () {

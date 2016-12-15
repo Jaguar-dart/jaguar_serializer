@@ -1,5 +1,5 @@
 name: jaguar_serializer
-version: 0.1.5
+version: 0.1.6
 description: Platform and format agnostic serializer built using source_gen
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
@@ -20,7 +20,7 @@ dependencies:
   source_gen_help:
     git:
       url: https://github.com/Jaguar-dart/source_gen_help.git
-      ref: dbf0557
+      ref: d5d427e
 
 dev_dependencies:
   test:

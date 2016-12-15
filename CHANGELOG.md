@@ -12,4 +12,8 @@ Contains:
 
 ## 0.1.3
 
-Fixed renaming encode field bug
+- Fixed renaming encode field bug
+
+## 0.1.6
+
+- Null nested objects are not serialized properly
