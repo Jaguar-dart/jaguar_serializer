@@ -10,9 +10,17 @@ part of example.model.book;
 abstract class _$BookViewSerializer implements MapSerializer<Book> {
   Map toMap(Book model) {
     Map ret = new Map();
-    ret["id"] = model.id;
-    ret["name"] = model.name;
-    ret["publishedYear"] = model.publishedYear;
+    if (model != null) {
+      if (model.id != null) {
+        ret["id"] = model.id;
+      }
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.publishedYear != null) {
+        ret["publishedYear"] = model.publishedYear;
+      }
+    }
     return ret;
   }
 

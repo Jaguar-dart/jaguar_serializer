@@ -10,31 +10,57 @@ part of example.user.mongo;
 abstract class _$UserMongoSerializer implements MapSerializer<User> {
   Map toMap(User model) {
     Map ret = new Map();
-    ret["id"] = new MongoId(#id).to(model.id);
-    ret["email"] = model.email;
-    ret["N"] = model.name;
-    ret["dob"] = new DateTimeSerializer(#dob).to(model.dob);
-    ret["book"] = new BookMongoSerializer().toMap(model.book);
-    ret["listStr"] =
-        model.listStr?.map((String val) => val != null ? val : null)?.toList();
-    ret["listBook"] = model.listBook
-        ?.map((Book val) =>
-            val != null ? new BookMongoSerializer().toMap(val) : null)
-        ?.toList();
-    ret["map"] = new MapMaker(model.map, (String key) => key, (String value) {
-      return value;
-    }).model;
-    ret["mapMap"] = new MapMaker(model.mapMap, (String key) => key,
-        (Map<String, String> value) {
-      return new MapMaker(value, (String key) => key, (String value) {
-        return value;
-      }).model;
-    }).model;
-    ret["mapBook"] =
-        new MapMaker(model.mapBook, (String key) => key, (Book value) {
-      return new BookMongoSerializer().toMap(value);
-    }).model;
-    ret["passwordHash"] = model.passwordHash;
+    if (model != null) {
+      if (model.id != null) {
+        ret["id"] = new MongoId(#id).to(model.id);
+      }
+      if (model.email != null) {
+        ret["email"] = model.email;
+      }
+      if (model.name != null) {
+        ret["N"] = model.name;
+      }
+      if (model.dob != null) {
+        ret["dob"] = new DateTimeSerializer(#dob).to(model.dob);
+      }
+      if (model.book != null) {
+        ret["book"] = new BookMongoSerializer().toMap(model.book);
+      }
+      if (model.listStr != null) {
+        ret["listStr"] = model.listStr
+            ?.map((String val) => val != null ? val : null)
+            ?.toList();
+      }
+      if (model.listBook != null) {
+        ret["listBook"] = model.listBook
+            ?.map((Book val) =>
+                val != null ? new BookMongoSerializer().toMap(val) : null)
+            ?.toList();
+      }
+      if (model.map != null) {
+        ret["map"] =
+            new MapMaker(model.map, (String key) => key, (String value) {
+          return value;
+        }).model;
+      }
+      if (model.mapMap != null) {
+        ret["mapMap"] = new MapMaker(model.mapMap, (String key) => key,
+            (Map<String, String> value) {
+          return new MapMaker(value, (String key) => key, (String value) {
+            return value;
+          }).model;
+        }).model;
+      }
+      if (model.mapBook != null) {
+        ret["mapBook"] =
+            new MapMaker(model.mapBook, (String key) => key, (Book value) {
+          return new BookMongoSerializer().toMap(value);
+        }).model;
+      }
+      if (model.passwordHash != null) {
+        ret["passwordHash"] = model.passwordHash;
+      }
+    }
     return ret;
   }
 

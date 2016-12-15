@@ -10,17 +10,27 @@ part of serializer.test.models.book;
 abstract class _$BookSerializer implements MapSerializer<Book> {
   Map toMap(Book model) {
     Map ret = new Map();
-    ret["name"] = model.name;
-    ret["tags"] =
-        model.tags?.map((String val) => val != null ? val : null)?.toList();
-    ret["publishedDates"] =
-        new MapMaker(model.publishedDates, (num key) => key, (String value) {
-      return value;
-    }).model;
-    ret["authors"] = model.authors
-        ?.map((Author val) =>
-            val != null ? new AuthorSerializer().toMap(val) : null)
-        ?.toList();
+    if (model != null) {
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.tags != null) {
+        ret["tags"] =
+            model.tags?.map((String val) => val != null ? val : null)?.toList();
+      }
+      if (model.publishedDates != null) {
+        ret["publishedDates"] = new MapMaker(
+            model.publishedDates, (num key) => key, (String value) {
+          return value;
+        }).model;
+      }
+      if (model.authors != null) {
+        ret["authors"] = model.authors
+            ?.map((Author val) =>
+                val != null ? new AuthorSerializer().toMap(val) : null)
+            ?.toList();
+      }
+    }
     return ret;
   }
 

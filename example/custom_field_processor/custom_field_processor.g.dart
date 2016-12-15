@@ -10,9 +10,17 @@ part of example.field_manipulation;
 abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
   Map toMap(Player model) {
     Map ret = new Map();
-    ret["_id"] = new MongoId(#id).to(model.id);
-    ret["name"] = model.name;
-    ret["email"] = model.email;
+    if (model != null) {
+      if (model.id != null) {
+        ret["_id"] = new MongoId(#id).to(model.id);
+      }
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.email != null) {
+        ret["email"] = model.email;
+      }
+    }
     return ret;
   }
 

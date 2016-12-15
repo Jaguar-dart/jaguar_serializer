@@ -10,30 +10,54 @@ part of example.model.user;
 abstract class _$UserViewSerializer implements MapSerializer<User> {
   Map toMap(User model) {
     Map ret = new Map();
-    ret["Id"] = model.id;
-    ret["Email"] = model.email;
-    ret["N"] = model.name;
-    ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
-    ret["Book"] = new BookViewSerializer().toMap(model.book);
-    ret["listStr"] =
-        model.listStr?.map((String val) => val != null ? val : null)?.toList();
-    ret["listBook"] = model.listBook
-        ?.map((Book val) =>
-            val != null ? new BookViewSerializer().toMap(val) : null)
-        ?.toList();
-    ret["map"] = new MapMaker(model.map, (String key) => key, (String value) {
-      return value;
-    }).model;
-    ret["mapMap"] = new MapMaker(model.mapMap, (String key) => key,
-        (Map<String, String> value) {
-      return new MapMaker(value, (String key) => key, (String value) {
-        return value;
-      }).model;
-    }).model;
-    ret["mapBook"] =
-        new MapMaker(model.mapBook, (String key) => key, (Book value) {
-      return new BookViewSerializer().toMap(value);
-    }).model;
+    if (model != null) {
+      if (model.id != null) {
+        ret["Id"] = model.id;
+      }
+      if (model.email != null) {
+        ret["Email"] = model.email;
+      }
+      if (model.name != null) {
+        ret["N"] = model.name;
+      }
+      if (model.dob != null) {
+        ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
+      }
+      if (model.book != null) {
+        ret["Book"] = new BookViewSerializer().toMap(model.book);
+      }
+      if (model.listStr != null) {
+        ret["listStr"] = model.listStr
+            ?.map((String val) => val != null ? val : null)
+            ?.toList();
+      }
+      if (model.listBook != null) {
+        ret["listBook"] = model.listBook
+            ?.map((Book val) =>
+                val != null ? new BookViewSerializer().toMap(val) : null)
+            ?.toList();
+      }
+      if (model.map != null) {
+        ret["map"] =
+            new MapMaker(model.map, (String key) => key, (String value) {
+          return value;
+        }).model;
+      }
+      if (model.mapMap != null) {
+        ret["mapMap"] = new MapMaker(model.mapMap, (String key) => key,
+            (Map<String, String> value) {
+          return new MapMaker(value, (String key) => key, (String value) {
+            return value;
+          }).model;
+        }).model;
+      }
+      if (model.mapBook != null) {
+        ret["mapBook"] =
+            new MapMaker(model.mapBook, (String key) => key, (Book value) {
+          return new BookViewSerializer().toMap(value);
+        }).model;
+      }
+    }
     return ret;
   }
 

@@ -38,7 +38,7 @@ void main() {
       expect(result, containsPair('email', 'john@noemail.com'));
       expect(result, containsPair('age', 25));
       expect(result, containsPair('score', 1000));
-      expect(result, containsPair('emailConfirmed', isNull));
+      expect(result, isNot(contains('emailConfirmed')));
     });
 
     test('IgnoreField', () {

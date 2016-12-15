@@ -10,8 +10,14 @@ part of test.common.models.address_book;
 abstract class _$Person implements MapSerializer<Person> {
   Map toMap(Person model) {
     Map ret = new Map();
-    ret["name"] = model.name;
-    ret["address"] = new Address().toMap(model.address);
+    if (model != null) {
+      if (model.name != null) {
+        ret["name"] = model.name;
+      }
+      if (model.address != null) {
+        ret["address"] = new Address().toMap(model.address);
+      }
+    }
     return ret;
   }
 
@@ -36,11 +42,23 @@ abstract class _$Person implements MapSerializer<Person> {
 abstract class _$Address implements MapSerializer<Address> {
   Map toMap(Address model) {
     Map ret = new Map();
-    ret["street"] = model.street;
-    ret["houseNum"] = model.houseNum;
-    ret["city"] = model.city;
-    ret["country"] = model.country;
-    ret["pincode"] = model.pincode;
+    if (model != null) {
+      if (model.street != null) {
+        ret["street"] = model.street;
+      }
+      if (model.houseNum != null) {
+        ret["houseNum"] = model.houseNum;
+      }
+      if (model.city != null) {
+        ret["city"] = model.city;
+      }
+      if (model.country != null) {
+        ret["country"] = model.country;
+      }
+      if (model.pincode != null) {
+        ret["pincode"] = model.pincode;
+      }
+    }
     return ret;
   }
 
