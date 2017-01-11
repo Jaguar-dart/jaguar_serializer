@@ -4,15 +4,17 @@ import 'dart:convert';
 import 'package:jaguar_serializer/src/serializer/import.dart';
 
 abstract class JsonSerializer<ModelType> {
-  String toJson(ModelType model);
+  String toJson(dynamic model);
 
-  ModelType fromJson(String json, {ModelType model}) {
-    if (model is! ModelType) {
-      model = createModel();
-    }
+  dynamic fromJson(String json);
 
-    return model;
-  }
+  String toJsonObject(ModelType model);
+
+  ModelType fromJsonObject(String json, {ModelType model});
+
+  String toJsonList(List<ModelType> models);
+
+  List<ModelType> fromJsonList(String json);
 
   ModelType createModel();
 }
@@ -20,18 +22,49 @@ abstract class JsonSerializer<ModelType> {
 /// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
 abstract class JsonMixin<ModelType>
     implements MapSerializer<ModelType>, JsonSerializer<ModelType> {
-  String toJson(ModelType model) => JSON.encode(toMap(model));
+  String toJson(dynamic model) {
+    if (model is ModelType) {
+      return toJsonObject(model);
+    } else if (model is List<ModelType>) {
+      return toJsonList(model);
+    } else {
+      throw new Exception("Unknown object type received!");
+    }
+  }
 
-  ModelType fromJson(String json, {ModelType model}) =>
+  dynamic fromJson(String json) {
+    dynamic decoded = JSON.decode(json);
+    if (decoded is Map) {
+      return fromMap(decoded);
+    } else if (decoded is List<Map>) {
+      return decoded.map((Map map) => fromMap(map)).toList();
+    } else {
+      throw new Exception("Unknown object type received!");
+    }
+  }
+
+  String toJsonObject(ModelType model) => JSON.encode(toMap(model));
+
+  ModelType fromJsonObject(String json, {ModelType model}) =>
       fromMap(JSON.decode(json), model: model);
+
+  String toJsonList(List<ModelType> models) =>
+      JSON.encode(models.map((ModelType model) => toMap(model)).toList());
+
+  List<ModelType> fromJsonList(String json) {
+    dynamic decoded = JSON.decode(json);
+    if (decoded is! List) return null;
+
+    return (decoded as List).map((Map map) => fromMap(map)).toList();
+  }
 }
 
 abstract class JsonSerializable<ModelType> {
-  JsonSerializer<ModelType> get jsonSerializer;
+  MapSerializer<ModelType> get jsonSerializer;
 
-  String toJson() => jsonSerializer.toJson(this as ModelType);
+  Map toJson() => jsonSerializer.toMap(this as ModelType);
 
-  void fromJson(String json) {
-    jsonSerializer.fromJson(json, model: (this as ModelType));
+  void fromJson(Map json) {
+    jsonSerializer.fromMap(json, model: (this as ModelType));
   }
 }
