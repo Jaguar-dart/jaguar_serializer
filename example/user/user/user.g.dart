@@ -24,7 +24,7 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
         ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
       }
       if (model.book != null) {
-        ret["Book"] = new BookViewSerializer().toMap(model.book);
+        ret["Book"] = providers[Book]?.toMap(model.book);
       }
       if (model.listStr != null) {
         ret["listStr"] = model.listStr
@@ -33,8 +33,8 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
       }
       if (model.listBook != null) {
         ret["listBook"] = model.listBook
-            ?.map((Book val) =>
-                val != null ? new BookViewSerializer().toMap(val) : null)
+            ?.map(
+                (Book val) => val != null ? providers[Book]?.toMap(val) : null)
             ?.toList();
       }
       if (model.map != null) {
@@ -54,8 +54,11 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
       if (model.mapBook != null) {
         ret["mapBook"] =
             new MapMaker(model.mapBook, (String key) => key, (Book value) {
-          return new BookViewSerializer().toMap(value);
+          return providers[Book]?.toMap(value);
         }).model;
+      }
+      if (modelString != null) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -72,28 +75,26 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
     model.email = map["Email"];
     model.name = map["N"];
     model.dob = new DateTimeSerializer(#dob).from(map["DoB"]);
-    model.book = new BookViewSerializer().fromMap(map["Book"]);
-    model.listStr =
-        (map["listStr"] as List<String>)?.map((String val) => val)?.toList();
-    model.listBook = (map["listBook"] as List<Map>)
-        ?.map((Map val) => new BookViewSerializer().fromMap(val))
+    model.book = providers[Book]?.fromMap(map["Book"]);
+    model.listStr = map["listStr"]?.map((String val) => val)?.toList();
+    model.listBook = map["listBook"]
+        ?.map((dynamic val) => providers[Book]?.fromMap(val))
         ?.toList();
-    model.map = new MapMaker(
-        map["map"] as Map<String, String>, (String key) => key, (String value) {
+    model.map = new MapMaker(map["map"], (String key) => key, (String value) {
       return value;
-    }).model;
-    model.mapMap = new MapMaker(
-        map["mapMap"] as Map<String, Map<String, String>>, (String key) => key,
+    }).model as dynamic;
+    model.mapMap = new MapMaker(map["mapMap"], (String key) => key,
         (Map<String, String> value) {
-      return new MapMaker(value as Map<String, String>, (String key) => key,
-          (String value) {
+      return new MapMaker(value, (String key) => key, (String value) {
         return value;
-      }).model;
-    }).model;
-    model.mapBook = new MapMaker(
-        map["mapBook"] as Map<String, Map>, (String key) => key, (Map value) {
-      return new BookViewSerializer().fromMap(value);
-    }).model;
+      }).model as dynamic;
+    }).model as dynamic;
+    model.mapBook =
+        new MapMaker(map["mapBook"], (String key) => key, (dynamic value) {
+      return providers[Book]?.fromMap(value);
+    }).model as dynamic;
     return model;
   }
+
+  String get modelString => "User";
 }

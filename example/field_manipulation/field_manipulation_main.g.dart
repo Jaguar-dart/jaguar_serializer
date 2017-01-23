@@ -23,6 +23,9 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
       if (model.score != null) {
         ret["S"] = model.score;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -40,4 +43,6 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
     model.score = map["S"];
     return model;
   }
+
+  String get modelString => "Player";
 }

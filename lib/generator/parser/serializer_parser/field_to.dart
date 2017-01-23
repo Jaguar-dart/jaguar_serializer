@@ -50,7 +50,13 @@ class SerializedPropertyTo implements LeafPropertyTo {
   const SerializedPropertyTo(this.instantiationString);
 }
 
-PropertyTo _parsePropertyTo(SerializerInfo info, DartTypeWrap type) {
+class ProviderPropertyTo implements LeafPropertyTo {
+  final String type;
+
+  const ProviderPropertyTo(this.type);
+}
+
+PropertyTo _parsePropertyTo(SerializerInfo info, String fieldName, DartTypeWrap type) {
   if (type.isDynamic) {
     throw new Exception('Cannot serialize dynamic type!');
   } else if (type.isObject) {
@@ -65,7 +71,7 @@ PropertyTo _parsePropertyTo(SerializerInfo info, DartTypeWrap type) {
 
     DartTypeWrap param = params[0];
 
-    return new ListPropertyTo(_parsePropertyTo(info, param), param.displayName);
+    return new ListPropertyTo(_parsePropertyTo(info, fieldName, param), param.displayName);
   } else if (type.isMap) {
     List<DartTypeWrap> params = type.typeArguments;
 
@@ -78,25 +84,12 @@ PropertyTo _parsePropertyTo(SerializerInfo info, DartTypeWrap type) {
     DartTypeWrap key = params[0];
     DartTypeWrap value = params[1];
 
-    return new MapPropertyTo(_parsePropertyTo(info, key), key.displayName,
-        _parsePropertyTo(info, value), value.displayName);
+    return new MapPropertyTo(_parsePropertyTo(info, fieldName, key), key.displayName,
+        _parsePropertyTo(info, fieldName, value), value.displayName);
   } else if (type.isBuiltin) {
     return new BuiltinLeafPropertyTo();
   } else {
-    DartTypeWrap ser;
-
-    info.serializationProviders
-        .forEach((DartTypeWrap modelType, DartTypeWrap serializer) {
-      if (type.compareNamedElement(modelType)) {
-        ser = serializer;
-      }
-    });
-
-    if (ser is! DartTypeWrap) {
-      throw new Exception("Cannot find a serializer for $type ...");
-    }
-
-    return new SerializedPropertyTo(ser.displayName);
+    return new ProviderPropertyTo(type.name);
   }
 }
 
@@ -105,6 +98,6 @@ FieldTo _parseFieldTo(SerializerInfo info, ModelField field, String key) {
     String instStr = info.customFieldCodecs[field.name].instantiationString;
     return new FieldTo(key, field.name, new CustomPropertyTo(instStr));
   } else {
-    return new FieldTo(key, field.name, _parsePropertyTo(info, field.type));
+    return new FieldTo(key, field.name, _parsePropertyTo(info, field.name, field.type));
   }
 }

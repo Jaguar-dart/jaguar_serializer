@@ -41,6 +41,8 @@ class ToItemWriter {
       _w.write(' new ' + leaf.instantiationString + '.to($reference)');
     } else if (leaf is SerializedPropertyTo) {
       _w.write(' new ' + leaf.instantiationString + '().toMap($reference)');
+    } else if (leaf is ProviderPropertyTo) {
+      _w.write(' providers[' + leaf.type + ']?.toMap($reference)');
     }
 
     return _w.toString();

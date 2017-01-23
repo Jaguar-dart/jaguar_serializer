@@ -17,7 +17,15 @@ abstract class MapSerializer<ModelType> {
     return model;
   }
 
+  Type get modelType => ModelType;
+
+  Map<Type, MapSerializer> providers = {};
+
+  String get modelString => "$ModelType";
+
   ModelType createModel();
+
+  static String type_info_key = "@t";
 }
 
 /// Annotation used to request generation of serializer
@@ -28,7 +36,7 @@ class GenSerializer {
 /// Annotation used to provide serializers for specific types
 class ProvideSerializers {
   /// A mapping from Type to the serializer used for that Type
-  final Map<Type, Type> serializers;
+  final Map<String, Type> serializers;
 
   const ProvideSerializers(this.serializers);
 }

@@ -20,6 +20,9 @@ abstract class _$BookMongoSerializer implements MapSerializer<Book> {
       if (model.publishedYear != null) {
         ret["publishedYear"] = model.publishedYear;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -36,4 +39,6 @@ abstract class _$BookMongoSerializer implements MapSerializer<Book> {
     model.publishedYear = map["publishedYear"];
     return model;
   }
+
+  String get modelString => "Book";
 }

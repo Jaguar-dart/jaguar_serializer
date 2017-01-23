@@ -26,6 +26,9 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -44,6 +47,8 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
     model.emailConfirmed = map["emailConfirmed"];
     return model;
   }
+
+  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -67,6 +72,9 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -84,6 +92,8 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
     model.score = map["score"];
     return model;
   }
+
+  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -101,6 +111,9 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -116,6 +129,8 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
     model.score = map["score"];
     return model;
   }
+
+  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -142,6 +157,9 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -160,4 +178,6 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
     model.emailConfirmed = map["eC"];
     return model;
   }
+
+  String get modelString => "Player";
 }

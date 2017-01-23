@@ -20,6 +20,9 @@ abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
       if (model.email != null) {
         ret["email"] = model.email;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -36,4 +39,6 @@ abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
     model.email = map["email"];
     return model;
   }
+
+  String get modelString => "Player";
 }

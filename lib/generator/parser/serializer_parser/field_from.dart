@@ -25,8 +25,7 @@ class MapPropertyFrom implements PropertyFrom {
 
   String get inputTypeStr => 'Map<${key.inputTypeStr}, ${value.inputTypeStr}>';
 
-  const MapPropertyFrom(
-      this.key, this.keyTypeStr, this.value, this.valueTypeStr);
+  const MapPropertyFrom(this.key, this.keyTypeStr, this.value, this.valueTypeStr);
 }
 
 class ListPropertyFrom implements PropertyFrom {
@@ -63,6 +62,14 @@ class SerializedPropertyFrom implements LeafPropertyFrom {
   const SerializedPropertyFrom(this.instantiationString);
 }
 
+class ProviderPropertyFrom implements LeafPropertyFrom {
+  final String type;
+
+  String get inputTypeStr => 'dynamic';
+
+  const ProviderPropertyFrom(this.type);
+}
+
 PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
   if (type.isDynamic) {
     throw new Exception('Cannot serialize dynamic type!');
@@ -97,20 +104,7 @@ PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
   } else if (type.isBuiltin) {
     return new BuiltinLeafPropertyFrom(type.displayName);
   } else {
-    DartTypeWrap ser;
-
-    info.serializationProviders
-        .forEach((DartTypeWrap modelType, DartTypeWrap serializer) {
-      if (type.compareNamedElement(modelType)) {
-        ser = serializer;
-      }
-    });
-
-    if (ser is! DartTypeWrap) {
-      throw new Exception("Cannot find a serializer for $type ...");
-    }
-
-    return new SerializedPropertyFrom(ser.displayName);
+    return new ProviderPropertyFrom(type.name);
   }
 }
 

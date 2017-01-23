@@ -1,4 +1,5 @@
 import 'user/user.dart';
+import 'package:jaguar_serializer/serializer.dart';
 
 const Map<String, dynamic> kUserMap1 = const {
   'Id': "111111111111111111111111",
@@ -26,11 +27,12 @@ const Map<String, dynamic> kUserMap1 = const {
 };
 
 main() {
-  UserViewSerializer serializer = new UserViewSerializer();
+  SerializerJson serializer = new SerializerJson();
+  serializer.addSerializer(new UserViewSerializer());
 
   User user = serializer.fromMap(kUserMap1);
 
-  print(User.viewSerializer.toMap(user));
+  print(serializer.toMap(user));
 
-  print(User.viewSerializer.toJson(user));
+  print(serializer.encode(user));
 }

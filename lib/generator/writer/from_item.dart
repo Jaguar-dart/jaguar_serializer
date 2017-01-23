@@ -8,7 +8,7 @@ class FromItemWriter {
   String writeFromListProperty(String reference, ListPropertyFrom prop) {
     StringBuffer _w = new StringBuffer();
 
-    _w.write('(' + reference + ' as ${prop.inputTypeStr})');
+    _w.write(reference);
     _w.write('?.map((${prop.value.inputTypeStr} val) => ');
     _w.write(writeFromProperty('val', prop.value));
     _w.write(')?.toList()');
@@ -18,16 +18,15 @@ class FromItemWriter {
 
   String writeFromMapProperty(String reference, MapPropertyFrom map) {
     StringBuffer _w = new StringBuffer();
-
     _w.write('new MapMaker');
     _w.write('(');
     _w.write(reference);
-    _w.write(' as ${map.inputTypeStr},');
+    _w.write(',');
     _w.write('(${map.key.inputTypeStr} key) => key,');
     _w.write('(${map.value.inputTypeStr} value) {');
     _w.write('return ');
     _w.write(writeFromProperty('value', map.value));
-    _w.write(';}).model');
+    _w.write(';}).model as dynamic');
 
     return _w.toString();
   }
@@ -41,6 +40,8 @@ class FromItemWriter {
       _w.write(' new ' + leaf.instantiationString + '.from($reference)');
     } else if (leaf is SerializedPropertyFrom) {
       _w.write(' new ' + leaf.instantiationString + '().fromMap($reference)');
+    } else if (leaf is ProviderPropertyFrom) {
+      _w.write(' providers[' + leaf.type + ']?.fromMap($reference)');
     }
 
     return _w.toString();

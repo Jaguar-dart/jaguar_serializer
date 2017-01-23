@@ -14,6 +14,9 @@ abstract class _$AuthorSerializer implements MapSerializer<Author> {
       if (model.name != null) {
         ret["name"] = model.name;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -28,4 +31,6 @@ abstract class _$AuthorSerializer implements MapSerializer<Author> {
     model.name = map["name"];
     return model;
   }
+
+  String get modelString => "Author";
 }

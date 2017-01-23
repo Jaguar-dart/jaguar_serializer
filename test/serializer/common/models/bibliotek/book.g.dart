@@ -27,8 +27,11 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
       if (model.authors != null) {
         ret["authors"] = model.authors
             ?.map((Author val) =>
-                val != null ? new AuthorSerializer().toMap(val) : null)
+                val != null ? providers[Author]?.toMap(val) : null)
             ?.toList();
+      }
+      if (modelString != null) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -42,16 +45,16 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
       model = createModel();
     }
     model.name = map["name"];
-    model.tags =
-        (map["tags"] as List<String>)?.map((String val) => val)?.toList();
-    model.publishedDates = new MapMaker(
-        map["publishedDates"] as Map<num, String>, (num key) => key,
-        (String value) {
+    model.tags = map["tags"]?.map((String val) => val)?.toList();
+    model.publishedDates =
+        new MapMaker(map["publishedDates"], (num key) => key, (String value) {
       return value;
-    }).model;
-    model.authors = (map["authors"] as List<Map>)
-        ?.map((Map val) => new AuthorSerializer().fromMap(val))
+    }).model as dynamic;
+    model.authors = map["authors"]
+        ?.map((dynamic val) => providers[Author]?.fromMap(val))
         ?.toList();
     return model;
   }
+
+  String get modelString => "Book";
 }

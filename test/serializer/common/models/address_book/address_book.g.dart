@@ -15,7 +15,10 @@ abstract class _$Person implements MapSerializer<Person> {
         ret["name"] = model.name;
       }
       if (model.address != null) {
-        ret["address"] = new Address().toMap(model.address);
+        ret["address"] = providers[Address]?.toMap(model.address);
+      }
+      if (modelString != null) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -29,9 +32,11 @@ abstract class _$Person implements MapSerializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address = new Address().fromMap(map["address"]);
+    model.address = providers[Address]?.fromMap(map["address"]);
     return model;
   }
+
+  String get modelString => "Person";
 }
 
 // **************************************************************************
@@ -58,6 +63,9 @@ abstract class _$Address implements MapSerializer<Address> {
       if (model.pincode != null) {
         ret["pincode"] = model.pincode;
       }
+      if (modelString != null) {
+        ret["@t"] = modelString;
+      }
     }
     return ret;
   }
@@ -76,4 +84,6 @@ abstract class _$Address implements MapSerializer<Address> {
     model.pincode = map["pincode"];
     return model;
   }
+
+  String get modelString => "Address";
 }

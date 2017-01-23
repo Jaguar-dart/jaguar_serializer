@@ -18,7 +18,7 @@ void _collectProviders(SerializerInfo ret, ClassElementWrap clazz) {
     serializers.forEach((DartObject model, DartObject serializer) {
       DartTypeWrap modelWrap = new DartTypeWrap(model.toTypeValue());
       DartTypeWrap serializerWrap = new DartTypeWrap(serializer.toTypeValue());
-      ret.serializationProviders[modelWrap] = serializerWrap;
+      //ret.serializationProviders[modelWrap] = serializerWrap;
     });
   });
 }

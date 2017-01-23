@@ -8,15 +8,12 @@ export 'author.dart' show Author, AuthorSerializer;
 part 'book.g.dart';
 
 @GenSerializer()
-@ProvideSerializers(const {
-  Author: AuthorSerializer,
-})
-class BookSerializer extends Object
-    with JsonMixin, _$BookSerializer
-    implements MapSerializer<Book> {
+class BookSerializer extends MapSerializer<Book> with _$BookSerializer  {
   Book createModel() => new Book();
 
-  BookSerializer();
+  BookSerializer() {
+    providers[Author] = new AuthorSerializer();
+  }
 }
 
 /// Player model for the game

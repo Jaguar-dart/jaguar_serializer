@@ -15,8 +15,7 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 
   final String locale;
 
-  const DateTimeSerializer(this.field,
-      {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
+  const DateTimeSerializer(this.field, {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
 
   /// Called to process field before decoding
   DateTime from(String value) {
@@ -39,17 +38,14 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   #book: 'Book',
   #dob: 'DoB',
 })
-@ProvideSerializers(const <Type, Type>{
-  Book: BookViewSerializer,
-})
 @IgnoreField(#password)
-@IgnoreFields(const [#passwordHash, #_passwordHash, #viewSerializer])
-class UserViewSerializer extends Object
-    with _$UserViewSerializer, JsonMixin
-    implements MapSerializer<User> {
+@IgnoreFields(const [#passwordHash, #viewSerializer])
+class UserViewSerializer extends MapSerializer<User> with _$UserViewSerializer {
   User createModel() => new User();
 
-  UserViewSerializer();
+  UserViewSerializer() {
+    providers[Book] = new BookViewSerializer();
+  }
 }
 
 class User {

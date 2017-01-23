@@ -6,8 +6,7 @@ part 'player.g.dart';
 
 @GenSerializer()
 class PlayerJsonSerializer extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializer
-    implements MapSerializer<Player> {
+    with JsonMixin<Player>, _$PlayerJsonSerializer, MapSerializer<Player> {
   Player createModel() => new Player();
 
   PlayerJsonSerializer();
@@ -16,8 +15,7 @@ class PlayerJsonSerializer extends Object
 @GenSerializer()
 @IgnoreField(#emailConfirmed)
 class PlayerJsonSerializerIgnore extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializerIgnore
-    implements MapSerializer<Player> {
+    with JsonMixin<Player>, _$PlayerJsonSerializerIgnore,  MapSerializer<Player> {
   Player createModel() => new Player();
 
   PlayerJsonSerializerIgnore();
@@ -26,8 +24,7 @@ class PlayerJsonSerializerIgnore extends Object
 @GenSerializer()
 @IgnoreFields(const <Symbol>[#emailConfirmed, #age, #email])
 class PlayerJsonSerializerIgnores extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializerIgnores
-    implements MapSerializer<Player> {
+    with JsonMixin<Player>, _$PlayerJsonSerializerIgnores, MapSerializer<Player> {
   Player createModel() => new Player();
 
   PlayerJsonSerializerIgnores();
@@ -42,8 +39,7 @@ class PlayerJsonSerializerIgnores extends Object
 @EncodeField(#score, as: 'S')
 @DecodeField(#emailConfirmed, from: 'eC')
 class PlayerJsonSerializerRename extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializerRename
-    implements MapSerializer<Player> {
+    with JsonMixin<Player>, _$PlayerJsonSerializerRename, MapSerializer<Player> {
   Player createModel() => new Player();
 
   PlayerJsonSerializerRename();

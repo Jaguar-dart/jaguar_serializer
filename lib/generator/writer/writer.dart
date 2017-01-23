@@ -1,8 +1,10 @@
 library jaguar_serializer.generator.writer;
 
 import 'package:jaguar_serializer/generator/parser/serializer_parser/serializer_parser.dart';
+import 'package:jaguar_serializer/src/serializer/import.dart';
 
 part 'to_item.dart';
+
 part 'from_item.dart';
 
 class SerializerWriter {
@@ -24,6 +26,8 @@ class SerializerWriter {
 
     _fromWriter();
 
+    _w.writeln('String get modelString => "${info.modelName}";');
+
     _w.writeln('}');
   }
 
@@ -37,10 +41,20 @@ class SerializerWriter {
       _toItemWriter(item);
     }
 
+    _typeInfoKey();
+
     _w.writeln('}');
 
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
+  }
+
+  void _typeInfoKey() {
+    _w.writeln('if(modelString != null) {');
+
+    _w.write('ret["${MapSerializer.type_info_key}"] = modelString;');
+
+    _w.writeln('}');
   }
 
   void _toItemWriter(FieldTo item) {

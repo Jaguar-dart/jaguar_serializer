@@ -13,7 +13,7 @@ class SerializerInfo {
 
   Map<String, CustomFieldCodecInfo> customFieldCodecs = {};
 
-  Map<DartTypeWrap, DartTypeWrap> serializationProviders = {};
+  //Map<DartTypeWrap, DartTypeWrap> serializationProviders = {};
 
   Model model = new Model();
 
