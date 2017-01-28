@@ -8,16 +8,18 @@ part of test.common.models.address_book;
 // **************************************************************************
 
 abstract class _$Person implements MapSerializer<Person> {
-  Map toMap(Person model) {
+  Map toMap(Person model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
         ret["name"] = model.name;
       }
       if (model.address != null) {
-        ret["address"] = providers[Address]?.toMap(model.address);
+        ret["address"] = JaguarSerializer
+            .getMapSerializerForType(Address)
+            .toMap(model.address, withTypeInfo: withTypeInfo);
       }
-      if (modelString != null) {
+      if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
     }
@@ -32,7 +34,9 @@ abstract class _$Person implements MapSerializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address = providers[Address]?.fromMap(map["address"]);
+    model.address = JaguarSerializer
+        .getMapSerializerForType(Address)
+        .fromMap(map["address"]);
     return model;
   }
 
@@ -45,7 +49,7 @@ abstract class _$Person implements MapSerializer<Person> {
 // **************************************************************************
 
 abstract class _$Address implements MapSerializer<Address> {
-  Map toMap(Address model) {
+  Map toMap(Address model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.street != null) {
@@ -63,7 +67,7 @@ abstract class _$Address implements MapSerializer<Address> {
       if (model.pincode != null) {
         ret["pincode"] = model.pincode;
       }
-      if (modelString != null) {
+      if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
     }

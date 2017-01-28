@@ -5,29 +5,26 @@ import 'package:jaguar_serializer/serializer.dart';
 part 'player.g.dart';
 
 @GenSerializer()
-class PlayerJsonSerializer extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializer, MapSerializer<Player> {
+class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 
-  PlayerJsonSerializer();
+  PlayerSerializer();
 }
 
 @GenSerializer()
 @IgnoreField(#emailConfirmed)
-class PlayerJsonSerializerIgnore extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializerIgnore,  MapSerializer<Player> {
+class PlayerSerializerIgnore extends MapSerializer<Player> with _$PlayerSerializerIgnore {
   Player createModel() => new Player();
 
-  PlayerJsonSerializerIgnore();
+  PlayerSerializerIgnore();
 }
 
 @GenSerializer()
 @IgnoreFields(const <Symbol>[#emailConfirmed, #age, #email])
-class PlayerJsonSerializerIgnores extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializerIgnores, MapSerializer<Player> {
+class PlayerSerializerIgnores extends MapSerializer<Player> with _$PlayerSerializerIgnores {
   Player createModel() => new Player();
 
-  PlayerJsonSerializerIgnores();
+  PlayerSerializerIgnores();
 }
 
 @GenSerializer()
@@ -38,11 +35,10 @@ class PlayerJsonSerializerIgnores extends Object
 })
 @EncodeField(#score, as: 'S')
 @DecodeField(#emailConfirmed, from: 'eC')
-class PlayerJsonSerializerRename extends Object
-    with JsonMixin<Player>, _$PlayerJsonSerializerRename, MapSerializer<Player> {
+class PlayerSerializerRename extends MapSerializer<Player> with _$PlayerSerializerRename {
   Player createModel() => new Player();
 
-  PlayerJsonSerializerRename();
+  PlayerSerializerRename();
 }
 
 /// Player model for the game

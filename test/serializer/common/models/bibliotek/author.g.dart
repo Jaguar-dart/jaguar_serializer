@@ -8,13 +8,13 @@ part of serializer.test.models.Author;
 // **************************************************************************
 
 abstract class _$AuthorSerializer implements MapSerializer<Author> {
-  Map toMap(Author model) {
+  Map toMap(Author model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
         ret["name"] = model.name;
       }
-      if (modelString != null) {
+      if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
     }

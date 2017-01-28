@@ -13,7 +13,7 @@ class Person extends Object
 
   Person createModel() => new Person();
   Person() {
-    providers[Address] = new Address();
+    JaguarSerializer.addSerializer(new Address());
   }
 }
 

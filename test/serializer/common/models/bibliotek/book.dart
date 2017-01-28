@@ -12,7 +12,7 @@ class BookSerializer extends MapSerializer<Book> with _$BookSerializer  {
   Book createModel() => new Book();
 
   BookSerializer() {
-    providers[Author] = new AuthorSerializer();
+    JaguarSerializer.addSerializer(new AuthorSerializer());
   }
 }
 

@@ -8,7 +8,7 @@ part of example.field_manipulation;
 // **************************************************************************
 
 abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
-  Map toMap(Player model) {
+  Map toMap(Player model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -23,7 +23,7 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
       if (model.score != null) {
         ret["S"] = model.score;
       }
-      if (modelString != null) {
+      if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
     }

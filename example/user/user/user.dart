@@ -44,7 +44,7 @@ class UserViewSerializer extends MapSerializer<User> with _$UserViewSerializer {
   User createModel() => new User();
 
   UserViewSerializer() {
-    providers[Book] = new BookViewSerializer();
+    JaguarSerializer.addSerializer(new BookViewSerializer());
   }
 }
 

@@ -5,8 +5,7 @@ import 'package:jaguar_serializer/serializer.dart';
 part 'author.g.dart';
 
 @GenSerializer()
-class AuthorSerializer extends Object
-    with JsonMixin, _$AuthorSerializer, MapSerializer<Author> {
+class AuthorSerializer extends MapSerializer<Author> with _$AuthorSerializer {
   Author createModel() => new Author();
 
   AuthorSerializer();

@@ -32,7 +32,7 @@ class SerializerWriter {
   }
 
   void _toWriter() {
-    _w.writeln('Map toMap(${info.modelName} model) {');
+    _w.writeln('Map toMap(${info.modelName} model, {bool withTypeInfo: false}) {');
     _w.writeln(r'Map ret = new Map();');
 
     _w.writeln('if(model != null) {');
@@ -50,9 +50,9 @@ class SerializerWriter {
   }
 
   void _typeInfoKey() {
-    _w.writeln('if(modelString != null) {');
+    _w.writeln('if(modelString != null && withTypeInfo) {');
 
-    _w.write('ret["${MapSerializer.type_info_key}"] = modelString;');
+    _w.write('ret["${JaguarSerializer.type_info_key}"] = modelString;');
 
     _w.writeln('}');
   }

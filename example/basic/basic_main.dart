@@ -11,7 +11,7 @@ class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 
   PlayerSerializer() {
-    providers[Address] = new AddressSerializer();
+    JaguarSerializer.addSerializer(new AddressSerializer());
   }
 }
 
@@ -21,7 +21,6 @@ class AddressSerializer extends MapSerializer<Address> with _$AddressSerializer 
 
   AddressSerializer();
 }
-
 
 /// Player model for the game
 class Player {
@@ -56,10 +55,8 @@ class Address {
   String city;
 }
 
-void main() {
-  SerializerJson serializer = new SerializerJson();
-  serializer.addSerializer(new PlayerSerializer());
-
+void json() {
+  Serializer serializer = new SerializerJson();
   {
     Player player = serializer.fromMap({
       'name': 'John',
@@ -74,13 +71,9 @@ void main() {
   }
 
   {
-    Player player = serializer.fromMap({
-      'name': 'John',
-      'email': 'john@noemail.com',
-      'age': 25,
-      'score': 1000,
-      'emailConfirmed': true
-    }, type: Player);
+    Player player = serializer.fromMap(
+        {'name': 'John', 'email': 'john@noemail.com', 'age': 25, 'score': 1000, 'emailConfirmed': true},
+        type: Player);
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
@@ -92,8 +85,53 @@ void main() {
       ..age = 25
       ..score = 1000
       ..emailConfirmed = true
-    ..address = (new Address()..city = "Paris");
-    print(serializer.toDart(player));
+      ..address = (new Address()..city = "Paris");
+    print(serializer.toObject(player));
     print(serializer.encode(player));
+    print(serializer.encode(player, withTypeInfo: true));
   }
+}
+
+void yaml() {
+  Serializer serializer = new SerializerYaml();
+  {
+    Player player = serializer.fromMap({
+      'name': 'John',
+      'email': 'john@noemail.com',
+      'age': 25,
+      'score': 1000,
+      'emailConfirmed': true,
+      '@t': "Player"
+    });
+    // Player(John, john@noemail.com, 25, 1000, true)
+    print(player);
+  }
+
+  {
+    Player player = serializer.fromMap(
+        {'name': 'John', 'email': 'john@noemail.com', 'age': 25, 'score': 1000, 'emailConfirmed': true},
+        type: Player);
+    // Player(John, john@noemail.com, 25, 1000, true)
+    print(player);
+  }
+
+  {
+    Player player = new Player()
+      ..name = 'John'
+      ..email = 'john@noemail.com'
+      ..age = 25
+      ..score = 1000
+      ..emailConfirmed = true
+      ..address = (new Address()..city = "Paris");
+    print(serializer.toObject(player));
+    print(serializer.encode(player));
+    print(serializer.encode(player, withTypeInfo: true));
+  }
+}
+
+void main() {
+  JaguarSerializer.addSerializer(new PlayerSerializer());
+
+  json();
+  yaml();
 }

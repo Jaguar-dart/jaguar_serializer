@@ -3,6 +3,7 @@ library serializer.json;
 import 'dart:convert';
 import 'package:jaguar_serializer/src/serializer/import.dart';
 
+@Deprecated("Use SerializerJson")
 abstract class JsonSerializer<ModelType> {
   String toJson(dynamic model);
 
@@ -20,6 +21,7 @@ abstract class JsonSerializer<ModelType> {
 }
 
 /// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
+@Deprecated("Use SerializerJson")
 abstract class JsonMixin<ModelType> implements MapSerializer<ModelType>, JsonSerializer<ModelType> {
   String toJson(dynamic model) {
     if (model is ModelType) {
@@ -56,6 +58,7 @@ abstract class JsonMixin<ModelType> implements MapSerializer<ModelType>, JsonSer
   }
 }
 
+@Deprecated("Use SerializerJson")
 abstract class JsonSerializable<ModelType> {
   MapSerializer<ModelType> get jsonSerializer;
 
@@ -66,62 +69,6 @@ abstract class JsonSerializable<ModelType> {
   }
 }
 
-class SerializerJson {
-  Map<Type, MapSerializer> _mapperType = {};
-  Map<String, MapSerializer> _mapperString = {};
-
-  String encode(Object object) => JSON.encode(toDart(object));
-
-  Object decode(String json, {Type type}) => fromMap(JSON.decode(json), type: type);
-
-  Map toMap(Object object) {
-    MapSerializer serializer = getMapSerializerForType(object.runtimeType);
-    return serializer.toMap(object);
-  }
-
-  List toList(List objects) => objects.map((object) => toDart(object)).toList();
-
-  Object toDart(Object object) {
-    if (object is Iterable) {
-      return toDart(object.toList());
-    }
-    if (object is List) {
-      return toList(object);
-    } else if (object is Map) {
-      object.forEach((key, value) {
-        object[key] = toDart(object[key]);
-      });
-      return object;
-    }
-    return toMap(object);
-  }
-
-  Object fromMap(Map map, {Type type}) {
-    MapSerializer serializer;
-    try {
-      serializer = getMapSerializerForType(type);
-    } catch (e) {
-      serializer = getMapSerializerFromMap(map);
-    }
-    return serializer.fromMap(map);
-  }
-
-  MapSerializer getMapSerializerForType(Type type) {
-    if (_mapperType.containsKey(type)) {
-      return _mapperType[type];
-    }
-    throw new Exception("No MapSerializer found for $type");
-  }
-
-  MapSerializer getMapSerializerFromMap(Map map) {
-    if (map.containsKey(MapSerializer.type_info_key) && _mapperString.containsKey(map[MapSerializer.type_info_key])) {
-      return _mapperString[map[MapSerializer.type_info_key]];
-    }
-    throw new Exception("No MapSerializer found for ${map[MapSerializer.type_info_key]}");
-  }
-
-  void addSerializer(MapSerializer serializer) {
-    _mapperType[serializer.modelType] = serializer;
-    _mapperString[serializer.modelString] = serializer;
-  }
+class SerializerJson extends Serializer {
+  SerializerJson() : super((Object object) => JSON.encode(object), (String data) => JSON.decode(data));
 }

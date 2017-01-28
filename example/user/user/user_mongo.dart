@@ -22,13 +22,10 @@ class UserMongoSerializer extends MapSerializer<User>
   User createModel() => new User();
 
   UserMongoSerializer() {
-    providers[Book] = new BookMongoSerializer();
+    JaguarSerializer.addSerializer(new BookMongoSerializer());
   }
 
-  UserMongoSerializer.FromMap(Map map) {
-    providers[Book] = new BookMongoSerializer();
-    fromMap(map);
-  }
+  factory UserMongoSerializer.FromMap(Map map) => new UserMongoSerializer()..fromMap(map);
 }
 
 /*
