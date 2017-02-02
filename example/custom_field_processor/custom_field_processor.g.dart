@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example.field_manipulation;
+part of example.custom_field_manipulation;
 
 // **************************************************************************
 // Generator: SerializerGenerator

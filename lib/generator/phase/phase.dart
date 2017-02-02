@@ -16,10 +16,9 @@ String getProjectName() {
 }
 
 List<String> getAnnotations() {
-  File pubspec = new File('./serializer.yaml');
+  File pubspec = new File('serializer/config.yaml');
   String content = pubspec.readAsStringSync();
-  Map<String, List<String>> doc =
-      loadYaml(content) as Map<String, List<String>>;
+  Map<String, List<String>> doc = loadYaml(content) as Map<String, List<String>>;
   return doc['serializers'];
 }
 
@@ -32,9 +31,17 @@ Phase apisPhase(String projectName, List<String> apis) {
         new InputSet(projectName, apis));
 }
 
+Phase bootstrapPhase(String projectName) {
+  return new Phase()
+    ..addAction(
+        new SerializerBootstrapBuilder(projectName),
+        new InputSet(projectName, ["serializer/config.yaml"]));
+}
+
 PhaseGroup generatePhaseGroup({String projectName, List<String> apis}) {
   PhaseGroup phaseGroup = new PhaseGroup();
   phaseGroup.addPhase(apisPhase(projectName, apis));
+  phaseGroup.addPhase(bootstrapPhase(projectName));
   return phaseGroup;
 }
 
