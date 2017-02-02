@@ -110,6 +110,10 @@ class DateSerializer extends MapSerializer<Date> with _$DateSerializer {
 class NullTestSerializer extends MapSerializer<NullTest> with _$NullTestSerializer {
   @override
   NullTest createModel() => new NullTest();
+
+  NullTestSerializer() {
+    addSerializer(new ModelIntSerializer());
+  }
 }
 
 @GenSerializer()
@@ -131,6 +135,10 @@ class ModelRenamedSerializer extends MapSerializer<ModelRenamed> with _$ModelRen
 class ComplexSerializer extends MapSerializer<Complex> with _$ComplexSerializer {
   @override
   Complex createModel() => new Complex();
+
+  ComplexSerializer() {
+    addSerializer(new WithIgnoreSerializer());
+  }
 }
 
 @DefineFieldProcessor()

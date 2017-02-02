@@ -61,8 +61,7 @@ abstract class MapSerializer<ModelType> {
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
     }
-    //Todo: better exception, how to fix error ? how to add serializer ? ...
-    throw new Exception("No MapSerializer found for $type");
+    return null;
   }
 
   MapSerializer getMapSerializerFromMap(Map map) {
@@ -70,7 +69,7 @@ abstract class MapSerializer<ModelType> {
         _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
       return _mapperString[map[JaguarSerializer.type_info_key]];
     }
-    throw new Exception("No MapSerializer found for ${map[JaguarSerializer.type_info_key]}");
+    return null;
   }
 
   void addSerializer(MapSerializer serializer) {
