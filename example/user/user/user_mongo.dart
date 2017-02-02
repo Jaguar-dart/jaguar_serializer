@@ -13,9 +13,7 @@ part 'user_mongo.g.dart';
 @MongoId(#id)
 @DateTimeSerializer(#dob)
 @EnDecodeField(#name, asAndFrom: 'N')
-@ProvideSerializers(const <String, Type>{
-  "Book": BookMongoSerializer
-})
+@ProvideSerializers(const <String, Type>{"Book": BookMongoSerializer})
 @IgnoreFields(const [#viewSerializer])
 class UserMongoSerializer extends MapSerializer<User>
     with _$UserMongoSerializer {
@@ -25,7 +23,8 @@ class UserMongoSerializer extends MapSerializer<User>
     JaguarSerializer.addSerializer(new BookMongoSerializer());
   }
 
-  factory UserMongoSerializer.FromMap(Map map) => new UserMongoSerializer()..fromMap(map);
+  factory UserMongoSerializer.FromMap(Map map) =>
+      new UserMongoSerializer()..fromMap(map);
 }
 
 /*

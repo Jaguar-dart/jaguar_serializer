@@ -6,5 +6,7 @@ import 'package:yaml/yaml.dart';
 import 'package:yamlicious/yamlicious.dart';
 
 class SerializerYaml extends Serializer {
-  SerializerYaml() : super((Object object) => toYamlString(object), (String data) => loadYaml(data));
+  SerializerYaml()
+      : super((Object object) => toYamlString(object),
+            (String data) => loadYaml(data));
 }

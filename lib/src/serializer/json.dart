@@ -22,7 +22,8 @@ abstract class JsonSerializer<ModelType> {
 
 /// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
 @Deprecated("Use SerializerJson")
-abstract class JsonMixin<ModelType> implements MapSerializer<ModelType>, JsonSerializer<ModelType> {
+abstract class JsonMixin<ModelType>
+    implements MapSerializer<ModelType>, JsonSerializer<ModelType> {
   String toJson(dynamic model) {
     if (model is ModelType) {
       return toJsonObject(model);
@@ -46,9 +47,11 @@ abstract class JsonMixin<ModelType> implements MapSerializer<ModelType>, JsonSer
 
   String toJsonObject(ModelType model) => JSON.encode(toMap(model));
 
-  ModelType fromJsonObject(String json, {ModelType model}) => fromMap(JSON.decode(json), model: model);
+  ModelType fromJsonObject(String json, {ModelType model}) =>
+      fromMap(JSON.decode(json), model: model);
 
-  String toJsonList(List<ModelType> models) => JSON.encode(models.map((ModelType model) => toMap(model)).toList());
+  String toJsonList(List<ModelType> models) =>
+      JSON.encode(models.map((ModelType model) => toMap(model)).toList());
 
   List<ModelType> fromJsonList(String json) {
     dynamic decoded = JSON.decode(json);
@@ -70,5 +73,7 @@ abstract class JsonSerializable<ModelType> {
 }
 
 class SerializerJson extends Serializer {
-  SerializerJson() : super((Object object) => JSON.encode(object), (String data) => JSON.decode(data));
+  SerializerJson()
+      : super((Object object) => JSON.encode(object),
+            (String data) => JSON.decode(data));
 }

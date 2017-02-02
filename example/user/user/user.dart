@@ -15,7 +15,8 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 
   final String locale;
 
-  const DateTimeSerializer(this.field, {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
+  const DateTimeSerializer(this.field,
+      {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
 
   /// Called to process field before decoding
   DateTime from(String value) {

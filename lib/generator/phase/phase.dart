@@ -51,5 +51,3 @@ PhaseGroup phaseGroup() {
 
   return generatePhaseGroup(projectName: projectName, apis: apis);
 }
-
-

@@ -21,7 +21,8 @@ abstract class JaguarSerializer {
         _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
       return _mapperString[map[JaguarSerializer.type_info_key]];
     }
-    throw new Exception("No MapSerializer found for ${map[JaguarSerializer.type_info_key]}");
+    throw new Exception(
+        "No MapSerializer found for ${map[JaguarSerializer.type_info_key]}");
   }
 
   static void addSerializer(MapSerializer serializer) {
@@ -111,22 +112,26 @@ class MapMaker<KF, VF, KT, VT> {
 }
 
 abstract class Serializer {
-  Object fromObject(Object object, {Type type, bool useTypeInfo: true, dynamic model}) {
+  Object fromObject(Object object,
+      {Type type, bool useTypeInfo: true, dynamic model}) {
     if (object is List) {
       return fromList(object, type: type, useTypeInfo: useTypeInfo);
     } else if (object is Map) {
-      return fromMap(object, type: type, useTypeInfo: useTypeInfo, model: model);
+      return fromMap(object,
+          type: type, useTypeInfo: useTypeInfo, model: model);
     }
     return object;
   }
 
   Map toMap(Object object, {bool withTypeInfo: false}) {
-    MapSerializer serializer = JaguarSerializer.getMapSerializerForType(object.runtimeType);
+    MapSerializer serializer =
+        JaguarSerializer.getMapSerializerForType(object.runtimeType);
     return serializer.toMap(object, withTypeInfo: withTypeInfo);
   }
 
-  List toList(List objects, {bool withTypeInfo: false}) =>
-      objects.map((object) => toObject(object, withTypeInfo: withTypeInfo)).toList();
+  List toList(List objects, {bool withTypeInfo: false}) => objects
+      .map((object) => toObject(object, withTypeInfo: withTypeInfo))
+      .toList();
 
   Object toObject(Object object, {bool withTypeInfo: false}) {
     if (object is Iterable) {
@@ -143,8 +148,9 @@ abstract class Serializer {
     return toMap(object, withTypeInfo: withTypeInfo);
   }
 
-  Object fromList(List objects, {Type type, bool useTypeInfo: true}) =>
-      objects.map((object) => fromObject(object, type: type, useTypeInfo: useTypeInfo)).toList();
+  Object fromList(List objects, {Type type, bool useTypeInfo: true}) => objects
+      .map((object) => fromObject(object, type: type, useTypeInfo: useTypeInfo))
+      .toList();
 
   Object fromMap(Map map, {Type type, bool useTypeInfo: true, dynamic model}) {
     MapSerializer serializer;
@@ -163,9 +169,12 @@ abstract class Serializer {
     JaguarSerializer.addSerializer(serializer);
   }
 
-  String encode(Object object, {bool withTypeInfo: false}) => _encoder(toObject(object, withTypeInfo: withTypeInfo));
-  Object decode(String data, {Type type, bool useTypeInfo: true, dynamic model}) =>
-      fromObject(_decoder(data), type: type, useTypeInfo: useTypeInfo, model: model);
+  String encode(Object object, {bool withTypeInfo: false}) =>
+      _encoder(toObject(object, withTypeInfo: withTypeInfo));
+  Object decode(String data,
+          {Type type, bool useTypeInfo: true, dynamic model}) =>
+      fromObject(_decoder(data),
+          type: type, useTypeInfo: useTypeInfo, model: model);
 
   Encoder _encoder;
   Decoder _decoder;

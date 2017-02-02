@@ -13,7 +13,8 @@ class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
 
 @GenSerializer()
 @IgnoreField(#emailConfirmed)
-class PlayerSerializerIgnore extends MapSerializer<Player> with _$PlayerSerializerIgnore {
+class PlayerSerializerIgnore extends MapSerializer<Player>
+    with _$PlayerSerializerIgnore {
   Player createModel() => new Player();
 
   PlayerSerializerIgnore();
@@ -21,7 +22,8 @@ class PlayerSerializerIgnore extends MapSerializer<Player> with _$PlayerSerializ
 
 @GenSerializer()
 @IgnoreFields(const <Symbol>[#emailConfirmed, #age, #email])
-class PlayerSerializerIgnores extends MapSerializer<Player> with _$PlayerSerializerIgnores {
+class PlayerSerializerIgnores extends MapSerializer<Player>
+    with _$PlayerSerializerIgnores {
   Player createModel() => new Player();
 
   PlayerSerializerIgnores();
@@ -35,7 +37,8 @@ class PlayerSerializerIgnores extends MapSerializer<Player> with _$PlayerSeriali
 })
 @EncodeField(#score, as: 'S')
 @DecodeField(#emailConfirmed, from: 'eC')
-class PlayerSerializerRename extends MapSerializer<Player> with _$PlayerSerializerRename {
+class PlayerSerializerRename extends MapSerializer<Player>
+    with _$PlayerSerializerRename {
   Player createModel() => new Player();
 
   PlayerSerializerRename();

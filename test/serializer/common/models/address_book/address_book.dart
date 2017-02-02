@@ -5,8 +5,7 @@ import 'package:jaguar_serializer/serializer.dart';
 part 'address_book.g.dart';
 
 @GenSerializer()
-class Person extends Object
-    with JsonMixin, _$Person, MapSerializer<Person> {
+class Person extends Object with JsonMixin, _$Person, MapSerializer<Person> {
   String name;
 
   Address address;
@@ -18,8 +17,7 @@ class Person extends Object
 }
 
 @GenSerializer()
-class Address extends Object
-    with JsonMixin, _$Address, MapSerializer<Address> {
+class Address extends Object with JsonMixin, _$Address, MapSerializer<Address> {
   String street;
 
   String houseNum;

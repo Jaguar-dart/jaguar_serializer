@@ -32,7 +32,8 @@ class SerializerWriter {
   }
 
   void _toWriter() {
-    _w.writeln('Map toMap(${info.modelName} model, {bool withTypeInfo: false}) {');
+    _w.writeln(
+        'Map toMap(${info.modelName} model, {bool withTypeInfo: false}) {');
     _w.writeln(r'Map ret = new Map();');
 
     _w.writeln('if(model != null) {');

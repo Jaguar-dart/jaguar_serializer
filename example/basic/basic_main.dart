@@ -16,7 +16,8 @@ class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
 }
 
 @GenSerializer()
-class AddressSerializer extends MapSerializer<Address> with _$AddressSerializer {
+class AddressSerializer extends MapSerializer<Address>
+    with _$AddressSerializer {
   Address createModel() => new Address();
 
   AddressSerializer();
@@ -71,9 +72,13 @@ void json() {
   }
 
   {
-    Player player = serializer.fromMap(
-        {'name': 'John', 'email': 'john@noemail.com', 'age': 25, 'score': 1000, 'emailConfirmed': true},
-        type: Player);
+    Player player = serializer.fromMap({
+      'name': 'John',
+      'email': 'john@noemail.com',
+      'age': 25,
+      'score': 1000,
+      'emailConfirmed': true
+    }, type: Player);
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
@@ -108,9 +113,13 @@ void yaml() {
   }
 
   {
-    Player player = serializer.fromMap(
-        {'name': 'John', 'email': 'john@noemail.com', 'age': 25, 'score': 1000, 'emailConfirmed': true},
-        type: Player);
+    Player player = serializer.fromMap({
+      'name': 'John',
+      'email': 'john@noemail.com',
+      'age': 25,
+      'score': 1000,
+      'emailConfirmed': true
+    }, type: Player);
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
@@ -127,11 +136,9 @@ void yaml() {
     print(serializer.encode(player));
     print(serializer.encode(player, withTypeInfo: true));
   }
-
 }
 
 void main() {
-
   // user basic serializer
   PlayerSerializer pSerializer = new PlayerSerializer();
   Player player = new Player()

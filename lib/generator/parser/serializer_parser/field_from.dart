@@ -25,7 +25,8 @@ class MapPropertyFrom implements PropertyFrom {
 
   String get inputTypeStr => 'Map<${key.inputTypeStr}, ${value.inputTypeStr}>';
 
-  const MapPropertyFrom(this.key, this.keyTypeStr, this.value, this.valueTypeStr);
+  const MapPropertyFrom(
+      this.key, this.keyTypeStr, this.value, this.valueTypeStr);
 }
 
 class ListPropertyFrom implements PropertyFrom {

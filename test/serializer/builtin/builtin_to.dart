@@ -53,8 +53,7 @@ void main() {
     });
 
     test('IgnoreFields', () {
-      PlayerSerializerIgnores serializer =
-          new PlayerSerializerIgnores();
+      PlayerSerializerIgnores serializer = new PlayerSerializerIgnores();
 
       Map result = serializer.toMap(player);
       expect(result, containsPair('name', 'John'));

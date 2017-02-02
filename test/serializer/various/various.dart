@@ -82,19 +82,22 @@ class Complex {
 }
 
 @GenSerializer()
-class ModelIntSerializer extends MapSerializer<ModelInt> with _$ModelIntSerializer {
+class ModelIntSerializer extends MapSerializer<ModelInt>
+    with _$ModelIntSerializer {
   @override
   ModelInt createModel() => new ModelInt();
 }
 
 @GenSerializer()
-class ModelDoubleSerializer extends MapSerializer<ModelDouble> with _$ModelDoubleSerializer {
+class ModelDoubleSerializer extends MapSerializer<ModelDouble>
+    with _$ModelDoubleSerializer {
   @override
   ModelDouble createModel() => new ModelDouble();
 }
 
 @GenSerializer()
-class InheritanceSerializer extends MapSerializer<Inheritance> with _$InheritanceSerializer {
+class InheritanceSerializer extends MapSerializer<Inheritance>
+    with _$InheritanceSerializer {
   @override
   Inheritance createModel() => new Inheritance();
 }
@@ -107,7 +110,8 @@ class DateSerializer extends MapSerializer<Date> with _$DateSerializer {
 }
 
 @GenSerializer()
-class NullTestSerializer extends MapSerializer<NullTest> with _$NullTestSerializer {
+class NullTestSerializer extends MapSerializer<NullTest>
+    with _$NullTestSerializer {
   @override
   NullTest createModel() => new NullTest();
 
@@ -118,21 +122,24 @@ class NullTestSerializer extends MapSerializer<NullTest> with _$NullTestSerializ
 
 @GenSerializer()
 @IgnoreFields(const [#secret])
-class WithIgnoreSerializer extends MapSerializer<WithIgnore> with _$WithIgnoreSerializer {
+class WithIgnoreSerializer extends MapSerializer<WithIgnore>
+    with _$WithIgnoreSerializer {
   @override
   WithIgnore createModel() => new WithIgnore(null, null);
 }
 
 @GenSerializer()
 @EnDecodeField(#original, asAndFrom: 'renamed')
-class ModelRenamedSerializer extends MapSerializer<ModelRenamed> with _$ModelRenamedSerializer {
+class ModelRenamedSerializer extends MapSerializer<ModelRenamed>
+    with _$ModelRenamedSerializer {
   @override
   ModelRenamed createModel() => new ModelRenamed(null);
 }
 
 @GenSerializer()
 @DateTimeProcessor(#dates)
-class ComplexSerializer extends MapSerializer<Complex> with _$ComplexSerializer {
+class ComplexSerializer extends MapSerializer<Complex>
+    with _$ComplexSerializer {
   @override
   Complex createModel() => new Complex();
 
@@ -175,31 +182,44 @@ void main() {
     test('Inheritance', () {
       Inheritance d = new Inheritance();
       expect(serializer.toMap(d), {"clazzA": "classA", "clazzB": "classB"});
-      expect(serializer.toMap(d, withTypeInfo: true),
-          {"clazzA": "classA", "clazzB": "classB", JaguarSerializer.type_info_key: "Inheritance"});
+      expect(serializer.toMap(d, withTypeInfo: true), {
+        "clazzA": "classA",
+        "clazzB": "classB",
+        JaguarSerializer.type_info_key: "Inheritance"
+      });
     }, skip: true);
 
     test('ModelInt', () {
       ModelInt d = new ModelInt();
       expect(serializer.toMap(d), {"bar": 42, "clazzA": "classA"});
-      expect(serializer.toMap(d, withTypeInfo: true),
-          {"bar": 42, "clazzA": "classA", JaguarSerializer.type_info_key: "ModelInt"});
+      expect(serializer.toMap(d, withTypeInfo: true), {
+        "bar": 42,
+        "clazzA": "classA",
+        JaguarSerializer.type_info_key: "ModelInt"
+      });
     }, skip: true);
 
     test('ModelDouble', () {
       ModelDouble d = new ModelDouble();
       expect(serializer.toMap(d), {"bar": 42.42, "clazzA": "classA"});
-      expect(serializer.toMap(d, withTypeInfo: true),
-          {"bar": 42.42, "clazzA": "classA", JaguarSerializer.type_info_key: "ModelDouble"});
+      expect(serializer.toMap(d, withTypeInfo: true), {
+        "bar": 42.42,
+        "clazzA": "classA",
+        JaguarSerializer.type_info_key: "ModelDouble"
+      });
     }, skip: true);
 
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
 
       Date d = new Date(now);
-      expect(serializer.toMap(d), {"date": now.toIso8601String(), "clazzA": "classA"});
-      expect(serializer.toMap(d, withTypeInfo: true),
-          {"date": now.toIso8601String(), "clazzA": "classA", JaguarSerializer.type_info_key: "Date"});
+      expect(serializer.toMap(d),
+          {"date": now.toIso8601String(), "clazzA": "classA"});
+      expect(serializer.toMap(d, withTypeInfo: true), {
+        "date": now.toIso8601String(),
+        "clazzA": "classA",
+        JaguarSerializer.type_info_key: "Date"
+      });
     }, skip: true);
 
     test("Null Test", () {
@@ -238,14 +258,20 @@ void main() {
         ..ints = [1, 2, 3]
         ..doubles = [1.1, 2.2, 3.3]
         //  ..dates = [new DateTime(2016, 12, 24), new DateTime(2016, 12, 25), new DateTime(2016, 12, 26)]
-        ..ignores = [new WithIgnore("1337A", "ThisIsASecretA"), new WithIgnore("1337B", "ThisIsASecretB")]
+        ..ignores = [
+          new WithIgnore("1337A", "ThisIsASecretA"),
+          new WithIgnore("1337B", "ThisIsASecretB")
+        ]
         ..numSet = {"numA": 1, "numB": 12.2}
         ..stringSet = {"strA": "1", "strB": "3"}
         ..boolSet = {"ok": true, "nok": false}
         ..intSet = {"intA": 1, "intB": 12}
         ..doubleSet = {"dblA": 1.1, "dblB": 12.1}
         // ..dateSet = {"fiesta": new DateTime(2016, 12, 24), "christmas": new DateTime(2016, 12, 25)}
-        ..ignoreSet = {"A": new WithIgnore("1337A", "ThisIsASecretA"), "B": new WithIgnore("1337B", "ThisIsASecretB")}
+        ..ignoreSet = {
+          "A": new WithIgnore("1337A", "ThisIsASecretA"),
+          "B": new WithIgnore("1337B", "ThisIsASecretB")
+        }
         ..listInnerMap1 = {
           "test": ["123456"]
         };
@@ -307,39 +333,59 @@ void main() {
 
   group('Various - fromMap', () {
     test('Inheritance', () {
-      Inheritance d = serializer.fromMap({"clazzA": "classA", "clazzB": "classB"}, type: Inheritance);
+      Inheritance d = serializer
+          .fromMap({"clazzA": "classA", "clazzB": "classB"}, type: Inheritance);
       expect(d.clazzA, "classA");
       expect(d.clazzB, "classB");
 
-      d = serializer.fromMap({"clazzA": "classA", "clazzB": "classB", JaguarSerializer.type_info_key: "Inheritance"});
+      d = serializer.fromMap({
+        "clazzA": "classA",
+        "clazzB": "classB",
+        JaguarSerializer.type_info_key: "Inheritance"
+      });
       expect(d.clazzA, "classA");
       expect(d.clazzB, "classB");
     }, skip: true);
 
     test('ModelInt', () {
-      ModelInt d = serializer.fromMap({"bar": 42, "clazzA": "classA"}, type: ModelInt);
+      ModelInt d =
+          serializer.fromMap({"bar": 42, "clazzA": "classA"}, type: ModelInt);
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
-      d = serializer.fromMap({"bar": 42, "clazzA": "classA", JaguarSerializer.type_info_key: "ModelInt"});
+      d = serializer.fromMap({
+        "bar": 42,
+        "clazzA": "classA",
+        JaguarSerializer.type_info_key: "ModelInt"
+      });
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
     }, skip: true);
 
     test('ModelDouble', () {
-      ModelDouble d = serializer.fromMap({"bar": 42.42, "clazzA": "classA"}, type: ModelDouble);
+      ModelDouble d = serializer
+          .fromMap({"bar": 42.42, "clazzA": "classA"}, type: ModelDouble);
       expect(d.bar, 42.42);
       expect(d.clazzA, "classA");
-      d = serializer.fromMap({"bar": 42.42, "clazzA": "classA", JaguarSerializer.type_info_key: "ModelDouble"});
+      d = serializer.fromMap({
+        "bar": 42.42,
+        "clazzA": "classA",
+        JaguarSerializer.type_info_key: "ModelDouble"
+      });
       expect(d.bar, 42.42);
       expect(d.clazzA, "classA");
     }, skip: true);
 
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
-      Date d = serializer.fromMap({"date": now.toIso8601String(), "clazzA": "classA"}, type: Date);
+      Date d = serializer.fromMap(
+          {"date": now.toIso8601String(), "clazzA": "classA"},
+          type: Date);
       expect(d.date, now);
-      d = serializer
-          .fromMap({"date": now.toIso8601String(), "clazzA": "classA", JaguarSerializer.type_info_key: "Date"});
+      d = serializer.fromMap({
+        "date": now.toIso8601String(),
+        "clazzA": "classA",
+        JaguarSerializer.type_info_key: "Date"
+      });
       expect(d.date, now);
     }, skip: true);
 
@@ -366,7 +412,8 @@ void main() {
     });
 
     test("Serialized name", () {
-      ModelRenamed model = serializer.fromMap({"renamed": "foo"}, type: ModelRenamed);
+      ModelRenamed model =
+          serializer.fromMap({"renamed": "foo"}, type: ModelRenamed);
 
       expect(model.original, "foo");
     });

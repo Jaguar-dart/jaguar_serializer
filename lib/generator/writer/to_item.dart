@@ -40,7 +40,9 @@ class ToItemWriter {
     } else if (leaf is CustomPropertyTo) {
       _w.write(' new ' + leaf.instantiationString + '.to($reference)');
     } else if (leaf is SerializedPropertyTo) {
-      _w.write(' new ' + leaf.instantiationString + '().toMap($reference, withTypeInfo: withTypeInfo)');
+      _w.write(' new ' +
+          leaf.instantiationString +
+          '().toMap($reference, withTypeInfo: withTypeInfo)');
     } else if (leaf is ProviderPropertyTo) {
       _w.write(' (getMapSerializerForType(' +
           leaf.type +
