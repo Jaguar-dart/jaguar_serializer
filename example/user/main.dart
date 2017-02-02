@@ -30,7 +30,7 @@ main() {
   SerializerJson serializer = new SerializerJson();
   serializer.addSerializer(new UserViewSerializer());
 
-  User user = serializer.fromMap(kUserMap1);
+  User user = serializer.fromMap(kUserMap1, type: User);
 
   print(serializer.toMap(user));
 

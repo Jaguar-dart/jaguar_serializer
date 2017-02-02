@@ -9,8 +9,6 @@ part of example.model.user;
 
 abstract class _$UserViewSerializer implements MapSerializer<User> {
   final BookViewSerializer toBookViewSerializer = new BookViewSerializer();
-  final BookViewSerializer toBookViewSerializer = new BookViewSerializer();
-  final BookViewSerializer fromBookViewSerializer = new BookViewSerializer();
   final BookViewSerializer fromBookViewSerializer = new BookViewSerializer();
 
   Map toMap(User model, {bool withTypeInfo: false}) {

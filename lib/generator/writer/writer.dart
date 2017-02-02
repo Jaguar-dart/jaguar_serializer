@@ -9,6 +9,8 @@ part 'from_item.dart';
 
 class SerializerWriter {
   final SerializerWriteInfo info;
+  List<String> _providersTo = [];
+  List<String> _providersFrom = [];
 
   StringBuffer _w = new StringBuffer();
 
@@ -35,6 +37,10 @@ class SerializerWriter {
 
   void _serializedPropertyToWriter(PropertyTo to) {
     if (to is SerializedPropertyTo) {
+      if (_providersTo.contains(to.instantiationString)) {
+        return;
+      }
+      _providersTo.add(to.instantiationString);
       _w.writeln(
           'final ${to.instantiationString} to${to.instantiationString} = new ${to.instantiationString}();');
     } else if (to is ListPropertyTo) {
@@ -44,6 +50,10 @@ class SerializerWriter {
 
   void _serializedPropertyFromWriter(PropertyFrom from) {
     if (from is SerializedPropertyFrom) {
+      if (_providersFrom.contains(from.instantiationString)) {
+        return;
+      }
+      _providersFrom.add(from.instantiationString);
       _w.writeln(
           'final ${from.instantiationString} from${from.instantiationString} = new ${from.instantiationString}();');
     } else if (from is ListPropertyFrom) {

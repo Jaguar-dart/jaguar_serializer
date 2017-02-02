@@ -9,8 +9,6 @@ part of example.user.mongo;
 
 abstract class _$UserMongoSerializer implements MapSerializer<User> {
   final BookMongoSerializer toBookMongoSerializer = new BookMongoSerializer();
-  final BookMongoSerializer toBookMongoSerializer = new BookMongoSerializer();
-  final BookMongoSerializer fromBookMongoSerializer = new BookMongoSerializer();
   final BookMongoSerializer fromBookMongoSerializer = new BookMongoSerializer();
 
   Map toMap(User model, {bool withTypeInfo: false}) {
