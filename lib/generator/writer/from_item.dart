@@ -39,13 +39,11 @@ class FromItemWriter {
     } else if (leaf is CustomPropertyFrom) {
       _w.write(' new ' + leaf.instantiationString + '.from($reference)');
     } else if (leaf is SerializedPropertyFrom) {
-      _w.write(' new ' + leaf.instantiationString + '().fromMap($reference)');
+      _w.write('from' + leaf.instantiationString + '.fromMap($reference)');
     } else if (leaf is ProviderPropertyFrom) {
-      _w.write(' (getMapSerializerForType(' +
+      _w.write(' JaguarSerializer.getMapSerializerForType(' +
           leaf.type +
-          ') ?? JaguarSerializer.getMapSerializerForType(' +
-          leaf.type +
-          '))?.fromMap($reference)');
+          ').fromMap($reference)');
     }
     return _w.toString();
   }

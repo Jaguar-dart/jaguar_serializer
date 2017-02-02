@@ -5,15 +5,13 @@ import 'package:jaguar_serializer/serializer.dart';
 part 'address_book.g.dart';
 
 @GenSerializer()
+@ProvideSerializer(Address, Address)
 class Person extends Object with JsonMixin, _$Person, MapSerializer<Person> {
   String name;
 
   Address address;
 
   Person createModel() => new Person();
-  Person() {
-    JaguarSerializer.addSerializer(new Address());
-  }
 }
 
 @GenSerializer()

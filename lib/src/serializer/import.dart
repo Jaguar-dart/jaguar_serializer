@@ -54,33 +54,6 @@ abstract class MapSerializer<ModelType> {
   String get modelString => "$ModelType";
 
   ModelType createModel();
-
-  Map<Type, MapSerializer> _mapperType = {};
-  Map<String, MapSerializer> _mapperString = {};
-
-  MapSerializer getMapSerializerForType(Type type) {
-    if (_mapperType.containsKey(type)) {
-      return _mapperType[type];
-    }
-    return null;
-  }
-
-  MapSerializer getMapSerializerFromMap(Map map) {
-    if (map.containsKey(JaguarSerializer.type_info_key) &&
-        _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
-      return _mapperString[map[JaguarSerializer.type_info_key]];
-    }
-    return null;
-  }
-
-  void addSerializer(MapSerializer serializer) {
-    if (!_mapperType.containsKey(serializer.modelType)) {
-      _mapperType[serializer.modelType] = serializer;
-    }
-    if (!_mapperString.containsKey(serializer.modelString)) {
-      _mapperString[serializer.modelString] = serializer;
-    }
-  }
 }
 
 /// Annotation used to request generation of serializer
@@ -89,11 +62,12 @@ class GenSerializer {
 }
 
 /// Annotation used to provide serializers for specific types
-class ProvideSerializers {
+class ProvideSerializer {
   /// A mapping from Type to the serializer used for that Type
-  final Map<String, Type> serializers;
+  final Type field;
+  final Type serializer;
 
-  const ProvideSerializers(this.serializers);
+  const ProvideSerializer(this.field, this.serializer);
 }
 
 class MapMaker<KF, VF, KT, VT> {
@@ -160,6 +134,7 @@ abstract class Serializer {
       if (useTypeInfo == false) {
         rethrow;
       }
+      print(useTypeInfo);
       serializer = JaguarSerializer.getMapSerializerFromMap(map);
     }
     return serializer.fromMap(map, model: model);

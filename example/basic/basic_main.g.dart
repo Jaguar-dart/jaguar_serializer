@@ -8,6 +8,9 @@ part of example.player;
 // **************************************************************************
 
 abstract class _$PlayerSerializer implements MapSerializer<Player> {
+  final AddressSerializer toAddressSerializer = new AddressSerializer();
+  final AddressSerializer fromAddressSerializer = new AddressSerializer();
+
   Map toMap(Player model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
@@ -30,9 +33,8 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
         ret["test"] = model.test;
       }
       if (model.address != null) {
-        ret["address"] = (getMapSerializerForType(Address) ??
-                JaguarSerializer.getMapSerializerForType(Address))
-            ?.toMap(model.address, withTypeInfo: withTypeInfo);
+        ret["address"] = toAddressSerializer.toMap(model.address,
+            withTypeInfo: withTypeInfo);
       }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
@@ -54,9 +56,7 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
     model.score = map["score"];
     model.emailConfirmed = map["emailConfirmed"];
     model.test = map["test"];
-    model.address = (getMapSerializerForType(Address) ??
-            JaguarSerializer.getMapSerializerForType(Address))
-        ?.fromMap(map["address"]);
+    model.address = fromAddressSerializer.fromMap(map["address"]);
     return model;
   }
 

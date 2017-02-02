@@ -136,6 +136,9 @@ abstract class _$DateSerializer implements MapSerializer<Date> {
 // **************************************************************************
 
 abstract class _$NullTestSerializer implements MapSerializer<NullTest> {
+  final ModelIntSerializer toModelIntSerializer = new ModelIntSerializer();
+  final ModelIntSerializer fromModelIntSerializer = new ModelIntSerializer();
+
   Map toMap(NullTest model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
@@ -150,9 +153,7 @@ abstract class _$NullTestSerializer implements MapSerializer<NullTest> {
       if (model.testModel != null) {
         ret["testModel"] = model.testModel
             ?.map((ModelInt val) => val != null
-                ? (getMapSerializerForType(ModelInt) ??
-                        JaguarSerializer.getMapSerializerForType(ModelInt))
-                    ?.toMap(val, withTypeInfo: withTypeInfo)
+                ? toModelIntSerializer.toMap(val, withTypeInfo: withTypeInfo)
                 : null)
             ?.toList();
       }
@@ -173,9 +174,7 @@ abstract class _$NullTestSerializer implements MapSerializer<NullTest> {
     model.tests = map["tests"]?.map((String val) => val)?.toList();
     model.test = map["test"];
     model.testModel = map["testModel"]
-        ?.map((dynamic val) => (getMapSerializerForType(ModelInt) ??
-                JaguarSerializer.getMapSerializerForType(ModelInt))
-            ?.fromMap(val))
+        ?.map((Map val) => fromModelIntSerializer.fromMap(val))
         ?.toList();
     return model;
   }
@@ -255,6 +254,11 @@ abstract class _$ModelRenamedSerializer implements MapSerializer<ModelRenamed> {
 // **************************************************************************
 
 abstract class _$ComplexSerializer implements MapSerializer<Complex> {
+  final WithIgnoreSerializer toWithIgnoreSerializer =
+      new WithIgnoreSerializer();
+  final WithIgnoreSerializer fromWithIgnoreSerializer =
+      new WithIgnoreSerializer();
+
   Map toMap(Complex model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
@@ -283,9 +287,7 @@ abstract class _$ComplexSerializer implements MapSerializer<Complex> {
       if (model.ignores != null) {
         ret["ignores"] = model.ignores
             ?.map((WithIgnore val) => val != null
-                ? (getMapSerializerForType(WithIgnore) ??
-                        JaguarSerializer.getMapSerializerForType(WithIgnore))
-                    ?.toMap(val, withTypeInfo: withTypeInfo)
+                ? toWithIgnoreSerializer.toMap(val, withTypeInfo: withTypeInfo)
                 : null)
             ?.toList();
       }
@@ -322,9 +324,8 @@ abstract class _$ComplexSerializer implements MapSerializer<Complex> {
       if (model.ignoreSet != null) {
         ret["ignoreSet"] = new MapMaker(model.ignoreSet, (String key) => key,
             (WithIgnore value) {
-          return (getMapSerializerForType(WithIgnore) ??
-                  JaguarSerializer.getMapSerializerForType(WithIgnore))
-              ?.toMap(value, withTypeInfo: withTypeInfo);
+          return toWithIgnoreSerializer.toMap(value,
+              withTypeInfo: withTypeInfo);
         }).model;
       }
       if (model.listInnerMap1 != null) {
@@ -353,9 +354,7 @@ abstract class _$ComplexSerializer implements MapSerializer<Complex> {
     model.ints = map["ints"]?.map((int val) => val)?.toList();
     model.doubles = map["doubles"]?.map((double val) => val)?.toList();
     model.ignores = map["ignores"]
-        ?.map((dynamic val) => (getMapSerializerForType(WithIgnore) ??
-                JaguarSerializer.getMapSerializerForType(WithIgnore))
-            ?.fromMap(val))
+        ?.map((Map val) => fromWithIgnoreSerializer.fromMap(val))
         ?.toList();
     model.numSet =
         new MapMaker(map["numSet"], (String key) => key, (num value) {
@@ -378,10 +377,8 @@ abstract class _$ComplexSerializer implements MapSerializer<Complex> {
       return value;
     }).model as dynamic;
     model.ignoreSet =
-        new MapMaker(map["ignoreSet"], (String key) => key, (dynamic value) {
-      return (getMapSerializerForType(WithIgnore) ??
-              JaguarSerializer.getMapSerializerForType(WithIgnore))
-          ?.fromMap(value);
+        new MapMaker(map["ignoreSet"], (String key) => key, (Map value) {
+      return fromWithIgnoreSerializer.fromMap(value);
     }).model as dynamic;
     model.listInnerMap1 = new MapMaker(
         map["listInnerMap1"], (String key) => key, (List<String> value) {

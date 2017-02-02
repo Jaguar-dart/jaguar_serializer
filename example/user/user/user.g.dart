@@ -8,6 +8,11 @@ part of example.model.user;
 // **************************************************************************
 
 abstract class _$UserViewSerializer implements MapSerializer<User> {
+  final BookViewSerializer toBookViewSerializer = new BookViewSerializer();
+  final BookViewSerializer toBookViewSerializer = new BookViewSerializer();
+  final BookViewSerializer fromBookViewSerializer = new BookViewSerializer();
+  final BookViewSerializer fromBookViewSerializer = new BookViewSerializer();
+
   Map toMap(User model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
@@ -24,9 +29,8 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
         ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
       }
       if (model.book != null) {
-        ret["Book"] = (getMapSerializerForType(Book) ??
-                JaguarSerializer.getMapSerializerForType(Book))
-            ?.toMap(model.book, withTypeInfo: withTypeInfo);
+        ret["Book"] =
+            toBookViewSerializer.toMap(model.book, withTypeInfo: withTypeInfo);
       }
       if (model.listStr != null) {
         ret["listStr"] = model.listStr
@@ -36,9 +40,7 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
       if (model.listBook != null) {
         ret["listBook"] = model.listBook
             ?.map((Book val) => val != null
-                ? (getMapSerializerForType(Book) ??
-                        JaguarSerializer.getMapSerializerForType(Book))
-                    ?.toMap(val, withTypeInfo: withTypeInfo)
+                ? toBookViewSerializer.toMap(val, withTypeInfo: withTypeInfo)
                 : null)
             ?.toList();
       }
@@ -59,9 +61,7 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
       if (model.mapBook != null) {
         ret["mapBook"] =
             new MapMaker(model.mapBook, (String key) => key, (Book value) {
-          return (getMapSerializerForType(Book) ??
-                  JaguarSerializer.getMapSerializerForType(Book))
-              ?.toMap(value, withTypeInfo: withTypeInfo);
+          return toBookViewSerializer.toMap(value, withTypeInfo: withTypeInfo);
         }).model;
       }
       if (modelString != null && withTypeInfo) {
@@ -82,14 +82,10 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
     model.email = map["Email"];
     model.name = map["N"];
     model.dob = new DateTimeSerializer(#dob).from(map["DoB"]);
-    model.book = (getMapSerializerForType(Book) ??
-            JaguarSerializer.getMapSerializerForType(Book))
-        ?.fromMap(map["Book"]);
+    model.book = fromBookViewSerializer.fromMap(map["Book"]);
     model.listStr = map["listStr"]?.map((String val) => val)?.toList();
     model.listBook = map["listBook"]
-        ?.map((dynamic val) => (getMapSerializerForType(Book) ??
-                JaguarSerializer.getMapSerializerForType(Book))
-            ?.fromMap(val))
+        ?.map((Map val) => fromBookViewSerializer.fromMap(val))
         ?.toList();
     model.map = new MapMaker(map["map"], (String key) => key, (String value) {
       return value;
@@ -101,10 +97,8 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
       }).model as dynamic;
     }).model as dynamic;
     model.mapBook =
-        new MapMaker(map["mapBook"], (String key) => key, (dynamic value) {
-      return (getMapSerializerForType(Book) ??
-              JaguarSerializer.getMapSerializerForType(Book))
-          ?.fromMap(value);
+        new MapMaker(map["mapBook"], (String key) => key, (Map value) {
+      return fromBookViewSerializer.fromMap(value);
     }).model as dynamic;
     return model;
   }

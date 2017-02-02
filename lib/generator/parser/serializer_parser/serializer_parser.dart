@@ -51,7 +51,7 @@ SerializerInfo parseSerializer(ClassElementWrap clazz) {
 
   SerializerInfo ret = new SerializerInfo(clazz.name);
 
-  // _collectProviders(ret, clazz);
+  _collectProviders(ret, clazz);
   _collectCustomFields(ret, clazz);
 
   _collectIgnoreField(ret, clazz);

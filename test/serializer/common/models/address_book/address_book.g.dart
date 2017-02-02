@@ -8,6 +8,9 @@ part of test.common.models.address_book;
 // **************************************************************************
 
 abstract class _$Person implements MapSerializer<Person> {
+  final Address toAddress = new Address();
+  final Address fromAddress = new Address();
+
   Map toMap(Person model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
@@ -15,9 +18,8 @@ abstract class _$Person implements MapSerializer<Person> {
         ret["name"] = model.name;
       }
       if (model.address != null) {
-        ret["address"] = (getMapSerializerForType(Address) ??
-                JaguarSerializer.getMapSerializerForType(Address))
-            ?.toMap(model.address, withTypeInfo: withTypeInfo);
+        ret["address"] =
+            toAddress.toMap(model.address, withTypeInfo: withTypeInfo);
       }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
@@ -34,9 +36,7 @@ abstract class _$Person implements MapSerializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address = (getMapSerializerForType(Address) ??
-            JaguarSerializer.getMapSerializerForType(Address))
-        ?.fromMap(map["address"]);
+    model.address = fromAddress.fromMap(map["address"]);
     return model;
   }
 

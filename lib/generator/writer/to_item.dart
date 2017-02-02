@@ -40,15 +40,13 @@ class ToItemWriter {
     } else if (leaf is CustomPropertyTo) {
       _w.write(' new ' + leaf.instantiationString + '.to($reference)');
     } else if (leaf is SerializedPropertyTo) {
-      _w.write(' new ' +
+      _w.write(' to' +
           leaf.instantiationString +
-          '().toMap($reference, withTypeInfo: withTypeInfo)');
+          '.toMap($reference, withTypeInfo: withTypeInfo)');
     } else if (leaf is ProviderPropertyTo) {
-      _w.write(' (getMapSerializerForType(' +
+      _w.write(' JaguarSerializer.getMapSerializerForType(' +
           leaf.type +
-          ') ?? JaguarSerializer.getMapSerializerForType(' +
-          leaf.type +
-          '))?.toMap($reference, withTypeInfo: withTypeInfo)');
+          ').toMap($reference, withTypeInfo: withTypeInfo)');
     }
 
     return _w.toString();

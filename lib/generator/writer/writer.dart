@@ -22,6 +22,8 @@ class SerializerWriter {
         ' implements MapSerializer<${info.modelName}> {');
     _w.writeln();
 
+    _providerWriter();
+
     _toWriter();
 
     _fromWriter();
@@ -29,6 +31,34 @@ class SerializerWriter {
     _w.writeln('String get modelString => "${info.modelName}";');
 
     _w.writeln('}');
+  }
+
+  void _serializedPropertyToWriter(PropertyTo to) {
+    if (to is SerializedPropertyTo) {
+      _w.writeln(
+          'final ${to.instantiationString} to${to.instantiationString} = new ${to.instantiationString}();');
+    } else if (to is ListPropertyTo) {
+      _serializedPropertyToWriter(to.value);
+    }
+  }
+
+  void _serializedPropertyFromWriter(PropertyFrom from) {
+    if (from is SerializedPropertyFrom) {
+      _w.writeln(
+          'final ${from.instantiationString} from${from.instantiationString} = new ${from.instantiationString}();');
+    } else if (from is ListPropertyFrom) {
+      _serializedPropertyFromWriter(from.value);
+    }
+  }
+
+  void _providerWriter() {
+    info.to.forEach((FieldTo item) {
+      _serializedPropertyToWriter(item.property);
+    });
+    info.from.forEach((FieldFrom item) {
+      _serializedPropertyFromWriter(item.property);
+    });
+    _w.writeln("");
   }
 
   void _toWriter() {

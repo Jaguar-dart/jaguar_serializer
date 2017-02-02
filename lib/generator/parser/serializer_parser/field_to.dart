@@ -94,7 +94,20 @@ PropertyTo _parsePropertyTo(
   } else if (type.isBuiltin) {
     return new BuiltinLeafPropertyTo();
   } else {
-    return new ProviderPropertyTo(type.name);
+    DartTypeWrap ser;
+
+    info.serializationProviders
+        .forEach((DartTypeWrap modelType, DartTypeWrap serializer) {
+      if (type.compareNamedElement(modelType)) {
+        ser = serializer;
+      }
+    });
+
+    if (ser is! DartTypeWrap) {
+      return new ProviderPropertyTo(type.displayName);
+    }
+
+    return new SerializedPropertyTo(ser.displayName);
   }
 }
 

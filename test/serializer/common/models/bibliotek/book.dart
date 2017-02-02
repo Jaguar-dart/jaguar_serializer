@@ -8,12 +8,9 @@ export 'author.dart' show Author, AuthorSerializer;
 part 'book.g.dart';
 
 @GenSerializer()
+@ProvideSerializer(Author, AuthorSerializer)
 class BookSerializer extends MapSerializer<Book> with _$BookSerializer {
   Book createModel() => new Book();
-
-  BookSerializer() {
-    addSerializer(new AuthorSerializer());
-  }
 }
 
 /// Player model for the game

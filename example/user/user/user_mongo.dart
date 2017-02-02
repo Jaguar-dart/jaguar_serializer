@@ -13,15 +13,13 @@ part 'user_mongo.g.dart';
 @MongoId(#id)
 @DateTimeSerializer(#dob)
 @EnDecodeField(#name, asAndFrom: 'N')
-@ProvideSerializers(const <String, Type>{"Book": BookMongoSerializer})
+@ProvideSerializer(Book, BookMongoSerializer)
 @IgnoreFields(const [#viewSerializer])
 class UserMongoSerializer extends MapSerializer<User>
     with _$UserMongoSerializer {
   User createModel() => new User();
 
-  UserMongoSerializer() {
-    JaguarSerializer.addSerializer(new BookMongoSerializer());
-  }
+  UserMongoSerializer();
 
   factory UserMongoSerializer.FromMap(Map map) =>
       new UserMongoSerializer()..fromMap(map);

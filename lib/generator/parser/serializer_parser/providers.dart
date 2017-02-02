@@ -1,7 +1,7 @@
 part of jaguar_serializer.generator.parser.serializer;
 
 const NamedElement kTypeProvideSerializers =
-    const NamedElementImpl.Make('ProvideSerializers', kLibMapSer);
+    const NamedElementImpl.Make('ProvideSerializer', kLibMapSer);
 
 void _collectProviders(SerializerInfo ret, ClassElementWrap clazz) {
   clazz.metadata.forEach((AnnotationElementWrap annot) {
@@ -13,12 +13,10 @@ void _collectProviders(SerializerInfo ret, ClassElementWrap clazz) {
       return;
     }
 
-    Map<DartObject, DartObject> serializers =
-        instance.getField('serializers').toMapValue();
-    serializers.forEach((DartObject model, DartObject serializer) {
-      DartTypeWrap modelWrap = new DartTypeWrap(model.toTypeValue());
-      DartTypeWrap serializerWrap = new DartTypeWrap(serializer.toTypeValue());
-      //ret.serializationProviders[modelWrap] = serializerWrap;
-    });
+    DartTypeWrap modelWrap =
+        new DartTypeWrap(instance.getField('field').toTypeValue());
+    DartTypeWrap serializerWrap =
+        new DartTypeWrap(instance.getField('serializer').toTypeValue());
+    ret.serializationProviders[modelWrap] = serializerWrap;
   });
 }

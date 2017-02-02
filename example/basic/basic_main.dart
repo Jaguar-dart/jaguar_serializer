@@ -7,12 +7,9 @@ import 'package:jaguar_serializer/serializer.dart';
 part 'basic_main.g.dart';
 
 @GenSerializer()
+@ProvideSerializer(Address, AddressSerializer)
 class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
-
-  PlayerSerializer() {
-    addSerializer(new AddressSerializer());
-  }
 }
 
 @GenSerializer()
