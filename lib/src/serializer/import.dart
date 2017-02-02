@@ -17,15 +17,20 @@ abstract class JaguarSerializer {
   }
 
   static MapSerializer getMapSerializerFromMap(Map map) {
-    if (map.containsKey(JaguarSerializer.type_info_key) && _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
+    if (map.containsKey(JaguarSerializer.type_info_key) &&
+        _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
       return _mapperString[map[JaguarSerializer.type_info_key]];
     }
     throw new Exception("No MapSerializer found for ${map[JaguarSerializer.type_info_key]}");
   }
 
   static void addSerializer(MapSerializer serializer) {
-    _mapperType[serializer.modelType] = serializer;
-    _mapperString[serializer.modelString] = serializer;
+    if (!_mapperType.containsKey(serializer.modelType)) {
+      _mapperType[serializer.modelType] = serializer;
+    }
+    if (!_mapperString.containsKey(serializer.modelString)) {
+      _mapperString[serializer.modelString] = serializer;
+    }
   }
 }
 
@@ -48,6 +53,34 @@ abstract class MapSerializer<ModelType> {
   String get modelString => "$ModelType";
 
   ModelType createModel();
+
+  Map<Type, MapSerializer> _mapperType = {};
+  Map<String, MapSerializer> _mapperString = {};
+
+  MapSerializer getMapSerializerForType(Type type) {
+    if (_mapperType.containsKey(type)) {
+      return _mapperType[type];
+    }
+    //Todo: better exception, how to fix error ? how to add serializer ? ...
+    throw new Exception("No MapSerializer found for $type");
+  }
+
+  MapSerializer getMapSerializerFromMap(Map map) {
+    if (map.containsKey(JaguarSerializer.type_info_key) &&
+        _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
+      return _mapperString[map[JaguarSerializer.type_info_key]];
+    }
+    throw new Exception("No MapSerializer found for ${map[JaguarSerializer.type_info_key]}");
+  }
+
+  void addSerializer(MapSerializer serializer) {
+    if (!_mapperType.containsKey(serializer.modelType)) {
+      _mapperType[serializer.modelType] = serializer;
+    }
+    if (!_mapperString.containsKey(serializer.modelString)) {
+      _mapperString[serializer.modelString] = serializer;
+    }
+  }
 }
 
 /// Annotation used to request generation of serializer

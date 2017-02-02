@@ -30,9 +30,9 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
         ret["test"] = model.test;
       }
       if (model.address != null) {
-        ret["address"] = JaguarSerializer
-            .getMapSerializerForType(Address)
-            .toMap(model.address, withTypeInfo: withTypeInfo);
+        ret["address"] = (getMapSerializerForType(Address) ??
+                JaguarSerializer.getMapSerializerForType(Address))
+            ?.toMap(model.address, withTypeInfo: withTypeInfo);
       }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
@@ -54,9 +54,9 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
     model.score = map["score"];
     model.emailConfirmed = map["emailConfirmed"];
     model.test = map["test"];
-    model.address = JaguarSerializer
-        .getMapSerializerForType(Address)
-        .fromMap(map["address"]);
+    model.address = (getMapSerializerForType(Address) ??
+            JaguarSerializer.getMapSerializerForType(Address))
+        ?.fromMap(map["address"]);
     return model;
   }
 

@@ -15,9 +15,9 @@ abstract class _$Person implements MapSerializer<Person> {
         ret["name"] = model.name;
       }
       if (model.address != null) {
-        ret["address"] = JaguarSerializer
-            .getMapSerializerForType(Address)
-            .toMap(model.address, withTypeInfo: withTypeInfo);
+        ret["address"] = (getMapSerializerForType(Address) ??
+                JaguarSerializer.getMapSerializerForType(Address))
+            ?.toMap(model.address, withTypeInfo: withTypeInfo);
       }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
@@ -34,9 +34,9 @@ abstract class _$Person implements MapSerializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address = JaguarSerializer
-        .getMapSerializerForType(Address)
-        .fromMap(map["address"]);
+    model.address = (getMapSerializerForType(Address) ??
+            JaguarSerializer.getMapSerializerForType(Address))
+        ?.fromMap(map["address"]);
     return model;
   }
 

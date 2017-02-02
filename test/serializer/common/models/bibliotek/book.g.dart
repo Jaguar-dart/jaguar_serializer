@@ -27,9 +27,9 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
       if (model.authors != null) {
         ret["authors"] = model.authors
             ?.map((Author val) => val != null
-                ? JaguarSerializer
-                    .getMapSerializerForType(Author)
-                    .toMap(val, withTypeInfo: withTypeInfo)
+                ? (getMapSerializerForType(Author) ??
+                        JaguarSerializer.getMapSerializerForType(Author))
+                    ?.toMap(val, withTypeInfo: withTypeInfo)
                 : null)
             ?.toList();
       }
@@ -54,8 +54,9 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
       return value;
     }).model as dynamic;
     model.authors = map["authors"]
-        ?.map((dynamic val) =>
-            JaguarSerializer.getMapSerializerForType(Author).fromMap(val))
+        ?.map((dynamic val) => (getMapSerializerForType(Author) ??
+                JaguarSerializer.getMapSerializerForType(Author))
+            ?.fromMap(val))
         ?.toList();
     return model;
   }

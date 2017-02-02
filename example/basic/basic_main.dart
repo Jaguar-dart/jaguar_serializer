@@ -11,7 +11,7 @@ class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 
   PlayerSerializer() {
-    JaguarSerializer.addSerializer(new AddressSerializer());
+    addSerializer(new AddressSerializer());
   }
 }
 
@@ -127,11 +127,25 @@ void yaml() {
     print(serializer.encode(player));
     print(serializer.encode(player, withTypeInfo: true));
   }
+
 }
 
 void main() {
-  JaguarSerializer.addSerializer(new PlayerSerializer());
 
+  // user basic serializer
+  PlayerSerializer pSerializer = new PlayerSerializer();
+  Player player = new Player()
+    ..name = 'John'
+    ..email = 'john@noemail.com'
+    ..age = 25
+    ..score = 1000
+    ..emailConfirmed = true
+    ..address = (new Address()..city = "Paris");
+  print(pSerializer.toMap(player));
+  print(pSerializer.toMap(player, withTypeInfo: true));
+
+  // use global serializer
+  JaguarSerializer.addSerializer(new PlayerSerializer());
   json();
   yaml();
 }
