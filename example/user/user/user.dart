@@ -39,17 +39,11 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   #book: 'Book',
   #dob: 'DoB',
 })
-@ProvideSerializers(const <Type, Type>{
-  Book: BookViewSerializer,
-})
 @IgnoreField(#password)
-@IgnoreFields(const [#passwordHash, #_passwordHash, #viewSerializer])
-class UserViewSerializer extends Object
-    with _$UserViewSerializer, JsonMixin
-    implements MapSerializer<User> {
+@IgnoreFields(const [#passwordHash, #viewSerializer])
+@ProvideSerializer(Book, BookViewSerializer)
+class UserViewSerializer extends MapSerializer<User> with _$UserViewSerializer {
   User createModel() => new User();
-
-  UserViewSerializer();
 }
 
 class User {

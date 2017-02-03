@@ -8,7 +8,10 @@ part of serializer.test.models.book;
 // **************************************************************************
 
 abstract class _$BookSerializer implements MapSerializer<Book> {
-  Map toMap(Book model) {
+  final AuthorSerializer toAuthorSerializer = new AuthorSerializer();
+  final AuthorSerializer fromAuthorSerializer = new AuthorSerializer();
+
+  Map toMap(Book model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -26,9 +29,13 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
       }
       if (model.authors != null) {
         ret["authors"] = model.authors
-            ?.map((Author val) =>
-                val != null ? new AuthorSerializer().toMap(val) : null)
+            ?.map((Author val) => val != null
+                ? toAuthorSerializer.toMap(val, withTypeInfo: withTypeInfo)
+                : null)
             ?.toList();
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -42,16 +49,16 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
       model = createModel();
     }
     model.name = map["name"];
-    model.tags =
-        (map["tags"] as List<String>)?.map((String val) => val)?.toList();
-    model.publishedDates = new MapMaker(
-        map["publishedDates"] as Map<num, String>, (num key) => key,
-        (String value) {
+    model.tags = map["tags"]?.map((String val) => val)?.toList();
+    model.publishedDates =
+        new MapMaker(map["publishedDates"], (num key) => key, (String value) {
       return value;
-    }).model;
-    model.authors = (map["authors"] as List<Map>)
-        ?.map((Map val) => new AuthorSerializer().fromMap(val))
+    }).model as dynamic;
+    model.authors = map["authors"]
+        ?.map((Map val) => fromAuthorSerializer.fromMap(val))
         ?.toList();
     return model;
   }
+
+  String get modelString => "Book";
 }

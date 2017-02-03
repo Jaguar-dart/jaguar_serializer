@@ -8,14 +8,21 @@ part of test.common.models.address_book;
 // **************************************************************************
 
 abstract class _$Person implements MapSerializer<Person> {
-  Map toMap(Person model) {
+  final Address toAddress = new Address();
+  final Address fromAddress = new Address();
+
+  Map toMap(Person model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
         ret["name"] = model.name;
       }
       if (model.address != null) {
-        ret["address"] = new Address().toMap(model.address);
+        ret["address"] =
+            toAddress.toMap(model.address, withTypeInfo: withTypeInfo);
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -29,9 +36,11 @@ abstract class _$Person implements MapSerializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address = new Address().fromMap(map["address"]);
+    model.address = fromAddress.fromMap(map["address"]);
     return model;
   }
+
+  String get modelString => "Person";
 }
 
 // **************************************************************************
@@ -40,7 +49,7 @@ abstract class _$Person implements MapSerializer<Person> {
 // **************************************************************************
 
 abstract class _$Address implements MapSerializer<Address> {
-  Map toMap(Address model) {
+  Map toMap(Address model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.street != null) {
@@ -57,6 +66,9 @@ abstract class _$Address implements MapSerializer<Address> {
       }
       if (model.pincode != null) {
         ret["pincode"] = model.pincode;
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -76,4 +88,6 @@ abstract class _$Address implements MapSerializer<Address> {
     model.pincode = map["pincode"];
     return model;
   }
+
+  String get modelString => "Address";
 }

@@ -4,11 +4,11 @@ part of serializer.test.models.player;
 
 // **************************************************************************
 // Generator: SerializerGenerator
-// Target: class PlayerJsonSerializer
+// Target: class PlayerSerializer
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
-  Map toMap(Player model) {
+abstract class _$PlayerSerializer implements MapSerializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -25,6 +25,9 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
       }
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -44,15 +47,17 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
     model.emailConfirmed = map["emailConfirmed"];
     return model;
   }
+
+  String get modelString => "Player";
 }
 
 // **************************************************************************
 // Generator: SerializerGenerator
-// Target: class PlayerJsonSerializerIgnore
+// Target: class PlayerSerializerIgnore
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
-  Map toMap(Player model) {
+abstract class _$PlayerSerializerIgnore implements MapSerializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -66,6 +71,9 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
       }
       if (model.score != null) {
         ret["score"] = model.score;
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -84,15 +92,17 @@ abstract class _$PlayerJsonSerializerIgnore implements MapSerializer<Player> {
     model.score = map["score"];
     return model;
   }
+
+  String get modelString => "Player";
 }
 
 // **************************************************************************
 // Generator: SerializerGenerator
-// Target: class PlayerJsonSerializerIgnores
+// Target: class PlayerSerializerIgnores
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
-  Map toMap(Player model) {
+abstract class _$PlayerSerializerIgnores implements MapSerializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -100,6 +110,9 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
       }
       if (model.score != null) {
         ret["score"] = model.score;
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -116,15 +129,17 @@ abstract class _$PlayerJsonSerializerIgnores implements MapSerializer<Player> {
     model.score = map["score"];
     return model;
   }
+
+  String get modelString => "Player";
 }
 
 // **************************************************************************
 // Generator: SerializerGenerator
-// Target: class PlayerJsonSerializerRename
+// Target: class PlayerSerializerRename
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
-  Map toMap(Player model) {
+abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -141,6 +156,9 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
       }
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -160,4 +178,6 @@ abstract class _$PlayerJsonSerializerRename implements MapSerializer<Player> {
     model.emailConfirmed = map["eC"];
     return model;
   }
+
+  String get modelString => "Player";
 }

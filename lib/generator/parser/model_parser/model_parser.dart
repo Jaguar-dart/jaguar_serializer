@@ -28,7 +28,7 @@ Model parseModel(ClassElementWrap modelClazz) {
   mod.model = modelClazz;
 
   modelClazz.fields
-      .where((FieldElement field) => !field.isStatic)
+      .where((FieldElement field) => !field.isStatic && !field.isPrivate)
       .forEach((FieldElement field) {
     if (field.getter is PropertyAccessorElement) {
       mod.to.add(new ModelField(field.name, new DartTypeWrap(field.type)));

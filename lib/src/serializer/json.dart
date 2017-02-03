@@ -3,6 +3,7 @@ library serializer.json;
 import 'dart:convert';
 import 'package:jaguar_serializer/src/serializer/import.dart';
 
+@Deprecated("Use SerializerJson")
 abstract class JsonSerializer<ModelType> {
   String toJson(dynamic model);
 
@@ -20,6 +21,7 @@ abstract class JsonSerializer<ModelType> {
 }
 
 /// Mixin that provides encoding and decoding JSON on top of [MapSerializer]
+@Deprecated("Use SerializerJson")
 abstract class JsonMixin<ModelType>
     implements MapSerializer<ModelType>, JsonSerializer<ModelType> {
   String toJson(dynamic model) {
@@ -59,6 +61,7 @@ abstract class JsonMixin<ModelType>
   }
 }
 
+@Deprecated("Use SerializerJson")
 abstract class JsonSerializable<ModelType> {
   MapSerializer<ModelType> get jsonSerializer;
 
@@ -67,4 +70,10 @@ abstract class JsonSerializable<ModelType> {
   void fromJson(Map json) {
     jsonSerializer.fromMap(json, model: (this as ModelType));
   }
+}
+
+class SerializerJson extends Serializer {
+  SerializerJson()
+      : super((Object object) => JSON.encode(object),
+            (String data) => JSON.decode(data));
 }

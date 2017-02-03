@@ -10,6 +10,8 @@ import 'serializer/nested_objects/builtin_to.dart' as nestedObjectTo;
 
 import 'generator/writer/list_map/list_map.dart' as genWriterListMap;
 
+import 'serializer/various/various.dart' as various;
+
 void main() {
   builtinTo.main();
   builtinFrom.main();
@@ -18,6 +20,8 @@ void main() {
   listFrom.main();
 
   nestedObjectTo.main();
+
+  various.main();
 
   genWriterListMap.main();
 }

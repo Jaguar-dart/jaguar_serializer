@@ -63,6 +63,14 @@ class SerializedPropertyFrom implements LeafPropertyFrom {
   const SerializedPropertyFrom(this.instantiationString);
 }
 
+class ProviderPropertyFrom implements LeafPropertyFrom {
+  final String type;
+
+  String get inputTypeStr => 'dynamic';
+
+  const ProviderPropertyFrom(this.type);
+}
+
 PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
   if (type.isDynamic) {
     throw new Exception('Cannot serialize dynamic type!');
@@ -107,7 +115,7 @@ PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
     });
 
     if (ser is! DartTypeWrap) {
-      throw new Exception("Cannot find a serializer for $type ...");
+      return new ProviderPropertyFrom(type.displayName);
     }
 
     return new SerializedPropertyFrom(ser.displayName);

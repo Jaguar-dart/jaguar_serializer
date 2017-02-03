@@ -8,7 +8,7 @@ part of example.model.book;
 // **************************************************************************
 
 abstract class _$BookViewSerializer implements MapSerializer<Book> {
-  Map toMap(Book model) {
+  Map toMap(Book model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
@@ -19,6 +19,9 @@ abstract class _$BookViewSerializer implements MapSerializer<Book> {
       }
       if (model.publishedYear != null) {
         ret["publishedYear"] = model.publishedYear;
+      }
+      if (modelString != null && withTypeInfo) {
+        ret["@t"] = modelString;
       }
     }
     return ret;
@@ -36,4 +39,6 @@ abstract class _$BookViewSerializer implements MapSerializer<Book> {
     model.publishedYear = map["publishedYear"];
     return model;
   }
+
+  String get modelString => "Book";
 }
