@@ -86,6 +86,9 @@ class MapMaker<KF, VF, KT, VT> {
 }
 
 abstract class Serializer {
+  Map<Type, MapSerializer> _mapperType = {};
+  Map<String, MapSerializer> _mapperString = {};
+
   Object fromObject(Object object,
       {Type type, bool useTypeInfo: true, dynamic model}) {
     if (object is List) {
@@ -98,7 +101,7 @@ abstract class Serializer {
   }
 
   Map toMap(Object object, {bool withTypeInfo: false}) {
-    MapSerializer serializer =
+    MapSerializer serializer = getMapSerializerForType(object.runtimeType) ??
         JaguarSerializer.getMapSerializerForType(object.runtimeType);
     return serializer.toMap(object, withTypeInfo: withTypeInfo);
   }
@@ -129,19 +132,40 @@ abstract class Serializer {
   Object fromMap(Map map, {Type type, bool useTypeInfo: true, dynamic model}) {
     MapSerializer serializer;
     try {
-      serializer = JaguarSerializer.getMapSerializerForType(type);
+      serializer = getMapSerializerForType(type) ??
+          JaguarSerializer.getMapSerializerForType(type);
     } catch (e) {
       if (useTypeInfo == false) {
         rethrow;
       }
-      print(useTypeInfo);
-      serializer = JaguarSerializer.getMapSerializerFromMap(map);
+      serializer = getMapSerializerFromMap(map) ??
+          JaguarSerializer.getMapSerializerFromMap(map);
     }
     return serializer.fromMap(map, model: model);
   }
 
+  MapSerializer getMapSerializerFromMap(Map map) {
+    if (map.containsKey(JaguarSerializer.type_info_key) &&
+        _mapperString.containsKey(map[JaguarSerializer.type_info_key])) {
+      return _mapperString[map[JaguarSerializer.type_info_key]];
+    }
+    return null;
+  }
+
+  MapSerializer getMapSerializerForType(Type type) {
+    if (_mapperType.containsKey(type)) {
+      return _mapperType[type];
+    }
+    return null;
+  }
+
   void addSerializer(MapSerializer serializer) {
-    JaguarSerializer.addSerializer(serializer);
+    if (!_mapperType.containsKey(serializer.modelType)) {
+      _mapperType[serializer.modelType] = serializer;
+    }
+    if (!_mapperString.containsKey(serializer.modelString)) {
+      _mapperString[serializer.modelString] = serializer;
+    }
   }
 
   String encode(Object object, {bool withTypeInfo: false}) =>
