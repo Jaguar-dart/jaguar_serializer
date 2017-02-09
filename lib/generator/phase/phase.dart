@@ -1,27 +1,10 @@
 library jaguar.generator.phase;
 
-import 'dart:io';
-
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:yaml/yaml.dart';
 
 import 'package:jaguar_serializer/generator/hook/make_serializer/make_serializer.dart';
-
-String getProjectName() {
-  File pubspec = new File('./pubspec.yaml');
-  String content = pubspec.readAsStringSync();
-  var doc = loadYaml(content);
-  return doc['name'];
-}
-
-List<String> getAnnotations() {
-  File pubspec = new File('./serializer.yaml');
-  String content = pubspec.readAsStringSync();
-  Map<String, List<String>> doc =
-      loadYaml(content) as Map<String, List<String>>;
-  return doc['serializers'];
-}
+import 'package:jaguar_serializer/generator/config/config.dart';
 
 Phase apisPhase(String projectName, List<String> apis) {
   return new Phase()
@@ -38,16 +21,15 @@ PhaseGroup generatePhaseGroup({String projectName, List<String> apis}) {
   return phaseGroup;
 }
 
-PhaseGroup phaseGroup() {
-  String projectName = getProjectName();
-  if (projectName == null) {
+PhaseGroup phaseGroup({String configFileName: jaguarSerializerConfigFile}) {
+  JaguarSerializerConfig config = new JaguarSerializerConfig(configFileName: configFileName);
+  if (config.pubspec.projectName == null) {
     throw "Could not find the project name";
   }
 
-  List<String> apis = getAnnotations();
-  if (apis == null) {
+  if (config.serializers == null) {
     throw "You need to provide one or more api file";
   }
 
-  return generatePhaseGroup(projectName: projectName, apis: apis);
+  return generatePhaseGroup(projectName: config.pubspec.projectName, apis: config.serializers);
 }
