@@ -22,6 +22,9 @@ dependencies:
     git:
       url: https://github.com/Jaguar-dart/source_gen_help.git
       ref: 4acd8b6
+  jaguar_generator_config:
+    git:
+      url: https://github.com/Jaguar-dart/jaguar_generator_config.git
 
 dev_dependencies:
   test:
