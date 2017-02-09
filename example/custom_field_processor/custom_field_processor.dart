@@ -1,4 +1,4 @@
-library example.field_manipulation;
+library example.custom_field_manipulation;
 
 import 'package:jaguar_serializer/serializer.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mgo;

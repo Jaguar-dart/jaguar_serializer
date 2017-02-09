@@ -1,0 +1,13 @@
+serializers:
+- example/basic/basic_main.dart
+- example/field_manipulation/field_manipulation_main.dart
+- example/custom_field_processor/custom_field_processor.dart
+- example/user/user/user.dart
+- example/user/user/user_mongo.dart
+- example/user/book/book.dart
+- example/user/book/book_mongo.dart
+- test/serializer/common/models/player/player.dart
+- test/serializer/common/models/bibliotek/author.dart
+- test/serializer/common/models/bibliotek/book.dart
+- test/serializer/common/models/address_book/address_book.dart
+- test/serializer/various/various.dart

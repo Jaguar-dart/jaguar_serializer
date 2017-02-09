@@ -1,7 +1,5 @@
 library example.player;
 
-import 'dart:convert';
-
 import 'package:jaguar_serializer/serializer.dart';
 
 part 'basic_main.g.dart';
@@ -149,7 +147,6 @@ void main() {
   print(pSerializer.toMap(player, withTypeInfo: true));
 
   // use global serializer
-  JaguarSerializer.addSerializer(new PlayerSerializer());
   json();
   yaml();
 }

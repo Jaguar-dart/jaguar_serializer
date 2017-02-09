@@ -25,11 +25,11 @@ abstract class JaguarSerializer {
         "No MapSerializer found for ${map[JaguarSerializer.type_info_key]}");
   }
 
-  static void addSerializer(MapSerializer serializer) {
-    if (!_mapperType.containsKey(serializer.modelType)) {
+  static void addSerializer(MapSerializer serializer, {bool override: false}) {
+    if (!_mapperType.containsKey(serializer.modelType) || override) {
       _mapperType[serializer.modelType] = serializer;
     }
-    if (!_mapperString.containsKey(serializer.modelString)) {
+    if (!_mapperString.containsKey(serializer.modelString) || override) {
       _mapperString[serializer.modelString] = serializer;
     }
   }
