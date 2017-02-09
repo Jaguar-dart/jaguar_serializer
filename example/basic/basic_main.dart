@@ -1,7 +1,5 @@
 library example.player;
 
-import 'dart:convert';
-
 import 'package:jaguar_serializer/serializer.dart';
 
 part 'basic_main.g.dart';

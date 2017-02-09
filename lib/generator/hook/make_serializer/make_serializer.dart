@@ -13,7 +13,6 @@ import 'package:jaguar_serializer/generator/writer/writer.dart';
 
 import 'package:source_gen_help/source_gen_help.dart';
 
-import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 
 /// source_gen hook to generate serializer
