@@ -1,9 +1,6 @@
 library example.player;
 
-import 'dart:convert';
-
 import 'package:jaguar_serializer/serializer.dart';
-import '../../serializer/bootstrap.dart';
 
 part 'basic_main.g.dart';
 
@@ -137,8 +134,6 @@ void yaml() {
 }
 
 void main() {
-
-  bootstrap();
   // user basic serializer
   PlayerSerializer pSerializer = new PlayerSerializer();
   Player player = new Player()

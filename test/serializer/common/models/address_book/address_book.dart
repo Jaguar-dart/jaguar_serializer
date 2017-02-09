@@ -6,7 +6,7 @@ part 'address_book.g.dart';
 
 @GenSerializer()
 @ProvideSerializer(Address, Address)
-class Person extends Object with JsonMixin, _$Person, MapSerializer<Person> {
+class Person extends MapSerializer<Person> with _$Person {
   String name;
 
   Address address;
@@ -15,7 +15,7 @@ class Person extends Object with JsonMixin, _$Person, MapSerializer<Person> {
 }
 
 @GenSerializer()
-class Address extends Object with JsonMixin, _$Address, MapSerializer<Address> {
+class Address extends MapSerializer<Address> with _$Address {
   String street;
 
   String houseNum;
