@@ -22,7 +22,8 @@ PhaseGroup generatePhaseGroup({String projectName, List<String> apis}) {
 }
 
 PhaseGroup phaseGroup({String configFileName: jaguarSerializerConfigFile}) {
-  JaguarSerializerConfig config = new JaguarSerializerConfig(configFileName: configFileName);
+  JaguarSerializerConfig config =
+      new JaguarSerializerConfig(configFileName: configFileName);
   if (config.pubspec.projectName == null) {
     throw "Could not find the project name";
   }
@@ -31,5 +32,6 @@ PhaseGroup phaseGroup({String configFileName: jaguarSerializerConfigFile}) {
     throw "You need to provide one or more api file";
   }
 
-  return generatePhaseGroup(projectName: config.pubspec.projectName, apis: config.serializers);
+  return generatePhaseGroup(
+      projectName: config.pubspec.projectName, apis: config.serializers);
 }
