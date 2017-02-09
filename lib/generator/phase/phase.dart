@@ -26,7 +26,6 @@ PhaseGroup phaseGroup() {
     throw "Could not find the project name";
   }
 
-  print(serializer_config.annotations);
   if (serializer_config.annotations == null) {
     throw "You need to provide one or more api file";
   }
