@@ -14,6 +14,9 @@ abstract class _$ModelIntSerializer implements MapSerializer<ModelInt> {
       if (model.bar != null) {
         ret["bar"] = model.bar;
       }
+      if (model.clazzA != null) {
+        ret["clazzA"] = model.clazzA;
+      }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
@@ -29,6 +32,7 @@ abstract class _$ModelIntSerializer implements MapSerializer<ModelInt> {
       model = createModel();
     }
     model.bar = map["bar"];
+    model.clazzA = map["clazzA"];
     return model;
   }
 
@@ -47,6 +51,9 @@ abstract class _$ModelDoubleSerializer implements MapSerializer<ModelDouble> {
       if (model.bar != null) {
         ret["bar"] = model.bar;
       }
+      if (model.clazzA != null) {
+        ret["clazzA"] = model.clazzA;
+      }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
@@ -62,6 +69,7 @@ abstract class _$ModelDoubleSerializer implements MapSerializer<ModelDouble> {
       model = createModel();
     }
     model.bar = map["bar"];
+    model.clazzA = map["clazzA"];
     return model;
   }
 
@@ -77,6 +85,12 @@ abstract class _$InheritanceSerializer implements MapSerializer<Inheritance> {
   Map toMap(Inheritance model, {bool withTypeInfo: false}) {
     Map ret = new Map();
     if (model != null) {
+      if (model.clazzA != null) {
+        ret["clazzA"] = model.clazzA;
+      }
+      if (model.clazzB != null) {
+        ret["clazzB"] = model.clazzB;
+      }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
@@ -91,6 +105,8 @@ abstract class _$InheritanceSerializer implements MapSerializer<Inheritance> {
     if (model is! Inheritance) {
       model = createModel();
     }
+    model.clazzA = map["clazzA"];
+    model.clazzB = map["clazzB"];
     return model;
   }
 
@@ -109,6 +125,9 @@ abstract class _$DateSerializer implements MapSerializer<Date> {
       if (model.date != null) {
         ret["date"] = new DateTimeProcessor(#date).to(model.date);
       }
+      if (model.clazzA != null) {
+        ret["clazzA"] = model.clazzA;
+      }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
@@ -124,6 +143,7 @@ abstract class _$DateSerializer implements MapSerializer<Date> {
       model = createModel();
     }
     model.date = new DateTimeProcessor(#date).from(map["date"]);
+    model.clazzA = map["clazzA"];
     return model;
   }
 

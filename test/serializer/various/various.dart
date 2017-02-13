@@ -175,46 +175,46 @@ void main() {
   group('Various - toMap', () {
     test('Inheritance', () {
       Inheritance d = new Inheritance();
-      expect(serializer.toMap(d), {"clazzA": "classA", "clazzB": "classB"});
+      expect(serializer.toMap(d), {"clazzA": "ClassA", "clazzB": "inheritance"});
       expect(serializer.toMap(d, withTypeInfo: true), {
-        "clazzA": "classA",
-        "clazzB": "classB",
+        "clazzA": "ClassA",
+        "clazzB": "inheritance",
         JaguarSerializer.type_info_key: "Inheritance"
       });
-    }, skip: true);
+    });
 
     test('ModelInt', () {
       ModelInt d = new ModelInt();
-      expect(serializer.toMap(d), {"bar": 42, "clazzA": "classA"});
+      expect(serializer.toMap(d), {"bar": 42, "clazzA": "ClassA"});
       expect(serializer.toMap(d, withTypeInfo: true), {
         "bar": 42,
-        "clazzA": "classA",
+        "clazzA": "ClassA",
         JaguarSerializer.type_info_key: "ModelInt"
       });
-    }, skip: true);
+    });
 
     test('ModelDouble', () {
       ModelDouble d = new ModelDouble();
-      expect(serializer.toMap(d), {"bar": 42.42, "clazzA": "classA"});
+      expect(serializer.toMap(d), {"bar": 42.42, "clazzA": "ClassA"});
       expect(serializer.toMap(d, withTypeInfo: true), {
         "bar": 42.42,
-        "clazzA": "classA",
+        "clazzA": "ClassA",
         JaguarSerializer.type_info_key: "ModelDouble"
       });
-    }, skip: true);
+    });
 
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
 
       Date d = new Date(now);
       expect(serializer.toMap(d),
-          {"date": now.toIso8601String(), "clazzA": "classA"});
+          {"date": now.toIso8601String(), "clazzA": "ClassA"});
       expect(serializer.toMap(d, withTypeInfo: true), {
         "date": now.toIso8601String(),
-        "clazzA": "classA",
+        "clazzA": "ClassA",
         JaguarSerializer.type_info_key: "Date"
       });
-    }, skip: true);
+    });
 
     test("Null Test", () {
       NullTest d = new NullTest();
@@ -328,18 +328,18 @@ void main() {
   group('Various - fromMap', () {
     test('Inheritance', () {
       Inheritance d = serializer
-          .fromMap({"clazzA": "classA", "clazzB": "classB"}, type: Inheritance);
-      expect(d.clazzA, "classA");
-      expect(d.clazzB, "classB");
+          .fromMap({"clazzA": "A", "clazzB": "B"}, type: Inheritance);
+      expect(d.clazzA, "A");
+      expect(d.clazzB, "B");
 
       d = serializer.fromMap({
-        "clazzA": "classA",
-        "clazzB": "classB",
+        "clazzA": "A",
+        "clazzB": "B",
         JaguarSerializer.type_info_key: "Inheritance"
       });
-      expect(d.clazzA, "classA");
-      expect(d.clazzB, "classB");
-    }, skip: true);
+      expect(d.clazzA, "A");
+      expect(d.clazzB, "B");
+    });
 
     test('ModelInt', () {
       ModelInt d =
@@ -353,35 +353,35 @@ void main() {
       });
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
-    }, skip: true);
+    });
 
     test('ModelDouble', () {
       ModelDouble d = serializer
-          .fromMap({"bar": 42.42, "clazzA": "classA"}, type: ModelDouble);
+          .fromMap({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
       expect(d.bar, 42.42);
-      expect(d.clazzA, "classA");
+      expect(d.clazzA, "A");
       d = serializer.fromMap({
         "bar": 42.42,
-        "clazzA": "classA",
+        "clazzA": "A",
         JaguarSerializer.type_info_key: "ModelDouble"
       });
       expect(d.bar, 42.42);
-      expect(d.clazzA, "classA");
-    }, skip: true);
+      expect(d.clazzA, "A");
+    });
 
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
       Date d = serializer.fromMap(
-          {"date": now.toIso8601String(), "clazzA": "classA"},
+          {"date": now.toIso8601String(), "clazzA": "A"},
           type: Date);
       expect(d.date, now);
       d = serializer.fromMap({
         "date": now.toIso8601String(),
-        "clazzA": "classA",
+        "clazzA": "A",
         JaguarSerializer.type_info_key: "Date"
       });
       expect(d.date, now);
-    }, skip: true);
+    });
 
     test("Null Test", () {
       NullTest d = serializer.fromMap({

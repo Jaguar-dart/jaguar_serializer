@@ -1,6 +1,7 @@
 library jaguar_serializer.generator.parser.model;
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 
 import 'package:source_gen_help/source_gen_help.dart';
 
@@ -28,14 +29,14 @@ Model parseModel(ClassElementWrap modelClazz) {
   mod.model = modelClazz;
 
   modelClazz.fields
-      .where((FieldElement field) => !field.isStatic && !field.isPrivate)
-      .forEach((FieldElement field) {
-    if (field.getter is PropertyAccessorElement) {
-      mod.to.add(new ModelField(field.name, new DartTypeWrap(field.type)));
+      .where((PropertyAccessorElement field) => !field.isStatic && !field.isPrivate)
+      .forEach((PropertyAccessorElement field) {
+    if (field.isGetter) {
+      mod.to.add(new ModelField(field.displayName, new DartTypeWrap(field.returnType)));
     }
 
-    if (field.setter is PropertyAccessorElement) {
-      mod.from.add(new ModelField(field.name, new DartTypeWrap(field.type)));
+    if (field.isSetter) {
+      mod.from.add(new ModelField(field.displayName, new DartTypeWrap(field.type.parameters.first.type)));
     }
   });
 

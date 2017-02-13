@@ -21,6 +21,12 @@ abstract class _$Person implements MapSerializer<Person> {
         ret["address"] =
             toAddress.toMap(model.address, withTypeInfo: withTypeInfo);
       }
+      if (model.modelType != null) {
+        ret["modelType"] = "${model.modelType}";
+      }
+      if (model.modelString != null) {
+        ret["modelString"] = model.modelString;
+      }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
       }
@@ -66,6 +72,12 @@ abstract class _$Address implements MapSerializer<Address> {
       }
       if (model.pincode != null) {
         ret["pincode"] = model.pincode;
+      }
+      if (model.modelType != null) {
+        ret["modelType"] = "${model.modelType}";
+      }
+      if (model.modelString != null) {
+        ret["modelString"] = model.modelString;
       }
       if (modelString != null && withTypeInfo) {
         ret["@t"] = modelString;
