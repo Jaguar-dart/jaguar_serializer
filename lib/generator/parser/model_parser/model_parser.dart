@@ -28,7 +28,7 @@ Model parseModel(ClassElementWrap modelClazz) {
 
   mod.model = modelClazz;
 
-  modelClazz.fields
+  modelClazz.getAccessors(withSupertype: true)
       .where((PropertyAccessorElement field) => !field.isStatic && !field.isPrivate)
       .forEach((PropertyAccessorElement field) {
     if (field.isGetter) {
