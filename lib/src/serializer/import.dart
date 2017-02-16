@@ -111,9 +111,6 @@ abstract class Serializer {
       .toList();
 
   Object toObject(Object object, {bool withTypeInfo: false}) {
-    if (object is Iterable) {
-      return toObject(object.toList(), withTypeInfo: withTypeInfo);
-    }
     if (object is List) {
       return toList(object, withTypeInfo: withTypeInfo);
     } else if (object is Map) {
@@ -121,6 +118,8 @@ abstract class Serializer {
         object[key] = toObject(object[key], withTypeInfo: withTypeInfo);
       });
       return object;
+    } else if (object is Iterable) {
+      return toObject(object.toList(), withTypeInfo: withTypeInfo);
     }
     return toMap(object, withTypeInfo: withTypeInfo);
   }
