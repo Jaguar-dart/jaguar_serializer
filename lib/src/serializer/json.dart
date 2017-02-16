@@ -5,6 +5,6 @@ import 'package:jaguar_serializer/src/serializer/import.dart';
 
 class SerializerJson extends Serializer {
   SerializerJson()
-      : super((Object object) => JSON.encode(object),
+      : super((dynamic object) => JSON.encode(convertKeysToString(object)),
             (String data) => JSON.decode(data));
 }

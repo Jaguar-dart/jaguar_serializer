@@ -21,7 +21,7 @@ abstract class _$BookMongoSerializer implements MapSerializer<Book> {
         ret["publishedYear"] = model.publishedYear;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

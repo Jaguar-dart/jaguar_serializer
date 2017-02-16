@@ -23,7 +23,7 @@ void main() {
       ];
     });
 
-    test('From', () {
+    test('toMap', () {
       BookSerializer serializer = new BookSerializer();
       Map map = serializer.toMap(book);
 

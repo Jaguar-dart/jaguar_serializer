@@ -37,7 +37,7 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
             withTypeInfo: withTypeInfo);
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -85,7 +85,7 @@ abstract class _$AddressSerializer implements MapSerializer<Address> {
         ret["city"] = model.city;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

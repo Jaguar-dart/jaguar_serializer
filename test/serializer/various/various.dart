@@ -175,7 +175,8 @@ void main() {
   group('Various - toMap', () {
     test('Inheritance', () {
       Inheritance d = new Inheritance();
-      expect(serializer.toMap(d), {"clazzA": "ClassA", "clazzB": "inheritance"});
+      expect(
+          serializer.toMap(d), {"clazzA": "ClassA", "clazzB": "inheritance"});
       expect(serializer.toMap(d, withTypeInfo: true), {
         "clazzA": "ClassA",
         "clazzB": "inheritance",
@@ -327,8 +328,8 @@ void main() {
 
   group('Various - fromMap', () {
     test('Inheritance', () {
-      Inheritance d = serializer
-          .fromMap({"clazzA": "A", "clazzB": "B"}, type: Inheritance);
+      Inheritance d =
+          serializer.fromMap({"clazzA": "A", "clazzB": "B"}, type: Inheritance);
       expect(d.clazzA, "A");
       expect(d.clazzB, "B");
 
@@ -356,8 +357,8 @@ void main() {
     });
 
     test('ModelDouble', () {
-      ModelDouble d = serializer
-          .fromMap({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
+      ModelDouble d =
+          serializer.fromMap({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
       d = serializer.fromMap({
@@ -371,9 +372,8 @@ void main() {
 
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
-      Date d = serializer.fromMap(
-          {"date": now.toIso8601String(), "clazzA": "A"},
-          type: Date);
+      Date d = serializer
+          .fromMap({"date": now.toIso8601String(), "clazzA": "A"}, type: Date);
       expect(d.date, now);
       d = serializer.fromMap({
         "date": now.toIso8601String(),

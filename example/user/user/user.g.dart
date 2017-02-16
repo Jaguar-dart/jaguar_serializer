@@ -63,7 +63,7 @@ abstract class _$UserViewSerializer implements MapSerializer<User> {
         }).model;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

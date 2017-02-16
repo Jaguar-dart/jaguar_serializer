@@ -18,7 +18,7 @@ abstract class _$ModelIntSerializer implements MapSerializer<ModelInt> {
         ret["clazzA"] = model.clazzA;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -55,7 +55,7 @@ abstract class _$ModelDoubleSerializer implements MapSerializer<ModelDouble> {
         ret["clazzA"] = model.clazzA;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -92,7 +92,7 @@ abstract class _$InheritanceSerializer implements MapSerializer<Inheritance> {
         ret["clazzB"] = model.clazzB;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -129,7 +129,7 @@ abstract class _$DateSerializer implements MapSerializer<Date> {
         ret["clazzA"] = model.clazzA;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -178,7 +178,7 @@ abstract class _$NullTestSerializer implements MapSerializer<NullTest> {
             ?.toList();
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -215,7 +215,7 @@ abstract class _$WithIgnoreSerializer implements MapSerializer<WithIgnore> {
         ret["a"] = model.a;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -248,7 +248,7 @@ abstract class _$ModelRenamedSerializer implements MapSerializer<ModelRenamed> {
         ret["renamed"] = model.original;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -355,7 +355,7 @@ abstract class _$ComplexSerializer implements MapSerializer<Complex> {
         }).model;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

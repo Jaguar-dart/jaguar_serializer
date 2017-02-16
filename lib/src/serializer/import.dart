@@ -1,6 +1,7 @@
 library serializer.serializer;
 
 part 'field_annotations.dart';
+
 part 'custom_codec.dart';
 
 abstract class JaguarSerializer {
@@ -89,7 +90,7 @@ abstract class Serializer {
   Map<Type, MapSerializer> _mapperType = {};
   Map<String, MapSerializer> _mapperString = {};
 
-  Object fromObject(Object object,
+  dynamic fromObject(dynamic object,
       {Type type, bool useTypeInfo: true, dynamic model}) {
     if (object is List) {
       return fromList(object, type: type, useTypeInfo: useTypeInfo);
@@ -100,7 +101,7 @@ abstract class Serializer {
     return object;
   }
 
-  Map toMap(Object object, {bool withTypeInfo: false}) {
+  Map toMap(dynamic object, {bool withTypeInfo: false}) {
     MapSerializer serializer = getMapSerializerForType(object.runtimeType) ??
         JaguarSerializer.getMapSerializerForType(object.runtimeType);
     return serializer.toMap(object, withTypeInfo: withTypeInfo);
@@ -110,16 +111,19 @@ abstract class Serializer {
       .map((object) => toObject(object, withTypeInfo: withTypeInfo))
       .toList();
 
-  Object toObject(Object object, {bool withTypeInfo: false}) {
+  dynamic toObject(dynamic object, {bool withTypeInfo: false}) {
     if (object is List) {
       return toList(object, withTypeInfo: withTypeInfo);
-    } else if (object is Map) {
-      object.forEach((key, value) {
-        object[key] = toObject(object[key], withTypeInfo: withTypeInfo);
-      });
-      return object;
     } else if (object is Iterable) {
-      return toObject(object.toList(), withTypeInfo: withTypeInfo);
+      return toList(object.toList(), withTypeInfo: withTypeInfo);
+    } else if (object is Map) {
+      Map newMap = {};
+      object.forEach((key, value) {
+        newMap[key] = toObject(object[key], withTypeInfo: withTypeInfo);
+      });
+      return newMap;
+    } else if (object is String || object is num) {
+      return object;
     }
     return toMap(object, withTypeInfo: withTypeInfo);
   }
@@ -167,17 +171,53 @@ abstract class Serializer {
     }
   }
 
-  String encode(Object object, {bool withTypeInfo: false}) =>
+  String encode(dynamic object, {bool withTypeInfo: false}) =>
       _encoder(toObject(object, withTypeInfo: withTypeInfo));
-  Object decode(String data,
+
+  dynamic decode(String data,
           {Type type, bool useTypeInfo: true, dynamic model}) =>
       fromObject(_decoder(data),
           type: type, useTypeInfo: useTypeInfo, model: model);
 
   Encoder _encoder;
   Decoder _decoder;
+
   Serializer(this._encoder, this._decoder);
 }
 
-typedef String Encoder(Object object);
-typedef Object Decoder(String data);
+typedef String Encoder(dynamic object);
+
+typedef dynamic Decoder(String data);
+
+dynamic convertKeysToString(dynamic object) {
+  if (object is List) {
+    return object.map((Object inner) => convertKeysToString(inner)).toList();
+  } else if (object is Map) {
+
+    // fixme, handle all possibilities
+    Map newMap = {};
+    if (_mapStringKeysTester.keys.runtimeType == object.keys.runtimeType ||
+        _constMapStringKeysTester.keys.runtimeType == object.keys.runtimeType) {
+      for (var key in object.keys) {
+        if (key is String || key is num) {
+          //fixme: find a better way to convert keys to String
+          newMap[key.toString()] = convertKeysToString(object[key]);
+        } else {
+          //Todo: better exception
+          throw new Exception(
+              "Error in map keys: Impossible to convert a ${key.runtimeType} to a String");
+        }
+      }
+    } else {
+      for (var key in object.keys) {
+        newMap[key] = convertKeysToString(object[key]);
+      }
+    }
+    return newMap;
+  }
+  return object;
+}
+
+///https://github.com/dart-lang/sdk/issues/28548
+Map<String, dynamic> _mapStringKeysTester = {};
+const Map<String, dynamic> _constMapStringKeysTester = const {};

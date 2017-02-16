@@ -21,7 +21,7 @@ abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
         ret["email"] = model.email;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

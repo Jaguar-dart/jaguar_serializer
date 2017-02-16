@@ -41,7 +41,9 @@ class FromItemWriter {
     } else if (leaf is SerializedPropertyFrom) {
       _w.write('from' + leaf.instantiationString + '.fromMap($reference)');
     } else if (leaf is ProviderPropertyFrom) {
-      _w.write(' JaguarSerializer.getMapSerializerForType(' + leaf.type + ').fromMap($reference)');
+      _w.write(' JaguarSerializer.getMapSerializerForType(' +
+          leaf.type +
+          ').fromMap($reference)');
     }
     return _w.toString();
   }

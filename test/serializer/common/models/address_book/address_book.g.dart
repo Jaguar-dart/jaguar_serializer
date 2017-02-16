@@ -28,7 +28,7 @@ abstract class _$Person implements MapSerializer<Person> {
         ret["modelString"] = model.modelString;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;
@@ -80,7 +80,7 @@ abstract class _$Address implements MapSerializer<Address> {
         ret["modelString"] = model.modelString;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

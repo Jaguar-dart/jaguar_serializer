@@ -24,7 +24,7 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
         ret["S"] = model.score;
       }
       if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+        ret[JaguarSerializer.type_info_key] = modelString;
       }
     }
     return ret;

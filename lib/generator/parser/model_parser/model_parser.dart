@@ -28,15 +28,19 @@ Model parseModel(ClassElementWrap modelClazz) {
 
   mod.model = modelClazz;
 
-  modelClazz.getAccessors(withSupertype: true)
-      .where((PropertyAccessorElement field) => !field.isStatic && !field.isPrivate)
+  modelClazz
+      .getAccessors(withSupertype: true)
+      .where((PropertyAccessorElement field) =>
+          !field.isStatic && !field.isPrivate)
       .forEach((PropertyAccessorElement field) {
     if (field.isGetter) {
-      mod.to.add(new ModelField(field.displayName, new DartTypeWrap(field.returnType)));
+      mod.to.add(new ModelField(
+          field.displayName, new DartTypeWrap(field.returnType)));
     }
 
     if (field.isSetter) {
-      mod.from.add(new ModelField(field.displayName, new DartTypeWrap(field.type.parameters.first.type)));
+      mod.from.add(new ModelField(field.displayName,
+          new DartTypeWrap(field.type.parameters.first.type)));
     }
   });
 
