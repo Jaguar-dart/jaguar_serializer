@@ -4,6 +4,7 @@ description: Platform and format agnostic serializer built using source_gen
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
 - Kevin Segaud <segaud.kevin@gmail.com>
+- Hadrien Lejard <hadrien.lejard@gmail.com>
 homepage: http://jaguar-dart.github.io
 
 executables:
@@ -24,6 +25,10 @@ dependencies:
   jaguar_generator_config:
     git:
       url: https://github.com/Jaguar-dart/jaguar_generator_config.git
+
+transformers:
+- test/pub_serve:
+    $include: test/all_browser_test.dart
 
 dev_dependencies:
   test:

@@ -179,6 +179,8 @@ abstract class Serializer {
       fromObject(_decoder(data),
           type: type, useTypeInfo: useTypeInfo, model: model);
 
+  //TODO: method to decode List (JSON, YAML ...) to Stream
+
   Encoder _encoder;
   Decoder _decoder;
 
@@ -193,7 +195,6 @@ dynamic convertKeysToString(dynamic object) {
   if (object is List) {
     return object.map((Object inner) => convertKeysToString(inner)).toList();
   } else if (object is Map) {
-
     // fixme, handle all possibilities
     Map newMap = {};
     if (_mapStringKeysTester.keys.runtimeType == object.keys.runtimeType ||

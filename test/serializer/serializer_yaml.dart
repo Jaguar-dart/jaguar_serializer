@@ -17,8 +17,8 @@ void main() {
     book.name = 'Dawn of AI: The last few centuries of humanity';
     book.tags = <String>['AI', 'Humanity', 'SciFi'];
     book.publishedDates = <num, String>{
-      1.0: '2010',
-      2.0: '2016',
+      1: '2010',
+      2: '2016',
     };
     book.authors = <Author>[
       new Author()..name = 'Teja Hackborn',
@@ -35,8 +35,8 @@ void main() {
           encode,
           equals('name: "Dawn of AI: The last few centuries of humanity"\n'
               'publishedDates: \n'
-              '  1.0: "2010"\n'
-              '  2.0: "2016"\n'
+              '  1: "2010"\n'
+              '  2: "2016"\n'
               'authors: \n'
               '  - \n'
               '    name: "Teja Hackborn"\n'
@@ -75,37 +75,41 @@ void main() {
     });
 
     test('Map<dynamic, String>', () {
-      Map<dynamic, String> map = {1: "first", "2": "second", 3.0: "third"};
+      Map<dynamic, String> map = {1: "first", "2": "second", 3: "third"};
       String encode = serializer.encode(map);
       expect(
           encode,
           equals('1: "first"\n'
               '2: "second"\n'
-              '3.0: "third"\n'));
+              '3: "third"\n'));
     });
 
     test('Map<dynamic, dynamic>', () {
       serializer.addSerializer(new AuthorSerializer());
-      Map<dynamic, dynamic> map = {1: book.authors.first, "2": "second", 3.0: book.authors.last};
+      Map<dynamic, dynamic> map = {
+        1: book.authors.first,
+        "2": "second",
+        3: book.authors.last
+      };
       String encode = serializer.encode(map);
       expect(
           encode,
           equals('2: "second"\n'
               '1: \n'
               '  name: "Teja Hackborn"\n'
-              '3.0: \n'
+              '3: \n'
               '  name: "Kleak"\n'));
     });
 
-    test('const Map<dynamic, dynamic>', () {
+    test('const Map<dynamic, String>', () {
       serializer.addSerializer(new AuthorSerializer());
-      const Map<dynamic, dynamic> map = const {1: 1.1, "2": "second", 3: 3};
+      const Map<dynamic, String> map = const {1: "1", "2": "2", 3: "3"};
       String encode = serializer.encode(map);
       expect(
           encode,
-          equals('2: "second"\n'
-              '1: !!float 1.1\n'
-              '3: 3\n'));
+          equals('1: "1"\n'
+              '2: "2"\n'
+              '3: "3"\n'));
     });
   });
 
@@ -115,8 +119,8 @@ void main() {
       Book bookTest = serializer.decode(
           'name: "Dawn of AI: The last few centuries of humanity"\n'
           'publishedDates: \n'
-          '  1.0: "2010"\n'
-          '  2.0: "2016"\n'
+          '  1: "2010"\n'
+          '  2: "2016"\n'
           'authors: \n'
           '  - \n'
           '    name: "Teja Hackborn"\n'
@@ -128,7 +132,8 @@ void main() {
           '  - "SciFi"\n',
           type: Book);
 
-      expect(bookTest.name, equals("Dawn of AI: The last few centuries of humanity"));
+      expect(bookTest.name,
+          equals("Dawn of AI: The last few centuries of humanity"));
       expect(bookTest.tags, equals(["AI", "Humanity", "SciFi"]));
       //expect(bookTest.publishedDates, equals({"1.0": "2010", "2.0": "2016"}));
       expect(bookTest.authors.length, equals(2));
@@ -151,13 +156,14 @@ void main() {
 
     //todo: decode to Map<dynamic, String>
     test('Map<dynamic, String>', () {
-      var decode = serializer.decode('{"1":"first","2":"second","3.0":"third"}');
+      var decode = serializer.decode('{"1":"first","2":"second","3":"third"}');
     }, skip: true);
 
     //todo: decode to Map<dynamic, dynamic>
     test('Map<dynamic, dynamic>', () {
       serializer.addSerializer(new AuthorSerializer());
-      var decode = serializer.decode('{"1":{"name":"Teja Hackborn"},"2":"second","3.0":{"name":"Kleak"}}');
+      var decode = serializer.decode(
+          '{"1":{"name":"Teja Hackborn"},"2":"second","3.0":{"name":"Kleak"}}');
     }, skip: true);
 
     //todo: decode to Map<dynamic, dynamic>

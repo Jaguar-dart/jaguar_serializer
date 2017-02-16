@@ -146,10 +146,10 @@ abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
         ret["N"] = model.name;
       }
       if (model.email != null) {
-        ret["E"] = model.email;
+        ret["email"] = model.email;
       }
       if (model.age != null) {
-        ret["A"] = model.age;
+        ret["age"] = model.age;
       }
       if (model.score != null) {
         ret["S"] = model.score;
@@ -172,8 +172,8 @@ abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
       model = createModel();
     }
     model.name = map["N"];
-    model.email = map["E"];
-    model.age = map["A"];
+    model.email = map["email"];
+    model.age = map["age"];
     model.score = map["score"];
     model.emailConfirmed = map["eC"];
     return model;

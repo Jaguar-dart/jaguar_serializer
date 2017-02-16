@@ -21,10 +21,8 @@ void main() {
       2.0: '2016',
     };
     book.authors = <Author>[
-      new Author()
-        ..name = 'Teja Hackborn',
-      new Author()
-        ..name = 'Kleak',
+      new Author()..name = 'Teja Hackborn',
+      new Author()..name = 'Kleak',
     ];
     serializer = new SerializerJson();
     serializer.addSerializer(new BookSerializer());
@@ -101,9 +99,14 @@ void main() {
         "name": "Dawn of AI: The last few centuries of humanity",
         "tags": ["AI", "Humanity", "SciFi"],
         "publishedDates": {1.0: "2010", 2.0: "2016"},
-        "authors": [{"name": "Teja Hackborn"}, {"name": "Kleak"}]}, type: Book);
+        "authors": [
+          {"name": "Teja Hackborn"},
+          {"name": "Kleak"}
+        ]
+      }, type: Book);
 
-      expect(bookTest.name, equals("Dawn of AI: The last few centuries of humanity"));
+      expect(bookTest.name,
+          equals("Dawn of AI: The last few centuries of humanity"));
       expect(bookTest.tags, equals(["AI", "Humanity", "SciFi"]));
       expect(bookTest.publishedDates, equals({1.0: "2010", 2.0: "2016"}));
       expect(bookTest.authors.length, equals(2));
@@ -113,7 +116,10 @@ void main() {
 
     test('List<Author>', () {
       serializer.addSerializer(new AuthorSerializer());
-      List<Author> authors = serializer.fromObject([{"name":"Teja Hackborn"},{"name":"Kleak"}], type: Author);
+      List<Author> authors = serializer.fromObject([
+        {"name": "Teja Hackborn"},
+        {"name": "Kleak"}
+      ], type: Author);
       expect(authors.length, equals(2));
       expect(authors[0].name, equals("Teja Hackborn"));
       expect(authors[1].name, equals("Kleak"));
@@ -121,14 +127,18 @@ void main() {
 
     test('List<Author> use global MapperSerializer', () {
       JaguarSerializer.addSerializer(new AuthorSerializer());
-      List<Author> authors = serializer.fromObject([{"name":"Teja Hackborn"},{"name":"Kleak"}], type: Author);
+      List<Author> authors = serializer.fromObject([
+        {"name": "Teja Hackborn"},
+        {"name": "Kleak"}
+      ], type: Author);
       expect(authors.length, equals(2));
       expect(authors[0].name, equals("Teja Hackborn"));
       expect(authors[1].name, equals("Kleak"));
     });
 
     test('Map<dynamic, String>', () {
-      Map<dynamic, String> decode = serializer.fromObject({1:"first","2":"second",3.0:"third"});
+      Map<dynamic, String> decode =
+          serializer.fromObject({1: "first", "2": "second", 3.0: "third"});
       expect(decode[1], equals("first"));
       expect(decode["2"], equals("second"));
       expect(decode[3.0], equals("third"));
@@ -136,14 +146,21 @@ void main() {
 
     test('Map<dynamic, Author>', () {
       serializer.addSerializer(new AuthorSerializer());
-      Map<dynamic, Author> decode = serializer.fromObject({"1":{"name":"Teja Hackborn"},3.0:{"name":"Kleak"}}, type: Author);
+      Map<dynamic, Author> decode = serializer.fromObject({
+        "1": {"name": "Teja Hackborn"},
+        3.0: {"name": "Kleak"}
+      }, type: Author);
       expect(decode["1"].name, equals("Teja Hackborn"));
       expect(decode[3.0].name, equals("Kleak"));
     }, skip: true);
 
     test('Map<dynamic, dynamic>', () {
       serializer.addSerializer(new AuthorSerializer());
-      Map<dynamic, dynamic> decode = serializer.fromObject({1:{"name":"Teja Hackborn"},"2":"second",3.0:{"name":"Kleak"}});
+      Map<dynamic, dynamic> decode = serializer.fromObject({
+        1: {"name": "Teja Hackborn"},
+        "2": "second",
+        3.0: {"name": "Kleak"}
+      });
       expect(decode[1], equals("first"));
       expect(decode["2"], equals("second"));
       expect(decode[3.0], equals("third"));
@@ -176,8 +193,7 @@ void main() {
   test('global config', () {
     JaguarSerializer.type_info_key = "#my_type_info_key";
     Map object = serializer.toMap(book, withTypeInfo: true);
-    expect(object[JaguarSerializer.type_info_key], equals(serializer
-        .getMapSerializerForType(Book)
-        .modelString));
+    expect(object[JaguarSerializer.type_info_key],
+        equals(serializer.getMapSerializerForType(Book).modelString));
   });
 }

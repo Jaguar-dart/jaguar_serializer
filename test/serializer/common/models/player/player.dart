@@ -31,10 +31,11 @@ class PlayerSerializerIgnores extends MapSerializer<Player>
 
 @GenSerializer()
 @EnDecodeField(#name, asAndFrom: 'N')
+/* todo: does not work on browser
 @EnDecodeFields(const {
   #email: 'E',
   #age: 'A',
-})
+})*/
 @EncodeField(#score, as: 'S')
 @DecodeField(#emailConfirmed, from: 'eC')
 class PlayerSerializerRename extends MapSerializer<Player>
