@@ -18,7 +18,9 @@ dependencies:
   yaml: ">=2.1.10 <3.0.0"
   intl: ">=0.14.0 <0.15.0"
   yamlicious: ^0.0.5
-  source_gen_help: ^0.0.4
+  source_gen_help:
+    git:
+      url: https://github.com/Jaguar-dart/source_gen_help.git
   jaguar_generator_config:
     git:
       url: https://github.com/Jaguar-dart/jaguar_generator_config.git
