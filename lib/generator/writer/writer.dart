@@ -92,7 +92,7 @@ class SerializerWriter {
   void _typeInfoKey() {
     _w.writeln('if(modelString != null && withTypeInfo) {');
 
-    _w.write('ret[JaguarSerializer.type_info_key] = modelString;');
+    _w.write('ret[SerializerRepo.typeInfoKey] = modelString;');
 
     _w.writeln('}');
   }

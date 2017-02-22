@@ -47,7 +47,7 @@ class ToItemWriter {
       if (leaf.type == "Type") {
         _w.write(' "\${$reference}"');
       } else {
-        _w.write(' JaguarSerializer.getMapSerializerForType(' +
+        _w.write(' SerializerRepo.getMapSerializerForType(' +
             leaf.type +
             ').toMap($reference, withTypeInfo: withTypeInfo)');
       }
