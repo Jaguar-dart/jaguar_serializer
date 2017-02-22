@@ -7,8 +7,8 @@ part of example.field_manipulation;
 // Target: class PlayerJsonSerializer
 // **************************************************************************
 
-abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false}) {
+abstract class _$PlayerJsonSerializer implements Serializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -24,13 +24,13 @@ abstract class _$PlayerJsonSerializer implements MapSerializer<Player> {
         ret["S"] = model.score;
       }
       if (modelString != null && withTypeInfo) {
-        ret[SerializerRepo.typeInfoKey] = modelString;
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model}) {
+  Player fromMap(Map map, {Player model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }

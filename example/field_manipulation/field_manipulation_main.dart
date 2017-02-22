@@ -12,7 +12,7 @@ part 'field_manipulation_main.g.dart';
   #age: 'A',
   #score: 'S',
 })
-class PlayerJsonSerializer extends MapSerializer<Player>
+class PlayerJsonSerializer extends Serializer<Player>
     with _$PlayerJsonSerializer {
   Player createModel() => new Player();
 

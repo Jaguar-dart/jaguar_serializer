@@ -9,7 +9,7 @@ import 'common/models/bibliotek/book.dart';
 
 void main() {
   Book book;
-  Serializer serializer;
+  SerializerRepo serializer;
 
   setUpAll(() {
     book = new Book();
@@ -24,13 +24,13 @@ void main() {
       new Author()..name = 'Teja Hackborn',
       new Author()..name = 'Kleak',
     ];
-    serializer = new SerializerJson();
+    serializer = new JsonRepo();
     serializer.add(new BookSerializer());
   });
 
   group('toJson', () {
     test('Book', () {
-      String encode = serializer.encode(book);
+      String encode = serializer.to(book);
       expect(
           encode,
           equals('{'
@@ -42,7 +42,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encode = serializer.encode(book.authors);
+      String encode = serializer.to(book.authors);
       expect(encode, equals('[{"name":"Teja Hackborn"},{"name":"Kleak"}]'));
     });
 
@@ -52,7 +52,7 @@ void main() {
         1: new Author()..name = 'Teja Hackborn',
         2: new Author()..name = 'Kleak',
       };
-      String encode = serializer.encode(tester.values);
+      String encode = serializer.to(tester.values);
       expect(encode, equals('[{"name":"Teja Hackborn"},{"name":"Kleak"}]'));
     });
   });
@@ -60,7 +60,7 @@ void main() {
   group('fromJson', () {
     test('Book', () {
       //todo: decode to Map<num, dynamic>
-      Book bookTest = serializer.decode(
+      Book bookTest = serializer.from(
           '{'
           '"name":"Dawn of AI: The last few centuries of humanity",'
           '"tags":["AI","Humanity","SciFi"],'
@@ -78,38 +78,18 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      List<Author> authors = serializer
-          .decode('[{"name":"Teja Hackborn"},{"name":"Kleak"}]', type: Author);
+      List<Author> authors = serializer.from('[{"name":"Teja Hackborn"},{"name":"Kleak"}]', type: Author);
       expect(authors.length, equals(2));
       expect(authors[0].name, equals("Teja Hackborn"));
       expect(authors[1].name, equals("Kleak"));
     });
-
-    //todo: decode to Map<dynamic, String>
-    test('Map<dynamic, String>', () {
-      var decode =
-          serializer.decode('{"1":"first","2":"second","3.0":"third"}');
-    }, skip: true);
-
-    //todo: decode to Map<dynamic, dynamic>
-    test('Map<dynamic, dynamic>', () {
-      serializer.add(new AuthorSerializer());
-      var decode = serializer.decode(
-          '{"1":{"name":"Teja Hackborn"},"2":"second","3.0":{"name":"Kleak"}}');
-    }, skip: true);
-
-    //todo: decode to Map<dynamic, dynamic>
-    test('const Map<dynamic, dynamic>', () {
-      serializer.add(new AuthorSerializer());
-      var decode = serializer.decode('{"1":1.1,"2":"second","3":3}');
-    }, skip: true);
   });
 
   group("json with type info", () {
     test('Book', () {
       book.publishedDates = null;
-      String encoded = serializer.encode(book, withTypeInfo: true);
-      Book bookTest = serializer.decode(encoded);
+      String encoded = serializer.to(book, withTypeInfo: true);
+      Book bookTest = serializer.from(encoded);
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
       expect(bookTest.publishedDates, equals(book.publishedDates));
@@ -120,8 +100,8 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded = serializer.encode(book.authors, withTypeInfo: true);
-      List<Author> authors = serializer.decode(encoded);
+      String encoded = serializer.to(book.authors, withTypeInfo: true);
+      List<Author> authors = serializer.from(encoded);
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));
       expect(authors[1].name, equals(book.authors[1].name));

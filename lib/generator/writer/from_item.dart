@@ -39,12 +39,12 @@ class FromItemWriter {
     } else if (leaf is CustomPropertyFrom) {
       _w.write(' new ' + leaf.instantiationString + '.from($reference)');
     } else if (leaf is SerializedPropertyFrom) {
-      _w.write('from' + leaf.instantiationString + '.fromMap($reference)');
-    } else if (leaf is ProviderPropertyFrom) {
-      _w.write(' SerializerRepo.getMapSerializerForType(' +
+      _w.write('from' + leaf.instantiationString + '.fromMap($reference, typeInfoKey: typeInfoKey)');
+    } /*else if (leaf is ProviderPropertyFrom) {
+      _w.write(' SerializerRepo.getSerializerForType(' +
           leaf.type +
           ').fromMap($reference)');
-    }
+    }*/
     return _w.toString();
   }
 

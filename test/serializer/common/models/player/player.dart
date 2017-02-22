@@ -5,7 +5,7 @@ import 'package:jaguar_serializer/serializer.dart';
 part 'player.g.dart';
 
 @GenSerializer()
-class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
+class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 
   PlayerSerializer();
@@ -13,7 +13,7 @@ class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
 
 @GenSerializer()
 @IgnoreField(#emailConfirmed)
-class PlayerSerializerIgnore extends MapSerializer<Player>
+class PlayerSerializerIgnore extends Serializer<Player>
     with _$PlayerSerializerIgnore {
   Player createModel() => new Player();
 
@@ -22,7 +22,7 @@ class PlayerSerializerIgnore extends MapSerializer<Player>
 
 @GenSerializer()
 @IgnoreFields(const <Symbol>[#emailConfirmed, #age, #email])
-class PlayerSerializerIgnores extends MapSerializer<Player>
+class PlayerSerializerIgnores extends Serializer<Player>
     with _$PlayerSerializerIgnores {
   Player createModel() => new Player();
 
@@ -38,7 +38,7 @@ class PlayerSerializerIgnores extends MapSerializer<Player>
 })*/
 @EncodeField(#score, as: 'S')
 @DecodeField(#emailConfirmed, from: 'eC')
-class PlayerSerializerRename extends MapSerializer<Player>
+class PlayerSerializerRename extends Serializer<Player>
     with _$PlayerSerializerRename {
   Player createModel() => new Player();
 

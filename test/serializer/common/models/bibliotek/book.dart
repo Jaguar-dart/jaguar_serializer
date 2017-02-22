@@ -10,7 +10,7 @@ part 'book.g.dart';
 @GenSerializer()
 @ProvideSerializer(Author, AuthorSerializer)
 @MapKeyNumToStringProcessor(#publishedDates)
-class BookSerializer extends MapSerializer<Book> with _$BookSerializer {
+class BookSerializer extends Serializer<Book> with _$BookSerializer {
   Book createModel() => new Book();
 }
 

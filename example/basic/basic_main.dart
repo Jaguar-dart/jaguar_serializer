@@ -6,12 +6,12 @@ part 'basic_main.g.dart';
 
 @GenSerializer()
 @ProvideSerializer(Address, AddressSerializer)
-class PlayerSerializer extends MapSerializer<Player> with _$PlayerSerializer {
+class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 }
 
 @GenSerializer()
-class AddressSerializer extends MapSerializer<Address>
+class AddressSerializer extends Serializer<Address>
     with _$AddressSerializer {
   Address createModel() => new Address();
 
@@ -52,9 +52,9 @@ class Address {
 }
 
 void json() {
-  Serializer serializer = new SerializerJson();
+  SerializerRepo serializer = new JsonRepo();
   {
-    Player player = serializer.fromMap({
+    Player player = serializer.from({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -67,7 +67,7 @@ void json() {
   }
 
   {
-    Player player = serializer.fromMap({
+    Player player = serializer.from({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -86,16 +86,15 @@ void json() {
       ..score = 1000
       ..emailConfirmed = true
       ..address = (new Address()..city = "Paris");
-    print(serializer.toObject(player));
-    print(serializer.encode(player));
-    print(serializer.encode(player, withTypeInfo: true));
+    print(serializer.to(player));
+    print(serializer.to(player, withTypeInfo: true));
   }
 }
 
 void yaml() {
-  Serializer serializer = new SerializerYaml();
+  SerializerRepo serializer = new YamlRepo();
   {
-    Player player = serializer.fromMap({
+    Player player = serializer.from({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -108,7 +107,7 @@ void yaml() {
   }
 
   {
-    Player player = serializer.fromMap({
+    Player player = serializer.from({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -127,9 +126,8 @@ void yaml() {
       ..score = 1000
       ..emailConfirmed = true
       ..address = (new Address()..city = "Paris");
-    print(serializer.toObject(player));
-    print(serializer.encode(player));
-    print(serializer.encode(player, withTypeInfo: true));
+    print(serializer.to(player));
+    print(serializer.to(player, withTypeInfo: true));
   }
 }
 
@@ -146,8 +144,6 @@ void main() {
   print(pSerializer.toMap(player));
   print(pSerializer.toMap(player, withTypeInfo: true));
 
-  // use global serializer
-  SerializerRepo.add(new PlayerSerializer());
   json();
   yaml();
 }

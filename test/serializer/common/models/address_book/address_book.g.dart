@@ -7,19 +7,19 @@ part of test.common.models.address_book;
 // Target: class Person
 // **************************************************************************
 
-abstract class _$Person implements MapSerializer<Person> {
+abstract class _$Person implements Serializer<Person> {
   final Address toAddress = new Address();
   final Address fromAddress = new Address();
 
-  Map toMap(Person model, {bool withTypeInfo: false}) {
+  Map toMap(Person model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
         ret["name"] = model.name;
       }
       if (model.address != null) {
-        ret["address"] =
-            toAddress.toMap(model.address, withTypeInfo: withTypeInfo);
+        ret["address"] = toAddress.toMap(model.address,
+            withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
       }
       if (model.modelType != null) {
         ret["modelType"] = "${model.modelType}";
@@ -28,13 +28,13 @@ abstract class _$Person implements MapSerializer<Person> {
         ret["modelString"] = model.modelString;
       }
       if (modelString != null && withTypeInfo) {
-        ret[SerializerRepo.typeInfoKey] = modelString;
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
       }
     }
     return ret;
   }
 
-  Person fromMap(Map map, {Person model}) {
+  Person fromMap(Map map, {Person model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -42,7 +42,8 @@ abstract class _$Person implements MapSerializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address = fromAddress.fromMap(map["address"]);
+    model.address =
+        fromAddress.fromMap(map["address"], typeInfoKey: typeInfoKey);
     return model;
   }
 
@@ -54,8 +55,8 @@ abstract class _$Person implements MapSerializer<Person> {
 // Target: class Address
 // **************************************************************************
 
-abstract class _$Address implements MapSerializer<Address> {
-  Map toMap(Address model, {bool withTypeInfo: false}) {
+abstract class _$Address implements Serializer<Address> {
+  Map toMap(Address model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.street != null) {
@@ -80,13 +81,13 @@ abstract class _$Address implements MapSerializer<Address> {
         ret["modelString"] = model.modelString;
       }
       if (modelString != null && withTypeInfo) {
-        ret[SerializerRepo.typeInfoKey] = modelString;
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
       }
     }
     return ret;
   }
 
-  Address fromMap(Map map, {Address model}) {
+  Address fromMap(Map map, {Address model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }

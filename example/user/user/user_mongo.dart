@@ -15,7 +15,7 @@ part 'user_mongo.g.dart';
 @EnDecodeField(#name, asAndFrom: 'N')
 @ProvideSerializer(Book, BookMongoSerializer)
 @IgnoreFields(const [#viewSerializer])
-class UserMongoSerializer extends MapSerializer<User>
+class UserMongoSerializer extends Serializer<User>
     with _$UserMongoSerializer {
   User createModel() => new User();
 

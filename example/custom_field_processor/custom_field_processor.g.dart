@@ -7,8 +7,8 @@ part of example.field_manipulation;
 // Target: class PlayerMongoSerializer
 // **************************************************************************
 
-abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false}) {
+abstract class _$PlayerMongoSerializer implements Serializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
@@ -21,13 +21,13 @@ abstract class _$PlayerMongoSerializer implements MapSerializer<Player> {
         ret["email"] = model.email;
       }
       if (modelString != null && withTypeInfo) {
-        ret[SerializerRepo.typeInfoKey] = modelString;
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model}) {
+  Player fromMap(Map map, {Player model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }

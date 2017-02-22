@@ -42,15 +42,15 @@ class ToItemWriter {
     } else if (leaf is SerializedPropertyTo) {
       _w.write(' to' +
           leaf.instantiationString +
-          '.toMap($reference, withTypeInfo: withTypeInfo)');
+          '.toMap($reference, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)');
     } else if (leaf is ProviderPropertyTo) {
       if (leaf.type == "Type") {
         _w.write(' "\${$reference}"');
-      } else {
-        _w.write(' SerializerRepo.getMapSerializerForType(' +
+      }/* else {
+        _w.write(' SerializerRepo.getSerializerForType(' +
             leaf.type +
             ').toMap($reference, withTypeInfo: withTypeInfo)');
-      }
+      }*/
     }
 
     return _w.toString();
