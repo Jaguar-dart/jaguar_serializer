@@ -1,13 +1,13 @@
 part of jaguar_serializer.serializer;
 
 class SerializerRepo {
-  SerializerRepo._();
+  SerializerRepo({this.typeInfoKey: "@t"});
 
-  static String typeInfoKey = "@t";
-  static Map<Type, MapSerializer> _mapperType = {};
-  static Map<String, MapSerializer> _mapperString = {};
+  final String typeInfoKey;
+  final Map<Type, Serializer> _mapperType = {};
+  final Map<String, Serializer> _mapperString = {};
 
-  static MapSerializer getMapSerializerForType(Type type) {
+  MapSerializer getMapSerializerForType(Type type) {
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
     }
@@ -15,16 +15,16 @@ class SerializerRepo {
     throw new Exception("No MapSerializer found for $type");
   }
 
-  static MapSerializer getMapSerializerFromMap(Map map) {
-    if (map.containsKey(SerializerRepo.typeInfoKey) &&
-        _mapperString.containsKey(map[SerializerRepo.typeInfoKey])) {
-      return _mapperString[map[SerializerRepo.typeInfoKey]];
+  MapSerializer getMapSerializerFromMap(Map map) {
+    if (map.containsKey(typeInfoKey) &&
+        _mapperString.containsKey(map[typeInfoKey])) {
+      return _mapperString[map[typeInfoKey]];
     }
     throw new Exception(
-        "No MapSerializer found for ${map[SerializerRepo.typeInfoKey]}");
+        "No MapSerializer found for ${map[typeInfoKey]}");
   }
 
-  static void addSerializer(MapSerializer serializer) {
+  void addSerializer(Serializer serializer) {
     if (!_mapperType.containsKey(serializer.modelType)) {
       _mapperType[serializer.modelType] = serializer;
     }
@@ -32,4 +32,28 @@ class SerializerRepo {
       _mapperString[serializer.modelString] = serializer;
     }
   }
+
+  dynamic to(dynamic object, {Type type}) {
+    final Serializer serializer = getMapSerializerForType(type);
+
+    if(serializer == null) {
+      throw new Exception("Cannot find serializer for type $type");
+    }
+
+    return encode(serializer.to(object));
+  }
+
+  dynamic from(dynamic object, {Type type}) {
+    final Serializer serializer = getMapSerializerForType(type);
+
+    if(serializer == null) {
+      throw new Exception("Cannot find serializer for type $type");
+    }
+
+    return serializer.from(decode(object));
+  }
+
+  dynamic encode(dynamic object) => object;
+
+  dynamic decode(dynamic object) => object;
 }
