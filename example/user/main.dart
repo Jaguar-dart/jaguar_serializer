@@ -33,5 +33,4 @@ main() {
   User user = serializer.from(kUserMap1, type: User);
 
   print(serializer.to(user));
-
 }

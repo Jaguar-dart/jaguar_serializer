@@ -34,7 +34,8 @@ class SerializerRepo {
     }
   }
 
-  dynamic _to(dynamic object, {Type type, bool withTypeInfo: false, String useTypeInfoKey}) {
+  dynamic _to(dynamic object,
+      {Type type, bool withTypeInfo: false, String useTypeInfoKey}) {
     useTypeInfoKey ??= typeInfoKey;
     if (object is String || object is num) {
       return object;
@@ -45,24 +46,34 @@ class SerializerRepo {
       throw new Exception("Cannot find serializer for type $type");
     }
 
-    return serializer.to(object, withTypeInfo: withTypeInfo, typeInfoKey: useTypeInfoKey);
+    return serializer.to(object,
+        withTypeInfo: withTypeInfo, typeInfoKey: useTypeInfoKey);
   }
 
-  dynamic to(dynamic object, {bool withTypeInfo: false, String useTypeInfoKey}) {
+  dynamic to(dynamic object,
+      {bool withTypeInfo: false, String useTypeInfoKey}) {
     useTypeInfoKey ??= typeInfoKey;
     if (object is Iterable) {
       return encode(object
-          .map((obj) => _to(obj, type: obj.runtimeType, withTypeInfo: withTypeInfo, useTypeInfoKey: useTypeInfoKey))
+          .map((obj) => _to(obj,
+              type: obj.runtimeType,
+              withTypeInfo: withTypeInfo,
+              useTypeInfoKey: useTypeInfoKey))
           .toList());
     } else if (object is Map) {
       Map map = {};
       for (var key in object.keys) {
-        map[key] =
-            _to(object[key], type: object[key].runtimeType, withTypeInfo: withTypeInfo, useTypeInfoKey: useTypeInfoKey);
+        map[key] = _to(object[key],
+            type: object[key].runtimeType,
+            withTypeInfo: withTypeInfo,
+            useTypeInfoKey: useTypeInfoKey);
       }
       return encode(map);
     }
-    return encode(_to(object, type: object.runtimeType, withTypeInfo: withTypeInfo, useTypeInfoKey: useTypeInfoKey));
+    return encode(_to(object,
+        type: object.runtimeType,
+        withTypeInfo: withTypeInfo,
+        useTypeInfoKey: useTypeInfoKey));
   }
 
   dynamic _from(dynamic decoded, {Type type, String useTypeInfoKey}) {
@@ -88,7 +99,9 @@ class SerializerRepo {
     final decoded = object is String ? decode(object) : object;
 
     if (decoded is Iterable) {
-      return decoded.map((obj) => _from(obj, type: type, useTypeInfoKey: useTypeInfoKey)).toList();
+      return decoded
+          .map((obj) => _from(obj, type: type, useTypeInfoKey: useTypeInfoKey))
+          .toList();
     }
     return _from(decoded, type: type, useTypeInfoKey: useTypeInfoKey);
   }
@@ -101,7 +114,9 @@ class SerializerRepo {
     String typeKey;
     if (object is Map) {
       typeKey = object[infoKey];
-    } else if (object is List<Map> && object.length != 0 && object.first is Map) {
+    } else if (object is List<Map> &&
+        object.length != 0 &&
+        object.first is Map) {
       typeKey = object.first[infoKey];
     }
     return typeKey;

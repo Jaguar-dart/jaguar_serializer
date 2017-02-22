@@ -11,8 +11,7 @@ class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
 }
 
 @GenSerializer()
-class AddressSerializer extends Serializer<Address>
-    with _$AddressSerializer {
+class AddressSerializer extends Serializer<Address> with _$AddressSerializer {
   Address createModel() => new Address();
 
   AddressSerializer();

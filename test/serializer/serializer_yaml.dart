@@ -90,7 +90,6 @@ void main() {
               '3: \n'
               '  name: "Kleak"\n'));
     });
-
   });
 
   group('fromYaml', () {
@@ -138,7 +137,8 @@ void main() {
   group("yaml with type info", () {
     test('Book', () {
       book.publishedDates = null;
-      String encoded = serializer.to(book, withTypeInfo: true, useTypeInfoKey: "(t)" );
+      String encoded =
+          serializer.to(book, withTypeInfo: true, useTypeInfoKey: "(t)");
       Book bookTest = serializer.from(encoded, useTypeInfoKey: "(t)");
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
@@ -150,7 +150,8 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded = serializer.to(book.authors, withTypeInfo: true, useTypeInfoKey: "(t)" );
+      String encoded = serializer.to(book.authors,
+          withTypeInfo: true, useTypeInfoKey: "(t)");
       List<Author> authors = serializer.from(encoded, useTypeInfoKey: "(t)");
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));

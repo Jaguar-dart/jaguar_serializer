@@ -5,11 +5,15 @@ part 'map_maker.dart';
 part 'repo.dart';
 
 abstract class Serializer<ModelType> {
-  dynamic to(dynamic model, {bool withTypeInfo: false, String typeInfoKey: defaultTypeInfoKey}) {
+  dynamic to(dynamic model,
+      {bool withTypeInfo: false, String typeInfoKey: defaultTypeInfoKey}) {
     if (model is ModelType) {
       return toMap(model, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
     } else if (model is List<ModelType>) {
-      return model.map((ModelType model) => toMap(model, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)).toList();
+      return model
+          .map((ModelType model) => toMap(model,
+              withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey))
+          .toList();
     } else {
       throw new Exception("Unknown object type received!");
     }
@@ -19,7 +23,9 @@ abstract class Serializer<ModelType> {
     if (object is Map) {
       return fromMap(object, typeInfoKey: useTypeInfoKey);
     } else if (object is List<Map>) {
-      return object.map((Map map) => fromMap(map, typeInfoKey: useTypeInfoKey)).toList();
+      return object
+          .map((Map map) => fromMap(map, typeInfoKey: useTypeInfoKey))
+          .toList();
     } else {
       throw new Exception("Unknown object type received!");
     }

@@ -15,7 +15,8 @@ class BookSerializer extends Serializer<Book> with _$BookSerializer {
 }
 
 @DefineFieldProcessor()
-class MapKeyNumToStringProcessor implements FieldProcessor<Map<num, dynamic>, Map<dynamic, dynamic>> {
+class MapKeyNumToStringProcessor
+    implements FieldProcessor<Map<num, dynamic>, Map<dynamic, dynamic>> {
   final Symbol field;
 
   const MapKeyNumToStringProcessor(this.field);
@@ -31,7 +32,6 @@ class MapKeyNumToStringProcessor implements FieldProcessor<Map<num, dynamic>, Ma
       } else if (key is num) {
         fromMap[key] = input[key];
       }
-
     }
     return fromMap;
   }

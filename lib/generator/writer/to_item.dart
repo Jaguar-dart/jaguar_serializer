@@ -46,7 +46,8 @@ class ToItemWriter {
     } else if (leaf is ProviderPropertyTo) {
       if (leaf.type == "Type") {
         _w.write(' "\${$reference}"');
-      }/* else {
+      }
+      /* else {
         _w.write(' SerializerRepo.getSerializerForType(' +
             leaf.type +
             ').toMap($reference, withTypeInfo: withTypeInfo)');
