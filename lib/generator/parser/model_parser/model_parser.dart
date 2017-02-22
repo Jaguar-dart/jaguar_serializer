@@ -1,7 +1,6 @@
 library jaguar_serializer.generator.parser.model;
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/type.dart';
 
 import 'package:source_gen_help/source_gen_help.dart';
 

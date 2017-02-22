@@ -18,7 +18,7 @@ part 'info.dart';
 part 'providers.dart';
 part 'custom_field.dart';
 
-const String kLibMapSer = 'serializer.serializer';
+const String kLibMapSer = 'jaguar_serializer.serializer';
 
 const NamedElementImpl kMapSerializer =
     const NamedElementImpl.Make('MapSerializer', kLibMapSer);
@@ -26,8 +26,8 @@ const NamedElementImpl kMapSerializer =
 const NamedElementImpl kFieldProcessor =
     const NamedElementImpl.Make('FieldProcessor', kLibMapSer);
 
-const NamedElementImpl kDefineFieldProcessor =
-    const NamedElementImpl.Make('DefineFieldProcessor', kLibMapSer);
+const NamedElementImpl kDefineFieldProcessor = const NamedElementImpl.Make(
+    'DefineFieldProcessor', 'jaguar_serializer.annotations');
 
 SerializerInfo parseSerializer(ClassElementWrap clazz) {
   final InterfaceTypeWrap interface = clazz.allSupertypes.firstWhere(

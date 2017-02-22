@@ -27,7 +27,7 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;
@@ -73,7 +73,7 @@ abstract class _$PlayerSerializerIgnore implements MapSerializer<Player> {
         ret["score"] = model.score;
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;
@@ -112,7 +112,7 @@ abstract class _$PlayerSerializerIgnores implements MapSerializer<Player> {
         ret["score"] = model.score;
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;
@@ -158,7 +158,7 @@ abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;
