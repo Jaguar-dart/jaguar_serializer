@@ -1,35 +1,78 @@
 part of jaguar_serializer.serializer;
 
 class SerializerRepo {
-  SerializerRepo._();
+  SerializerRepo({this.typeInfoKey: "@t"});
 
-  static String typeInfoKey = "@t";
-  static Map<Type, MapSerializer> _mapperType = {};
-  static Map<String, MapSerializer> _mapperString = {};
+  final String typeInfoKey;
+  final Map<Type, Serializer> _mapperType = {};
+  final Map<String, Serializer> _mapperString = {};
 
-  static MapSerializer getMapSerializerForType(Type type) {
+  MapSerializer getByType(Type type) {
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
     }
-    //Todo: better exception, how to fix error ? how to add serializer ? ...
     throw new Exception("No MapSerializer found for $type");
   }
 
-  static MapSerializer getMapSerializerFromMap(Map map) {
-    if (map.containsKey(SerializerRepo.typeInfoKey) &&
-        _mapperString.containsKey(map[SerializerRepo.typeInfoKey])) {
-      return _mapperString[map[SerializerRepo.typeInfoKey]];
+  MapSerializer getByTypeKey(String key) {
+    final serializer = _mapperString[key];
+    if (serializer == null) {
+      throw new Exception("No MapSerializer found for type key $key");
     }
-    throw new Exception(
-        "No MapSerializer found for ${map[SerializerRepo.typeInfoKey]}");
+    return serializer;
   }
 
-  static void addSerializer(MapSerializer serializer) {
+  void add(Serializer serializer) {
     if (!_mapperType.containsKey(serializer.modelType)) {
       _mapperType[serializer.modelType] = serializer;
     }
+    //TODO what if different serializers with same name are added?
     if (!_mapperString.containsKey(serializer.modelString)) {
       _mapperString[serializer.modelString] = serializer;
     }
+  }
+
+  dynamic to(dynamic object, {Type type}) {
+    final Serializer serializer = getByType(type);
+
+    if (serializer == null) {
+      throw new Exception("Cannot find serializer for type $type");
+    }
+
+    return encode(serializer.to(object));
+  }
+
+  dynamic from(dynamic object, {Type type}) {
+    Serializer serializer = getByType(type);
+
+    final decoded = decode(object);
+
+    if (serializer == null) {
+      final String typeInfo = _objectToType(decoded);
+      if (typeInfo is String) {
+        serializer = getByTypeKey(typeInfo);
+      }
+      throw new Exception("Cannot find serializer for type $type");
+    }
+
+    if (decoded is Map) {}
+
+    return serializer.from(decode(object));
+  }
+
+  dynamic encode(dynamic object) => object;
+
+  dynamic decode(dynamic object) => object;
+
+  String _objectToType(object) {
+    String typeKey;
+    if (object is Map) {
+      typeKey = object[typeInfoKey];
+    } else if (object is List<Map> &&
+        object.length != 0 &&
+        object.first is Map) {
+      typeKey = object.first[typeInfoKey];
+    }
+    return typeKey;
   }
 }

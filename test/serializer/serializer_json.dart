@@ -25,7 +25,7 @@ void main() {
       new Author()..name = 'Kleak',
     ];
     serializer = new SerializerJson();
-    serializer.addSerializer(new BookSerializer());
+    serializer.add(new BookSerializer());
   });
 
   group('toJson', () {
@@ -41,13 +41,13 @@ void main() {
     });
 
     test('List<Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       String encode = serializer.encode(book.authors);
       expect(encode, equals('[{"name":"Teja Hackborn"},{"name":"Kleak"}]'));
     });
 
     test('Iterable<Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       Map tester = {
         1: new Author()..name = 'Teja Hackborn',
         2: new Author()..name = 'Kleak',
@@ -63,7 +63,7 @@ void main() {
     });
 
     test('Map<dynamic, dynamic>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       Map<dynamic, dynamic> map = {
         1: book.authors.first,
         "2": "second",
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('const Map<dynamic, dynamic>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       const Map<dynamic, dynamic> map = const {1: 1.1, "2": "second", 3: 3};
       String encode = serializer.encode(map);
       expect(encode, equals('{"1":1.1,"2":"second","3":3}'));
@@ -104,7 +104,7 @@ void main() {
     });
 
     test('List<Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       List<Author> authors = serializer
           .decode('[{"name":"Teja Hackborn"},{"name":"Kleak"}]', type: Author);
       expect(authors.length, equals(2));
@@ -120,14 +120,14 @@ void main() {
 
     //todo: decode to Map<dynamic, dynamic>
     test('Map<dynamic, dynamic>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       var decode = serializer.decode(
           '{"1":{"name":"Teja Hackborn"},"2":"second","3.0":{"name":"Kleak"}}');
     }, skip: true);
 
     //todo: decode to Map<dynamic, dynamic>
     test('const Map<dynamic, dynamic>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       var decode = serializer.decode('{"1":1.1,"2":"second","3":3}');
     }, skip: true);
   });
@@ -146,7 +146,7 @@ void main() {
     });
 
     test('List<Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       String encoded = serializer.encode(book.authors, withTypeInfo: true);
       List<Author> authors = serializer.decode(encoded);
       expect(authors.length, equals(book.authors.length));

@@ -162,14 +162,14 @@ void main() {
 
   setUpAll(() {
     serializer = new SerializerJson()
-      ..addSerializer(new ModelIntSerializer())
-      ..addSerializer(new ModelDoubleSerializer())
-      ..addSerializer(new DateSerializer())
-      ..addSerializer(new WithIgnoreSerializer())
-      ..addSerializer(new NullTestSerializer())
-      ..addSerializer(new ModelRenamedSerializer())
-      ..addSerializer(new ComplexSerializer())
-      ..addSerializer(new InheritanceSerializer());
+      ..add(new ModelIntSerializer())
+      ..add(new ModelDoubleSerializer())
+      ..add(new DateSerializer())
+      ..add(new WithIgnoreSerializer())
+      ..add(new NullTestSerializer())
+      ..add(new ModelRenamedSerializer())
+      ..add(new ComplexSerializer())
+      ..add(new InheritanceSerializer());
   });
 
   group('Various - toMap', () {

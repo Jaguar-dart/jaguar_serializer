@@ -3,8 +3,10 @@ library jaguar_serializer.json;
 import 'dart:convert';
 import 'package:jaguar_serializer/serializer.dart';
 
-class SerializerJson extends Serializer {
-  SerializerJson()
-      : super((dynamic object) => JSON.encode(object),
-            (String data) => JSON.decode(data));
+class JsonRepo extends SerializerRepo {
+  JsonRepo({String typeInfoKey: "@t"}) : super(typeInfoKey: typeInfoKey);
+
+  dynamic encode(dynamic object) => JSON.encode(object);
+
+  dynamic decode(dynamic object) => JSON.decode(object);
 }

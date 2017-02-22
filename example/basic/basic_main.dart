@@ -147,7 +147,7 @@ void main() {
   print(pSerializer.toMap(player, withTypeInfo: true));
 
   // use global serializer
-  SerializerRepo.addSerializer(new PlayerSerializer());
+  SerializerRepo.add(new PlayerSerializer());
   json();
   yaml();
 }
