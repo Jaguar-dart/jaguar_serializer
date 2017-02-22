@@ -28,7 +28,7 @@ const Map<String, dynamic> kUserMap1 = const {
 
 main() {
   SerializerJson serializer = new SerializerJson();
-  serializer.addSerializer(new UserViewSerializer());
+  serializer.add(new UserViewSerializer());
 
   User user = serializer.fromMap(kUserMap1, type: User);
 

@@ -25,7 +25,7 @@ void main() {
       new Author()..name = 'Kleak',
     ];
     serializer = new SerializerJson();
-    serializer.addSerializer(new BookSerializer());
+    serializer.add(new BookSerializer());
   });
 
   group("toObject", () {
@@ -58,7 +58,7 @@ void main() {
     });
 
     test('List<Author> toObject', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       var object = serializer.toObject(book.authors);
       expect(object is List, isTrue);
       List list = object;
@@ -68,7 +68,7 @@ void main() {
     });
 
     test('List<Author> toList', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       List object = serializer.toList(book.authors);
       expect(object is List, isTrue);
       expect(object.length, equals(2));
@@ -77,7 +77,7 @@ void main() {
     });
 
     test('List<Author> toList use global MapperSerializer', () {
-      SerializerRepo.addSerializer(new AuthorSerializer());
+      SerializerRepo.add(new AuthorSerializer());
       List object = serializer.toList(book.authors);
       expect(object is List, isTrue);
       expect(object.length, equals(2));
@@ -86,7 +86,7 @@ void main() {
     });
 
     test('List<Author> toObject == toList', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       List list = serializer.toList(book.authors);
       var object = serializer.toObject(book.authors);
       expect(list, equals(object));
@@ -115,7 +115,7 @@ void main() {
     });
 
     test('List<Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       List<Author> authors = serializer.fromObject([
         {"name": "Teja Hackborn"},
         {"name": "Kleak"}
@@ -126,7 +126,7 @@ void main() {
     });
 
     test('List<Author> use global MapperSerializer', () {
-      SerializerRepo.addSerializer(new AuthorSerializer());
+      SerializerRepo.add(new AuthorSerializer());
       List<Author> authors = serializer.fromObject([
         {"name": "Teja Hackborn"},
         {"name": "Kleak"}
@@ -145,7 +145,7 @@ void main() {
     }, skip: true);
 
     test('Map<dynamic, Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       Map<dynamic, Author> decode = serializer.fromObject({
         "1": {"name": "Teja Hackborn"},
         3.0: {"name": "Kleak"}
@@ -155,7 +155,7 @@ void main() {
     }, skip: true);
 
     test('Map<dynamic, dynamic>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       Map<dynamic, dynamic> decode = serializer.fromObject({
         1: {"name": "Teja Hackborn"},
         "2": "second",
@@ -181,7 +181,7 @@ void main() {
     });
 
     test('List<Author>', () {
-      serializer.addSerializer(new AuthorSerializer());
+      serializer.add(new AuthorSerializer());
       List encoded = serializer.toObject(book.authors, withTypeInfo: true);
       List<Author> authors = serializer.fromObject(encoded);
       expect(authors.length, equals(book.authors.length));
@@ -194,6 +194,6 @@ void main() {
     SerializerRepo.typeInfoKey = "#my_type_info_key";
     Map object = serializer.toMap(book, withTypeInfo: true);
     expect(object[SerializerRepo.typeInfoKey],
-        equals(serializer.getMapSerializerForType(Book).modelString));
+        equals(serializer.getByType(Book).modelString));
   });
 }
