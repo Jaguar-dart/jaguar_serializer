@@ -55,33 +55,6 @@ void main() {
       String encode = serializer.encode(tester.values);
       expect(encode, equals('[{"name":"Teja Hackborn"},{"name":"Kleak"}]'));
     });
-
-    test('Map<dynamic, String>', () {
-      Map<dynamic, String> map = {1: "first", "2": "second", 3: "third"};
-      String encode = serializer.encode(map);
-      expect(encode, equals('{"1":"first","2":"second","3":"third"}'));
-    });
-
-    test('Map<dynamic, dynamic>', () {
-      serializer.add(new AuthorSerializer());
-      Map<dynamic, dynamic> map = {
-        1: book.authors.first,
-        "2": "second",
-        3: book.authors.last
-      };
-      String encode = serializer.encode(map);
-      expect(
-          encode,
-          equals(
-              '{"1":{"name":"Teja Hackborn"},"2":"second","3":{"name":"Kleak"}}'));
-    });
-
-    test('const Map<dynamic, dynamic>', () {
-      serializer.add(new AuthorSerializer());
-      const Map<dynamic, dynamic> map = const {1: 1.1, "2": "second", 3: 3};
-      String encode = serializer.encode(map);
-      expect(encode, equals('{"1":1.1,"2":"second","3":3}'));
-    });
   });
 
   group('fromJson', () {

@@ -34,7 +34,10 @@ void main() {
       expect(object is Map, isTrue);
       expect(object["name"], equals(book.name));
       expect(object["tags"], equals(book.tags));
-      expect(object["publishedDates"], equals(book.publishedDates));
+      expect(object["publishedDates"], equals({
+        '1.0': '2010',
+        '2.0': '2016',
+      }));
       expect(object["authors"].length, equals(2));
       expect(object["authors"][0]["name"], equals('Teja Hackborn'));
       expect(object["authors"][1]["name"], equals('Kleak'));
@@ -45,7 +48,10 @@ void main() {
       expect(object is Map, isTrue);
       expect(object["name"], equals(book.name));
       expect(object["tags"], equals(book.tags));
-      expect(object["publishedDates"], equals(book.publishedDates));
+      expect(object["publishedDates"], equals({
+        '1.0': '2010',
+        '2.0': '2016',
+      }));
       expect(object["authors"].length, equals(2));
       expect(object["authors"][0]["name"], equals('Teja Hackborn'));
       expect(object["authors"][1]["name"], equals('Kleak'));
@@ -98,7 +104,7 @@ void main() {
       Book bookTest = serializer.fromObject({
         "name": "Dawn of AI: The last few centuries of humanity",
         "tags": ["AI", "Humanity", "SciFi"],
-        "publishedDates": {1.0: "2010", 2.0: "2016"},
+        "publishedDates": {'1.0': "2010", '2.0': "2016"},
         "authors": [
           {"name": "Teja Hackborn"},
           {"name": "Kleak"}

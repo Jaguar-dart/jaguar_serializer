@@ -74,16 +74,6 @@ void main() {
               '  name: "Kleak"\n'));
     });
 
-    test('Map<dynamic, String>', () {
-      Map<dynamic, String> map = {1: "first", "2": "second", 3: "third"};
-      String encode = serializer.encode(map);
-      expect(
-          encode,
-          equals('1: "first"\n'
-              '2: "second"\n'
-              '3: "third"\n'));
-    });
-
     test('Map<dynamic, dynamic>', () {
       serializer.add(new AuthorSerializer());
       Map<dynamic, dynamic> map = {
@@ -101,16 +91,6 @@ void main() {
               '  name: "Kleak"\n'));
     });
 
-    test('const Map<dynamic, String>', () {
-      serializer.add(new AuthorSerializer());
-      const Map<dynamic, String> map = const {1: "1", "2": "2", 3: "3"};
-      String encode = serializer.encode(map);
-      expect(
-          encode,
-          equals('1: "1"\n'
-              '2: "2"\n'
-              '3: "3"\n'));
-    });
   });
 
   group('fromYaml', () {

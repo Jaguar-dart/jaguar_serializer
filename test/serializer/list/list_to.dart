@@ -35,8 +35,8 @@ void main() {
       expect(
           map,
           containsPair('publishedDates', {
-            1.0: '2010',
-            2.0: '2016',
+            '1.0': '2010',
+            '2.0': '2016',
           }));
       expect(
           map,
@@ -60,8 +60,8 @@ void main() {
       expect(
           map,
           containsPair('publishedDates', {
-            1.0: '2010',
-            2.0: '2016',
+            '1.0': '2010',
+            '2.0': '2016',
           }));
       expect(
           map,
@@ -85,8 +85,8 @@ void main() {
       expect(
           map,
           containsPair('publishedDates', {
-            1.0: '2010',
-            2.0: '2016',
+            '1.0': '2010',
+            '2.0': '2016',
           }));
       expect(
           map,
