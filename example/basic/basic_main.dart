@@ -147,7 +147,7 @@ void main() {
   print(pSerializer.toMap(player, withTypeInfo: true));
 
   // use global serializer
-  JaguarSerializer.addSerializer(new PlayerSerializer());
+  SerializerRepo.addSerializer(new PlayerSerializer());
   json();
   yaml();
 }

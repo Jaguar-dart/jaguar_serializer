@@ -35,7 +35,7 @@ abstract class _$BookSerializer implements MapSerializer<Book> {
             ?.toList();
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;

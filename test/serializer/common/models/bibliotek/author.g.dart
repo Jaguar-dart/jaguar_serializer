@@ -15,7 +15,7 @@ abstract class _$AuthorSerializer implements MapSerializer<Author> {
         ret["name"] = model.name;
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;

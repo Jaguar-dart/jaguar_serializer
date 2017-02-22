@@ -77,7 +77,7 @@ void main() {
     });
 
     test('List<Author> toList use global MapperSerializer', () {
-      JaguarSerializer.addSerializer(new AuthorSerializer());
+      SerializerRepo.addSerializer(new AuthorSerializer());
       List object = serializer.toList(book.authors);
       expect(object is List, isTrue);
       expect(object.length, equals(2));
@@ -126,7 +126,7 @@ void main() {
     });
 
     test('List<Author> use global MapperSerializer', () {
-      JaguarSerializer.addSerializer(new AuthorSerializer());
+      SerializerRepo.addSerializer(new AuthorSerializer());
       List<Author> authors = serializer.fromObject([
         {"name": "Teja Hackborn"},
         {"name": "Kleak"}
@@ -191,9 +191,9 @@ void main() {
   });
 
   test('global config', () {
-    JaguarSerializer.type_info_key = "#my_type_info_key";
+    SerializerRepo.typeInfoKey = "#my_type_info_key";
     Map object = serializer.toMap(book, withTypeInfo: true);
-    expect(object[JaguarSerializer.type_info_key],
+    expect(object[SerializerRepo.typeInfoKey],
         equals(serializer.getMapSerializerForType(Book).modelString));
   });
 }

@@ -1,7 +1,6 @@
 library jaguar_serializer.generator.writer;
 
 import 'package:jaguar_serializer/generator/parser/serializer_parser/serializer_parser.dart';
-import 'package:jaguar_serializer/src/serializer/import.dart';
 
 part 'to_item.dart';
 

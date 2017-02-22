@@ -180,7 +180,7 @@ void main() {
       expect(serializer.toMap(d, withTypeInfo: true), {
         "clazzA": "ClassA",
         "clazzB": "inheritance",
-        JaguarSerializer.type_info_key: "Inheritance"
+        SerializerRepo.typeInfoKey: "Inheritance"
       });
     });
 
@@ -190,7 +190,7 @@ void main() {
       expect(serializer.toMap(d, withTypeInfo: true), {
         "bar": 42,
         "clazzA": "ClassA",
-        JaguarSerializer.type_info_key: "ModelInt"
+        SerializerRepo.typeInfoKey: "ModelInt"
       });
     });
 
@@ -200,7 +200,7 @@ void main() {
       expect(serializer.toMap(d, withTypeInfo: true), {
         "bar": 42.42,
         "clazzA": "ClassA",
-        JaguarSerializer.type_info_key: "ModelDouble"
+        SerializerRepo.typeInfoKey: "ModelDouble"
       });
     });
 
@@ -213,7 +213,7 @@ void main() {
       expect(serializer.toMap(d, withTypeInfo: true), {
         "date": now.toIso8601String(),
         "clazzA": "ClassA",
-        JaguarSerializer.type_info_key: "Date"
+        SerializerRepo.typeInfoKey: "Date"
       });
     });
 
@@ -228,7 +228,7 @@ void main() {
       expect(serializer.toMap(d, withTypeInfo: true), {
         "test": "test",
         "testModel": [null],
-        JaguarSerializer.type_info_key: "NullTest"
+        SerializerRepo.typeInfoKey: "NullTest"
       });
     });
 
@@ -336,7 +336,7 @@ void main() {
       d = serializer.fromMap({
         "clazzA": "A",
         "clazzB": "B",
-        JaguarSerializer.type_info_key: "Inheritance"
+        SerializerRepo.typeInfoKey: "Inheritance"
       });
       expect(d.clazzA, "A");
       expect(d.clazzB, "B");
@@ -350,7 +350,7 @@ void main() {
       d = serializer.fromMap({
         "bar": 42,
         "clazzA": "classA",
-        JaguarSerializer.type_info_key: "ModelInt"
+        SerializerRepo.typeInfoKey: "ModelInt"
       });
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
@@ -364,7 +364,7 @@ void main() {
       d = serializer.fromMap({
         "bar": 42.42,
         "clazzA": "A",
-        JaguarSerializer.type_info_key: "ModelDouble"
+        SerializerRepo.typeInfoKey: "ModelDouble"
       });
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
@@ -378,7 +378,7 @@ void main() {
       d = serializer.fromMap({
         "date": now.toIso8601String(),
         "clazzA": "A",
-        JaguarSerializer.type_info_key: "Date"
+        SerializerRepo.typeInfoKey: "Date"
       });
       expect(d.date, now);
     });
@@ -393,7 +393,7 @@ void main() {
       d = serializer.fromMap({
         "test": "test",
         "testModel": [null],
-        JaguarSerializer.type_info_key: "NullTest"
+        SerializerRepo.typeInfoKey: "NullTest"
       }, type: NullTest);
       expect(d.test, "test");
       expect(d.testModel, [null]);

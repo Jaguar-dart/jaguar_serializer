@@ -176,7 +176,7 @@ void main() {
   group("yaml with type info", () {
     test('Book', () {
       book.publishedDates = null;
-      JaguarSerializer.type_info_key = "(t)";
+      SerializerRepo.typeInfoKey = "(t)";
       String encoded = serializer.encode(book, withTypeInfo: true);
       Book bookTest = serializer.decode(encoded);
       expect(bookTest.name, equals(book.name));
@@ -188,7 +188,7 @@ void main() {
     });
 
     test('List<Author>', () {
-      JaguarSerializer.type_info_key = "(t)";
+      SerializerRepo.typeInfoKey = "(t)";
       serializer.addSerializer(new AuthorSerializer());
       String encoded = serializer.encode(book.authors, withTypeInfo: true);
       List<Author> authors = serializer.decode(encoded);

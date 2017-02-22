@@ -66,7 +66,7 @@ abstract class _$UserMongoSerializer implements MapSerializer<User> {
         ret["passwordHash"] = model.passwordHash;
       }
       if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+        ret[SerializerRepo.typeInfoKey] = modelString;
       }
     }
     return ret;

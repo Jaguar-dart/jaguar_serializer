@@ -1,4 +1,19 @@
-part of serializer.serializer;
+library jaguar_serializer.annotations;
+
+/// Annotation used to request generation of serializer
+class GenSerializer {
+  const GenSerializer();
+}
+
+/// Annotation used to provide serializers for specific types
+class ProvideSerializer {
+  /// A mapping from Type to the serializer used for that Type
+  final Type field;
+
+  final Type serializer;
+
+  const ProvideSerializer(this.field, this.serializer);
+}
 
 /// Annotation to ignore a field while encoding or decoding
 class IgnoreField {
@@ -103,4 +118,9 @@ class EnDecodeFields {
   final Map<Symbol, String> fields;
 
   const EnDecodeFields(this.fields);
+}
+
+/// Annotation to define a field processor
+class DefineFieldProcessor {
+  const DefineFieldProcessor();
 }
