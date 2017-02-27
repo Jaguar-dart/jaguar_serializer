@@ -12,8 +12,7 @@ part 'book_mongo.g.dart';
 @MongoId(#id)
 @EnDecodeField(#name, asAndFrom: 'N')
 @IgnoreField(#viewSerializer)
-class BookMongoSerializer extends MapSerializer<Book>
-    with _$BookMongoSerializer {
+class BookMongoSerializer extends Serializer<Book> with _$BookMongoSerializer {
   Book createModel() => new Book();
 
   BookMongoSerializer();

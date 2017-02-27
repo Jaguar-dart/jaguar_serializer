@@ -14,8 +14,8 @@ void main() {
       book.name = 'Dawn of AI: The last few centuries of humanity';
       book.tags = <String>['AI', 'Humanity', 'SciFi'];
       book.publishedDates = <num, String>{
-        1.0: '2010',
-        2.0: '2016',
+        1.1: '2010',
+        2.1: '2016',
       };
       book.authors = <Author>[
         new Author()..name = 'Teja Hackborn',
@@ -35,8 +35,8 @@ void main() {
       expect(
           map,
           containsPair('publishedDates', {
-            1.0: '2010',
-            2.0: '2016',
+            '1.1': '2010',
+            '2.1': '2016',
           }));
       expect(
           map,
@@ -60,8 +60,8 @@ void main() {
       expect(
           map,
           containsPair('publishedDates', {
-            1.0: '2010',
-            2.0: '2016',
+            '1.1': '2010',
+            '2.1': '2016',
           }));
       expect(
           map,
@@ -85,8 +85,8 @@ void main() {
       expect(
           map,
           containsPair('publishedDates', {
-            1.0: '2010',
-            2.0: '2016',
+            '1.1': '2010',
+            '2.1': '2016',
           }));
       expect(
           map,

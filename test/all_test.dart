@@ -12,7 +12,6 @@ import 'generator/writer/list_map/list_map.dart' as genWriterListMap;
 
 import 'serializer/various/various.dart' as various;
 
-import 'serializer/serializer.dart' as serializer;
 import 'serializer/serializer_json.dart' as serializer_json;
 import 'serializer/serializer_yaml.dart' as serializer_yaml;
 
@@ -27,7 +26,6 @@ void main() {
 
   various.main();
 
-  serializer.main();
   serializer_json.main();
   serializer_yaml.main();
 

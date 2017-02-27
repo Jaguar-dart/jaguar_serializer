@@ -20,7 +20,7 @@ class SerializerWriter {
   void generate() {
     _w.writeln('abstract class _\$' +
         info.name +
-        ' implements MapSerializer<${info.modelName}> {');
+        ' implements Serializer<${info.modelName}> {');
     _w.writeln();
 
     _providerWriter();
@@ -29,7 +29,7 @@ class SerializerWriter {
 
     _fromWriter();
 
-    _w.writeln('String get modelString => "${info.modelName}";');
+    //TODO _w.writeln('String get modelString => "${info.modelName}";');
 
     _w.writeln('}');
   }
@@ -72,7 +72,7 @@ class SerializerWriter {
 
   void _toWriter() {
     _w.writeln(
-        'Map toMap(${info.modelName} model, {bool withTypeInfo: false}) {');
+        'Map toMap(${info.modelName} model, {bool withTypeInfo: false, String typeInfoKey}) {');
     _w.writeln(r'Map ret = new Map();');
 
     _w.writeln('if(model != null) {');
@@ -90,9 +90,9 @@ class SerializerWriter {
   }
 
   void _typeInfoKey() {
-    _w.writeln('if(modelString != null && withTypeInfo) {');
+    _w.writeln('if(modelString() != null && withTypeInfo) {');
 
-    _w.write('ret[JaguarSerializer.type_info_key] = modelString;');
+    _w.write('ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();');
 
     _w.writeln('}');
   }
@@ -112,7 +112,7 @@ class SerializerWriter {
 
   void _fromWriter() {
     _w.writeln(
-        '${info.modelName} fromMap(Map map, {${info.modelName} model}) {');
+        '${info.modelName} fromMap(Map map, {${info.modelName} model, String typeInfoKey}) {');
     _w.writeln(r'if(map is! Map) {');
     _w.writeln(r'return null;');
     _w.writeln(r'}');

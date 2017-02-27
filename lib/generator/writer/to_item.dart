@@ -42,7 +42,7 @@ class ToItemWriter {
     } else if (leaf is SerializedPropertyTo) {
       _w.write(' to' +
           leaf.instantiationString +
-          '.toMap($reference, withTypeInfo: withTypeInfo)');
+          '.toMap($reference, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)');
     }
 
     return _w.toString();

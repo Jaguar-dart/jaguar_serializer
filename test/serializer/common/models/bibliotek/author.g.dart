@@ -7,21 +7,21 @@ part of serializer.test.models.Author;
 // Target: class AuthorSerializer
 // **************************************************************************
 
-abstract class _$AuthorSerializer implements MapSerializer<Author> {
-  Map toMap(Author model, {bool withTypeInfo: false}) {
+abstract class _$AuthorSerializer implements Serializer<Author> {
+  Map toMap(Author model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
         ret["name"] = model.name;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[SerializerRepo.typeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Author fromMap(Map map, {Author model}) {
+  Author fromMap(Map map, {Author model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -31,6 +31,4 @@ abstract class _$AuthorSerializer implements MapSerializer<Author> {
     model.name = map["name"];
     return model;
   }
-
-  String get modelString => "Author";
 }

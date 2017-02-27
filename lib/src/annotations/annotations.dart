@@ -1,5 +1,7 @@
 library jaguar_serializer.annotations;
 
+const String kLibAnnotations = 'jaguar_serializer.annotations';
+
 /// Annotation used to request generation of serializer
 class GenSerializer {
   const GenSerializer();
