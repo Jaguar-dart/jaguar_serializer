@@ -20,8 +20,8 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
       if (model.email != null) {
         ret["email"] = model.email;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -39,6 +39,4 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     model.email = map["email"];
     return model;
   }
-
-  String get modelString => "Player";
 }

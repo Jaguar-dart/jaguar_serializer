@@ -29,7 +29,7 @@ class SerializerWriter {
 
     _fromWriter();
 
-    _w.writeln('String get modelString => "${info.modelName}";');
+    //TODO _w.writeln('String get modelString => "${info.modelName}";');
 
     _w.writeln('}');
   }
@@ -90,9 +90,9 @@ class SerializerWriter {
   }
 
   void _typeInfoKey() {
-    _w.writeln('if(modelString != null && withTypeInfo) {');
+    _w.writeln('if(modelString() != null && withTypeInfo) {');
 
-    _w.write('ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;');
+    _w.write('ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();');
 
     _w.writeln('}');
   }

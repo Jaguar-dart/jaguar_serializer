@@ -17,8 +17,8 @@ abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -35,8 +35,6 @@ abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
     model.clazzA = map["clazzA"];
     return model;
   }
-
-  String get modelString => "ModelInt";
 }
 
 // **************************************************************************
@@ -54,8 +52,8 @@ abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -72,8 +70,6 @@ abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
     model.clazzA = map["clazzA"];
     return model;
   }
-
-  String get modelString => "ModelDouble";
 }
 
 // **************************************************************************
@@ -91,8 +87,8 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
       if (model.clazzB != null) {
         ret["clazzB"] = model.clazzB;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -109,8 +105,6 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
     model.clazzB = map["clazzB"];
     return model;
   }
-
-  String get modelString => "Inheritance";
 }
 
 // **************************************************************************
@@ -128,8 +122,8 @@ abstract class _$DateSerializer implements Serializer<Date> {
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -146,8 +140,6 @@ abstract class _$DateSerializer implements Serializer<Date> {
     model.clazzA = map["clazzA"];
     return model;
   }
-
-  String get modelString => "Date";
 }
 
 // **************************************************************************
@@ -178,8 +170,8 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
                 : null)
             ?.toList();
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -200,8 +192,6 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
         ?.toList();
     return model;
   }
-
-  String get modelString => "NullTest";
 }
 
 // **************************************************************************
@@ -216,8 +206,8 @@ abstract class _$WithIgnoreSerializer implements Serializer<WithIgnore> {
       if (model.a != null) {
         ret["a"] = model.a;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -233,8 +223,6 @@ abstract class _$WithIgnoreSerializer implements Serializer<WithIgnore> {
     model.a = map["a"];
     return model;
   }
-
-  String get modelString => "WithIgnore";
 }
 
 // **************************************************************************
@@ -250,8 +238,8 @@ abstract class _$ModelRenamedSerializer implements Serializer<ModelRenamed> {
       if (model.original != null) {
         ret["renamed"] = model.original;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -267,8 +255,6 @@ abstract class _$ModelRenamedSerializer implements Serializer<ModelRenamed> {
     model.original = map["renamed"];
     return model;
   }
-
-  String get modelString => "ModelRenamed";
 }
 
 // **************************************************************************
@@ -358,8 +344,8 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
           return value?.map((String val) => val != null ? val : null)?.toList();
         }).model;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -411,6 +397,4 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
     }).model as dynamic;
     return model;
   }
-
-  String get modelString => "Complex";
 }

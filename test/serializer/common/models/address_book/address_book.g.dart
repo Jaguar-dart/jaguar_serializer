@@ -21,14 +21,8 @@ abstract class _$Person implements Serializer<Person> {
         ret["address"] = toAddress.toMap(model.address,
             withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
       }
-      if (model.modelType != null) {
-        ret["modelType"] = "${model.modelType}";
-      }
-      if (model.modelString != null) {
-        ret["modelString"] = model.modelString;
-      }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -46,8 +40,6 @@ abstract class _$Person implements Serializer<Person> {
         fromAddress.fromMap(map["address"], typeInfoKey: typeInfoKey);
     return model;
   }
-
-  String get modelString => "Person";
 }
 
 // **************************************************************************
@@ -74,14 +66,8 @@ abstract class _$Address implements Serializer<Address> {
       if (model.pincode != null) {
         ret["pincode"] = model.pincode;
       }
-      if (model.modelType != null) {
-        ret["modelType"] = "${model.modelType}";
-      }
-      if (model.modelString != null) {
-        ret["modelString"] = model.modelString;
-      }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -101,6 +87,4 @@ abstract class _$Address implements Serializer<Address> {
     model.pincode = map["pincode"];
     return model;
   }
-
-  String get modelString => "Address";
 }

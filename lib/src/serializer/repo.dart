@@ -26,11 +26,11 @@ class SerializerRepo {
 
   void add(Serializer serializer) {
     if (!_mapperType.containsKey(serializer.modelType)) {
-      _mapperType[serializer.modelType] = serializer;
+      _mapperType[serializer.modelType()] = serializer;
     }
     //TODO what if different serializers with same name are added?
     if (!_mapperString.containsKey(serializer.modelString)) {
-      _mapperString[serializer.modelString] = serializer;
+      _mapperString[serializer.modelString()] = serializer;
     }
   }
 

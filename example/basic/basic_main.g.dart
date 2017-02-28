@@ -36,8 +36,8 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
         ret["address"] = toAddressSerializer.toMap(model.address,
             withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -60,8 +60,6 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
         fromAddressSerializer.fromMap(map["address"], typeInfoKey: typeInfoKey);
     return model;
   }
-
-  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -85,8 +83,8 @@ abstract class _$AddressSerializer implements Serializer<Address> {
       if (model.city != null) {
         ret["city"] = model.city;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -105,6 +103,4 @@ abstract class _$AddressSerializer implements Serializer<Address> {
     model.city = map["city"];
     return model;
   }
-
-  String get modelString => "Address";
 }

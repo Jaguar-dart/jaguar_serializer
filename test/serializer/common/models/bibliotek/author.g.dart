@@ -14,8 +14,8 @@ abstract class _$AuthorSerializer implements Serializer<Author> {
       if (model.name != null) {
         ret["name"] = model.name;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -31,6 +31,4 @@ abstract class _$AuthorSerializer implements Serializer<Author> {
     model.name = map["name"];
     return model;
   }
-
-  String get modelString => "Author";
 }

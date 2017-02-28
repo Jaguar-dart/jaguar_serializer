@@ -26,8 +26,8 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -47,8 +47,6 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     model.emailConfirmed = map["emailConfirmed"];
     return model;
   }
-
-  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -72,8 +70,8 @@ abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -92,8 +90,6 @@ abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
     model.score = map["score"];
     return model;
   }
-
-  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -111,8 +107,8 @@ abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -129,8 +125,6 @@ abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
     model.score = map["score"];
     return model;
   }
-
-  String get modelString => "Player";
 }
 
 // **************************************************************************
@@ -157,8 +151,8 @@ abstract class _$PlayerSerializerRename implements Serializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -178,6 +172,4 @@ abstract class _$PlayerSerializerRename implements Serializer<Player> {
     model.emailConfirmed = map["eC"];
     return model;
   }
-
-  String get modelString => "Player";
 }

@@ -33,8 +33,8 @@ abstract class _$BookSerializer implements Serializer<Book> {
                 : null)
             ?.toList();
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -57,6 +57,4 @@ abstract class _$BookSerializer implements Serializer<Book> {
         ?.toList();
     return model;
   }
-
-  String get modelString => "Book";
 }

@@ -20,8 +20,8 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
       if (model.publishedYear != null) {
         ret["publishedYear"] = model.publishedYear;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -39,6 +39,4 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
     model.publishedYear = map["publishedYear"];
     return model;
   }
-
-  String get modelString => "Book";
 }

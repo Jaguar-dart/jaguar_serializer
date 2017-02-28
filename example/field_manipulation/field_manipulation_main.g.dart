@@ -23,8 +23,8 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
       if (model.score != null) {
         ret["S"] = model.score;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -43,6 +43,4 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
     model.score = map["S"];
     return model;
   }
-
-  String get modelString => "Player";
 }

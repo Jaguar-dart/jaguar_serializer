@@ -67,8 +67,8 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
       if (model.passwordHash != null) {
         ret["passwordHash"] = model.passwordHash;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -108,6 +108,4 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     model.password = map["password"];
     return model;
   }
-
-  String get modelString => "User";
 }

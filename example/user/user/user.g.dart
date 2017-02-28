@@ -64,8 +64,8 @@ abstract class _$UserViewSerializer implements Serializer<User> {
               withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
         }).model;
       }
-      if (modelString != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
@@ -104,6 +104,4 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     }).model as dynamic;
     return model;
   }
-
-  String get modelString => "User";
 }
