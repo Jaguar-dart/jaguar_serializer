@@ -7,25 +7,26 @@ import 'package:jaguar_serializer/serializer.dart';
 part "benchmark.g.dart";
 
 @GenSerializer()
-class TestSerializer extends MapSerializer<Test> with _$TestSerializer {
+@ProvideSerializer(InnerTest, InnerTestSerializer)
+class ModelTestSerializer extends Serializer<ModelTest> with _$ModelTestSerializer {
   @override
-  Test createModel() => new Test();
+  ModelTest createModel() => new ModelTest();
 }
 
 @GenSerializer()
-class InnerTestSerializer extends MapSerializer<InnerTest> with _$InnerTestSerializer {
+class InnerTestSerializer extends Serializer<InnerTest> with _$InnerTestSerializer {
   @override
   InnerTest createModel() => new InnerTest();
 }
 
-class Test {
+class ModelTest {
   String name = "test";
   num number;
   List<String> names = [ "jaguar", "serializer", "test"];
   List<num> numbers = [];
   List<InnerTest> inner = [];
 
-  Test({this.number, int it}) {
+  ModelTest({this.number, int it}) {
     if (it != null) {
       for (int i = 0; i < it / 2; i++) {
         numbers.add(i);
@@ -43,12 +44,12 @@ class InnerTest {
 }
 
 const num maxIteration = 250;
-Serializer json = new SerializerJson();
+SerializerRepo json = new JsonRepo();
 
 
 main() {
-  JaguarSerializer.addSerializer(new TestSerializer());
-  JaguarSerializer.addSerializer(new InnerTestSerializer());
+  json.add(new ModelTestSerializer());
+  json.add(new InnerTestSerializer());
   File jsonFile = new File("benchmark_result.csv");
   if (jsonFile.existsSync() == false) {
     jsonFile.createSync();
@@ -56,9 +57,9 @@ main() {
 
   jsonFile.writeAsStringSync("");
   for (int it = 0; it < maxIteration; it++) {
-    List<Test> tests = [];
+    List<ModelTest> tests = [];
     for (int i = 0; i < it; i++) {
-      tests.add(new Test(number: i, it: it));
+      tests.add(new ModelTest(number: i, it: it));
     }
 
     Stopwatch time;
@@ -66,12 +67,12 @@ main() {
 
     time = new Stopwatch()
       ..start();
-    String encoded = json.encode(tests);
+    String encoded = json.to(tests);
     times.add(time.elapsedMilliseconds);
 
     time = new Stopwatch()
       ..start();
-    json.decode(encoded, type: Test);
+    json.from(encoded, type: ModelTest);
     times.add(time.elapsedMilliseconds);
 
     time = new Stopwatch()

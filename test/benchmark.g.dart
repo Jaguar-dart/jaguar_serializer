@@ -4,11 +4,14 @@ part of serializer.test.benchmark;
 
 // **************************************************************************
 // Generator: SerializerGenerator
-// Target: class TestSerializer
+// Target: class ModelTestSerializer
 // **************************************************************************
 
-abstract class _$TestSerializer implements MapSerializer<Test> {
-  Map toMap(Test model, {bool withTypeInfo: false}) {
+abstract class _$ModelTestSerializer implements Serializer<ModelTest> {
+  final InnerTestSerializer toInnerTestSerializer = new InnerTestSerializer();
+  final InnerTestSerializer fromInnerTestSerializer = new InnerTestSerializer();
+
+  Map toMap(ModelTest model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -29,24 +32,23 @@ abstract class _$TestSerializer implements MapSerializer<Test> {
       if (model.inner != null) {
         ret["inner"] = model.inner
             ?.map((InnerTest val) => val != null
-                ? JaguarSerializer
-                    .getMapSerializerForType(InnerTest)
-                    .toMap(val, withTypeInfo: withTypeInfo)
+                ? toInnerTestSerializer.toMap(val,
+                    withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)
                 : null)
             ?.toList();
       }
-      if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Test fromMap(Map map, {Test model}) {
+  ModelTest fromMap(Map map, {ModelTest model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
-    if (model is! Test) {
+    if (model is! ModelTest) {
       model = createModel();
     }
     model.name = map["name"];
@@ -54,13 +56,13 @@ abstract class _$TestSerializer implements MapSerializer<Test> {
     model.names = map["names"]?.map((String val) => val)?.toList();
     model.numbers = map["numbers"]?.map((num val) => val)?.toList();
     model.inner = map["inner"]
-        ?.map((dynamic val) =>
-            JaguarSerializer.getMapSerializerForType(InnerTest).fromMap(val))
+        ?.map((Map val) =>
+            fromInnerTestSerializer.fromMap(val, typeInfoKey: typeInfoKey))
         ?.toList();
     return model;
   }
 
-  String get modelString => "Test";
+  String modelString() => "ModelTest";
 }
 
 // **************************************************************************
@@ -68,8 +70,8 @@ abstract class _$TestSerializer implements MapSerializer<Test> {
 // Target: class InnerTestSerializer
 // **************************************************************************
 
-abstract class _$InnerTestSerializer implements MapSerializer<InnerTest> {
-  Map toMap(InnerTest model, {bool withTypeInfo: false}) {
+abstract class _$InnerTestSerializer implements Serializer<InnerTest> {
+  Map toMap(InnerTest model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -80,14 +82,14 @@ abstract class _$InnerTestSerializer implements MapSerializer<InnerTest> {
             ?.map((String val) => val != null ? val : null)
             ?.toList();
       }
-      if (modelString != null && withTypeInfo) {
-        ret[JaguarSerializer.type_info_key] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  InnerTest fromMap(Map map, {InnerTest model}) {
+  InnerTest fromMap(Map map, {InnerTest model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -99,5 +101,5 @@ abstract class _$InnerTestSerializer implements MapSerializer<InnerTest> {
     return model;
   }
 
-  String get modelString => "InnerTest";
+  String modelString() => "InnerTest";
 }
