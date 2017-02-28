@@ -40,6 +40,8 @@ abstract class _$Person implements Serializer<Person> {
         fromAddress.fromMap(map["address"], typeInfoKey: typeInfoKey);
     return model;
   }
+
+  String modelString() => "Person";
 }
 
 // **************************************************************************
@@ -87,4 +89,6 @@ abstract class _$Address implements Serializer<Address> {
     model.pincode = map["pincode"];
     return model;
   }
+
+  String modelString() => "Address";
 }

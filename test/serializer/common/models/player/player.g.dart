@@ -47,6 +47,8 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     model.emailConfirmed = map["emailConfirmed"];
     return model;
   }
+
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -90,6 +92,8 @@ abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
     model.score = map["score"];
     return model;
   }
+
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -125,6 +129,8 @@ abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
     model.score = map["score"];
     return model;
   }
+
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -172,4 +178,6 @@ abstract class _$PlayerSerializerRename implements Serializer<Player> {
     model.emailConfirmed = map["eC"];
     return model;
   }
+
+  String modelString() => "Player";
 }

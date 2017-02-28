@@ -321,8 +321,8 @@ void main() {
             "doubles": [1.1, 2.2, 3.3],
             // "dates": ["2016-12-24T00:00:00.000", "2016-12-25T00:00:00.000", "2016-12-26T00:00:00.000"],
             "ignores": [
-              {"a": "1337A", "@t": "$WithIgnore"},
-              {"a": "1337B", "@t": "$WithIgnore"}
+              {"a": "1337A", "@t": "WithIgnore"},
+              {"a": "1337B", "@t": "WithIgnore"}
             ],
             "numSet": {"numA": 1, "numB": 12.2},
             "stringSet": {"strA": "1", "strB": "3"},
@@ -331,13 +331,13 @@ void main() {
             "doubleSet": {"dblA": 1.1, "dblB": 12.1},
             //  "dateSet": {"fiesta": "2016-12-24T00:00:00.000", "christmas": "2016-12-25T00:00:00.000"},
             "ignoreSet": {
-              "A": {"a": "1337A", "@t": "$WithIgnore"},
-              "B": {"a": "1337B", "@t": "$WithIgnore"}
+              "A": {"a": "1337A", "@t": "WithIgnore"},
+              "B": {"a": "1337B", "@t": "WithIgnore"}
             },
             "listInnerMap1": {
               "test": ["123456"]
             },
-            "@t": "$Complex",
+            "@t": "Complex",
           }));
     });
   });
@@ -424,7 +424,7 @@ void main() {
 
     test("Complex", () {
       Complex complex = serializer.from({
-        "@t": "$Complex",
+        "@t": "Complex",
         "nums": [1, 2.2, 3],
         "strings": ["1", "2", "3"],
         "bools": [true, false, true],
@@ -432,8 +432,8 @@ void main() {
         "doubles": [1.1, 2.2, 3.3],
         // "dates": ["2016-12-24T00:00:00.000", "2016-12-25T00:00:00.000", "2016-12-26T00:00:00.000"],
         "ignores": [
-          {"a": "1337A", "@t": "$WithIgnore"},
-          {"a": "1337B", "@t": "$WithIgnore"}
+          {"a": "1337A", "@t": "WithIgnore"},
+          {"a": "1337B", "@t": "WithIgnore"}
         ],
         "numSet": {"numA": 1, "numB": 12.2},
         "stringSet": {"strA": "1", "strB": "3"},
@@ -442,8 +442,8 @@ void main() {
         "doubleSet": {"dblA": 1.1, "dblB": 12.1},
         //  "dateSet": {"fiesta": "2016-12-24T00:00:00.000", "christmas": "2016-12-25T00:00:00.000"},
         "ignoreSet": {
-          "A": {"a": "1337A", "@t": "$WithIgnore"},
-          "B": {"a": "1337B", "@t": "$WithIgnore"}
+          "A": {"a": "1337A", "@t": "WithIgnore"},
+          "B": {"a": "1337B", "@t": "WithIgnore"}
         },
         "listInnerMap1": {
           "test": ["123456"]

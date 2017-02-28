@@ -43,4 +43,6 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
     model.score = map["S"];
     return model;
   }
+
+  String modelString() => "Player";
 }

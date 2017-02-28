@@ -29,6 +29,8 @@ dependencies:
 transformers:
 - test/pub_serve:
     $include: test/all_browser_test.dart
+- $dart2js:
+    minify: true
 
 dev_dependencies:
   test:

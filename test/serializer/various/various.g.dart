@@ -35,6 +35,8 @@ abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
     model.clazzA = map["clazzA"];
     return model;
   }
+
+  String modelString() => "ModelInt";
 }
 
 // **************************************************************************
@@ -70,6 +72,8 @@ abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
     model.clazzA = map["clazzA"];
     return model;
   }
+
+  String modelString() => "ModelDouble";
 }
 
 // **************************************************************************
@@ -105,6 +109,8 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
     model.clazzB = map["clazzB"];
     return model;
   }
+
+  String modelString() => "Inheritance";
 }
 
 // **************************************************************************
@@ -140,6 +146,8 @@ abstract class _$DateSerializer implements Serializer<Date> {
     model.clazzA = map["clazzA"];
     return model;
   }
+
+  String modelString() => "Date";
 }
 
 // **************************************************************************
@@ -192,6 +200,8 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
         ?.toList();
     return model;
   }
+
+  String modelString() => "NullTest";
 }
 
 // **************************************************************************
@@ -223,6 +233,8 @@ abstract class _$WithIgnoreSerializer implements Serializer<WithIgnore> {
     model.a = map["a"];
     return model;
   }
+
+  String modelString() => "WithIgnore";
 }
 
 // **************************************************************************
@@ -255,6 +267,8 @@ abstract class _$ModelRenamedSerializer implements Serializer<ModelRenamed> {
     model.original = map["renamed"];
     return model;
   }
+
+  String modelString() => "ModelRenamed";
 }
 
 // **************************************************************************
@@ -397,4 +411,6 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
     }).model as dynamic;
     return model;
   }
+
+  String modelString() => "Complex";
 }

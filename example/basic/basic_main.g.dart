@@ -60,6 +60,8 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
         fromAddressSerializer.fromMap(map["address"], typeInfoKey: typeInfoKey);
     return model;
   }
+
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -103,4 +105,6 @@ abstract class _$AddressSerializer implements Serializer<Address> {
     model.city = map["city"];
     return model;
   }
+
+  String modelString() => "Address";
 }

@@ -29,7 +29,7 @@ class SerializerWriter {
 
     _fromWriter();
 
-    //TODO _w.writeln('String get modelString => "${info.modelName}";');
+    _w.writeln('String modelString() => "${info.modelName}";');
 
     _w.writeln('}');
   }

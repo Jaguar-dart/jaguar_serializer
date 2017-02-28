@@ -39,4 +39,6 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
     model.publishedYear = map["publishedYear"];
     return model;
   }
+
+  String modelString() => "Book";
 }

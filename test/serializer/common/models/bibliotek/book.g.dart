@@ -57,4 +57,6 @@ abstract class _$BookSerializer implements Serializer<Book> {
         ?.toList();
     return model;
   }
+
+  String modelString() => "Book";
 }

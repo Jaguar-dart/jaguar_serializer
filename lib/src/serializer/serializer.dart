@@ -45,7 +45,7 @@ abstract class Serializer<ModelType> {
 
   Type modelType() => ModelType;
 
-  String modelString() => "$ModelType";
+  String modelString();
 
   ModelType createModel();
 }

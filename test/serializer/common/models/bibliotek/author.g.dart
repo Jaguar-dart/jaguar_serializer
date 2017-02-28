@@ -31,4 +31,6 @@ abstract class _$AuthorSerializer implements Serializer<Author> {
     model.name = map["name"];
     return model;
   }
+
+  String modelString() => "Author";
 }

@@ -108,4 +108,6 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     model.password = map["password"];
     return model;
   }
+
+  String modelString() => "User";
 }

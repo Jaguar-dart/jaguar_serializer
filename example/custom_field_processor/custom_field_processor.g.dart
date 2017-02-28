@@ -39,4 +39,6 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     model.email = map["email"];
     return model;
   }
+
+  String modelString() => "Player";
 }

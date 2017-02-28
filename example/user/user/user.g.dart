@@ -104,4 +104,6 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     }).model as dynamic;
     return model;
   }
+
+  String modelString() => "User";
 }
