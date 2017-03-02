@@ -4,7 +4,27 @@ part 'custom_codec.dart';
 part 'map_maker.dart';
 part 'repo.dart';
 
+/**
+ * Extend this class to create a Serializer for a [Type]
+ *
+ * Example:
+ *
+ *     @GenSerializer()
+ *     class UserSerializer extends Serializer<User> implements _$UserSerializer {
+ *        User createModel() => new User();
+ *     }
+ *
+ * Both methods, [to] and [from] can handle [Map] or [List].
+ */
 abstract class Serializer<ModelType> {
+
+  /**
+   * Convert [model] to a serialized object.
+   *
+   * If [withTypeInfo] is set to true, the serialized [Object] will contain a key.
+   * The value of the can be set with the [typeInfoKey] option.
+   * It will be associated with the type of the object.
+   */
   dynamic to(dynamic model,
       {bool withTypeInfo: false, String typeInfoKey: defaultTypeInfoKey}) {
     if (model is ModelType) {
@@ -19,12 +39,17 @@ abstract class Serializer<ModelType> {
     }
   }
 
-  dynamic from(dynamic object, {Type type, String useTypeInfoKey}) {
+  /**
+   * Deserialize [object]
+   *
+   * An instance of the resulting object can be passed with the [model] option.
+   */
+  dynamic from(dynamic object, {ModelType model}) {
     if (object is Map) {
-      return fromMap(object, typeInfoKey: useTypeInfoKey);
+      return fromMap(object, model: model);
     } else if (object is List<Map>) {
       return object
-          .map((Map map) => fromMap(map, typeInfoKey: useTypeInfoKey))
+          .map((Map map) => fromMap(map, model: model))
           .toList();
     } else {
       throw new Exception("Unknown object type received!");
@@ -35,16 +60,17 @@ abstract class Serializer<ModelType> {
   Map toMap(ModelType model, {bool withTypeInfo: false, String typeInfoKey});
 
   /// Decodes model from [Map]
-  ModelType fromMap(Map map, {ModelType model, String typeInfoKey}) {
+  ModelType fromMap(Map map, {ModelType model}) {
     if (model is! ModelType) {
       model = createModel();
     }
-
     return model;
   }
 
+  /// Return the [Type] handle by this [Serializer]
   Type modelType() => ModelType;
 
+  /// Return the associated [String] of the [Type] handle by this [Serializer], used by [typeInfoKey]
   String modelString();
 
   ModelType createModel();

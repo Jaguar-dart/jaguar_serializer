@@ -5,7 +5,7 @@ import 'package:yaml/yaml.dart';
 import 'package:yamlicious/yamlicious.dart';
 
 class YamlRepo extends SerializerRepo {
-  YamlRepo({String typeInfoKey: "@t"}) : super(typeInfoKey: typeInfoKey);
+  YamlRepo({String typeInfoKey: defaultTypeInfoKey}) : super(typeInfoKey: typeInfoKey);
 
   dynamic encode(dynamic object) => toYamlString(object);
 

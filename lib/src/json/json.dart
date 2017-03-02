@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:jaguar_serializer/serializer.dart';
 
 class JsonRepo extends SerializerRepo {
-  JsonRepo({String typeInfoKey: "@t"}) : super(typeInfoKey: typeInfoKey);
+  JsonRepo({String typeInfoKey: defaultTypeInfoKey}) : super(typeInfoKey: typeInfoKey);
 
   dynamic encode(dynamic object) => JSON.encode(object);
 

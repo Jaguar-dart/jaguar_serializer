@@ -2,8 +2,8 @@ library serializer.test.list_map;
 
 import 'package:test/test.dart';
 
-import 'package:jaguar_serializer/generator/parser/import.dart';
-import 'package:jaguar_serializer/generator/writer/writer.dart';
+import 'package:jaguar_serializer/src/generator/parser/import.dart';
+import 'package:jaguar_serializer/src/generator/writer/writer.dart';
 
 const PropertyTo prop1 = const ListPropertyTo(
     const ListPropertyTo(const BuiltinLeafPropertyTo(), 'String'),

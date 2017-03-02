@@ -8,3 +8,4 @@ pubspec.lock
 .atom
 .dart_tool
 serialize.iml
+doc/

@@ -8,13 +8,15 @@ part "benchmark.g.dart";
 
 @GenSerializer()
 @ProvideSerializer(InnerTest, InnerTestSerializer)
-class ModelTestSerializer extends Serializer<ModelTest> with _$ModelTestSerializer {
+class ModelTestSerializer extends Serializer<ModelTest>
+    with _$ModelTestSerializer {
   @override
   ModelTest createModel() => new ModelTest();
 }
 
 @GenSerializer()
-class InnerTestSerializer extends Serializer<InnerTest> with _$InnerTestSerializer {
+class InnerTestSerializer extends Serializer<InnerTest>
+    with _$InnerTestSerializer {
   @override
   InnerTest createModel() => new InnerTest();
 }
@@ -22,7 +24,7 @@ class InnerTestSerializer extends Serializer<InnerTest> with _$InnerTestSerializ
 class ModelTest {
   String name = "test";
   num number;
-  List<String> names = [ "jaguar", "serializer", "test"];
+  List<String> names = ["jaguar", "serializer", "test"];
   List<num> numbers = [];
   List<InnerTest> inner = [];
 
@@ -40,12 +42,11 @@ class ModelTest {
 
 class InnerTest {
   String name = "innerTest";
-  List<String> names = [ "jaguar", "serializer", "test", "inner"];
+  List<String> names = ["jaguar", "serializer", "test", "inner"];
 }
 
 const num maxIteration = 250;
 SerializerRepo json = new JsonRepo();
-
 
 main() {
   json.add(new ModelTestSerializer());
@@ -65,21 +66,17 @@ main() {
     Stopwatch time;
     List<num> times = [it];
 
-    time = new Stopwatch()
-      ..start();
+    time = new Stopwatch()..start();
     String encoded = json.to(tests);
     times.add(time.elapsedMilliseconds);
 
-    time = new Stopwatch()
-      ..start();
+    time = new Stopwatch()..start();
     json.from(encoded, type: ModelTest);
     times.add(time.elapsedMilliseconds);
 
-    time = new Stopwatch()
-      ..start();
+    time = new Stopwatch()..start();
     JSON.decode(encoded);
     times.add(time.elapsedMilliseconds);
-
 
     jsonFile.writeAsStringSync("${times.join(",")}\n", mode: FileMode.APPEND);
   }
