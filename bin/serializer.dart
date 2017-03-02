@@ -1,4 +1,4 @@
-import 'package:jaguar_serializer/generator/generator/generator.dart';
+import 'package:jaguar_serializer/generator.dart';
 
 main(List<String> args) {
   start(args);
