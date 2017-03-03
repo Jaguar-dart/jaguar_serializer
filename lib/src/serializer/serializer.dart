@@ -17,7 +17,6 @@ part 'repo.dart';
  * Both methods, [to] and [from] can handle [Map] or [List].
  */
 abstract class Serializer<ModelType> {
-
   /**
    * Convert [model] to a serialized object.
    *
@@ -50,9 +49,7 @@ abstract class Serializer<ModelType> {
     if (object is Map) {
       return fromMap(object, model: model);
     } else if (object is List<Map>) {
-      return object
-          .map((Map map) => fromMap(map, model: model))
-          .toList();
+      return object.map((Map map) => fromMap(map, model: model)).toList();
     } else {
       throw new Exception("Unknown object type received!");
     }
