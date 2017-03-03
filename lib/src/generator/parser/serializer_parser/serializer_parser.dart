@@ -1,3 +1,4 @@
+///@nodoc
 library jaguar_serializer.generator.parser.serializer;
 
 import 'dart:mirrors' show MirrorSystem;
@@ -6,7 +7,7 @@ import 'package:analyzer/dart/constant/value.dart';
 
 import 'package:source_gen_help/source_gen_help.dart';
 
-import 'package:jaguar_serializer/generator/parser/model_parser/model_parser.dart';
+import 'package:jaguar_serializer/src/generator/parser/model_parser/model_parser.dart';
 
 import 'package:jaguar_serializer/serializer.dart';
 

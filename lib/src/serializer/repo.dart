@@ -1,14 +1,43 @@
 part of jaguar_serializer.serializer;
 
+/// Default key added to a serialize Object to add his [Type]
 const String defaultTypeInfoKey = "@t";
 
+/**
+ * Repository that contains [Serializer] for a [Type].
+ *
+ * Example:
+ *
+ *     SerializerRepo repository = new SerializerRepo();
+ *     respository.add(new UserSerializer());
+ *
+ *     User user = new User();
+ *
+ *     // serialize
+ *     Map<String, dynamic> map = repository.to(user);
+ *     List<Map<String,dynamic>> list = repository.to([ user ] );
+ *
+ *     // deserialize
+ *     user = repository.from(map, type: User);
+ *     List<User> users = repository.from(list, type: User);
+ *
+ */
 class SerializerRepo {
-  SerializerRepo({this.typeInfoKey: defaultTypeInfoKey});
-
-  final String typeInfoKey;
   final Map<Type, Serializer> _mapperType = {};
   final Map<String, Serializer> _mapperString = {};
 
+  SerializerRepo({this.typeInfoKey: defaultTypeInfoKey});
+
+  /**
+   * Key added to a map when serializing an Object
+   */
+  final String typeInfoKey;
+
+  /**
+   * Return a [Serializer] for a Type
+   *
+   * Throw an [Exception] if no [Serializer]
+   */
   Serializer getByType(Type type) {
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
@@ -16,14 +45,24 @@ class SerializerRepo {
     throw new Exception("No Serializer found for $type");
   }
 
-  Serializer getByTypeKey(String key) {
-    final serializer = _mapperString[key];
+  /**
+   * Return a [Serializer] for a String representing his [Type]
+   *
+   * Throw an [Exception] if no [Serializer]
+   */
+  Serializer getByTypeKey(String name) {
+    final serializer = _mapperString[name];
     if (serializer == null) {
-      throw new Exception("No Serializer found for type key $key");
+      throw new Exception("No Serializer found for type key $name");
     }
     return serializer;
   }
 
+  /**
+   * Add a [Serializer] to the repository.
+   *
+   * If a [Serializer] using the same type is already in the repository, it won't be override.
+   */
   void add(Serializer serializer) {
     if (!_mapperType.containsKey(serializer.modelType)) {
       _mapperType[serializer.modelType()] = serializer;
@@ -34,22 +73,14 @@ class SerializerRepo {
     }
   }
 
-  dynamic _to(dynamic object,
-      {Type type, bool withTypeInfo: false, String useTypeInfoKey}) {
-    useTypeInfoKey ??= typeInfoKey;
-    if (object is String || object is num) {
-      return object;
-    }
-    final Serializer serializer = getByType(type);
-
-    if (serializer == null) {
-      throw new Exception("Cannot find serializer for type $type");
-    }
-
-    return serializer.to(object,
-        withTypeInfo: withTypeInfo, typeInfoKey: useTypeInfoKey);
-  }
-
+  /**
+   * Convert the given [Object] to a serialized [Object], [Map] or [List]
+   *
+   * If [withTypeInfo] is set to true, the serialized [Object] will contain a key ([typeInfoKey])
+   * with the type of the object as a value.
+   *
+   * The [typeInfoKey] can be override using the [useTypeInfoKey] option.
+   */
   dynamic to(dynamic object,
       {bool withTypeInfo: false, String useTypeInfoKey}) {
     useTypeInfoKey ??= typeInfoKey;
@@ -76,6 +107,49 @@ class SerializerRepo {
         useTypeInfoKey: useTypeInfoKey));
   }
 
+  /**
+   * Deserialize the given [Object] ([Map] or [List]).
+   *
+   * If the [type] option is specified, it will be used to get the correct [Serializer].
+   *
+   * If not, it will look at if the object contain the [typeInfoKey] and will use it to get the correct [Serializer].
+   *
+   * The [typeInfoKey] can be override using the [useTypeInfoKey] option.
+   */
+  dynamic from(dynamic object, {Type type, String useTypeInfoKey}) {
+    useTypeInfoKey ??= typeInfoKey;
+    final decoded = object is String ? decode(object) : object;
+
+    if (decoded is Iterable) {
+      return decoded
+          .map((obj) => _from(obj, type: type, useTypeInfoKey: useTypeInfoKey))
+          .toList();
+    }
+    return _from(decoded, type: type, useTypeInfoKey: useTypeInfoKey);
+  }
+
+  ///@nodoc
+  dynamic encode(dynamic object) => object;
+
+  ///@nodoc
+  dynamic decode(dynamic object) => object;
+
+  dynamic _to(dynamic object,
+      {Type type, bool withTypeInfo: false, String useTypeInfoKey}) {
+    useTypeInfoKey ??= typeInfoKey;
+    if (object is String || object is num) {
+      return object;
+    }
+    final Serializer serializer = getByType(type);
+
+    if (serializer == null) {
+      throw new Exception("Cannot find serializer for type $type");
+    }
+
+    return serializer.to(object,
+        withTypeInfo: withTypeInfo, typeInfoKey: useTypeInfoKey);
+  }
+
   dynamic _from(dynamic decoded, {Type type, String useTypeInfoKey}) {
     Serializer serializer;
 
@@ -93,22 +167,6 @@ class SerializerRepo {
 
     return serializer.from(decoded);
   }
-
-  dynamic from(dynamic object, {Type type, String useTypeInfoKey}) {
-    useTypeInfoKey ??= typeInfoKey;
-    final decoded = object is String ? decode(object) : object;
-
-    if (decoded is Iterable) {
-      return decoded
-          .map((obj) => _from(obj, type: type, useTypeInfoKey: useTypeInfoKey))
-          .toList();
-    }
-    return _from(decoded, type: type, useTypeInfoKey: useTypeInfoKey);
-  }
-
-  dynamic encode(dynamic object) => object;
-
-  dynamic decode(dynamic object) => object;
 
   String _objectToType(object, String infoKey) {
     String typeKey;

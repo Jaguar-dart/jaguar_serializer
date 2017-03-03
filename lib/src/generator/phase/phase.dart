@@ -1,10 +1,11 @@
+///@nodoc
 library jaguar.generator.phase;
 
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 
-import 'package:jaguar_serializer/generator/hook/make_serializer/make_serializer.dart';
-import 'package:jaguar_serializer/generator/config/config.dart';
+import 'package:jaguar_serializer/src/generator/generator.dart';
+import 'package:jaguar_serializer/src/generator/config/config.dart';
 
 Phase apisPhase(String projectName, List<String> apis) {
   return new Phase()

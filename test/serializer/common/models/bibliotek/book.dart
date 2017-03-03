@@ -16,16 +16,16 @@ class BookSerializer extends Serializer<Book> with _$BookSerializer {
 
 @DefineFieldProcessor()
 class MapKeyNumToStringProcessor
-    implements FieldProcessor<Map<num, dynamic>, Map<dynamic, dynamic>> {
+    implements FieldProcessor<Map<num, String>, Map<dynamic, String>> {
   final Symbol field;
 
   const MapKeyNumToStringProcessor(this.field);
 
-  Map<num, dynamic> from(final Map<dynamic, dynamic> input) {
+  Map<num, String> from(final Map<dynamic, String> input) {
     if (input == null) {
       return null;
     }
-    Map<num, dynamic> fromMap = {};
+    Map<num, String> fromMap = {};
     for (var key in input.keys) {
       if (key is String) {
         fromMap[num.parse(key)] = input[key];
@@ -36,11 +36,11 @@ class MapKeyNumToStringProcessor
     return fromMap;
   }
 
-  Map<dynamic, dynamic> to(final Map<num, dynamic> value) {
+  Map<String, String> to(final Map<num, String> value) {
     if (value == null) {
       return null;
     }
-    Map<String, dynamic> toMap = {};
+    Map<String, String> toMap = {};
     for (num key in value.keys) {
       toMap[key.toString()] = value[key];
     }

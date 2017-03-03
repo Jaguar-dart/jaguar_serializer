@@ -1,3 +1,4 @@
+///@nodoc
 import 'package:jaguar_generator_config/jaguar_generator_config.dart';
 
 const String jaguarSerializerConfigFile = "serializer.yaml";

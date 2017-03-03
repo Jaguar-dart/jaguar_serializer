@@ -1,19 +1,39 @@
-library jaguar_serializer.generator.hook.make_serializer;
-
+///@nodoc
 import 'dart:async';
 
+import 'package:build/build.dart' as _build;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
-
-import 'package:jaguar_serializer/serializer.dart';
-
-import 'package:jaguar_serializer/generator/parser/import.dart';
-import 'package:jaguar_serializer/generator/writer/writer.dart';
-
 import 'package:source_gen_help/source_gen_help.dart';
 
-import 'package:build/build.dart';
+import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/src/generator/phase/phase.dart';
+import 'package:jaguar_serializer/src/generator/parser/import.dart';
+import 'package:jaguar_serializer/src/generator/writer/writer.dart';
+
+/// Watch files and trigger build function
+Stream<_build.BuildResult> watch() =>
+    _build.watch(phaseGroup(), deleteFilesByDefault: true);
+
+/// Build all Serializer
+Future<_build.BuildResult> build() =>
+    _build.build(phaseGroup(), deleteFilesByDefault: true);
+
+// shoud we keep this ?
+start(List<String> args) {
+  if (args.length > 0) {
+    if (args[0] == 'watch') {
+      watch();
+    } else if (args[0] == 'build') {
+      build();
+    } else {
+      print("Invalid command!");
+    }
+  } else {
+    print("Invalid command!");
+  }
+}
 
 /// source_gen hook to generate serializer
 class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {

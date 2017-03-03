@@ -1,3 +1,4 @@
+///@nodoc
 part of jaguar_serializer.serializer;
 
 class MapMaker<KF, VF, KT, VT> {
