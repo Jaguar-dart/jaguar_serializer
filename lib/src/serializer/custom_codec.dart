@@ -24,7 +24,7 @@ part of jaguar_serializer.serializer;
  *
  *     @GenSerializer()
  *     @MongoId(#id)
- *     class UserSerializer extends Serializer<User> implements _$UserSerializer {
+ *     class UserSerializer extends Serializer<User> with _$UserSerializer {
  *        User createModel() => new User();
  *     }
  *

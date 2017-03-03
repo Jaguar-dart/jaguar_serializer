@@ -10,7 +10,7 @@ part 'repo.dart';
  * Example:
  *
  *     @GenSerializer()
- *     class UserSerializer extends Serializer<User> implements _$UserSerializer {
+ *     class UserSerializer extends Serializer<User> with _$UserSerializer {
  *        User createModel() => new User();
  *     }
  *
@@ -22,7 +22,9 @@ abstract class Serializer<ModelType> {
    * Convert [model] to a serialized object.
    *
    * If [withTypeInfo] is set to true, the serialized [Object] will contain a key.
-   * The value of the can be set with the [typeInfoKey] option.
+   *
+   * The value of the key can be set with the [typeInfoKey] option.
+   *
    * It will be associated with the type of the object.
    */
   dynamic to(dynamic model,

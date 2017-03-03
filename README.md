@@ -3,222 +3,114 @@
 # jaguar_serializer
 Format agnostic Serializer library that can be used in server and client for JSON, mongodb, postgresql, etc
 
-# Simple examples
+
+# Getting Started
+
+## Install
+
+`pub global activate jaguar_serializer`
+
+## Add it to your project
+
+```yaml
+dependencies:
+    jaguar_serializer: ">=1.0.0 <2.0.0"
+```
 
 ## Simple serializer
 
+Create a file for your model.
+
 ```dart
-library example.player;
+library example.user;
 
 import 'package:jaguar_serializer/serializer.dart';
 
-part 'basic_main.g.dart';
+part 'user.g.dart';
+```
 
-@GenSerializer()
-class PlayerJsonSerializer extends Object
-    with JsonMixin, _$PlayerJsonSerializer
-    implements Serializer<Player> {
-  Player createModel() => new Player();
+Create you model.
 
-  PlayerJsonSerializer();
-}
-
-/// Player model for the game
-class Player {
-  /// Name of the player
+```dart
+/// User model
+class User {
   String name;
-
-  /// Email of the player
-  String email;
-
-  /// Age of the player
   int age;
-
-  /// Player score
-  int score;
-
-  /// Has the player confirmed his email?
-  ///
-  /// Should not be sent to client
-  bool emailConfirmed;
-
-  String toString() => 'Player($name, $email, $age, $score, $emailConfirmed)';
-}
-
-void main() {
-  {
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
-    Player player = serializer.fromMap({
-      'name': 'John',
-      'email': 'john@noemail.com',
-      'age': 25,
-      'score': 1000,
-      'emailConfirmed': true,
-    });
-    // Player(John, john@noemail.com, 25, 1000, true)
-    print(player);
-  }
-
-  {
-    Player player = new Player()
-      ..name = 'John'
-      ..email = 'john@noemail.com'
-      ..age = 25
-      ..score = 1000
-      ..emailConfirmed = true;
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
-    Map map = serializer.toMap(player);
-    // {name: John, email: john@noemail.com, age: 25, score: 1000, emailConfirmed: true}
-    print(map);
-  }
 }
 ```
 
-## Field and key manipulation
+Declare a Serializer for your model
 
 ```dart
-library example.field_manipulation;
-
-import 'package:jaguar_serializer/serializer.dart';
-
-part 'field_manipulation_main.g.dart';
-
 @GenSerializer()
-@IgnoreField(#emailConfirmed)
-@EnDecodeFields(const {
-  #name: 'N',
-  #email: 'E',
-  #age: 'A',
-  #score: 'S',
-})
-class PlayerJsonSerializer extends Object
-    with JsonMixin, _$PlayerJsonSerializer
-    implements Serializer<Player> {
-  Player createModel() => new Player();
-
-  PlayerJsonSerializer();
-}
-
-/// Player model for the game
-class Player {
-  /// Name of the player
-  String name;
-
-  /// Email of the player
-  String email;
-
-  /// Age of the player
-  int age;
-
-  /// Player score
-  int score;
-
-  /// Has the player confirmed his email?
-  ///
-  /// Should not be sent to client
-  bool emailConfirmed;
-
-  String toString() => 'Player($name, $email, $age, $score, $emailConfirmed)';
-}
-
-void main() {
-  {
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
-    Player player = serializer.fromMap({
-      'N': 'John',
-      'E': 'john@noemail.com',
-      'A': 25,
-      'S': 1000,
-    });
-    // Player(John, john@noemail.com, 25, 1000, null)
-    print(player);
-  }
-
-  {
-    Player player = new Player()
-      ..name = 'John'
-      ..email = 'john@noemail.com'
-      ..age = 25
-      ..score = 1000
-      ..emailConfirmed = true;
-    PlayerJsonSerializer serializer = new PlayerJsonSerializer();
-    Map map = serializer.toMap(player);
-    // {N: John, E: john@noemail.com, A: 25, S: 1000}
-    print(map);
-  }
+class UserJsonSerializer extends Serializer<User> with _$UserJsonSerializer {
+  User createModel() => new User();
 }
 ```
 
-## Custom field processor
+## Generate Serializer
 
+### Configuration file
+
+Jaguar Serializer need a configuration file to know which files have possible Serializer.
+
+On your root directory, declare the `serializer.yaml` file with the following informations.
+
+```yaml
+serializers:
+- lib/model/user.dart
+...
+```
+
+### Build
+No you can build you serializer running the command
+
+`serializer build` 
+
+or 
+
+`pub run jaguar_serializer:serializer build`
+
+This command will create 'user.g.dart' file with the generated Serializer inside.
+
+### Watch
+
+You can trigger the rebuild each time you do a change in you file by using the `watch` command.
+
+`serializer watch`
+
+## Use Serializer
+
+A Serializer will convert an instance of object to a Map<String, dynamic>, that can be used to apply conversion to JSON, YAML ...
+
+You can directly use the generated Serializer and apply the conversion.
 ```dart
-library example.field_manipulation;
-
 import 'package:jaguar_serializer/serializer.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mgo;
-
-part 'custom_field_processor.g.dart';
-
-@DefineFieldProcessor()
-class MongoId implements FieldProcessor<String, mgo.ObjectId> {
-  final Symbol field;
-
-  const MongoId(this.field);
-
-  String from(mgo.ObjectId input) {
-    return input.toHexString();
-  }
-
-  mgo.ObjectId to(String value) {
-    return new mgo.ObjectId.fromHexString(value);
-  }
-}
-
-@GenSerializer()
-@MongoId(#id)
-@EnDecodeField(#id, asAndFrom: '_id')
-class PlayerMongoSerializer extends Object
-    with JsonMixin, _$PlayerMongoSerializer
-    implements Serializer<Player> {
-  Player createModel() => new Player();
-
-  PlayerMongoSerializer();
-}
-
-/// Player model for the game
-class Player {
-  String id;
-
-  /// Name of the player
-  String name;
-
-  /// Email of the player
-  String email;
-
-  String toString() => 'Player($id, $name, $email)';
-}
+import 'model/user.dart';
 
 void main() {
-  {
-    PlayerMongoSerializer serializer = new PlayerMongoSerializer();
-    Player player = serializer.fromMap({
-      '_id': new mgo.ObjectId(),
-      'name': 'John',
-      'email': 'john@noemail.com',
-    });
-    // Player(581f4dacfda7b4f46b878489, John, john@noemail.com)
-    print(player);
-  }
+  UserSerializer userSerializer = new UserSerializer();
+  
+  User user = userSerializer.fromMap({
+        'name': 'John',
+        'age': 25
+      });
+  
+  print(userSerializer.toMap(user));
+}
+```
 
-  {
-    Player player = new Player()
-      ..id = '1' * 24
-      ..name = 'John'
-      ..email = 'john@noemail.com';
-    PlayerMongoSerializer serializer = new PlayerMongoSerializer();
-    Map map = serializer.toMap(player);
-    // {_id: ObjectId("111111111111111111111111"), name: John, email: john@noemail.com}
-    print(map);
-  }
+You can also use a JSON repository or implement one.
+
+```dart
+import 'package:jaguar_serializer/serializer.dart';
+import 'model/user.dart';
+
+void main() {
+  SerializerRepo serializer = new JsonRepo()..add(new UserSerializer());
+  
+  User user = serializer.from("{'name':'John','age': 25}", type: User);
+  
+  print(serializer.to(user));
 }
 ```

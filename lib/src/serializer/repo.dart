@@ -110,8 +110,9 @@ class SerializerRepo {
   /**
    * Deserialize the given [Object] ([Map] or [List]).
    *
-   * If the [type] option is specified, it will be used to get the correct [Serializer]
-   * If not, it will look at if the object contain the [typeInfoKey] and will use it to get the correct [Serializer]
+   * If the [type] option is specified, it will be used to get the correct [Serializer].
+   *
+   * If not, it will look at if the object contain the [typeInfoKey] and will use it to get the correct [Serializer].
    *
    * The [typeInfoKey] can be override using the [useTypeInfoKey] option.
    */
