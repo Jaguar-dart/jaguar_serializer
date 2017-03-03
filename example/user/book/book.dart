@@ -6,7 +6,7 @@ part 'book.g.dart';
 
 @GenSerializer()
 @IgnoreField(#viewSerializer)
-class BookViewSerializer extends MapSerializer<Book> with _$BookViewSerializer {
+class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {
   Book createModel() => new Book();
 
   BookViewSerializer();

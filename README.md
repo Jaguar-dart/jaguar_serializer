@@ -17,7 +17,7 @@ part 'basic_main.g.dart';
 @GenSerializer()
 class PlayerJsonSerializer extends Object
     with JsonMixin, _$PlayerJsonSerializer
-    implements MapSerializer<Player> {
+    implements Serializer<Player> {
   Player createModel() => new Player();
 
   PlayerJsonSerializer();
@@ -93,7 +93,7 @@ part 'field_manipulation_main.g.dart';
 })
 class PlayerJsonSerializer extends Object
     with JsonMixin, _$PlayerJsonSerializer
-    implements MapSerializer<Player> {
+    implements Serializer<Player> {
   Player createModel() => new Player();
 
   PlayerJsonSerializer();
@@ -179,7 +179,7 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 @EnDecodeField(#id, asAndFrom: '_id')
 class PlayerMongoSerializer extends Object
     with JsonMixin, _$PlayerMongoSerializer
-    implements MapSerializer<Player> {
+    implements Serializer<Player> {
   Player createModel() => new Player();
 
   PlayerMongoSerializer();

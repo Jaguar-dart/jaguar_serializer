@@ -1,4 +1,4 @@
-part of serializer.serializer;
+part of jaguar_serializer.serializer;
 
 /// Interface specification to add custom field decoders
 abstract class FieldProcessor<FromType, ToType> {
@@ -10,9 +10,4 @@ abstract class FieldProcessor<FromType, ToType> {
 
   /// Called to process field before encoding
   ToType to(FromType value);
-}
-
-/// Annotation to define a field processor
-class DefineFieldProcessor {
-  const DefineFieldProcessor();
 }

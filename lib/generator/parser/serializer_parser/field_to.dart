@@ -50,12 +50,6 @@ class SerializedPropertyTo implements LeafPropertyTo {
   const SerializedPropertyTo(this.instantiationString);
 }
 
-class ProviderPropertyTo implements LeafPropertyTo {
-  final String type;
-
-  const ProviderPropertyTo(this.type);
-}
-
 PropertyTo _parsePropertyTo(
     SerializerInfo info, String fieldName, DartTypeWrap type) {
   if (type.isDynamic) {
@@ -102,10 +96,6 @@ PropertyTo _parsePropertyTo(
         ser = serializer;
       }
     });
-
-    if (ser is! DartTypeWrap) {
-      return new ProviderPropertyTo(type.displayName);
-    }
 
     return new SerializedPropertyTo(ser.displayName);
   }

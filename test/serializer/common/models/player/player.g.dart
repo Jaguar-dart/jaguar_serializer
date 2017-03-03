@@ -7,8 +7,8 @@ part of serializer.test.models.player;
 // Target: class PlayerSerializer
 // **************************************************************************
 
-abstract class _$PlayerSerializer implements MapSerializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false}) {
+abstract class _$PlayerSerializer implements Serializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -26,14 +26,14 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
-      if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model}) {
+  Player fromMap(Map map, {Player model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -48,7 +48,7 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
     return model;
   }
 
-  String get modelString => "Player";
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -56,8 +56,8 @@ abstract class _$PlayerSerializer implements MapSerializer<Player> {
 // Target: class PlayerSerializerIgnore
 // **************************************************************************
 
-abstract class _$PlayerSerializerIgnore implements MapSerializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false}) {
+abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -72,14 +72,14 @@ abstract class _$PlayerSerializerIgnore implements MapSerializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
-      if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model}) {
+  Player fromMap(Map map, {Player model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -93,7 +93,7 @@ abstract class _$PlayerSerializerIgnore implements MapSerializer<Player> {
     return model;
   }
 
-  String get modelString => "Player";
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -101,8 +101,8 @@ abstract class _$PlayerSerializerIgnore implements MapSerializer<Player> {
 // Target: class PlayerSerializerIgnores
 // **************************************************************************
 
-abstract class _$PlayerSerializerIgnores implements MapSerializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false}) {
+abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -111,14 +111,14 @@ abstract class _$PlayerSerializerIgnores implements MapSerializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
-      if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model}) {
+  Player fromMap(Map map, {Player model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -130,7 +130,7 @@ abstract class _$PlayerSerializerIgnores implements MapSerializer<Player> {
     return model;
   }
 
-  String get modelString => "Player";
+  String modelString() => "Player";
 }
 
 // **************************************************************************
@@ -138,18 +138,18 @@ abstract class _$PlayerSerializerIgnores implements MapSerializer<Player> {
 // Target: class PlayerSerializerRename
 // **************************************************************************
 
-abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false}) {
+abstract class _$PlayerSerializerRename implements Serializer<Player> {
+  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
         ret["N"] = model.name;
       }
       if (model.email != null) {
-        ret["E"] = model.email;
+        ret["email"] = model.email;
       }
       if (model.age != null) {
-        ret["A"] = model.age;
+        ret["age"] = model.age;
       }
       if (model.score != null) {
         ret["S"] = model.score;
@@ -157,14 +157,14 @@ abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
-      if (modelString != null && withTypeInfo) {
-        ret["@t"] = modelString;
+      if (modelString() != null && withTypeInfo) {
+        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model}) {
+  Player fromMap(Map map, {Player model, String typeInfoKey}) {
     if (map is! Map) {
       return null;
     }
@@ -172,12 +172,12 @@ abstract class _$PlayerSerializerRename implements MapSerializer<Player> {
       model = createModel();
     }
     model.name = map["N"];
-    model.email = map["E"];
-    model.age = map["A"];
+    model.email = map["email"];
+    model.age = map["age"];
     model.score = map["score"];
     model.emailConfirmed = map["eC"];
     return model;
   }
 
-  String get modelString => "Player";
+  String modelString() => "Player";
 }

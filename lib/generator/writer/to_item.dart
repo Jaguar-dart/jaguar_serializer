@@ -42,11 +42,7 @@ class ToItemWriter {
     } else if (leaf is SerializedPropertyTo) {
       _w.write(' to' +
           leaf.instantiationString +
-          '.toMap($reference, withTypeInfo: withTypeInfo)');
-    } else if (leaf is ProviderPropertyTo) {
-      _w.write(' JaguarSerializer.getMapSerializerForType(' +
-          leaf.type +
-          ').toMap($reference, withTypeInfo: withTypeInfo)');
+          '.toMap($reference, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)');
     }
 
     return _w.toString();

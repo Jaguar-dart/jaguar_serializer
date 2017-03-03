@@ -42,7 +42,7 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 @IgnoreField(#password)
 @IgnoreFields(const [#passwordHash, #viewSerializer])
 @ProvideSerializer(Book, BookViewSerializer)
-class UserViewSerializer extends MapSerializer<User> with _$UserViewSerializer {
+class UserViewSerializer extends Serializer<User> with _$UserViewSerializer {
   User createModel() => new User();
 }
 
