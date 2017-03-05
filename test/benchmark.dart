@@ -67,11 +67,11 @@ main() {
     List<num> times = [it];
 
     time = new Stopwatch()..start();
-    String encoded = json.to(tests);
+    String encoded = json.serialize(tests);
     times.add(time.elapsedMilliseconds);
 
     time = new Stopwatch()..start();
-    json.from(encoded, type: ModelTest);
+    json.deserialize(encoded, type: ModelTest);
     times.add(time.elapsedMilliseconds);
 
     time = new Stopwatch()..start();

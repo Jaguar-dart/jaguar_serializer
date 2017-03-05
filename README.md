@@ -109,8 +109,8 @@ import 'model/user.dart';
 void main() {
   SerializerRepo serializer = new JsonRepo()..add(new UserSerializer());
   
-  User user = serializer.from("{'name':'John','age': 25}", type: User);
+  User user = serializer.deserialize("{'name':'John','age': 25}", type: User);
   
-  print(serializer.to(user));
+  print(serializer.serialize(user));
 }
 ```

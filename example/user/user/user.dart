@@ -19,12 +19,12 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
       {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
 
   /// Called to process field before decoding
-  DateTime from(String value) {
+  DateTime deserialize(String value) {
     return new DateFormat(pattern, locale).parse(value);
   }
 
   /// Called to process field before encoding
-  String to(DateTime value) {
+  String serialize(DateTime value) {
     return new DateFormat(pattern, locale).format(value);
   }
 }

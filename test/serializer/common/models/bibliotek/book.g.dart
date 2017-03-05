@@ -23,7 +23,7 @@ abstract class _$BookSerializer implements Serializer<Book> {
       }
       if (model.publishedDates != null) {
         ret["publishedDates"] = new MapKeyNumToStringProcessor(#publishedDates)
-            .to(model.publishedDates);
+            .serialize(model.publishedDates);
       }
       if (model.authors != null) {
         ret["authors"] = model.authors
@@ -50,7 +50,7 @@ abstract class _$BookSerializer implements Serializer<Book> {
     model.name = map["name"];
     model.tags = map["tags"]?.map((String val) => val)?.toList();
     model.publishedDates = new MapKeyNumToStringProcessor(#publishedDates)
-        .from(map["publishedDates"]);
+        .deserialize(map["publishedDates"]);
     model.authors = map["authors"]
         ?.map((Map val) =>
             fromAuthorSerializer.fromMap(val, typeInfoKey: typeInfoKey))

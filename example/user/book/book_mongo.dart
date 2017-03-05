@@ -23,7 +23,7 @@ abstract class _$BookMongoSerializer {
   Book get _model;
 
   Map toMap() => {
-    "_id": new MongoId(null).to(_model.id),
+    "_id": new MongoId(null).serialize(_model.id),
     "name": _model.name,
     "publishedYear": _model.publishedYear,
   };
@@ -33,7 +33,7 @@ abstract class _$BookMongoSerializer {
       return;
     }
 
-    _model.id = new MongoId(null).from(map['_id']);
+    _model.id = new MongoId(null).deserialize(map['_id']);
     _model.name = map['name'];
     _model.publishedYear = map['publishedYear'];
   }

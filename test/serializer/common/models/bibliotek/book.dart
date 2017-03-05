@@ -21,7 +21,7 @@ class MapKeyNumToStringProcessor
 
   const MapKeyNumToStringProcessor(this.field);
 
-  Map<num, String> from(final Map<dynamic, String> input) {
+  Map<num, String> deserialize(final Map<dynamic, String> input) {
     if (input == null) {
       return null;
     }
@@ -36,7 +36,7 @@ class MapKeyNumToStringProcessor
     return fromMap;
   }
 
-  Map<String, String> to(final Map<num, String> value) {
+  Map<String, String> serialize(final Map<num, String> value) {
     if (value == null) {
       return null;
     }

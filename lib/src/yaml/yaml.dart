@@ -27,8 +27,8 @@ class YamlRepo extends SerializerRepo {
    * See [SerializerRepo.from] for more information.
    */
   @override
-  dynamic from(dynamic object, {Type type, String useTypeInfoKey}) =>
-      super.from(object, type: type, useTypeInfoKey: useTypeInfoKey);
+  dynamic deserialize(dynamic object, {Type type, String useTypeInfoKey}) =>
+      super.deserialize(object, type: type, useTypeInfoKey: useTypeInfoKey);
 
   /**
    * Serialize an object to a YAML String
@@ -38,8 +38,8 @@ class YamlRepo extends SerializerRepo {
    * See [SerializerRepo.to] for more information.
    */
   @override
-  dynamic to(dynamic object,
+  dynamic serialize(dynamic object,
           {bool withTypeInfo: false, String useTypeInfoKey}) =>
-      super.to(object,
+      super.serialize(object,
           withTypeInfo: withTypeInfo, useTypeInfoKey: useTypeInfoKey);
 }

@@ -14,12 +14,12 @@ const String defaultTypeInfoKey = "@t";
  *     User user = new User();
  *
  *     // serialize
- *     Map<String, dynamic> map = repository.to(user);
- *     List<Map<String,dynamic>> list = repository.to([ user ] );
+ *     Map<String, dynamic> map = repository.serialize(user);
+ *     List<Map<String,dynamic>> list = repository.serialize([ user ] );
  *
  *     // deserialize
- *     user = repository.from(map, type: User);
- *     List<User> users = repository.from(list, type: User);
+ *     user = repository.deserialize(map, type: User);
+ *     List<User> users = repository.deserialize(list, type: User);
  *
  */
 class SerializerRepo {
@@ -81,7 +81,7 @@ class SerializerRepo {
    *
    * The [typeInfoKey] can be override using the [useTypeInfoKey] option.
    */
-  dynamic to(dynamic object,
+  dynamic serialize(dynamic object,
       {bool withTypeInfo: false, String useTypeInfoKey}) {
     useTypeInfoKey ??= typeInfoKey;
     if (object is Iterable) {
@@ -116,7 +116,7 @@ class SerializerRepo {
    *
    * The [typeInfoKey] can be override using the [useTypeInfoKey] option.
    */
-  dynamic from(dynamic object, {Type type, String useTypeInfoKey}) {
+  dynamic deserialize(dynamic object, {Type type, String useTypeInfoKey}) {
     useTypeInfoKey ??= typeInfoKey;
     final decoded = object is String ? decode(object) : object;
 
@@ -146,7 +146,7 @@ class SerializerRepo {
       throw new Exception("Cannot find serializer for type $type");
     }
 
-    return serializer.to(object,
+    return serializer.serialize(object,
         withTypeInfo: withTypeInfo, typeInfoKey: useTypeInfoKey);
   }
 
@@ -165,7 +165,7 @@ class SerializerRepo {
       throw new Exception("Cannot find serializer for type $type");
     }
 
-    return serializer.from(decoded);
+    return serializer.deserialize(decoded);
   }
 
   String _objectToType(object, String infoKey) {

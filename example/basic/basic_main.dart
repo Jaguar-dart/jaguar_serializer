@@ -53,7 +53,7 @@ class Address {
 void json() {
   SerializerRepo serializer = new JsonRepo();
   {
-    Player player = serializer.from({
+    Player player = serializer.deserialize({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -66,7 +66,7 @@ void json() {
   }
 
   {
-    Player player = serializer.from({
+    Player player = serializer.deserialize({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -85,15 +85,15 @@ void json() {
       ..score = 1000
       ..emailConfirmed = true
       ..address = (new Address()..city = "Paris");
-    print(serializer.to(player));
-    print(serializer.to(player, withTypeInfo: true));
+    print(serializer.serialize(player));
+    print(serializer.serialize(player, withTypeInfo: true));
   }
 }
 
 void yaml() {
   SerializerRepo serializer = new YamlRepo();
   {
-    Player player = serializer.from({
+    Player player = serializer.deserialize({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -106,7 +106,7 @@ void yaml() {
   }
 
   {
-    Player player = serializer.from({
+    Player player = serializer.deserialize({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
@@ -125,8 +125,8 @@ void yaml() {
       ..score = 1000
       ..emailConfirmed = true
       ..address = (new Address()..city = "Paris");
-    print(serializer.to(player));
-    print(serializer.to(player, withTypeInfo: true));
+    print(serializer.serialize(player));
+    print(serializer.serialize(player, withTypeInfo: true));
   }
 }
 

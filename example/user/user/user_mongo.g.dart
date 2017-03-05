@@ -15,7 +15,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["id"] = new MongoId(#id).to(model.id);
+        ret["id"] = new MongoId(#id).serialize(model.id);
       }
       if (model.email != null) {
         ret["email"] = model.email;
@@ -24,7 +24,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
         ret["N"] = model.name;
       }
       if (model.dob != null) {
-        ret["dob"] = new DateTimeSerializer(#dob).to(model.dob);
+        ret["dob"] = new DateTimeSerializer(#dob).serialize(model.dob);
       }
       if (model.book != null) {
         ret["book"] = toBookMongoSerializer.toMap(model.book,
@@ -81,10 +81,10 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     if (model is! User) {
       model = createModel();
     }
-    model.id = new MongoId(#id).from(map["id"]);
+    model.id = new MongoId(#id).deserialize(map["id"]);
     model.email = map["email"];
     model.name = map["N"];
-    model.dob = new DateTimeSerializer(#dob).from(map["dob"]);
+    model.dob = new DateTimeSerializer(#dob).deserialize(map["dob"]);
     model.book =
         fromBookMongoSerializer.fromMap(map["book"], typeInfoKey: typeInfoKey);
     model.listStr = map["listStr"]?.map((String val) => val)?.toList();

@@ -12,7 +12,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["id"] = new MongoId(#id).to(model.id);
+        ret["id"] = new MongoId(#id).serialize(model.id);
       }
       if (model.name != null) {
         ret["N"] = model.name;
@@ -34,7 +34,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
     if (model is! Book) {
       model = createModel();
     }
-    model.id = new MongoId(#id).from(map["id"]);
+    model.id = new MongoId(#id).deserialize(map["id"]);
     model.name = map["N"];
     model.publishedYear = map["publishedYear"];
     return model;
