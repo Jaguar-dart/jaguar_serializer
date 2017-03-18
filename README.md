@@ -14,7 +14,7 @@ Format agnostic Serializer library that can be used in server and client for JSO
 
 ```yaml
 dependencies:
-    jaguar_serializer: ">=1.0.0 <2.0.0"
+    jaguar_serializer: ^0.3.0
 ```
 
 ## Simple serializer
