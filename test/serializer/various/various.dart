@@ -188,7 +188,8 @@ void main() {
 
     test('ModelInt', () {
       ModelInt d = new ModelInt();
-      expect(serializer.serialize(d), JSON.encode({"bar": 42, "clazzA": "ClassA"}));
+      expect(serializer.serialize(d),
+          JSON.encode({"bar": 42, "clazzA": "ClassA"}));
       expect(
           serializer.serialize(d, withTypeInfo: true),
           JSON.encode({
@@ -200,7 +201,8 @@ void main() {
 
     test('ModelDouble', () {
       ModelDouble d = new ModelDouble();
-      expect(serializer.serialize(d), JSON.encode({"bar": 42.42, "clazzA": "ClassA"}));
+      expect(serializer.serialize(d),
+          JSON.encode({"bar": 42.42, "clazzA": "ClassA"}));
       expect(
           serializer.serialize(d, withTypeInfo: true),
           JSON.encode({
@@ -344,8 +346,8 @@ void main() {
 
   group('Various - from', () {
     test('Inheritance', () {
-      Inheritance d =
-          serializer.deserialize({"clazzA": "A", "clazzB": "B"}, type: Inheritance);
+      Inheritance d = serializer
+          .deserialize({"clazzA": "A", "clazzB": "B"}, type: Inheritance);
       expect(d.clazzA, "A");
       expect(d.clazzB, "B");
 
@@ -359,8 +361,8 @@ void main() {
     });
 
     test('ModelInt', () {
-      ModelInt d =
-          serializer.deserialize({"bar": 42, "clazzA": "classA"}, type: ModelInt);
+      ModelInt d = serializer
+          .deserialize({"bar": 42, "clazzA": "classA"}, type: ModelInt);
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
       d = serializer.deserialize(
@@ -370,8 +372,8 @@ void main() {
     });
 
     test('ModelDouble', () {
-      ModelDouble d =
-          serializer.deserialize({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
+      ModelDouble d = serializer
+          .deserialize({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
       d = serializer.deserialize(
@@ -382,8 +384,9 @@ void main() {
 
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
-      Date d = serializer
-          .deserialize({"date": now.toIso8601String(), "clazzA": "A"}, type: Date);
+      Date d = serializer.deserialize(
+          {"date": now.toIso8601String(), "clazzA": "A"},
+          type: Date);
       expect(d.date, now);
       d = serializer.deserialize({
         "date": now.toIso8601String(),
@@ -410,7 +413,8 @@ void main() {
     });
 
     test("Ignore attribute", () {
-      WithIgnore ignore = serializer.deserialize({"a": "test"}, type: WithIgnore);
+      WithIgnore ignore =
+          serializer.deserialize({"a": "test"}, type: WithIgnore);
       expect(ignore.a, "test");
       expect(ignore.secret, isNull);
     });

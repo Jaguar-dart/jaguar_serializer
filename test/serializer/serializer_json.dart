@@ -78,8 +78,9 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      List<Author> authors = serializer
-          .deserialize('[{"name":"Teja Hackborn"},{"name":"Kleak"}]', type: Author);
+      List<Author> authors = serializer.deserialize(
+          '[{"name":"Teja Hackborn"},{"name":"Kleak"}]',
+          type: Author);
       expect(authors.length, equals(2));
       expect(authors[0].name, equals("Teja Hackborn"));
       expect(authors[1].name, equals("Kleak"));

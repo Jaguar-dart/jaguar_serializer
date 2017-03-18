@@ -152,7 +152,8 @@ void main() {
       serializer.add(new AuthorSerializer());
       String encoded = serializer.serialize(book.authors,
           withTypeInfo: true, useTypeInfoKey: "(t)");
-      List<Author> authors = serializer.deserialize(encoded, useTypeInfoKey: "(t)");
+      List<Author> authors =
+          serializer.deserialize(encoded, useTypeInfoKey: "(t)");
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));
       expect(authors[1].name, equals(book.authors[1].name));

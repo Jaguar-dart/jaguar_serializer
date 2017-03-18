@@ -20,19 +20,22 @@ Stream<_build.BuildResult> watch() =>
 Future<_build.BuildResult> build() =>
     _build.build(phaseGroup(), deleteFilesByDefault: true);
 
+String get _usage => '''
+Available commands:
+  - build
+  - watch
+''';
+
 // shoud we keep this ?
 start(List<String> args) {
   if (args.length > 0) {
     if (args[0] == 'watch') {
-      watch();
+      return watch();
     } else if (args[0] == 'build') {
-      build();
-    } else {
-      print("Invalid command!");
+      return build();
     }
-  } else {
-    print("Invalid command!");
   }
+  print(_usage);
 }
 
 /// source_gen hook to generate serializer
