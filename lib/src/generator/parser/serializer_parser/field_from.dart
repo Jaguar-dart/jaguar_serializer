@@ -63,7 +63,7 @@ class SerializedPropertyFrom implements LeafPropertyFrom {
   const SerializedPropertyFrom(this.instantiationString);
 }
 
-PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
+PropertyFrom _parsePropertyFrom(SerializerInfo info, String fieldName, DartTypeWrap type) {
   if (type.isDynamic) {
     throw new Exception('Cannot serialize dynamic type!');
   } else if (type.isObject) {
@@ -79,7 +79,7 @@ PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
     DartTypeWrap param = params[0];
 
     return new ListPropertyFrom(
-        _parsePropertyFrom(info, param), param.displayName);
+        _parsePropertyFrom(info, fieldName, param), param.displayName);
   } else if (type.isMap) {
     List<DartTypeWrap> params = type.typeArguments;
 
@@ -92,8 +92,8 @@ PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
     DartTypeWrap key = params[0];
     DartTypeWrap value = params[1];
 
-    return new MapPropertyFrom(_parsePropertyFrom(info, key), key.displayName,
-        _parsePropertyFrom(info, value), value.displayName);
+    return new MapPropertyFrom(_parsePropertyFrom(info, fieldName, key), key.displayName,
+        _parsePropertyFrom(info, fieldName, value), value.displayName);
   } else if (type.isBuiltin) {
     return new BuiltinLeafPropertyFrom(type.displayName);
   } else {
@@ -106,6 +106,10 @@ PropertyFrom _parsePropertyFrom(SerializerInfo info, DartTypeWrap type) {
       }
     });
 
+    if (ser == null) {
+      throw new Exception("Serializer not found for '${type.displayName} $fieldName'");
+    }
+
     return new SerializedPropertyFrom(ser.displayName);
   }
 }
@@ -115,6 +119,6 @@ FieldFrom _parseFieldFrom(SerializerInfo info, ModelField field, String key) {
     String instStr = info.customFieldCodecs[field.name].instantiationString;
     return new FieldFrom(key, field.name, new CustomPropertyFrom(instStr));
   } else {
-    return new FieldFrom(key, field.name, _parsePropertyFrom(info, field.type));
+    return new FieldFrom(key, field.name, _parsePropertyFrom(info, field.name, field.type));
   }
 }
