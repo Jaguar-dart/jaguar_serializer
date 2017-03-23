@@ -29,7 +29,7 @@ abstract class _$UserMongoSerializer {
   User get _model;
 
   Map toMap() => {
-    "_id": new MongoId(null).to(_model.id),
+    "_id": new MongoId(null).serialize(_model.id),
     "email": _model.email,
     "N": _model.name,
   };
@@ -39,7 +39,7 @@ abstract class _$UserMongoSerializer {
       return;
     }
 
-    _model.id = new MongoId(null).from(map['_id']);
+    _model.id = new MongoId(null).deserialize(map['_id']);
     _model.email = map['email'];
     _model.name = map['N'];
   }

@@ -97,6 +97,11 @@ PropertyTo _parsePropertyTo(
       }
     });
 
+    if (ser == null) {
+      throw new Exception(
+          "Serializer not found for '${type.displayName} $fieldName'");
+    }
+
     return new SerializedPropertyTo(ser.displayName);
   }
 }

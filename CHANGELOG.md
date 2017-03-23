@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+***New***
+
+- `Repository` system (Json, Yaml)
+- embeded type => see typeInfoKey
+
 ## 0.1.2
 
 First release.

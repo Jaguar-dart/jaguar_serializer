@@ -30,7 +30,7 @@ void main() {
 
   group('toYaml', () {
     test('Book', () {
-      String encode = serializer.to(book);
+      String encode = serializer.serialize(book);
       expect(
           encode,
           equals('name: "Dawn of AI: The last few centuries of humanity"\n'
@@ -50,7 +50,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encode = serializer.to(book.authors);
+      String encode = serializer.serialize(book.authors);
       expect(
           encode,
           equals('- \n'
@@ -65,7 +65,7 @@ void main() {
         1: new Author()..name = 'Teja Hackborn',
         2: new Author()..name = 'Kleak',
       };
-      String encode = serializer.to(tester.values);
+      String encode = serializer.serialize(tester.values);
       expect(
           encode,
           equals('- \n'
@@ -81,7 +81,7 @@ void main() {
         "2": "second",
         3: book.authors.last
       };
-      String encode = serializer.to(map);
+      String encode = serializer.serialize(map);
       expect(
           encode,
           equals('2: "second"\n'
@@ -95,7 +95,7 @@ void main() {
   group('fromYaml', () {
     test('Book', () {
       //todo: decode to Map<num, dynamic>
-      Book bookTest = serializer.from(
+      Book bookTest = serializer.deserialize(
           'name: "Dawn of AI: The last few centuries of humanity"\n'
           'publishedDates: \n'
           '  1: "2010"\n'
@@ -122,7 +122,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      List<Author> authors = serializer.from(
+      List<Author> authors = serializer.deserialize(
           '- \n'
           '  name: "Teja Hackborn"\n'
           '- \n'
@@ -138,8 +138,8 @@ void main() {
     test('Book', () {
       book.publishedDates = null;
       String encoded =
-          serializer.to(book, withTypeInfo: true, useTypeInfoKey: "(t)");
-      Book bookTest = serializer.from(encoded, useTypeInfoKey: "(t)");
+          serializer.serialize(book, withTypeInfo: true, useTypeInfoKey: "(t)");
+      Book bookTest = serializer.deserialize(encoded, useTypeInfoKey: "(t)");
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
       expect(bookTest.publishedDates, equals(book.publishedDates));
@@ -150,9 +150,10 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded = serializer.to(book.authors,
+      String encoded = serializer.serialize(book.authors,
           withTypeInfo: true, useTypeInfoKey: "(t)");
-      List<Author> authors = serializer.from(encoded, useTypeInfoKey: "(t)");
+      List<Author> authors =
+          serializer.deserialize(encoded, useTypeInfoKey: "(t)");
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));
       expect(authors[1].name, equals(book.authors[1].name));

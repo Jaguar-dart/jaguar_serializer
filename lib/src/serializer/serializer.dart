@@ -26,7 +26,7 @@ abstract class Serializer<ModelType> {
    *
    * It will be associated with the type of the object.
    */
-  dynamic to(dynamic model,
+  dynamic serialize(dynamic model,
       {bool withTypeInfo: false, String typeInfoKey: defaultTypeInfoKey}) {
     if (model is ModelType) {
       return toMap(model, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
@@ -45,7 +45,7 @@ abstract class Serializer<ModelType> {
    *
    * An instance of the resulting object can be passed with the [model] option.
    */
-  dynamic from(dynamic object, {ModelType model}) {
+  dynamic deserialize(dynamic object, {ModelType model}) {
     if (object is Map) {
       return fromMap(object, model: model);
     } else if (object is List<Map>) {

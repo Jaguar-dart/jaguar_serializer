@@ -13,11 +13,11 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 
   const MongoId(this.field);
 
-  String from(mgo.ObjectId input) {
+  String deserialize(mgo.ObjectId input) {
     return input.toHexString();
   }
 
-  mgo.ObjectId to(String value) {
+  mgo.ObjectId serialize(String value) {
     return new mgo.ObjectId.fromHexString(value);
   }
 }

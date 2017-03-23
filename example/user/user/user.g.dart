@@ -24,7 +24,7 @@ abstract class _$UserViewSerializer implements Serializer<User> {
         ret["N"] = model.name;
       }
       if (model.dob != null) {
-        ret["DoB"] = new DateTimeSerializer(#dob).to(model.dob);
+        ret["DoB"] = new DateTimeSerializer(#dob).serialize(model.dob);
       }
       if (model.book != null) {
         ret["Book"] = toBookViewSerializer.toMap(model.book,
@@ -81,7 +81,7 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     model.id = map["Id"];
     model.email = map["Email"];
     model.name = map["N"];
-    model.dob = new DateTimeSerializer(#dob).from(map["DoB"]);
+    model.dob = new DateTimeSerializer(#dob).deserialize(map["DoB"]);
     model.book =
         fromBookViewSerializer.fromMap(map["Book"], typeInfoKey: typeInfoKey);
     model.listStr = map["listStr"]?.map((String val) => val)?.toList();

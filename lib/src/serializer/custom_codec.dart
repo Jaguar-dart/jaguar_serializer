@@ -12,11 +12,11 @@ part of jaguar_serializer.serializer;
  *
  *       const DateTimeProcessor(this.field);
  *
- *       DateTime from(String input) {
+ *       DateTime deserialize(String input) {
  *         return DateTime.parse(input);
  *       }
  *
- *       String to(DateTime value) {
+ *       String serialize(DateTime value) {
  *        return value.toIso8601String();
  *       }
  *     }
@@ -37,8 +37,8 @@ abstract class FieldProcessor<FromType, ToType> {
   Symbol get field;
 
   /// Called to process field before decoding
-  FromType from(ToType value);
+  FromType deserialize(ToType value);
 
   /// Called to process field before encoding
-  ToType to(FromType value);
+  ToType serialize(FromType value);
 }

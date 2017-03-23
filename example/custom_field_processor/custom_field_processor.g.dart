@@ -12,7 +12,7 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["_id"] = new MongoId(#id).to(model.id);
+        ret["_id"] = new MongoId(#id).serialize(model.id);
       }
       if (model.name != null) {
         ret["name"] = model.name;
@@ -34,7 +34,7 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     if (model is! Player) {
       model = createModel();
     }
-    model.id = new MongoId(#id).from(map["_id"]);
+    model.id = new MongoId(#id).deserialize(map["_id"]);
     model.name = map["name"];
     model.email = map["email"];
     return model;

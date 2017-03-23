@@ -123,7 +123,7 @@ abstract class _$DateSerializer implements Serializer<Date> {
     Map ret = new Map();
     if (model != null) {
       if (model.date != null) {
-        ret["date"] = new DateTimeProcessor(#date).to(model.date);
+        ret["date"] = new DateTimeProcessor(#date).serialize(model.date);
       }
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
@@ -142,7 +142,7 @@ abstract class _$DateSerializer implements Serializer<Date> {
     if (model is! Date) {
       model = createModel();
     }
-    model.date = new DateTimeProcessor(#date).from(map["date"]);
+    model.date = new DateTimeProcessor(#date).deserialize(map["date"]);
     model.clazzA = map["clazzA"];
     return model;
   }
