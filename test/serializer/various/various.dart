@@ -82,6 +82,14 @@ class Complex {
   //Map<String, List> listInnerMap2; //TODO: dynamic
 }
 
+class NoTypeModel {
+  String foo;
+}
+
+class CustomModelName {
+  String foo;
+}
+
 @GenSerializer()
 class ModelIntSerializer extends Serializer<ModelInt>
     with _$ModelIntSerializer {
@@ -157,6 +165,20 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
   }
 }
 
+@GenSerializer(typeInfo: false)
+class NoTypeModelSerializer extends Serializer<NoTypeModel>
+    with _$NoTypeModelSerializer {
+  @override
+  NoTypeModel createModel() => new NoTypeModel();
+}
+
+@GenSerializer(modelName: "MyCustomModelName")
+class CustomModelNameSerializer extends Serializer<CustomModelName>
+    with _$CustomModelNameSerializer {
+  @override
+  CustomModelName createModel() => new CustomModelName();
+}
+
 void main() {
   SerializerRepo serializer;
 
@@ -169,7 +191,9 @@ void main() {
       ..add(new NullTestSerializer())
       ..add(new ModelRenamedSerializer())
       ..add(new ComplexSerializer())
-      ..add(new InheritanceSerializer());
+      ..add(new InheritanceSerializer())
+      ..add(new NoTypeModelSerializer())
+      ..add(new CustomModelNameSerializer());
   });
 
   group('Various - to', () {
@@ -376,8 +400,11 @@ void main() {
           .deserialize({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
-      d = serializer.deserialize(
-          {"bar": 42.42, "clazzA": "A", serializer.getTypeKey(): "ModelDouble"});
+      d = serializer.deserialize({
+        "bar": 42.42,
+        "clazzA": "A",
+        serializer.getTypeKey(): "ModelDouble"
+      });
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
     });
@@ -467,6 +494,19 @@ void main() {
       expect(complex.listInnerMap1, {
         "test": ["123456"]
       });
+    });
+
+    test('Serialize NoTypeModel', () {
+      NoTypeModel model = new NoTypeModel()..foo = 'bar';
+      expect(serializer.serialize(model), JSON.encode({'foo': 'bar'}));
+    });
+
+    test('Serialize With CustomModelName', () {
+      CustomModelName model = new CustomModelName()..foo = 'bar';
+      expect(
+          serializer.serialize(model, withType: true),
+          JSON.encode(
+              {'foo': 'bar', serializer.getTypeKey(): "MyCustomModelName"}));
     });
   });
 }

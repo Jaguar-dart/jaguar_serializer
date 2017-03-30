@@ -32,8 +32,8 @@ abstract class Serializer<ModelType> {
       return toMap(model, withType: withType, typeKey: typeKey);
     } else if (model is List<ModelType>) {
       return model
-          .map((ModelType model) => toMap(model,
-              withType: withType, typeKey: typeKey))
+          .map((ModelType model) =>
+              toMap(model, withType: withType, typeKey: typeKey))
           .toList();
     } else {
       throw new Exception("Unknown object type received!");

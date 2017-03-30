@@ -413,3 +413,67 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
 
   String modelString() => "Complex";
 }
+
+// **************************************************************************
+// Generator: SerializerGenerator
+// Target: class NoTypeModelSerializer
+// **************************************************************************
+
+abstract class _$NoTypeModelSerializer implements Serializer<NoTypeModel> {
+  Map toMap(NoTypeModel model, {bool withType: false, String typeKey}) {
+    Map ret = new Map();
+    if (model != null) {
+      if (model.foo != null) {
+        ret["foo"] = model.foo;
+      }
+    }
+    return ret;
+  }
+
+  NoTypeModel fromMap(Map map, {NoTypeModel model, String typeKey}) {
+    if (map is! Map) {
+      return null;
+    }
+    if (model is! NoTypeModel) {
+      model = createModel();
+    }
+    model.foo = map["foo"];
+    return model;
+  }
+
+  String modelString() => "NoTypeModel";
+}
+
+// **************************************************************************
+// Generator: SerializerGenerator
+// Target: class CustomModelNameSerializer
+// **************************************************************************
+
+abstract class _$CustomModelNameSerializer
+    implements Serializer<CustomModelName> {
+  Map toMap(CustomModelName model, {bool withType: false, String typeKey}) {
+    Map ret = new Map();
+    if (model != null) {
+      if (model.foo != null) {
+        ret["foo"] = model.foo;
+      }
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
+      }
+    }
+    return ret;
+  }
+
+  CustomModelName fromMap(Map map, {CustomModelName model, String typeKey}) {
+    if (map is! Map) {
+      return null;
+    }
+    if (model is! CustomModelName) {
+      model = createModel();
+    }
+    model.foo = map["foo"];
+    return model;
+  }
+
+  String modelString() => "MyCustomModelName";
+}

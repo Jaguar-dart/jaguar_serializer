@@ -83,15 +83,12 @@ class SerializerRepo {
    *
    * The [typeKey] can be override using the [typeKey] option.
    */
-  dynamic serialize(dynamic object,
-      {bool withType: false, String typeKey}) {
+  dynamic serialize(dynamic object, {bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
     if (object is Iterable) {
       return encode(object
           .map((obj) => _to(obj,
-              type: obj.runtimeType,
-              withType: withType,
-              typeKey: typeKey))
+              type: obj.runtimeType, withType: withType, typeKey: typeKey))
           .toList());
     } else if (object is Map) {
       Map map = {};
@@ -104,9 +101,7 @@ class SerializerRepo {
       return encode(map);
     }
     return encode(_to(object,
-        type: object.runtimeType,
-        withType: withType,
-        typeKey: typeKey));
+        type: object.runtimeType, withType: withType, typeKey: typeKey));
   }
 
   /**
@@ -148,8 +143,7 @@ class SerializerRepo {
       throw new Exception("Cannot find serializer for type $type");
     }
 
-    return serializer.serialize(object,
-        withType: withType, typeKey: typeKey);
+    return serializer.serialize(object, withType: withType, typeKey: typeKey);
   }
 
   dynamic _from(dynamic decoded, {Type type, String typeKey}) {

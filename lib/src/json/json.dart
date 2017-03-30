@@ -9,8 +9,7 @@ import 'package:jaguar_serializer/serializer.dart';
  * Same usage as [SerializerRepo]
  */
 class JsonRepo extends SerializerRepo {
-  JsonRepo({String typeKey: defaultTypeInfoKey})
-      : super(typeKey: typeKey);
+  JsonRepo({String typeKey: defaultTypeInfoKey}) : super(typeKey: typeKey);
 
   ///@nodoc
   dynamic encode(dynamic object) => JSON.encode(object);
@@ -37,8 +36,6 @@ class JsonRepo extends SerializerRepo {
    * See [SerializerRepo.to] for more information.
    */
   @override
-  dynamic serialize(dynamic object,
-          {bool withType: false, String typeKey}) =>
-      super.serialize(object,
-          withType: withType, typeKey: typeKey);
+  dynamic serialize(dynamic object, {bool withType: false, String typeKey}) =>
+      super.serialize(object, withType: withType, typeKey: typeKey);
 }
