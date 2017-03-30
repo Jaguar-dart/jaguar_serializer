@@ -82,7 +82,9 @@ class SerializerWriter {
       _toItemWriter(item);
     }
 
-    _typeInfoKey();
+    if (info.typeInfo) {
+      _typeInfoKey();
+    }
 
     _w.writeln('}');
 

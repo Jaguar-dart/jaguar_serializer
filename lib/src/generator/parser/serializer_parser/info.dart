@@ -17,6 +17,9 @@ class SerializerInfo {
 
   Model model = new Model();
 
+  bool typeInfo = true;
+  String modelName;
+
   SerializerInfo(this.name);
 }
 
@@ -29,7 +32,9 @@ class SerializerWriteInfo {
 
   final List<FieldFrom> from;
 
-  SerializerWriteInfo(this.name, this.modelName,
+  final typeInfo;
+
+  SerializerWriteInfo(this.name, this.modelName, this.typeInfo,
       [this.to = const [], this.from = const []]);
 
   factory SerializerWriteInfo.FromInfo(SerializerInfo info) {
@@ -64,6 +69,6 @@ class SerializerWriteInfo {
     }
 
     return new SerializerWriteInfo(
-        info.name, info.model.model.name, tos, froms);
+        info.name, info.modelName ?? info.model.model.name, info.typeInfo, tos, froms);
   }
 }
