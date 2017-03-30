@@ -8,7 +8,7 @@ part of serializer.test.models.player;
 // **************************************************************************
 
 abstract class _$PlayerSerializer implements Serializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -26,14 +26,14 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeInfoKey}) {
+  Player fromMap(Map map, {Player model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -57,7 +57,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
 // **************************************************************************
 
 abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -72,14 +72,14 @@ abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeInfoKey}) {
+  Player fromMap(Map map, {Player model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -102,7 +102,7 @@ abstract class _$PlayerSerializerIgnore implements Serializer<Player> {
 // **************************************************************************
 
 abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -111,14 +111,14 @@ abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
       if (model.score != null) {
         ret["score"] = model.score;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeInfoKey}) {
+  Player fromMap(Map map, {Player model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -139,7 +139,7 @@ abstract class _$PlayerSerializerIgnores implements Serializer<Player> {
 // **************************************************************************
 
 abstract class _$PlayerSerializerRename implements Serializer<Player> {
-  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -157,14 +157,14 @@ abstract class _$PlayerSerializerRename implements Serializer<Player> {
       if (model.emailConfirmed != null) {
         ret["emailConfirmed"] = model.emailConfirmed;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeInfoKey}) {
+  Player fromMap(Map map, {Player model, String typeKey}) {
     if (map is! Map) {
       return null;
     }

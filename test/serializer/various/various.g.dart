@@ -8,7 +8,7 @@ part of serializer.test.mix.models;
 // **************************************************************************
 
 abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
-  Map toMap(ModelInt model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(ModelInt model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.bar != null) {
@@ -17,14 +17,14 @@ abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  ModelInt fromMap(Map map, {ModelInt model, String typeInfoKey}) {
+  ModelInt fromMap(Map map, {ModelInt model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -45,7 +45,7 @@ abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
 // **************************************************************************
 
 abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
-  Map toMap(ModelDouble model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(ModelDouble model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.bar != null) {
@@ -54,14 +54,14 @@ abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  ModelDouble fromMap(Map map, {ModelDouble model, String typeInfoKey}) {
+  ModelDouble fromMap(Map map, {ModelDouble model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -82,7 +82,7 @@ abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
 // **************************************************************************
 
 abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
-  Map toMap(Inheritance model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Inheritance model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.clazzA != null) {
@@ -91,14 +91,14 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
       if (model.clazzB != null) {
         ret["clazzB"] = model.clazzB;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Inheritance fromMap(Map map, {Inheritance model, String typeInfoKey}) {
+  Inheritance fromMap(Map map, {Inheritance model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -119,7 +119,7 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
 // **************************************************************************
 
 abstract class _$DateSerializer implements Serializer<Date> {
-  Map toMap(Date model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Date model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.date != null) {
@@ -128,14 +128,14 @@ abstract class _$DateSerializer implements Serializer<Date> {
       if (model.clazzA != null) {
         ret["clazzA"] = model.clazzA;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Date fromMap(Map map, {Date model, String typeInfoKey}) {
+  Date fromMap(Map map, {Date model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -159,7 +159,7 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
   final ModelIntSerializer toModelIntSerializer = new ModelIntSerializer();
   final ModelIntSerializer fromModelIntSerializer = new ModelIntSerializer();
 
-  Map toMap(NullTest model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(NullTest model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.tests != null) {
@@ -174,18 +174,18 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
         ret["testModel"] = model.testModel
             ?.map((ModelInt val) => val != null
                 ? toModelIntSerializer.toMap(val,
-                    withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)
+                    withType: withType, typeKey: typeKey)
                 : null)
             ?.toList();
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  NullTest fromMap(Map map, {NullTest model, String typeInfoKey}) {
+  NullTest fromMap(Map map, {NullTest model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -195,8 +195,8 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
     model.tests = map["tests"]?.map((String val) => val)?.toList();
     model.test = map["test"];
     model.testModel = map["testModel"]
-        ?.map((Map val) =>
-            fromModelIntSerializer.fromMap(val, typeInfoKey: typeInfoKey))
+        ?.map(
+            (Map val) => fromModelIntSerializer.fromMap(val, typeKey: typeKey))
         ?.toList();
     return model;
   }
@@ -210,20 +210,20 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
 // **************************************************************************
 
 abstract class _$WithIgnoreSerializer implements Serializer<WithIgnore> {
-  Map toMap(WithIgnore model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(WithIgnore model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.a != null) {
         ret["a"] = model.a;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  WithIgnore fromMap(Map map, {WithIgnore model, String typeInfoKey}) {
+  WithIgnore fromMap(Map map, {WithIgnore model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -243,21 +243,20 @@ abstract class _$WithIgnoreSerializer implements Serializer<WithIgnore> {
 // **************************************************************************
 
 abstract class _$ModelRenamedSerializer implements Serializer<ModelRenamed> {
-  Map toMap(ModelRenamed model,
-      {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(ModelRenamed model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.original != null) {
         ret["renamed"] = model.original;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  ModelRenamed fromMap(Map map, {ModelRenamed model, String typeInfoKey}) {
+  ModelRenamed fromMap(Map map, {ModelRenamed model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -282,7 +281,7 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
   final WithIgnoreSerializer fromWithIgnoreSerializer =
       new WithIgnoreSerializer();
 
-  Map toMap(Complex model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Complex model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.nums != null) {
@@ -311,7 +310,7 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
         ret["ignores"] = model.ignores
             ?.map((WithIgnore val) => val != null
                 ? toWithIgnoreSerializer.toMap(val,
-                    withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)
+                    withType: withType, typeKey: typeKey)
                 : null)
             ?.toList();
       }
@@ -349,7 +348,7 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
         ret["ignoreSet"] = new MapMaker(model.ignoreSet, (String key) => key,
             (WithIgnore value) {
           return toWithIgnoreSerializer.toMap(value,
-              withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
+              withType: withType, typeKey: typeKey);
         }).model;
       }
       if (model.listInnerMap1 != null) {
@@ -358,14 +357,14 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
           return value?.map((String val) => val != null ? val : null)?.toList();
         }).model;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Complex fromMap(Map map, {Complex model, String typeInfoKey}) {
+  Complex fromMap(Map map, {Complex model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -379,7 +378,7 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
     model.doubles = map["doubles"]?.map((double val) => val)?.toList();
     model.ignores = map["ignores"]
         ?.map((Map val) =>
-            fromWithIgnoreSerializer.fromMap(val, typeInfoKey: typeInfoKey))
+            fromWithIgnoreSerializer.fromMap(val, typeKey: typeKey))
         ?.toList();
     model.numSet =
         new MapMaker(map["numSet"], (String key) => key, (num value) {
@@ -403,7 +402,7 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
     }).model as dynamic;
     model.ignoreSet =
         new MapMaker(map["ignoreSet"], (String key) => key, (Map value) {
-      return fromWithIgnoreSerializer.fromMap(value, typeInfoKey: typeInfoKey);
+      return fromWithIgnoreSerializer.fromMap(value, typeKey: typeKey);
     }).model as dynamic;
     model.listInnerMap1 = new MapMaker(
         map["listInnerMap1"], (String key) => key, (List<String> value) {

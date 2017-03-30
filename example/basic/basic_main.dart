@@ -86,7 +86,7 @@ void json() {
       ..emailConfirmed = true
       ..address = (new Address()..city = "Paris");
     print(serializer.serialize(player));
-    print(serializer.serialize(player, withTypeInfo: true));
+    print(serializer.serialize(player, withType: true));
   }
 }
 
@@ -126,7 +126,7 @@ void yaml() {
       ..emailConfirmed = true
       ..address = (new Address()..city = "Paris");
     print(serializer.serialize(player));
-    print(serializer.serialize(player, withTypeInfo: true));
+    print(serializer.serialize(player, withType: true));
   }
 }
 
@@ -141,7 +141,7 @@ void main() {
     ..emailConfirmed = true
     ..address = (new Address()..city = "Paris");
   print(pSerializer.toMap(player));
-  print(pSerializer.toMap(player, withTypeInfo: true));
+  print(pSerializer.toMap(player, withType: true));
 
   json();
   yaml();

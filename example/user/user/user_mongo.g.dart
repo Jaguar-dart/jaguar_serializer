@@ -11,7 +11,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
   final BookMongoSerializer toBookMongoSerializer = new BookMongoSerializer();
   final BookMongoSerializer fromBookMongoSerializer = new BookMongoSerializer();
 
-  Map toMap(User model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(User model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
@@ -28,7 +28,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
       }
       if (model.book != null) {
         ret["book"] = toBookMongoSerializer.toMap(model.book,
-            withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
+            withType: withType, typeKey: typeKey);
       }
       if (model.listStr != null) {
         ret["listStr"] = model.listStr
@@ -39,7 +39,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
         ret["listBook"] = model.listBook
             ?.map((Book val) => val != null
                 ? toBookMongoSerializer.toMap(val,
-                    withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)
+                    withType: withType, typeKey: typeKey)
                 : null)
             ?.toList();
       }
@@ -61,20 +61,20 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
         ret["mapBook"] =
             new MapMaker(model.mapBook, (String key) => key, (Book value) {
           return toBookMongoSerializer.toMap(value,
-              withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
+              withType: withType, typeKey: typeKey);
         }).model;
       }
       if (model.passwordHash != null) {
         ret["passwordHash"] = model.passwordHash;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  User fromMap(Map map, {User model, String typeInfoKey}) {
+  User fromMap(Map map, {User model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -85,12 +85,11 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     model.email = map["email"];
     model.name = map["N"];
     model.dob = new DateTimeSerializer(#dob).deserialize(map["dob"]);
-    model.book =
-        fromBookMongoSerializer.fromMap(map["book"], typeInfoKey: typeInfoKey);
+    model.book = fromBookMongoSerializer.fromMap(map["book"], typeKey: typeKey);
     model.listStr = map["listStr"]?.map((String val) => val)?.toList();
     model.listBook = map["listBook"]
-        ?.map((Map val) =>
-            fromBookMongoSerializer.fromMap(val, typeInfoKey: typeInfoKey))
+        ?.map(
+            (Map val) => fromBookMongoSerializer.fromMap(val, typeKey: typeKey))
         ?.toList();
     model.map = new MapMaker(map["map"], (String key) => key, (String value) {
       return value;
@@ -103,7 +102,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     }).model as dynamic;
     model.mapBook =
         new MapMaker(map["mapBook"], (String key) => key, (Map value) {
-      return fromBookMongoSerializer.fromMap(value, typeInfoKey: typeInfoKey);
+      return fromBookMongoSerializer.fromMap(value, typeKey: typeKey);
     }).model as dynamic;
     model.password = map["password"];
     return model;

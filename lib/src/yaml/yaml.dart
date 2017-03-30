@@ -10,8 +10,8 @@ import 'package:yamlicious/yamlicious.dart';
  * Same usage as [SerializerRepo]
  */
 class YamlRepo extends SerializerRepo {
-  YamlRepo({String typeInfoKey: defaultTypeInfoKey})
-      : super(typeInfoKey: typeInfoKey);
+  YamlRepo({String typeKey: defaultTypeInfoKey})
+      : super(typeKey: typeKey);
 
   ///@nodoc
   dynamic encode(dynamic object) => toYamlString(object);
@@ -27,8 +27,8 @@ class YamlRepo extends SerializerRepo {
    * See [SerializerRepo.from] for more information.
    */
   @override
-  dynamic deserialize(dynamic object, {Type type, String useTypeInfoKey}) =>
-      super.deserialize(object, type: type, useTypeInfoKey: useTypeInfoKey);
+  dynamic deserialize(dynamic object, {Type type, String typeKey}) =>
+      super.deserialize(object, type: type, typeKey: typeKey);
 
   /**
    * Serialize an object to a YAML String
@@ -39,7 +39,7 @@ class YamlRepo extends SerializerRepo {
    */
   @override
   dynamic serialize(dynamic object,
-          {bool withTypeInfo: false, String useTypeInfoKey}) =>
+          {bool withType: false, String typeKey}) =>
       super.serialize(object,
-          withTypeInfo: withTypeInfo, useTypeInfoKey: useTypeInfoKey);
+          withType: withType, typeKey: typeKey);
 }
