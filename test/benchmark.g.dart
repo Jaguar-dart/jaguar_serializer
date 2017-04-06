@@ -11,7 +11,7 @@ abstract class _$ModelTestSerializer implements Serializer<ModelTest> {
   final InnerTestSerializer toInnerTestSerializer = new InnerTestSerializer();
   final InnerTestSerializer fromInnerTestSerializer = new InnerTestSerializer();
 
-  Map toMap(ModelTest model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(ModelTest model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -33,18 +33,18 @@ abstract class _$ModelTestSerializer implements Serializer<ModelTest> {
         ret["inner"] = model.inner
             ?.map((InnerTest val) => val != null
                 ? toInnerTestSerializer.toMap(val,
-                    withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey)
+                    withType: withType, typeKey: typeKey)
                 : null)
             ?.toList();
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  ModelTest fromMap(Map map, {ModelTest model, String typeInfoKey}) {
+  ModelTest fromMap(Map map, {ModelTest model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -56,8 +56,8 @@ abstract class _$ModelTestSerializer implements Serializer<ModelTest> {
     model.names = map["names"]?.map((String val) => val)?.toList();
     model.numbers = map["numbers"]?.map((num val) => val)?.toList();
     model.inner = map["inner"]
-        ?.map((Map val) =>
-            fromInnerTestSerializer.fromMap(val, typeInfoKey: typeInfoKey))
+        ?.map(
+            (Map val) => fromInnerTestSerializer.fromMap(val, typeKey: typeKey))
         ?.toList();
     return model;
   }
@@ -71,7 +71,7 @@ abstract class _$ModelTestSerializer implements Serializer<ModelTest> {
 // **************************************************************************
 
 abstract class _$InnerTestSerializer implements Serializer<InnerTest> {
-  Map toMap(InnerTest model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(InnerTest model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -82,14 +82,14 @@ abstract class _$InnerTestSerializer implements Serializer<InnerTest> {
             ?.map((String val) => val != null ? val : null)
             ?.toList();
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  InnerTest fromMap(Map map, {InnerTest model, String typeInfoKey}) {
+  InnerTest fromMap(Map map, {InnerTest model, String typeKey}) {
     if (map is! Map) {
       return null;
     }

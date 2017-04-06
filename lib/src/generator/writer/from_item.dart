@@ -41,7 +41,7 @@ class FromItemWriter {
     } else if (leaf is SerializedPropertyFrom) {
       _w.write('from' +
           leaf.instantiationString +
-          '.fromMap($reference, typeInfoKey: typeInfoKey)');
+          '.fromMap($reference, typeKey: typeKey)');
     }
     return _w.toString();
   }

@@ -82,6 +82,14 @@ class Complex {
   //Map<String, List> listInnerMap2; //TODO: dynamic
 }
 
+class NoTypeModel {
+  String foo;
+}
+
+class CustomModelName {
+  String foo;
+}
+
 @GenSerializer()
 class ModelIntSerializer extends Serializer<ModelInt>
     with _$ModelIntSerializer {
@@ -157,6 +165,20 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
   }
 }
 
+@GenSerializer(typeInfo: false)
+class NoTypeModelSerializer extends Serializer<NoTypeModel>
+    with _$NoTypeModelSerializer {
+  @override
+  NoTypeModel createModel() => new NoTypeModel();
+}
+
+@GenSerializer(modelName: "MyCustomModelName")
+class CustomModelNameSerializer extends Serializer<CustomModelName>
+    with _$CustomModelNameSerializer {
+  @override
+  CustomModelName createModel() => new CustomModelName();
+}
+
 void main() {
   SerializerRepo serializer;
 
@@ -169,7 +191,9 @@ void main() {
       ..add(new NullTestSerializer())
       ..add(new ModelRenamedSerializer())
       ..add(new ComplexSerializer())
-      ..add(new InheritanceSerializer());
+      ..add(new InheritanceSerializer())
+      ..add(new NoTypeModelSerializer())
+      ..add(new CustomModelNameSerializer());
   });
 
   group('Various - to', () {
@@ -178,11 +202,11 @@ void main() {
       expect(serializer.serialize(d),
           JSON.encode({"clazzA": "ClassA", "clazzB": "inheritance"}));
       expect(
-          serializer.serialize(d, withTypeInfo: true),
+          serializer.serialize(d, withType: true),
           JSON.encode({
             "clazzA": "ClassA",
             "clazzB": "inheritance",
-            serializer.typeInfoKey: "Inheritance"
+            serializer.getTypeKey(): "Inheritance"
           }));
     });
 
@@ -191,11 +215,11 @@ void main() {
       expect(serializer.serialize(d),
           JSON.encode({"bar": 42, "clazzA": "ClassA"}));
       expect(
-          serializer.serialize(d, withTypeInfo: true),
+          serializer.serialize(d, withType: true),
           JSON.encode({
             "bar": 42,
             "clazzA": "ClassA",
-            serializer.typeInfoKey: "ModelInt"
+            serializer.getTypeKey(): "ModelInt"
           }));
     });
 
@@ -204,11 +228,11 @@ void main() {
       expect(serializer.serialize(d),
           JSON.encode({"bar": 42.42, "clazzA": "ClassA"}));
       expect(
-          serializer.serialize(d, withTypeInfo: true),
+          serializer.serialize(d, withType: true),
           JSON.encode({
             "bar": 42.42,
             "clazzA": "ClassA",
-            serializer.typeInfoKey: "ModelDouble"
+            serializer.getTypeKey(): "ModelDouble"
           }));
     });
 
@@ -219,11 +243,11 @@ void main() {
       expect(serializer.serialize(d),
           JSON.encode({"date": now.toIso8601String(), "clazzA": "ClassA"}));
       expect(
-          serializer.serialize(d, withTypeInfo: true),
+          serializer.serialize(d, withType: true),
           JSON.encode({
             "date": now.toIso8601String(),
             "clazzA": "ClassA",
-            serializer.typeInfoKey: "Date"
+            serializer.getTypeKey(): "Date"
           }));
     });
 
@@ -238,11 +262,11 @@ void main() {
             "testModel": [null]
           }));
       expect(
-          serializer.serialize(d, withTypeInfo: true),
+          serializer.serialize(d, withType: true),
           JSON.encode({
             "test": "test",
             "testModel": [null],
-            serializer.typeInfoKey: "NullTest"
+            serializer.getTypeKey(): "NullTest"
           }));
     });
 
@@ -314,7 +338,7 @@ void main() {
           }));
 
       expect(
-          serializer.serialize(complex, withTypeInfo: true),
+          serializer.serialize(complex, withType: true),
           JSON.encode({
             "nums": [1, 2.2, 3],
             "strings": ["1", "2", "3"],
@@ -354,7 +378,7 @@ void main() {
       d = serializer.deserialize({
         "clazzA": "A",
         "clazzB": "B",
-        serializer.typeInfoKey: "Inheritance"
+        serializer.getTypeKey(): "Inheritance"
       });
       expect(d.clazzA, "A");
       expect(d.clazzB, "B");
@@ -366,7 +390,7 @@ void main() {
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
       d = serializer.deserialize(
-          {"bar": 42, "clazzA": "classA", serializer.typeInfoKey: "ModelInt"});
+          {"bar": 42, "clazzA": "classA", serializer.getTypeKey(): "ModelInt"});
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
     });
@@ -376,8 +400,11 @@ void main() {
           .deserialize({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
-      d = serializer.deserialize(
-          {"bar": 42.42, "clazzA": "A", serializer.typeInfoKey: "ModelDouble"});
+      d = serializer.deserialize({
+        "bar": 42.42,
+        "clazzA": "A",
+        serializer.getTypeKey(): "ModelDouble"
+      });
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
     });
@@ -391,7 +418,7 @@ void main() {
       d = serializer.deserialize({
         "date": now.toIso8601String(),
         "clazzA": "A",
-        serializer.typeInfoKey: "Date"
+        serializer.getTypeKey(): "Date"
       });
       expect(d.date, now);
     });
@@ -406,7 +433,7 @@ void main() {
       d = serializer.deserialize({
         "test": "test",
         "testModel": [null],
-        serializer.typeInfoKey: "NullTest"
+        serializer.getTypeKey(): "NullTest"
       }, type: NullTest);
       expect(d.test, "test");
       expect(d.testModel, [null]);
@@ -467,6 +494,19 @@ void main() {
       expect(complex.listInnerMap1, {
         "test": ["123456"]
       });
+    });
+
+    test('Serialize NoTypeModel', () {
+      NoTypeModel model = new NoTypeModel()..foo = 'bar';
+      expect(serializer.serialize(model), JSON.encode({'foo': 'bar'}));
+    });
+
+    test('Serialize With CustomModelName', () {
+      CustomModelName model = new CustomModelName()..foo = 'bar';
+      expect(
+          serializer.serialize(model, withType: true),
+          JSON.encode(
+              {'foo': 'bar', serializer.getTypeKey(): "MyCustomModelName"}));
     });
   });
 }

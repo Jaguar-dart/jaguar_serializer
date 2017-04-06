@@ -20,20 +20,20 @@ abstract class Serializer<ModelType> {
   /**
    * Convert [model] to a serialized object.
    *
-   * If [withTypeInfo] is set to true, the serialized [Object] will contain a key.
+   * If [withType] is set to true, the serialized [Object] will contain a key.
    *
-   * The value of the key can be set with the [typeInfoKey] option.
+   * The value of the key can be set with the [typeKey] option.
    *
    * It will be associated with the type of the object.
    */
   dynamic serialize(dynamic model,
-      {bool withTypeInfo: false, String typeInfoKey: defaultTypeInfoKey}) {
+      {bool withType: false, String typeKey: defaultTypeInfoKey}) {
     if (model is ModelType) {
-      return toMap(model, withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
+      return toMap(model, withType: withType, typeKey: typeKey);
     } else if (model is List<ModelType>) {
       return model
-          .map((ModelType model) => toMap(model,
-              withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey))
+          .map((ModelType model) =>
+              toMap(model, withType: withType, typeKey: typeKey))
           .toList();
     } else {
       throw new Exception("Unknown object type received!");
@@ -56,7 +56,7 @@ abstract class Serializer<ModelType> {
   }
 
   /// Encodes model to [Map]
-  Map toMap(ModelType model, {bool withTypeInfo: false, String typeInfoKey});
+  Map toMap(ModelType model, {bool withType: false, String typeKey});
 
   /// Decodes model from [Map]
   ModelType fromMap(Map map, {ModelType model}) {
@@ -69,7 +69,7 @@ abstract class Serializer<ModelType> {
   /// Return the [Type] handle by this [Serializer]
   Type modelType() => ModelType;
 
-  /// Return the associated [String] of the [Type] handle by this [Serializer], used by [typeInfoKey]
+  /// Return the associated [String] of the [Type] handle by this [Serializer], used by [typeKey]
   String modelString();
 
   ModelType createModel();

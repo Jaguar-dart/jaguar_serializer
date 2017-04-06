@@ -138,8 +138,8 @@ void main() {
     test('Book', () {
       book.publishedDates = null;
       String encoded =
-          serializer.serialize(book, withTypeInfo: true, useTypeInfoKey: "(t)");
-      Book bookTest = serializer.deserialize(encoded, useTypeInfoKey: "(t)");
+          serializer.serialize(book, withType: true, typeKey: "(t)");
+      Book bookTest = serializer.deserialize(encoded, typeKey: "(t)");
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
       expect(bookTest.publishedDates, equals(book.publishedDates));
@@ -150,10 +150,9 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded = serializer.serialize(book.authors,
-          withTypeInfo: true, useTypeInfoKey: "(t)");
-      List<Author> authors =
-          serializer.deserialize(encoded, useTypeInfoKey: "(t)");
+      String encoded =
+          serializer.serialize(book.authors, withType: true, typeKey: "(t)");
+      List<Author> authors = serializer.deserialize(encoded, typeKey: "(t)");
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));
       expect(authors[1].name, equals(book.authors[1].name));

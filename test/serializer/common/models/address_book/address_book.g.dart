@@ -11,7 +11,7 @@ abstract class _$Person implements Serializer<Person> {
   final Address toAddress = new Address();
   final Address fromAddress = new Address();
 
-  Map toMap(Person model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Person model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -19,16 +19,16 @@ abstract class _$Person implements Serializer<Person> {
       }
       if (model.address != null) {
         ret["address"] = toAddress.toMap(model.address,
-            withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
+            withType: withType, typeKey: typeKey);
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Person fromMap(Map map, {Person model, String typeInfoKey}) {
+  Person fromMap(Map map, {Person model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -36,8 +36,7 @@ abstract class _$Person implements Serializer<Person> {
       model = createModel();
     }
     model.name = map["name"];
-    model.address =
-        fromAddress.fromMap(map["address"], typeInfoKey: typeInfoKey);
+    model.address = fromAddress.fromMap(map["address"], typeKey: typeKey);
     return model;
   }
 
@@ -50,7 +49,7 @@ abstract class _$Person implements Serializer<Person> {
 // **************************************************************************
 
 abstract class _$Address implements Serializer<Address> {
-  Map toMap(Address model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Address model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.street != null) {
@@ -68,14 +67,14 @@ abstract class _$Address implements Serializer<Address> {
       if (model.pincode != null) {
         ret["pincode"] = model.pincode;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Address fromMap(Map map, {Address model, String typeInfoKey}) {
+  Address fromMap(Map map, {Address model, String typeKey}) {
     if (map is! Map) {
       return null;
     }

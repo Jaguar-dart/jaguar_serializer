@@ -11,7 +11,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
   final AddressSerializer toAddressSerializer = new AddressSerializer();
   final AddressSerializer fromAddressSerializer = new AddressSerializer();
 
-  Map toMap(Player model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.name != null) {
@@ -34,16 +34,16 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       }
       if (model.address != null) {
         ret["address"] = toAddressSerializer.toMap(model.address,
-            withTypeInfo: withTypeInfo, typeInfoKey: typeInfoKey);
+            withType: withType, typeKey: typeKey);
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeInfoKey}) {
+  Player fromMap(Map map, {Player model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
@@ -57,7 +57,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     model.emailConfirmed = map["emailConfirmed"];
     model.test = map["test"];
     model.address =
-        fromAddressSerializer.fromMap(map["address"], typeInfoKey: typeInfoKey);
+        fromAddressSerializer.fromMap(map["address"], typeKey: typeKey);
     return model;
   }
 
@@ -70,7 +70,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
 // **************************************************************************
 
 abstract class _$AddressSerializer implements Serializer<Address> {
-  Map toMap(Address model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Address model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.street != null) {
@@ -85,14 +85,14 @@ abstract class _$AddressSerializer implements Serializer<Address> {
       if (model.city != null) {
         ret["city"] = model.city;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Address fromMap(Map map, {Address model, String typeInfoKey}) {
+  Address fromMap(Map map, {Address model, String typeKey}) {
     if (map is! Map) {
       return null;
     }

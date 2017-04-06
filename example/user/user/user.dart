@@ -29,7 +29,7 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   }
 }
 
-@GenSerializer()
+@GenSerializer(typeInfo: true)
 @DateTimeSerializer(#dob)
 @EncodeField(#id, as: 'Id')
 @DecodeField(#id, from: 'Id')

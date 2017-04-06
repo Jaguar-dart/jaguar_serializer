@@ -21,7 +21,7 @@ class SerializerWriter {
   void generate() {
     _w.writeln('abstract class _\$' +
         info.name +
-        ' implements Serializer<${info.modelName}> {');
+        ' implements Serializer<${info.className}> {');
     _w.writeln();
 
     _providerWriter();
@@ -73,7 +73,7 @@ class SerializerWriter {
 
   void _toWriter() {
     _w.writeln(
-        'Map toMap(${info.modelName} model, {bool withTypeInfo: false, String typeInfoKey}) {');
+        'Map toMap(${info.className} model, {bool withType: false, String typeKey}) {');
     _w.writeln(r'Map ret = new Map();');
 
     _w.writeln('if(model != null) {');
@@ -82,7 +82,9 @@ class SerializerWriter {
       _toItemWriter(item);
     }
 
-    _typeInfoKey();
+    if (info.typeInfo) {
+      _typeKey();
+    }
 
     _w.writeln('}');
 
@@ -90,10 +92,10 @@ class SerializerWriter {
     _w.writeln(r'}');
   }
 
-  void _typeInfoKey() {
-    _w.writeln('if(modelString() != null && withTypeInfo) {');
+  void _typeKey() {
+    _w.writeln('if(modelString() != null && withType) {');
 
-    _w.write('ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();');
+    _w.write('ret[typeKey ?? defaultTypeInfoKey] = modelString();');
 
     _w.writeln('}');
   }
@@ -113,12 +115,12 @@ class SerializerWriter {
 
   void _fromWriter() {
     _w.writeln(
-        '${info.modelName} fromMap(Map map, {${info.modelName} model, String typeInfoKey}) {');
+        '${info.className} fromMap(Map map, {${info.className} model, String typeKey}) {');
     _w.writeln(r'if(map is! Map) {');
     _w.writeln(r'return null;');
     _w.writeln(r'}');
 
-    _w.writeln('if(model is! ${info.modelName}) {');
+    _w.writeln('if(model is! ${info.className}) {');
     _w.writeln(r'model = createModel();');
     _w.writeln(r'}');
 

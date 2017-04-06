@@ -90,7 +90,7 @@ void main() {
   group("json with type info", () {
     test('Book', () {
       book.publishedDates = null;
-      String encoded = serializer.serialize(book, withTypeInfo: true);
+      String encoded = serializer.serialize(book, withType: true);
       Book bookTest = serializer.deserialize(encoded);
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
@@ -102,7 +102,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded = serializer.serialize(book.authors, withTypeInfo: true);
+      String encoded = serializer.serialize(book.authors, withType: true);
       List<Author> authors = serializer.deserialize(encoded);
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));

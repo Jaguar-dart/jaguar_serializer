@@ -5,7 +5,10 @@
 ***New***
 
 - `Repository` system (Json, Yaml)
-- embeded type => see typeInfoKey
+- embeded type => see typeKey
+- Optional parameters for GenSerializer :
+    * `bool typeKey (default:true)` if you want to include the type
+    * `String modelName` value that will be include as a type.
 
 ## 0.1.2
 

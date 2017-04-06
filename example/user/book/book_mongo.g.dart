@@ -8,7 +8,7 @@ part of example.book.mongo;
 // **************************************************************************
 
 abstract class _$BookMongoSerializer implements Serializer<Book> {
-  Map toMap(Book model, {bool withTypeInfo: false, String typeInfoKey}) {
+  Map toMap(Book model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
@@ -20,14 +20,14 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
       if (model.publishedYear != null) {
         ret["publishedYear"] = model.publishedYear;
       }
-      if (modelString() != null && withTypeInfo) {
-        ret[typeInfoKey ?? defaultTypeInfoKey] = modelString();
+      if (modelString() != null && withType) {
+        ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
     }
     return ret;
   }
 
-  Book fromMap(Map map, {Book model, String typeInfoKey}) {
+  Book fromMap(Map map, {Book model, String typeKey}) {
     if (map is! Map) {
       return null;
     }
