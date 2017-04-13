@@ -12,7 +12,6 @@ import 'package:jaguar_serializer/src/generator/phase/phase.dart';
 import 'package:jaguar_serializer/src/generator/parser/import.dart';
 import 'package:jaguar_serializer/src/generator/writer/writer.dart';
 
-
 /// Watch files and trigger build function
 Stream<build_runner.BuildResult> watch() =>
     build_runner.watch(phaseGroup(), deleteFilesByDefault: true);
