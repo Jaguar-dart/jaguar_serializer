@@ -62,6 +62,8 @@ serializers:
 ...
 ```
 
+You can use `serializer init` command to generate it.
+
 ### Build
 No you can build you serializer running the command
 

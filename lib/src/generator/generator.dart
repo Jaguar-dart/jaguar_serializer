@@ -1,5 +1,6 @@
 ///@nodoc
 import 'dart:async';
+import 'dart:io';
 
 import 'package:build_runner/build_runner.dart' as build_runner;
 import 'package:analyzer/dart/element/element.dart';
@@ -11,6 +12,7 @@ import 'package:jaguar_serializer/serializer.dart';
 import 'package:jaguar_serializer/src/generator/phase/phase.dart';
 import 'package:jaguar_serializer/src/generator/parser/import.dart';
 import 'package:jaguar_serializer/src/generator/writer/writer.dart';
+import 'package:jaguar_serializer/src/generator/config/config.dart';
 
 /// Watch files and trigger build function
 Stream<build_runner.BuildResult> watch() =>
@@ -19,6 +21,25 @@ Stream<build_runner.BuildResult> watch() =>
 /// Build all Serializer
 Future<build_runner.BuildResult> build() =>
     build_runner.build(phaseGroup(), deleteFilesByDefault: true);
+
+/// Create Serializer Config File
+init() {
+  final pubspec = new File("pubspec.yaml");
+  if (!pubspec.existsSync()) {
+    stderr.writeln("Error: 'pubspec.yaml' not found.");
+  } else {
+    final configFile = new File(jaguarSerializerConfigFile);
+    if (configFile.existsSync()) {
+      stderr.writeln("Error: '$jaguarSerializerConfigFile' already exist.");
+    } else {
+      configFile.writeAsStringSync('''
+serializers:
+# Add files with your serializable class here.
+#- lib/models/my_model.dart
+      ''');
+    }
+  }
+}
 
 String get _usage => '''
 Available commands:
@@ -33,6 +54,8 @@ start(List<String> args) {
       return watch();
     } else if (args[0] == 'build') {
       return build();
+    } else if (args[0] == 'init') {
+      return init();
     }
   }
   print(_usage);

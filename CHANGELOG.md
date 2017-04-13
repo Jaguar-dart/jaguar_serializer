@@ -3,6 +3,7 @@
 ## 0.3.1
 
 - Update `build` (>=0.7.0 <0.8.0)
+- `serializer init` command, generate `serializer.yaml`
 
 ## 0.3.0
 
