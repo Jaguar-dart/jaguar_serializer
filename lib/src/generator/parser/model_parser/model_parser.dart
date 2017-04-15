@@ -18,9 +18,20 @@ class ModelField {
 class Model {
   ClassElementWrap model;
 
-  List<ModelField> to = [];
+  Map<String, ModelField> _fieldsTo = {};
+  Map<String, ModelField> _fieldsFrom = {};
 
-  List<ModelField> from = [];
+  void addTo(ModelField field) {
+    _fieldsTo[field.name] = field;
+  }
+
+  void addFrom(ModelField field) {
+    _fieldsFrom[field.name] = field;
+  }
+
+  List<ModelField> get to => _fieldsTo.values.toList();
+
+  List<ModelField> get from => _fieldsFrom.values.toList();
 }
 
 Model parseModel(ClassElementWrap modelClazz) {
@@ -34,12 +45,12 @@ Model parseModel(ClassElementWrap modelClazz) {
           !field.isStatic && !field.isPrivate)
       .forEach((PropertyAccessorElement field) {
     if (field.isGetter) {
-      mod.to.add(new ModelField(
+      mod.addTo(new ModelField(
           field.displayName, new DartTypeWrap(field.returnType)));
     }
 
     if (field.isSetter) {
-      mod.from.add(new ModelField(field.displayName,
+      mod.addFrom(new ModelField(field.displayName,
           new DartTypeWrap(field.type.parameters.first.type)));
     }
   });
