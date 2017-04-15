@@ -12,3 +12,4 @@ serializers:
 - test/serializer/common/models/address_book/address_book.dart
 - test/serializer/various/various.dart
 - test/benchmark.dart
+- test/generator/inheritance.dart

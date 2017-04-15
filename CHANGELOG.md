@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1
+
+- Update `build` (>=0.7.0 <0.8.0)
+- `serializer init` command, generate `serializer.yaml`
+- fix overrided field in double inside the generated code
+
 ## 0.3.0
 
 ***New***
