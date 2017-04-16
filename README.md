@@ -3,6 +3,7 @@
 # jaguar_serializer
 Format agnostic Serializer library that can be used in server and client for JSON, mongodb, postgresql, etc
 
+- [Documentations](https://github.com/Jaguar-dart/jaguar_serializer/wiki)
 
 # Getting Started
 

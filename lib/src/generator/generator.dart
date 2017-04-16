@@ -45,6 +45,7 @@ String get _usage => '''
 Available commands:
   - build
   - watch
+  - init
 ''';
 
 // shoud we keep this ?
