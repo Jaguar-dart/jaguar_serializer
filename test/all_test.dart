@@ -6,6 +6,8 @@ import 'serializer/builtin/builtin_from.dart' as builtinFrom;
 import 'serializer/list/list_to.dart' as listTo;
 import 'serializer/list/list_from.dart' as listFrom;
 
+import 'serializer/excludeByDefault/excludeByDefault.dart' as excludeByDefault;
+
 import 'serializer/nested_objects/builtin_to.dart' as nestedObjectTo;
 
 import 'generator/writer/list_map/list_map.dart' as genWriterListMap;
@@ -21,6 +23,8 @@ void main() {
 
   listTo.main();
   listFrom.main();
+
+  excludeByDefault.main();
 
   nestedObjectTo.main();
 

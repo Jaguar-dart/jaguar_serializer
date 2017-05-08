@@ -5,6 +5,8 @@ import 'package:analyzer/dart/element/element.dart';
 
 import 'package:source_gen_help/source_gen_help.dart';
 
+import 'package:jaguar_serializer/src/generator/parser/serializer_parser/serializer_parser.dart';
+
 class ModelField {
   /// Name of the field
   String name;
@@ -34,7 +36,8 @@ class Model {
   List<ModelField> get from => _fieldsFrom.values.toList();
 }
 
-Model parseModel(ClassElementWrap modelClazz) {
+Model parseModel(
+    ClassElementWrap modelClazz, SerializerInfo info, bool includeByDefault) {
   Model mod = new Model();
 
   mod.model = modelClazz;
@@ -45,13 +48,17 @@ Model parseModel(ClassElementWrap modelClazz) {
           !field.isStatic && !field.isPrivate)
       .forEach((PropertyAccessorElement field) {
     if (field.isGetter) {
-      mod.addTo(new ModelField(
-          field.displayName, new DartTypeWrap(field.returnType)));
+      if (includeByDefault || info.toRename.containsKey(field.displayName)) {
+        mod.addTo(new ModelField(
+            field.displayName, new DartTypeWrap(field.returnType)));
+      }
     }
 
     if (field.isSetter) {
-      mod.addFrom(new ModelField(field.displayName,
-          new DartTypeWrap(field.type.parameters.first.type)));
+      if (includeByDefault || info.fromRename.containsKey(field.displayName)) {
+        mod.addFrom(new ModelField(field.displayName,
+            new DartTypeWrap(field.type.parameters.first.type)));
+      }
     }
   });
 
