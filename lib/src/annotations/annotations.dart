@@ -6,7 +6,9 @@ const String kLibAnnotations = 'jaguar_serializer.annotations';
 class GenSerializer {
   final bool typeInfo;
   final String modelName;
-  const GenSerializer({this.typeInfo: true, this.modelName});
+  final bool includeByDefault;
+  const GenSerializer(
+      {this.typeInfo: true, this.modelName, this.includeByDefault: true});
 }
 
 /// Annotation used to provide serializers for specific types

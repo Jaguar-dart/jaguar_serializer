@@ -18,7 +18,7 @@ void main() {
     });
 
     // Check if fromMap converts all Map items to fields
-    test('To map', () {
+    test('From map', () {
       PlayerSerializer serializer = new PlayerSerializer();
       Player player = serializer.fromMap(m);
       expect(player.name, 'John');

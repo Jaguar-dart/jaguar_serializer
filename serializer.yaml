@@ -13,3 +13,4 @@ serializers:
 - test/serializer/various/various.dart
 - test/benchmark.dart
 - test/generator/inheritance.dart
+- test/serializer/excludeByDefault/excludeByDefault.dart

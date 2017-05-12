@@ -30,7 +30,7 @@ const NamedElementImpl kFieldProcessor =
 const NamedElementImpl kDefineFieldProcessor = const NamedElementImpl.Make(
     'DefineFieldProcessor', 'jaguar_serializer.annotations');
 
-SerializerInfo parseSerializer(ClassElementWrap clazz) {
+SerializerInfo parseSerializer(ClassElementWrap clazz, bool includeByDefault) {
   final InterfaceTypeWrap interface = clazz.allSupertypes.firstWhere(
       (InterfaceTypeWrap interface) =>
           interface.compareNamedElement(kSerializer),
@@ -60,7 +60,7 @@ SerializerInfo parseSerializer(ClassElementWrap clazz) {
 
   _collectFieldsMetadata(ret, clazz);
 
-  ret.model = parseModel(typeArg.clazz);
+  ret.model = parseModel(typeArg.clazz, ret, includeByDefault);
 
   return ret;
 }

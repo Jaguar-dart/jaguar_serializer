@@ -84,7 +84,8 @@ class SerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
 
     print("Generating serializer for $className ...");
 
-    SerializerInfo info = parseSerializer(new ClassElementWrap(classElement));
+    SerializerInfo info = parseSerializer(
+        new ClassElementWrap(classElement), api.includeByDefault);
     info.typeInfo = api.typeInfo;
     info.modelName = api.modelName;
 

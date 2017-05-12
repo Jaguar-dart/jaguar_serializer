@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+- Added "exclude by default" feature 
+
 ## 0.3.1
 
 - Update `build` (>=0.7.0 <0.8.0)
