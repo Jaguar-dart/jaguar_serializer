@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+- Better failure messages when property is an Object or dynamic
+
 ## 0.3.2
 
 - Added "exclude by default" feature 
