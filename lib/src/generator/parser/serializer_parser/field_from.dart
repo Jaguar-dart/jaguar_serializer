@@ -66,9 +66,9 @@ class SerializedPropertyFrom implements LeafPropertyFrom {
 PropertyFrom _parsePropertyFrom(
     SerializerInfo info, String fieldName, DartTypeWrap type) {
   if (type.isDynamic) {
-    throw new Exception('Cannot serialize dynamic type!');
+    throw new Exception('Cannot serialize "dynamic" type for property $fieldName!');
   } else if (type.isObject) {
-    throw new Exception('Cannot serialize Object type!');
+    throw new Exception('Cannot serialize "Object" type for property $fieldName!');
   }
 
   if (type.isList) {
