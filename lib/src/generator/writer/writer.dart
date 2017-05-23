@@ -45,6 +45,9 @@ class SerializerWriter {
           'final ${to.instantiationString} to${to.instantiationString} = new ${to.instantiationString}();');
     } else if (to is ListPropertyTo) {
       _serializedPropertyToWriter(to.value);
+    } else if (to is MapPropertyTo) {
+      _serializedPropertyToWriter(to.key);
+      _serializedPropertyToWriter(to.value);
     }
   }
 
@@ -57,6 +60,9 @@ class SerializerWriter {
       _w.writeln(
           'final ${from.instantiationString} from${from.instantiationString} = new ${from.instantiationString}();');
     } else if (from is ListPropertyFrom) {
+      _serializedPropertyFromWriter(from.value);
+    } else if (from is MapPropertyFrom) {
+      _serializedPropertyFromWriter(from.key);
       _serializedPropertyFromWriter(from.value);
     }
   }

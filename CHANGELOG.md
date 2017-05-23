@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4
+
+- Fixed ProvideSerializer for Map fields
+
 ## 0.3.3
 
 - Better failure messages when property is an Object or dynamic
