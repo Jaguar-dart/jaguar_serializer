@@ -51,7 +51,7 @@ class UserJsonSerializer extends Serializer<User> with _$UserJsonSerializer {
 
 ## Generate Serializer
 
-### Configuration file
+### Configuration file (Optional since `0.3.5`)
 
 Jaguar Serializer need a configuration file to know which files have possible Serializer.
 
@@ -64,6 +64,8 @@ serializers:
 ```
 
 You can use `serializer init` command to generate it.
+
+If no files are provided, `jaguar_serializer` will take all dart files under `lib`, `bin`, `example` and `test` folders.
 
 ### Build
 No you can build you serializer running the command

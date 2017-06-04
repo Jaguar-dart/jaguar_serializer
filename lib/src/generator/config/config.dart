@@ -11,3 +11,13 @@ class JaguarSerializerConfig extends GeneratorConfig {
 
   List<String> get serializers => config[serializersKey];
 }
+
+class DefaultGeneratorConfig {
+  List<String> _apis;
+
+  List<String> get serializers => _apis;
+
+  final Pubspec pubspec;
+
+  DefaultGeneratorConfig(this._apis) : pubspec = new Pubspec();
+}

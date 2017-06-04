@@ -1,10 +1,10 @@
-library serializer.test.excludeByDefault;
+library serializer.test.exclude_by_default;
 
 import 'package:test/test.dart';
 
 import 'package:jaguar_serializer/serializer.dart';
 
-part 'excludeByDefault.g.dart';
+part 'exclude_by_default.g.dart';
 
 class ExcludeByDefault {
   String id;
