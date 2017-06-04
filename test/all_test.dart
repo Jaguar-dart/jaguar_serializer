@@ -6,7 +6,8 @@ import 'serializer/builtin/builtin_from.dart' as builtinFrom;
 import 'serializer/list/list_to.dart' as listTo;
 import 'serializer/list/list_from.dart' as listFrom;
 
-import 'serializer/excludeByDefault/excludeByDefault.dart' as excludeByDefault;
+import 'serializer/exclude_by_default/exclude_by_default.dart'
+    as excludeByDefault;
 
 import 'serializer/nested_objects/builtin_to.dart' as nestedObjectTo;
 
