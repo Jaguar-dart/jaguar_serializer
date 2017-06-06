@@ -111,7 +111,8 @@ PropertyTo _parsePropertyTo(
 FieldTo _parseFieldTo(SerializerInfo info, ModelField field, String key) {
   if (info.customFieldCodecs.containsKey(field.name)) {
     String instStr = info.customFieldCodecs[field.name].instantiationString;
-    return new FieldTo(key, field.name, new CustomPropertyTo(instStr));
+    return new FieldTo(
+        key, field.name, new CustomPropertyTo("${field.name}$instStr"));
   } else {
     return new FieldTo(
         key, field.name, _parsePropertyTo(info, field.name, field.type));

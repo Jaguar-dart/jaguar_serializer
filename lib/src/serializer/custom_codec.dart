@@ -36,6 +36,8 @@ abstract class FieldProcessor<FromType, ToType> {
   /// Field in the model to be processed
   Symbol get field;
 
+  /// fixme? (lejard_h) do we really need to store the symbole here ?
+
   /// Called to process field before decoding
   FromType deserialize(ToType value);
 

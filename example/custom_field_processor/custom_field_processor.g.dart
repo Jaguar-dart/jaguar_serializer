@@ -8,11 +8,13 @@ part of example.field_manipulation;
 // **************************************************************************
 
 abstract class _$PlayerMongoSerializer implements Serializer<Player> {
+  final MongoId idMongoId = const MongoId(#id);
+
   Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["_id"] = new MongoId(#id).serialize(model.id);
+        ret["_id"] = idMongoId.serialize(model.id);
       }
       if (model.name != null) {
         ret["name"] = model.name;
@@ -34,7 +36,7 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     if (model is! Player) {
       model = createModel();
     }
-    model.id = new MongoId(#id).deserialize(map["_id"]);
+    model.id = idMongoId.deserialize(map["_id"]);
     model.name = map["name"];
     model.email = map["email"];
     return model;

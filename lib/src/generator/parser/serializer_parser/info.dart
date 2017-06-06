@@ -36,8 +36,12 @@ class SerializerWriteInfo {
 
   final typeInfo;
 
+  final Map<String, CustomFieldCodecInfo> customFieldCodecs;
+
   SerializerWriteInfo(this.name, this.className, this.modelName, this.typeInfo,
-      [this.to = const [], this.from = const []]);
+      [this.to = const [],
+      this.from = const [],
+      this.customFieldCodecs = const {}]);
 
   factory SerializerWriteInfo.FromInfo(SerializerInfo info) {
     List<FieldTo> tos = <FieldTo>[];
@@ -73,7 +77,7 @@ class SerializerWriteInfo {
     String className = info.model.model.name;
     String modelName = info.modelName ?? className;
 
-    return new SerializerWriteInfo(
-        info.name, className, modelName, info.typeInfo, tos, froms);
+    return new SerializerWriteInfo(info.name, className, modelName,
+        info.typeInfo, tos, froms, info.customFieldCodecs);
   }
 }

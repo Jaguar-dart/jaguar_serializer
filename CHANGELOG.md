@@ -3,6 +3,7 @@
 ## 0.3.7
 
 - Add builtin `RawData` Processor
+- Optimize CustomFieldProcessor
 
 ## 0.3.6
 
