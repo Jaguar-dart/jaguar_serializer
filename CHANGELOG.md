@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.7
+
+- Add builtin `RawData` Processor
+
 ## 0.3.6
 
 - Update `build` package to `>=0.9.3 <0.10.0`
