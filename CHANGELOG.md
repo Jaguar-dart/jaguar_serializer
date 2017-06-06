@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.6
+
+- Update `build` package to `>=0.9.3 <0.10.0`
+
 ## 0.3.5
 - `serializers.yaml` is now optional, Jaguar Serializer will take all dart files under `lib`, `bin`, `example` and `test` folders.
 Be careful on big project, `watch` can be slow or take a lot of resources.
