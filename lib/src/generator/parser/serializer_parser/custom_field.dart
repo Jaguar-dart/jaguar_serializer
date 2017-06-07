@@ -36,8 +36,7 @@ void _parseCustomField(SerializerInfo ret, AnnotationElementWrap annot) {
   }
 
   String key = annot.constantValue.getField('field').toSymbolValue();
-  ret.customFieldCodecs[key] =
-      new CustomFieldCodecInfo(annot.instantiationString);
+  ret.customFieldCodecs[key] = new CustomFieldCodecInfo(annot.name);
 }
 
 void _collectCustomFields(SerializerInfo ret, ClassElementWrap clazz) {

@@ -1,5 +1,7 @@
 library jaguar_serializer.serializer;
 
+import 'package:jaguar_serializer/src/annotations/annotations.dart';
+
 part 'custom_codec.dart';
 part 'map_maker.dart';
 part 'repo.dart';

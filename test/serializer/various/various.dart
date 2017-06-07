@@ -69,6 +69,7 @@ class Complex {
   List<bool> bools;
   List<int> ints;
   List<double> doubles;
+
   //List<DateTime> dates; //TODO: processField inside List or Map
   List<WithIgnore> ignores;
   Map<String, num> numSet;
@@ -76,10 +77,12 @@ class Complex {
   Map<String, bool> boolSet;
   Map<String, int> intSet;
   Map<String, double> doubleSet;
+
   // Map<String, DateTime> dateSet;//TODO: processField inside List or Map
   Map<String, WithIgnore> ignoreSet;
   Map<String, List<String>> listInnerMap1;
-  //Map<String, List> listInnerMap2; //TODO: dynamic
+  Map dynamicMap;
+  List dynamicList;
 }
 
 class NoTypeModel {
@@ -144,6 +147,8 @@ class ModelRenamedSerializer extends Serializer<ModelRenamed>
 
 @GenSerializer()
 @DateTimeProcessor(#dates)
+@RawData(#dynamicMap)
+@RawData(#dynamicList)
 @ProvideSerializer(WithIgnore, WithIgnoreSerializer)
 class ComplexSerializer extends Serializer<Complex> with _$ComplexSerializer {
   @override
@@ -507,6 +512,38 @@ void main() {
           serializer.serialize(model, withType: true),
           JSON.encode(
               {'foo': 'bar', serializer.getTypeKey(): "MyCustomModelName"}));
+    });
+
+    test("RawData Processor - Serialize dynamic Map", () {
+      Complex complex = new Complex();
+      complex.dynamicMap = {
+        "1": [1, 2, 3],
+        "2": ["1", "2", "3"],
+        "3": [1, "2", 1.3]
+      };
+
+      final encoded = serializer.serialize(complex);
+      expect(
+          encoded,
+          JSON.encode({
+            'dynamicMap': {
+              "1": [1, 2, 3],
+              "2": ["1", "2", "3"],
+              "3": [1, "2", 1.3]
+            }
+          }));
+    });
+
+    test("RawData Processor - Serialize dynamic List", () {
+      Complex complex = new Complex();
+      complex.dynamicList = [1, "2", 1.3];
+
+      final encoded = serializer.serialize(complex);
+      expect(
+          encoded,
+          JSON.encode({
+            'dynamicList': [1, "2", 1.3]
+          }));
     });
   });
 }

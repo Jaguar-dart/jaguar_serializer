@@ -11,6 +11,7 @@ class SerializerWriter {
   final SerializerWriteInfo info;
   List<String> _providersTo = [];
   List<String> _providersFrom = [];
+  List<String> _customsProcessors = [];
 
   StringBuffer _w = new StringBuffer();
 
@@ -57,8 +58,8 @@ class SerializerWriter {
         return;
       }
       _providersFrom.add(from.instantiationString);
-      _w.writeln(
-          'final ${from.instantiationString} from${from.instantiationString} = new ${from.instantiationString}();');
+      _w.writeln('final ${from.instantiationString} from${from
+              .instantiationString} = new ${from.instantiationString}();');
     } else if (from is ListPropertyFrom) {
       _serializedPropertyFromWriter(from.value);
     } else if (from is MapPropertyFrom) {
@@ -67,7 +68,19 @@ class SerializerWriter {
     }
   }
 
+  void _serializedPropertyCustomWriter(
+      String key, CustomFieldCodecInfo customProcessor) {
+    if (!_customsProcessors
+        .contains("$key${customProcessor.instantiationString}")) {
+      _customsProcessors.add("$key${customProcessor.instantiationString}");
+      _w.writeln(
+          'final ${customProcessor.instantiationString} $key${customProcessor
+              .instantiationString} = const ${customProcessor.instantiationString}(#$key);');
+    }
+  }
+
   void _providerWriter() {
+    info.customFieldCodecs.forEach(_serializedPropertyCustomWriter);
     info.to.forEach((FieldTo item) {
       _serializedPropertyToWriter(item.property);
     });

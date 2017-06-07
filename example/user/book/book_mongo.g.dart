@@ -8,11 +8,13 @@ part of example.book.mongo;
 // **************************************************************************
 
 abstract class _$BookMongoSerializer implements Serializer<Book> {
+  final MongoId idMongoId = const MongoId(#id);
+
   Map toMap(Book model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["id"] = new MongoId(#id).serialize(model.id);
+        ret["id"] = idMongoId.serialize(model.id);
       }
       if (model.name != null) {
         ret["N"] = model.name;
@@ -34,7 +36,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
     if (model is! Book) {
       model = createModel();
     }
-    model.id = new MongoId(#id).deserialize(map["id"]);
+    model.id = idMongoId.deserialize(map["id"]);
     model.name = map["N"];
     model.publishedYear = map["publishedYear"];
     return model;

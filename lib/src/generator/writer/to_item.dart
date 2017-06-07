@@ -38,7 +38,7 @@ class ToItemWriter {
     if (leaf is BuiltinLeafPropertyTo) {
       _w.write(reference);
     } else if (leaf is CustomPropertyTo) {
-      _w.write(' new ' + leaf.instantiationString + '.serialize($reference)');
+      _w.write(leaf.instantiationString + '.serialize($reference)');
     } else if (leaf is SerializedPropertyTo) {
       _w.write(' to' +
           leaf.instantiationString +
