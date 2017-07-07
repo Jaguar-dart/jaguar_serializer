@@ -8,6 +8,9 @@ part of example.user.mongo;
 // **************************************************************************
 
 abstract class _$UserMongoSerializer implements Serializer<User> {
+  final MongoId idMongoId = const MongoId(#id);
+  final DateTimeSerializer dobDateTimeSerializer =
+      const DateTimeSerializer(#dob);
   final BookMongoSerializer toBookMongoSerializer = new BookMongoSerializer();
   final BookMongoSerializer fromBookMongoSerializer = new BookMongoSerializer();
 
@@ -15,7 +18,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["id"] = new MongoId(#id).serialize(model.id);
+        ret["id"] = idMongoId.serialize(model.id);
       }
       if (model.email != null) {
         ret["email"] = model.email;
@@ -24,7 +27,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
         ret["N"] = model.name;
       }
       if (model.dob != null) {
-        ret["dob"] = new DateTimeSerializer(#dob).serialize(model.dob);
+        ret["dob"] = dobDateTimeSerializer.serialize(model.dob);
       }
       if (model.book != null) {
         ret["book"] = toBookMongoSerializer.toMap(model.book,
@@ -81,10 +84,10 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     if (model is! User) {
       model = createModel();
     }
-    model.id = new MongoId(#id).deserialize(map["id"]);
+    model.id = idMongoId.deserialize(map["id"]);
     model.email = map["email"];
     model.name = map["N"];
-    model.dob = new DateTimeSerializer(#dob).deserialize(map["dob"]);
+    model.dob = dobDateTimeSerializer.deserialize(map["dob"]);
     model.book = fromBookMongoSerializer.fromMap(map["book"], typeKey: typeKey);
     model.listStr = map["listStr"]?.map((String val) => val)?.toList();
     model.listBook = map["listBook"]

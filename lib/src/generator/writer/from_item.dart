@@ -37,7 +37,7 @@ class FromItemWriter {
     if (leaf is BuiltinLeafPropertyFrom) {
       _w.write(reference);
     } else if (leaf is CustomPropertyFrom) {
-      _w.write(' new ' + leaf.instantiationString + '.deserialize($reference)');
+      _w.write(leaf.instantiationString + '.deserialize($reference)');
     } else if (leaf is SerializedPropertyFrom) {
       _w.write('from' +
           leaf.instantiationString +
