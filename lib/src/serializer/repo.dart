@@ -60,14 +60,12 @@ class SerializerRepo {
       _mapperType[serializer.modelType()] = serializer;
     }
     //TODO what if different serializers with same name are added?
-    if (!_mapperString.containsKey(serializer.modelString)) {
+    if (!_mapperString.containsKey(serializer.modelString())) {
       _mapperString[serializer.modelString()] = serializer;
     }
   }
 
-  void addAll(Iterable<Serializer> serializers) {
-    serializers.map(add);
-  }
+  void addAll(Iterable<Serializer> serializers) => serializers.map(add);
 
   /// Convert the given [Object] to a serialized [Object], [Map] or [List]
   ///
@@ -83,7 +81,7 @@ class SerializerRepo {
               type: obj.runtimeType, withType: withType, typeKey: typeKey))
           .toList());
     } else if (object is Map) {
-      Map map = {};
+      final map = {};
       for (var key in object.keys) {
         map[key] = _to(object[key],
             type: object[key].runtimeType,
@@ -128,6 +126,7 @@ class SerializerRepo {
     if (object is String || object is num) {
       return object;
     }
+
     final Serializer serializer = getByType(type);
 
     if (serializer == null) {

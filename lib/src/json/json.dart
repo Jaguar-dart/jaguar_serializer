@@ -7,9 +7,9 @@ import 'package:jaguar_serializer/serializer.dart';
 ///
 /// Same usage as [SerializerRepo]
 class JsonRepo extends SerializerRepo {
-  JsonRepo(List<Serializer> serializers, {String typeKey: defaultTypeInfoKey})
+  JsonRepo({List<Serializer> serializers, String typeKey: defaultTypeInfoKey})
       : super(typeKey: typeKey) {
-    //TODO
+    if (serializers is List) addAll(serializers);
   }
 
   ///@nodoc

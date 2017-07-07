@@ -66,7 +66,7 @@ abstract class Serializer<ModelType> {
   Type modelType() => ModelType;
 
   /// Return the associated [String] of the [Type] handle by this [Serializer], used by [typeKey]
-  String modelString();
+  String modelString() => null;
 
   ModelType createModel();
 }
