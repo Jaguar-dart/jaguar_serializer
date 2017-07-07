@@ -56,7 +56,7 @@ class SerializerRepo {
   /// If a [Serializer] using the same type is already in the repository, it
   /// won't be override.
   void add(Serializer serializer) {
-    if (!_mapperType.containsKey(serializer.modelType)) {
+    if (!_mapperType.containsKey(serializer.modelType())) {
       _mapperType[serializer.modelType()] = serializer;
     }
     //TODO what if different serializers with same name are added?
