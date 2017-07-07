@@ -65,6 +65,10 @@ class SerializerRepo {
     }
   }
 
+  void addAll(Iterable<Serializer> serializers) {
+    serializers.map(add);
+  }
+
   /// Convert the given [Object] to a serialized [Object], [Map] or [List]
   ///
   /// If [withType] is set to true, the serialized [Object] will contain a key
