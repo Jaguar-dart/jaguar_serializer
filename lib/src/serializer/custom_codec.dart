@@ -1,6 +1,5 @@
 part of jaguar_serializer.serializer;
 
-///
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
 ///
@@ -31,7 +30,6 @@ part of jaguar_serializer.serializer;
 ///     class User {
 ///        DateTime birthday;
 ///     }
-///
 abstract class FieldProcessor<FromType, ToType> {
   /// Field in the model to be processed
   Symbol get field;
@@ -60,7 +58,6 @@ abstract class FieldProcessor<FromType, ToType> {
 ///     class Model {
 ///        Map<String, dynamic> data;
 ///     }
-
 @DefineFieldProcessor()
 class RawData implements FieldProcessor {
   final Symbol field;

@@ -3,43 +3,36 @@ part of jaguar_serializer.serializer;
 /// Default key added to a serialize Object to add his [Type]
 const String defaultTypeInfoKey = "@t";
 
-/**
- * Repository that contains [Serializer] for a [Type].
- *
- * Example:
- *
- *     SerializerRepo repository = new SerializerRepo();
- *     respository.add(new UserSerializer());
- *
- *     User user = new User();
- *
- *     // serialize
- *     Map<String, dynamic> map = repository.serialize(user);
- *     List<Map<String,dynamic>> list = repository.serialize([ user ] );
- *
- *     // deserialize
- *     user = repository.deserialize(map, type: User);
- *     List<User> users = repository.deserialize(list, type: User);
- *
- */
+/// Repository that contains [Serializer] for a [Type].
+///
+/// Example:
+///
+///     SerializerRepo repository = new SerializerRepo();
+///     respository.add(new UserSerializer());
+///
+///     User user = new User();
+///
+///     // serialize
+///     Map<String, dynamic> map = repository.serialize(user);
+///     List<Map<String,dynamic>> list = repository.serialize([ user ] );
+///
+///     // deserialize
+///     user = repository.deserialize(map, type: User);
+///     List<User> users = repository.deserialize(list, type: User);
 class SerializerRepo {
   final Map<Type, Serializer> _mapperType = {};
   final Map<String, Serializer> _mapperString = {};
 
   SerializerRepo({String typeKey: defaultTypeInfoKey}) : _typeKey = typeKey;
 
-  /**
-   * Key added to a map when serializing an Object
-   */
+  /// Key added to a map when serializing an Object
   final String _typeKey;
 
   String getTypeKey() => _typeKey;
 
-  /**
-   * Return a [Serializer] for a Type
-   *
-   * Throw an [Exception] if no [Serializer]
-   */
+  /// Return a [Serializer] for a Type
+  ///
+  /// Throw an [Exception] if no [Serializer]
   Serializer getByType(Type type) {
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
@@ -47,11 +40,9 @@ class SerializerRepo {
     throw new Exception("No Serializer found for $type");
   }
 
-  /**
-   * Return a [Serializer] for a String representing his [Type]
-   *
-   * Throw an [Exception] if no [Serializer]
-   */
+  /// Return a [Serializer] for a String representing his [Type]
+  ///
+  /// Throw an [Exception] if no [Serializer]
   Serializer getByTypeKey(String name) {
     final serializer = _mapperString[name];
     if (serializer == null) {
@@ -60,11 +51,10 @@ class SerializerRepo {
     return serializer;
   }
 
-  /**
-   * Add a [Serializer] to the repository.
-   *
-   * If a [Serializer] using the same type is already in the repository, it won't be override.
-   */
+  /// Add a [Serializer] to the repository.
+  ///
+  /// If a [Serializer] using the same type is already in the repository, it
+  /// won't be override.
   void add(Serializer serializer) {
     if (!_mapperType.containsKey(serializer.modelType)) {
       _mapperType[serializer.modelType()] = serializer;
@@ -75,14 +65,12 @@ class SerializerRepo {
     }
   }
 
-  /**
-   * Convert the given [Object] to a serialized [Object], [Map] or [List]
-   *
-   * If [withType] is set to true, the serialized [Object] will contain a key ([typeKey])
-   * with the type of the object as a value.
-   *
-   * The [typeKey] can be override using the [typeKey] option.
-   */
+  /// Convert the given [Object] to a serialized [Object], [Map] or [List]
+  ///
+  /// If [withType] is set to true, the serialized [Object] will contain a key
+  /// ([typeKey]) with the type of the object as a value.
+  ///
+  /// The [typeKey] can be override using the [typeKey] option.
   dynamic serialize(dynamic object, {bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
     if (object is Iterable) {
@@ -104,15 +92,14 @@ class SerializerRepo {
         type: object.runtimeType, withType: withType, typeKey: typeKey));
   }
 
-  /**
-   * Deserialize the given [Object] ([Map] or [List]).
-   *
-   * If the [type] option is specified, it will be used to get the correct [Serializer].
-   *
-   * If not, it will look at if the object contain the [typeKey] and will use it to get the correct [Serializer].
-   *
-   * The [typeKey] can be override using the [typeKey] option.
-   */
+  /// Deserialize the given [Object] ([Map] or [List]).
+  ///
+  /// If the [type] option is specified, it will be used to get the correct [Serializer].
+  ///
+  /// If not, it will look at if the object contain the [typeKey] and will use it
+  /// to get the correct [Serializer].
+  ///
+  /// The [typeKey] can be override using the [typeKey] option.
   dynamic deserialize(dynamic object, {Type type, String typeKey}) {
     typeKey ??= _typeKey;
     final decoded = object is String ? decode(object) : object;

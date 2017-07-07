@@ -6,28 +6,24 @@ part 'custom_codec.dart';
 part 'map_maker.dart';
 part 'repo.dart';
 
-/**
- * Extend this class to create a Serializer for a [Type]
- *
- * Example:
- *
- *     @GenSerializer()
- *     class UserSerializer extends Serializer<User> with _$UserSerializer {
- *        User createModel() => new User();
- *     }
- *
- * Both methods, [to] and [from] can handle [Map] or [List].
- */
+/// Extend this class to create a Serializer for a [Type]
+///
+/// Example:
+///
+///     @GenSerializer()
+///     class UserSerializer extends Serializer<User> with _$UserSerializer {
+///        User createModel() => new User();
+///     }
+///
+/// Both methods, [to] and [from] can handle [Map] or [List].
 abstract class Serializer<ModelType> {
-  /**
-   * Convert [model] to a serialized object.
-   *
-   * If [withType] is set to true, the serialized [Object] will contain a key.
-   *
-   * The value of the key can be set with the [typeKey] option.
-   *
-   * It will be associated with the type of the object.
-   */
+  /// Convert [model] to a serialized object.
+  ///
+  /// If [withType] is set to true, the serialized [Object] will contain a key.
+  ///
+  /// The value of the key can be set with the [typeKey] option.
+  ///
+  /// It will be associated with the type of the object.
   dynamic serialize(dynamic model,
       {bool withType: false, String typeKey: defaultTypeInfoKey}) {
     if (model is ModelType) {
@@ -42,11 +38,9 @@ abstract class Serializer<ModelType> {
     }
   }
 
-  /**
-   * Deserialize [object]
-   *
-   * An instance of the resulting object can be passed with the [model] option.
-   */
+  /// Deserialize [object]
+  ///
+  /// An instance of the resulting object can be passed with the [model] option.
   dynamic deserialize(dynamic object, {ModelType model}) {
     if (object is Map) {
       return fromMap(object, model: model);
