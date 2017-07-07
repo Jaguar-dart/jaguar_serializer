@@ -65,7 +65,7 @@ class SerializerRepo {
     }
   }
 
-  void addAll(Iterable<Serializer> serializers) => serializers.map(add);
+  void addAll(Iterable<Serializer> serializers) => serializers.forEach(add);
 
   /// Convert the given [Object] to a serialized [Object], [Map] or [List]
   ///
