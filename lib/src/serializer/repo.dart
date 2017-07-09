@@ -168,7 +168,7 @@ class SerializerRepo {
         if (typeKey != null) {
           if (decoded.containsKey(typeKey) &&
               ser.modelString() != decoded[typeKey]) {
-            return _from2(decoded, typeKey, ser);
+            return _fromMapWithTypeKey(decoded, typeKey, ser);
           }
         }
         return ser.deserialize(decoded);
@@ -192,14 +192,14 @@ class SerializerRepo {
           return map;
         }
 
-        return _from2(decoded, typeKey, ser);
+        return _fromMapWithTypeKey(decoded, typeKey, ser);
       }
     } else {
       throw new Exception('Unknown type ${decoded.runtimeType}!');
     }
   }
 
-  dynamic _from2(Map decoded, String typeKey, Serializer ser) {
+  dynamic _fromMapWithTypeKey(Map decoded, String typeKey, Serializer ser) {
     if (decoded[typeKey] == 'Map') {
       final map = {};
       decoded.forEach((key, value) {
