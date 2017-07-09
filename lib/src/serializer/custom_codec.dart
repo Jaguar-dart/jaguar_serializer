@@ -65,8 +65,41 @@ class RawData implements FieldProcessor {
   const RawData(this.field);
 
   @override
-  dynamic serialize(dynamic value) => value;
+  dynamic serialize(dynamic value) {
+    _validate(value);
+    return value;
+  }
 
   @override
-  dynamic deserialize(dynamic value) => value;
+  dynamic deserialize(dynamic value) {
+    _validate(value);
+    return value;
+  }
+
+  void _validate(object) {
+    if (object == null) return;
+
+    if (object is num) return;
+
+    if (object is String) return;
+
+    if (object is List) {
+      object.forEach(_validate);
+      return;
+    }
+
+    if (object is Map) {
+      object.forEach((key, value) {
+        if (key is! String) {
+          throw new Exception('Key of a RawData Map must be a String!');
+        }
+
+        _validate(value);
+      });
+      return;
+    }
+
+    throw new Exception(
+        'Unknown RawData type found ${object.runtimeType}! Only List, Map, String and num are accepted!');
+  }
 }
