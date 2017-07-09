@@ -10,7 +10,8 @@ import 'package:yamlicious/yamlicious.dart';
  * Same usage as [SerializerRepo]
  */
 class YamlRepo extends SerializerRepo {
-  YamlRepo({String typeKey: defaultTypeInfoKey}) : super(typeKey: typeKey);
+  YamlRepo({List<Serializer> serializers, String typeKey: defaultTypeInfoKey})
+      : super(serializers: serializers, typeKey: typeKey);
 
   ///@nodoc
   dynamic encode(dynamic object) => toYamlString(object);

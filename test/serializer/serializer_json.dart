@@ -109,4 +109,40 @@ void main() {
       expect(authors[1].name, equals(book.authors[1].name));
     });
   });
+
+  group('Root map', () {
+    test('encode', () {
+      book.publishedDates = null;
+      String encode = serializer.serialize({'Book': book}, withType: true);
+      expect(encode,
+          '{"Book":{"name":"Dawn of AI: The last few centuries of humanity","tags":["AI","Humanity","SciFi"],"authors":[{"name":"Teja Hackborn","@t":"Author"},{"name":"Kleak","@t":"Author"}],"@t":"Book"},"@t":"Map"}');
+    });
+
+    test('decode', () {
+      book.publishedDates = null;
+      dynamic decoded = serializer.deserialize(
+          '{"Book":{"name":"Dawn of AI: The last few centuries of humanity","tags":["AI","Humanity","SciFi"],"authors":[{"name":"Teja Hackborn","@t":"Author"},{"name":"Kleak","@t":"Author"}],"@t":"Book"},"@t":"Map"}');
+      expect(decoded, isMap);
+      expect(decoded, hasLength(1));
+      expect(decoded['Book'].name, equals(book.name));
+      expect(decoded['Book'].tags, equals(book.tags));
+      expect(decoded['Book'].publishedDates, equals(book.publishedDates));
+      expect(decoded['Book'].authors.length, equals(book.authors.length));
+      expect(decoded['Book'].authors[0].name, equals(book.authors[0].name));
+      expect(decoded['Book'].authors[1].name, equals(book.authors[1].name));
+    });
+  });
+
+  group('Root List', () {
+    test('encode', () {
+      final model = [
+        {'field1': 'string', 'field2': 5},
+        {'field3': 'string', 'field4': 55},
+        {'book': book},
+      ];
+      String encoded = serializer.serialize(model, withType: true);
+      expect(encoded,
+          r'[{"field1":"string","field2":5,"@t":"Map"},{"field3":"string","field4":55,"@t":"Map"},{"book":{"name":"Dawn of AI: The last few centuries of humanity","tags":["AI","Humanity","SciFi"],"authors":[{"name":"Teja Hackborn","@t":"Author"},{"name":"Kleak","@t":"Author"}],"@t":"Book"},"@t":"Map"}]');
+    });
+  });
 }
