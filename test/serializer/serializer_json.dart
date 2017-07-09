@@ -132,4 +132,17 @@ void main() {
       expect(decoded['Book'].authors[1].name, equals(book.authors[1].name));
     });
   });
+
+  group('Root List', () {
+    test('encode', () {
+      final model = [
+        {'field1': 'string', 'field2': 5},
+        {'field3': 'string', 'field4': 55},
+        {'book': book},
+      ];
+      String encoded = serializer.serialize(model, withType: true);
+      expect(encoded,
+          r'[{"field1":"string","field2":5,"@t":"Map"},{"field3":"string","field4":55,"@t":"Map"},{"book":{"name":"Dawn of AI: The last few centuries of humanity","tags":["AI","Humanity","SciFi"],"authors":[{"name":"Teja Hackborn","@t":"Author"},{"name":"Kleak","@t":"Author"}],"@t":"Book"},"@t":"Map"}]');
+    });
+  });
 }

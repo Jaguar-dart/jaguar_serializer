@@ -75,26 +75,6 @@ class SerializerRepo {
   /// The [typeKey] can be override using the [typeKey] option.
   dynamic serialize(dynamic object, {bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
-    if (object is Iterable) {
-      return encode(object
-          .map((obj) => _to(
-                obj,
-                type: obj.runtimeType,
-                withType: withType,
-                typeKey: typeKey,
-              ))
-          .toList());
-    } else if (object is Map) {
-      final map = {};
-      for (var key in object.keys) {
-        map[key] = _to(object[key],
-            type: object[key].runtimeType,
-            withType: withType,
-            typeKey: typeKey);
-      }
-      if (withType) map[typeKey] = 'Map';
-      return encode(map);
-    }
     return encode(_to(object,
         type: object.runtimeType, withType: withType, typeKey: typeKey));
   }
@@ -109,21 +89,15 @@ class SerializerRepo {
   /// The [typeKey] can be override using the [typeKey] option.
   dynamic deserialize(dynamic object, {Type type, String typeKey}) {
     typeKey ??= _typeKey;
-    final decoded = object is String ? decode(object) : object;
+    final decoded = decode(object);
 
-    if (decoded is Iterable) {
-      return decoded
-          .map((obj) => _from(obj, type: type, typeKey: typeKey))
-          .toList();
-    } else if (decoded is Map && decoded[typeKey] == 'Map') {
-      final map = {};
-      decoded.forEach((key, value) {
-        if (key == typeKey) return;
-        map[key] = _from(value, typeKey: typeKey);
-      });
-      return map;
+    Serializer ser;
+
+    if (type != null) {
+      ser = getByType(type);
     }
-    return _from(decoded, type: type, typeKey: typeKey);
+
+    return _from(decoded, ser: ser, typeKey: typeKey);
   }
 
   ///@nodoc
@@ -139,44 +113,111 @@ class SerializerRepo {
       return object;
     }
 
-    final Serializer serializer = getByType(type);
+    if (object is Map) {
+      final map = {};
+      object.forEach((key, value) {
+        final k = _to(key,
+            type: key.runtimeType, withType: withType, typeKey: typeKey);
+        if (value == null) {
+          map[k] = null;
+          return;
+        }
+        final v = _to(value,
+            type: value.runtimeType, withType: withType, typeKey: typeKey);
+        map[k] = v;
+      });
+      if (withType) map[typeKey] = 'Map';
+      return map;
+    } else if (object is Iterable) {
+      return object
+          .map((obj) => _to(
+                obj,
+                type: obj.runtimeType,
+                withType: withType,
+                typeKey: typeKey,
+              ))
+          .toList();
+    } else {
+      final Serializer serializer = getByType(type);
 
-    if (serializer == null) {
-      throw new Exception("Cannot find serializer for type $type");
+      if (serializer == null) {
+        throw new Exception("Cannot find serializer for type $type");
+      }
+
+      return serializer.serialize(object, withType: withType, typeKey: typeKey);
     }
-
-    return serializer.serialize(object, withType: withType, typeKey: typeKey);
   }
 
-  dynamic _from(dynamic decoded, {Type type, String typeKey}) {
+  dynamic _from(decoded, {Serializer ser, String typeKey}) {
     if (decoded is String || decoded is num) return decoded;
 
-    Serializer serializer;
-
-    try {
-      serializer = getByType(type);
-    } catch (e) {
-      final String typeInfo = _objectToType(decoded, typeKey);
-      if (typeInfo is String) {
-        serializer = getByTypeKey(typeInfo);
+    if (decoded is Iterable) {
+      return decoded
+          .map((obj) => _from(obj, ser: ser, typeKey: typeKey))
+          .toList();
+    } else if (decoded is Map) {
+      if (typeKey == null && ser == null) {
+        throw new Exception('typeKey or Type is required to decode!');
       }
+
+      if (ser != null) {
+        if (typeKey != null) {
+          if (decoded.containsKey(typeKey) &&
+              ser.modelString() != decoded[typeKey]) {
+            return _from2(decoded, typeKey, ser);
+          }
+        }
+        return ser.deserialize(decoded);
+      } else {
+        if (typeKey == null) {
+          throw new Exception(
+              'typeKey must be provided if Type is not provided!');
+        }
+
+        if (!decoded.containsKey(typeKey)) {
+          final map = {};
+          decoded.forEach((key, value) {
+            final k = _from(key, ser: ser, typeKey: typeKey);
+            if (value == null) {
+              map[k] = null;
+              return;
+            }
+            final v = _from(value, ser: ser, typeKey: typeKey);
+            map[k] = v;
+          });
+          return map;
+        }
+
+        return _from2(decoded, typeKey, ser);
+      }
+    } else {
+      throw new Exception('Unknown type ${decoded.runtimeType}!');
     }
+  }
+
+  dynamic _from2(Map decoded, String typeKey, Serializer ser) {
+    if (decoded[typeKey] == 'Map') {
+      final map = {};
+      decoded.forEach((key, value) {
+        if (key == typeKey) return;
+        final k = _from(key, ser: ser, typeKey: typeKey);
+        if (value == null) {
+          map[k] = null;
+          return;
+        }
+        final v = _from(value, ser: ser, typeKey: typeKey);
+        map[k] = v;
+      });
+      return map;
+    }
+
+    final Serializer serializer = getByTypeKey(decoded[typeKey]);
+
     if (serializer == null) {
-      throw new Exception("Cannot find serializer for type $type");
+      throw new Exception(
+          "Cannot find serializer for typeKey ${decoded[typeKey]}");
     }
 
     return serializer.deserialize(decoded);
-  }
-
-  String _objectToType(object, String infoKey) {
-    String typeKey;
-    if (object is Map) {
-      typeKey = object[infoKey];
-    } else if (object is List<Map> &&
-        object.length != 0 &&
-        object.first is Map) {
-      typeKey = object.first[infoKey];
-    }
-    return typeKey;
   }
 }

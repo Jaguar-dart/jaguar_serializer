@@ -375,41 +375,41 @@ void main() {
 
   group('Various - from', () {
     test('Inheritance', () {
-      Inheritance d = serializer
-          .deserialize({"clazzA": "A", "clazzB": "B"}, type: Inheritance);
+      Inheritance d = serializer.deserialize('{"clazzA": "A", "clazzB": "B"}',
+          type: Inheritance);
       expect(d.clazzA, "A");
       expect(d.clazzB, "B");
 
-      d = serializer.deserialize({
+      d = serializer.deserialize('''{
         "clazzA": "A",
         "clazzB": "B",
-        serializer.getTypeKey(): "Inheritance"
-      });
+        "${serializer.getTypeKey()}": "Inheritance"
+      }''');
       expect(d.clazzA, "A");
       expect(d.clazzB, "B");
     });
 
     test('ModelInt', () {
-      ModelInt d = serializer
-          .deserialize({"bar": 42, "clazzA": "classA"}, type: ModelInt);
+      ModelInt d = serializer.deserialize('{"bar": 42, "clazzA": "classA"}',
+          type: ModelInt);
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
       d = serializer.deserialize(
-          {"bar": 42, "clazzA": "classA", serializer.getTypeKey(): "ModelInt"});
+          '{"bar": 42, "clazzA": "classA", "${serializer.getTypeKey()}": "ModelInt"}');
       expect(d.bar, 42);
       expect(d.clazzA, "classA");
     });
 
     test('ModelDouble', () {
-      ModelDouble d = serializer
-          .deserialize({"bar": 42.42, "clazzA": "A"}, type: ModelDouble);
+      ModelDouble d = serializer.deserialize('{"bar": 42.42, "clazzA": "A"}',
+          type: ModelDouble);
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
-      d = serializer.deserialize({
+      d = serializer.deserialize('''{
         "bar": 42.42,
         "clazzA": "A",
-        serializer.getTypeKey(): "ModelDouble"
-      });
+        "${serializer.getTypeKey()}": "ModelDouble"
+      }''');
       expect(d.bar, 42.42);
       expect(d.clazzA, "A");
     });
@@ -417,56 +417,59 @@ void main() {
     test("DateTimeProcessor", () {
       DateTime now = new DateTime.now();
       Date d = serializer.deserialize(
-          {"date": now.toIso8601String(), "clazzA": "A"},
+          '{"date": "${now.toIso8601String()}", "clazzA": "A"}',
           type: Date);
       expect(d.date, now);
-      d = serializer.deserialize({
-        "date": now.toIso8601String(),
+      d = serializer.deserialize('''{
+        "date": "${now.toIso8601String()}",
         "clazzA": "A",
-        serializer.getTypeKey(): "Date"
-      });
+        "${serializer.getTypeKey()}": "Date"
+      }''');
       expect(d.date, now);
     });
 
     test("Null Test", () {
-      NullTest d = serializer.deserialize({
+      NullTest d = serializer.deserialize(
+          '''{
         "test": "test",
         "testModel": [null]
-      }, type: NullTest);
+      }''',
+          type: NullTest);
       expect(d.test, "test");
       expect(d.testModel, [null]);
-      d = serializer.deserialize({
+      d = serializer.deserialize(
+          '''{
         "test": "test",
         "testModel": [null],
-        serializer.getTypeKey(): "NullTest"
-      }, type: NullTest);
+        "${serializer.getTypeKey()}": "NullTest"
+      }''',
+          type: NullTest);
       expect(d.test, "test");
       expect(d.testModel, [null]);
     });
 
     test("Ignore attribute", () {
       WithIgnore ignore =
-          serializer.deserialize({"a": "test"}, type: WithIgnore);
+          serializer.deserialize('{"a": "test"}', type: WithIgnore);
       expect(ignore.a, "test");
       expect(ignore.secret, isNull);
     });
 
     test("Serialized name", () {
       ModelRenamed model =
-          serializer.deserialize({"renamed": "foo"}, type: ModelRenamed);
+          serializer.deserialize('{"renamed": "foo"}', type: ModelRenamed);
 
       expect(model.original, "foo");
     });
 
     test("Complex", () {
-      Complex complex = serializer.deserialize({
+      Complex complex = serializer.deserialize('''{
         "@t": "Complex",
         "nums": [1, 2.2, 3],
         "strings": ["1", "2", "3"],
         "bools": [true, false, true],
         "ints": [1, 2, 3],
         "doubles": [1.1, 2.2, 3.3],
-        // "dates": ["2016-12-24T00:00:00.000", "2016-12-25T00:00:00.000", "2016-12-26T00:00:00.000"],
         "ignores": [
           {"a": "1337A", "@t": "WithIgnore"},
           {"a": "1337B", "@t": "WithIgnore"}
@@ -476,7 +479,6 @@ void main() {
         "boolSet": {"ok": true, "nok": false},
         "intSet": {"intA": 1, "intB": 12},
         "doubleSet": {"dblA": 1.1, "dblB": 12.1},
-        //  "dateSet": {"fiesta": "2016-12-24T00:00:00.000", "christmas": "2016-12-25T00:00:00.000"},
         "ignoreSet": {
           "A": {"a": "1337A", "@t": "WithIgnore"},
           "B": {"a": "1337B", "@t": "WithIgnore"}
@@ -484,7 +486,9 @@ void main() {
         "listInnerMap1": {
           "test": ["123456"]
         }
-      });
+      }''');
+      //  "dateSet": {"fiesta": "2016-12-24T00:00:00.000", "christmas": "2016-12-25T00:00:00.000"},
+      // "dates": ["2016-12-24T00:00:00.000", "2016-12-25T00:00:00.000", "2016-12-26T00:00:00.000"],
 
       expect(complex.nums, [1, 2.2, 3]);
       expect(complex.strings, ["1", "2", "3"]);
