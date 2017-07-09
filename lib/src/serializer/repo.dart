@@ -77,8 +77,12 @@ class SerializerRepo {
     typeKey ??= _typeKey;
     if (object is Iterable) {
       return encode(object
-          .map((obj) => _to(obj,
-              type: obj.runtimeType, withType: withType, typeKey: typeKey))
+          .map((obj) => _to(
+                obj,
+                type: obj.runtimeType,
+                withType: withType,
+                typeKey: typeKey,
+              ))
           .toList());
     } else if (object is Map) {
       final map = {};
@@ -88,6 +92,7 @@ class SerializerRepo {
             withType: withType,
             typeKey: typeKey);
       }
+      if (withType) map[typeKey] = 'Map';
       return encode(map);
     }
     return encode(_to(object,
@@ -110,6 +115,13 @@ class SerializerRepo {
       return decoded
           .map((obj) => _from(obj, type: type, typeKey: typeKey))
           .toList();
+    } else if (decoded is Map && decoded[typeKey] == 'Map') {
+      final map = {};
+      decoded.forEach((key, value) {
+        if (key == typeKey) return;
+        map[key] = _from(value, typeKey: typeKey);
+      });
+      return map;
     }
     return _from(decoded, type: type, typeKey: typeKey);
   }
@@ -137,6 +149,8 @@ class SerializerRepo {
   }
 
   dynamic _from(dynamic decoded, {Type type, String typeKey}) {
+    if (decoded is String || decoded is num) return decoded;
+
     Serializer serializer;
 
     try {
