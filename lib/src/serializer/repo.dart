@@ -23,7 +23,11 @@ class SerializerRepo {
   final Map<Type, Serializer> _mapperType = {};
   final Map<String, Serializer> _mapperString = {};
 
-  SerializerRepo({String typeKey: defaultTypeInfoKey}) : _typeKey = typeKey;
+  SerializerRepo(
+      {List<Serializer> serializers, String typeKey: defaultTypeInfoKey})
+      : _typeKey = typeKey {
+    if (serializers is List) addAll(serializers);
+  }
 
   /// Key added to a map when serializing an Object
   final String _typeKey;
