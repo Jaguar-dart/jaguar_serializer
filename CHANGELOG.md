@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.11
+
+- SerializerRepo now serializes and de-serializes built-in types at the root like `Map`, `List<List>`, etc
+- added `addAll` method to `SerializerRepo` to add multiple serializers
+- Validation for `RawData` custom field processor
+
 ## 0.3.7
 
 - Add builtin `RawData` Processor
