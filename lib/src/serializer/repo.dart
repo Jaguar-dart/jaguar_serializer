@@ -79,7 +79,7 @@ class SerializerRepo {
   /// The [typeKey] can be override using the [typeKey] option.
   dynamic serialize(dynamic object, {bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
-    return encode(_to(object,
+    return encode(to(object,
         type: object.runtimeType, withType: withType, typeKey: typeKey));
   }
 
@@ -95,13 +95,7 @@ class SerializerRepo {
     typeKey ??= _typeKey;
     final decoded = decode(object);
 
-    Serializer ser;
-
-    if (type != null) {
-      ser = getByType(type);
-    }
-
-    return _from(decoded, ser: ser, typeKey: typeKey);
+    return from(decoded, type: type, typeKey: typeKey);
   }
 
   ///@nodoc
@@ -110,7 +104,8 @@ class SerializerRepo {
   ///@nodoc
   dynamic decode(dynamic object) => object;
 
-  dynamic _to(dynamic object,
+  /// Serializes [object] to Dart built-in type
+  dynamic to(dynamic object,
       {Type type, bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
     if (object is String || object is num) {
@@ -120,13 +115,13 @@ class SerializerRepo {
     if (object is Map) {
       final map = {};
       object.forEach((key, value) {
-        final k = _to(key,
+        final k = to(key,
             type: key.runtimeType, withType: withType, typeKey: typeKey);
         if (value == null) {
           map[k] = null;
           return;
         }
-        final v = _to(value,
+        final v = to(value,
             type: value.runtimeType, withType: withType, typeKey: typeKey);
         map[k] = v;
       });
@@ -134,7 +129,7 @@ class SerializerRepo {
       return map;
     } else if (object is Iterable) {
       return object
-          .map((obj) => _to(
+          .map((obj) => to(
                 obj,
                 type: obj.runtimeType,
                 withType: withType,
@@ -150,6 +145,19 @@ class SerializerRepo {
 
       return serializer.serialize(object, withType: withType, typeKey: typeKey);
     }
+  }
+
+  /// Deserializes Dart built-in object to Dart PODO
+  dynamic from(dynamic object, {Type type, String typeKey}) {
+    typeKey ??= _typeKey;
+
+    Serializer ser;
+
+    if (type != null) {
+      ser = getByType(type);
+    }
+
+    return _from(object, ser: ser, typeKey: typeKey);
   }
 
   dynamic _from(decoded, {Serializer ser, String typeKey}) {
