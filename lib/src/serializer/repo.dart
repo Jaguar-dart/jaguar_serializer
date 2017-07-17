@@ -108,9 +108,7 @@ class SerializerRepo {
   dynamic to(dynamic object,
       {Type type, bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
-    if (object is String || object is num) {
-      return object;
-    }
+    if (object is String || object is num || object is bool) return object;
 
     if (object is Map) {
       final map = {};
@@ -161,7 +159,7 @@ class SerializerRepo {
   }
 
   dynamic _from(decoded, {Serializer ser, String typeKey}) {
-    if (decoded is String || decoded is num) return decoded;
+    if (decoded is String || decoded is num || decoded is bool) return decoded;
 
     if (decoded is Iterable) {
       return decoded
