@@ -33,6 +33,8 @@ abstract class Serializer<ModelType> {
           .map((ModelType model) =>
               toMap(model, withType: withType, typeKey: typeKey))
           .toList();
+    } else if (model == null) {
+      return null;
     } else {
       throw new Exception("Unknown object type received!");
     }
@@ -46,6 +48,8 @@ abstract class Serializer<ModelType> {
       return fromMap(object, model: model);
     } else if (object is List<Map>) {
       return object.map((Map map) => fromMap(map)).toList();
+    } else if (object == null) {
+      return null;
     } else {
       throw new Exception("Unknown object type received!");
     }

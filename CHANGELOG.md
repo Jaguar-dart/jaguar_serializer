@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.15
+
+- `serialize` and `deserialize` methods now handle `null` values correctly
+
 ## 0.3.14
 
 - `SerializerRepo` handles when `type` is `dynamic`
