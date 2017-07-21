@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.14
+
+- `SerializerRepo` handles when `type` is `dynamic`
+
 ## 0.3.12
 
 - Added `from` and `to` methods to `SerializerRepo`

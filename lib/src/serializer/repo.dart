@@ -38,6 +38,7 @@ class SerializerRepo {
   ///
   /// Throw an [Exception] if no [Serializer]
   Serializer getByType(Type type) {
+    if (type == dynamic) return null;
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
     }
