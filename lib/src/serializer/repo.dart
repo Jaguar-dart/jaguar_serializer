@@ -38,7 +38,7 @@ class SerializerRepo {
   ///
   /// Throw an [Exception] if no [Serializer]
   Serializer getByType(Type type) {
-    if (type == dynamic) return null;
+    if (type == dynamic || type == Null) return null;
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
     }
@@ -80,8 +80,7 @@ class SerializerRepo {
   /// The [typeKey] can be override using the [typeKey] option.
   dynamic serialize(dynamic object, {bool withType: false, String typeKey}) {
     typeKey ??= _typeKey;
-    return encode(to(object,
-        type: object.runtimeType, withType: withType, typeKey: typeKey));
+    return encode(to(object, withType: withType, typeKey: typeKey));
   }
 
   /// Deserialize the given [Object] ([Map] or [List]).
@@ -106,22 +105,22 @@ class SerializerRepo {
   dynamic decode(dynamic object) => object;
 
   /// Serializes [object] to Dart built-in type
-  dynamic to(dynamic object,
-      {Type type, bool withType: false, String typeKey}) {
+  dynamic to(dynamic object, {bool withType: false, String typeKey}) {
+    if (object is String || object is num || object is bool || object == null)
+      return object;
+
     typeKey ??= _typeKey;
-    if (object is String || object is num || object is bool) return object;
+    final Type type = object.runtimeType;
 
     if (object is Map) {
       final map = {};
       object.forEach((key, value) {
-        final k = to(key,
-            type: key.runtimeType, withType: withType, typeKey: typeKey);
+        final k = to(key, withType: withType, typeKey: typeKey);
         if (value == null) {
           map[k] = null;
           return;
         }
-        final v = to(value,
-            type: value.runtimeType, withType: withType, typeKey: typeKey);
+        final v = to(value, withType: withType, typeKey: typeKey);
         map[k] = v;
       });
       if (withType) map[typeKey] = 'Map';
@@ -130,7 +129,6 @@ class SerializerRepo {
       return object
           .map((obj) => to(
                 obj,
-                type: obj.runtimeType,
                 withType: withType,
                 typeKey: typeKey,
               ))
@@ -160,7 +158,10 @@ class SerializerRepo {
   }
 
   dynamic _from(decoded, {Serializer ser, String typeKey}) {
-    if (decoded is String || decoded is num || decoded is bool) return decoded;
+    if (decoded is String ||
+        decoded is num ||
+        decoded is bool ||
+        decoded == null) return decoded;
 
     if (decoded is Iterable) {
       return decoded
