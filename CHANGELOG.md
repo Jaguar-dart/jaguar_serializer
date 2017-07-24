@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.16
+
+- `to`, `from`, `serialize`, `deserialize` methods now handle `null` values correctly
+
+## 0.3.15
+
+- `serialize` and `deserialize` methods now handle `null` values correctly
+
+## 0.3.14
+
+- `SerializerRepo` handles when `type` is `dynamic`
+
+## 0.3.12
+
+- Added `from` and `to` methods to `SerializerRepo`
+
 ## 0.3.11
 
 - SerializerRepo now serializes and de-serializes built-in types at the root like `Map`, `List<List>`, etc
