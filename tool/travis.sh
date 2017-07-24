@@ -4,7 +4,7 @@
 set -e
 
 chmod +x $(dirname -- "$0")/ensure_dartfmt.sh
-$(dirname -- "$0")/ensure_dartfmt.sh
+# $(dirname -- "$0")/ensure_dartfmt.sh
 
 dart bin/serializer.dart build
 
