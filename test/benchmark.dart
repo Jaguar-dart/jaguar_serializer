@@ -2,7 +2,7 @@ library serializer.test.benchmark;
 
 import 'dart:io';
 import 'dart:convert';
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part "benchmark.g.dart";
 

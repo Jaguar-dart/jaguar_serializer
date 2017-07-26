@@ -1,6 +1,6 @@
 library serializer.test.models.player;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'player.g.dart';
 
@@ -30,7 +30,7 @@ class PlayerSerializerIgnores extends Serializer<Player>
 @GenSerializer(fields: const {
   'name': const EnDecode('N'),
   'score': const EncodeOnly('S'),
-  'emailConfirmed': const DecodeOnly('eC'),
+  'emailConfirmed': const EnDecode('eC'),
 })
 class PlayerSerializerRename extends Serializer<Player>
     with _$PlayerSerializerRename {

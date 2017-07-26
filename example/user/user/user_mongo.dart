@@ -1,6 +1,6 @@
 library example.user.mongo;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 import '../../_common/mongo_serializer/import.dart';
 import 'user.dart';
 import '../book/book_mongo.dart';

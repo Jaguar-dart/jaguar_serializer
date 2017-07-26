@@ -1,7 +1,7 @@
 library serializer.test.mix.models;
 
 import 'dart:convert';
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:test/test.dart';
 
 part 'various.g.dart';
@@ -118,7 +118,7 @@ class InheritanceSerializer extends Serializer<Inheritance>
 
 @GenSerializer(
   processors: const {
-    'data': const DateTimeProcessor(),
+    'date': const DateTimeProcessor(),
   },
 )
 class DateSerializer extends Serializer<Date> with _$DateSerializer {

@@ -1,5 +1,5 @@
 import 'user/user.dart';
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 const Map<String, dynamic> kUserMap1 = const {
   'Id': "111111111111111111111111",

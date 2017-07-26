@@ -1,6 +1,6 @@
 library example.field_manipulation;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:mongo_dart/mongo_dart.dart' as mgo;
 
 part 'custom_field_processor.g.dart';

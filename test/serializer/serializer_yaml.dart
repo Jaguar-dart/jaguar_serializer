@@ -3,7 +3,7 @@
  */
 
 import 'package:test/test.dart';
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 import 'common/models/bibliotek/book.dart';
 

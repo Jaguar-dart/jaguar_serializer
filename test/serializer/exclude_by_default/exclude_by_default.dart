@@ -2,7 +2,7 @@ library serializer.test.exclude_by_default;
 
 import 'package:test/test.dart';
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'exclude_by_default.g.dart';
 
