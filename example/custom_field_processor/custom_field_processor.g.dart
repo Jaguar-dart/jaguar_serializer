@@ -8,7 +8,7 @@ part of example.field_manipulation;
 // **************************************************************************
 
 abstract class _$PlayerMongoSerializer implements Serializer<Player> {
-  final MongoId idMongoId = const MongoId(#id);
+  final MongoId idMongoId = const MongoId();
 
   Map toMap(Player model, {bool withType: false, String typeKey}) {
     Map ret = new Map();

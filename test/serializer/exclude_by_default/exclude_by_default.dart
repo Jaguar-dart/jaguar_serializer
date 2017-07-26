@@ -22,9 +22,10 @@ class ExcludeByDefault {
   }
 }
 
-@GenSerializer(includeByDefault: false)
-@EnDecodeField(#id, asAndFrom: 'id')
-@EnDecodeField(#name, asAndFrom: 'name')
+@GenSerializer(includeByDefault: false, fields: const {
+  'id': const EnDecode('id'),
+  'name': const EnDecode('name'),
+})
 class ExcludeByDefaultCodec extends Serializer<ExcludeByDefault>
     with _$ExcludeByDefaultCodec {
   ExcludeByDefault createModel() => new ExcludeByDefault();

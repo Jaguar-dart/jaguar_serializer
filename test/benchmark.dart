@@ -6,8 +6,7 @@ import 'package:jaguar_serializer/serializer.dart';
 
 part "benchmark.g.dart";
 
-@GenSerializer()
-@ProvideSerializer(InnerTest, InnerTestSerializer)
+@GenSerializer(serializers: const [InnerTestSerializer])
 class ModelTestSerializer extends Serializer<ModelTest>
     with _$ModelTestSerializer {
   @override

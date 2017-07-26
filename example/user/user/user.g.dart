@@ -8,8 +8,7 @@ part of example.model.user;
 // **************************************************************************
 
 abstract class _$UserViewSerializer implements Serializer<User> {
-  final DateTimeSerializer dobDateTimeSerializer =
-      const DateTimeSerializer(#dob);
+  final DateTimeSerializer dobDateTimeSerializer = const DateTimeSerializer();
   final BookViewSerializer toBookViewSerializer = new BookViewSerializer();
   final BookViewSerializer fromBookViewSerializer = new BookViewSerializer();
 

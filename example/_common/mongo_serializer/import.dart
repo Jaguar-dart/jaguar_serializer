@@ -7,11 +7,8 @@ abstract class SerializableToMongo {
   Serializer get mongoSerializer;
 }
 
-@DefineFieldProcessor()
 class MongoId implements FieldProcessor<String, mgo.ObjectId> {
-  final Symbol field;
-
-  const MongoId(this.field);
+  const MongoId();
 
   String deserialize(mgo.ObjectId input) {
     return input.toHexString();

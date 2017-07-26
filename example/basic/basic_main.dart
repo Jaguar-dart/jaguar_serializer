@@ -4,8 +4,9 @@ import 'package:jaguar_serializer/serializer.dart';
 
 part 'basic_main.g.dart';
 
-@GenSerializer()
-@ProvideSerializer(Address, AddressSerializer)
+@GenSerializer(serializers: const [
+  AddressSerializer,
+])
 class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 }
@@ -14,7 +15,7 @@ class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
 class AddressSerializer extends Serializer<Address> with _$AddressSerializer {
   Address createModel() => new Address();
 
-  AddressSerializer();
+  const AddressSerializer();
 }
 
 /// Player model for the game

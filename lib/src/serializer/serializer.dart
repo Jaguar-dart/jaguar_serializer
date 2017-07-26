@@ -1,7 +1,5 @@
 library jaguar_serializer.serializer;
 
-import 'package:jaguar_serializer/src/annotations/annotations.dart';
-
 part 'custom_codec.dart';
 part 'map_maker.dart';
 part 'repo.dart';
@@ -17,6 +15,8 @@ part 'repo.dart';
 ///
 /// Both methods, [to] and [from] can handle [Map] or [List].
 abstract class Serializer<ModelType> {
+  const Serializer();
+
   /// Convert [model] to a serialized object.
   ///
   /// If [withType] is set to true, the serialized [Object] will contain a key.

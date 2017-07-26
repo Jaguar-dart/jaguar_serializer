@@ -4,8 +4,7 @@ import 'package:jaguar_serializer/serializer.dart';
 
 part 'address_book.g.dart';
 
-@GenSerializer()
-@ProvideSerializer(Address, Address)
+@GenSerializer(serializers: const [Address])
 class Person extends Serializer<Person> with _$Person {
   String name;
 

@@ -5,11 +5,8 @@ import 'package:mongo_dart/mongo_dart.dart' as mgo;
 
 part 'custom_field_processor.g.dart';
 
-@DefineFieldProcessor()
 class MongoId implements FieldProcessor<String, mgo.ObjectId> {
-  final Symbol field;
-
-  const MongoId(this.field);
+  const MongoId();
 
   String deserialize(mgo.ObjectId input) {
     return input.toHexString();
@@ -20,9 +17,11 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
   }
 }
 
-@GenSerializer()
-@MongoId(#id)
-@EnDecodeField(#id, asAndFrom: '_id')
+@GenSerializer(fields: const {
+  'id': const EnDecode('_id'),
+}, processors: const {
+  'id': const MongoId(),
+})
 class PlayerMongoSerializer extends Serializer<Player>
     with _$PlayerMongoSerializer {
   Player createModel() => new Player();

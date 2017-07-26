@@ -8,9 +8,8 @@ part of example.user.mongo;
 // **************************************************************************
 
 abstract class _$UserMongoSerializer implements Serializer<User> {
-  final MongoId idMongoId = const MongoId(#id);
-  final DateTimeSerializer dobDateTimeSerializer =
-      const DateTimeSerializer(#dob);
+  final MongoId idMongoId = const MongoId();
+  final DateTimeSerializer dobDateTimeSerializer = const DateTimeSerializer();
   final BookMongoSerializer toBookMongoSerializer = new BookMongoSerializer();
   final BookMongoSerializer fromBookMongoSerializer = new BookMongoSerializer();
 

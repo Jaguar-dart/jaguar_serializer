@@ -4,14 +4,15 @@ import 'package:jaguar_serializer/serializer.dart';
 
 part 'field_manipulation_main.g.dart';
 
-@GenSerializer()
-@IgnoreField(#emailConfirmed)
-@EnDecodeFields(const {
-  #name: 'N',
-  #email: 'E',
-  #age: 'A',
-  #score: 'S',
-})
+@GenSerializer(
+  fields: const {
+    'name': const EnDecode('N'),
+    'email': const EnDecode('E'),
+    'age': const EnDecode('A'),
+    'score': const EnDecode('S'),
+    'emailConfirmed': const Ignore(),
+  },
+)
 class PlayerJsonSerializer extends Serializer<Player>
     with _$PlayerJsonSerializer {
   Player createModel() => new Player();

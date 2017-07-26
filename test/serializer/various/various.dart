@@ -85,9 +85,11 @@ class Complex {
   List dynamicList;
 }
 
+/* TODO
 class NoTypeModel {
   String foo;
 }
+*/
 
 class CustomModelName {
   String foo;
@@ -114,52 +116,53 @@ class InheritanceSerializer extends Serializer<Inheritance>
   Inheritance createModel() => new Inheritance();
 }
 
-@GenSerializer()
-@DateTimeProcessor(#date)
+@GenSerializer(
+  processors: const {
+    'data': const DateTimeProcessor(),
+  },
+)
 class DateSerializer extends Serializer<Date> with _$DateSerializer {
   @override
   Date createModel() => new Date();
 }
 
-@GenSerializer()
-@ProvideSerializer(ModelInt, ModelIntSerializer)
+@GenSerializer(serializers: const [
+  ModelIntSerializer,
+])
 class NullTestSerializer extends Serializer<NullTest>
     with _$NullTestSerializer {
   @override
   NullTest createModel() => new NullTest();
 }
 
-@GenSerializer()
-@IgnoreFields(const [#secret])
+@GenSerializer(ignore: const ['secret'])
 class WithIgnoreSerializer extends Serializer<WithIgnore>
     with _$WithIgnoreSerializer {
   @override
   WithIgnore createModel() => new WithIgnore(null, null);
 }
 
-@GenSerializer()
-@EnDecodeField(#original, asAndFrom: 'renamed')
+@GenSerializer(fields: const {'original': const EnDecode('renamed')})
 class ModelRenamedSerializer extends Serializer<ModelRenamed>
     with _$ModelRenamedSerializer {
   @override
   ModelRenamed createModel() => new ModelRenamed(null);
 }
 
-@GenSerializer()
-@DateTimeProcessor(#dates)
-@RawData(#dynamicMap)
-@RawData(#dynamicList)
-@ProvideSerializer(WithIgnore, WithIgnoreSerializer)
+@GenSerializer(processors: const {
+  'dates': const DateTimeProcessor(),
+  'dynamicMap': const RawData(),
+  'dynamicList': const RawData(),
+}, serializers: const [
+  WithIgnoreSerializer,
+])
 class ComplexSerializer extends Serializer<Complex> with _$ComplexSerializer {
   @override
   Complex createModel() => new Complex();
 }
 
-@DefineFieldProcessor()
 class DateTimeProcessor implements FieldProcessor<DateTime, String> {
-  final Symbol field;
-
-  const DateTimeProcessor(this.field);
+  const DateTimeProcessor();
 
   DateTime deserialize(String input) {
     return DateTime.parse(input);
@@ -168,13 +171,6 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
   String serialize(DateTime value) {
     return value.toIso8601String();
   }
-}
-
-@GenSerializer(typeInfo: false)
-class NoTypeModelSerializer extends Serializer<NoTypeModel>
-    with _$NoTypeModelSerializer {
-  @override
-  NoTypeModel createModel() => new NoTypeModel();
 }
 
 @GenSerializer(modelName: "MyCustomModelName")
@@ -197,7 +193,6 @@ void main() {
       ..add(new ModelRenamedSerializer())
       ..add(new ComplexSerializer())
       ..add(new InheritanceSerializer())
-      ..add(new NoTypeModelSerializer())
       ..add(new CustomModelNameSerializer());
   });
 
@@ -503,11 +498,6 @@ void main() {
       expect(complex.listInnerMap1, {
         "test": ["123456"]
       });
-    });
-
-    test('Serialize NoTypeModel', () {
-      NoTypeModel model = new NoTypeModel()..foo = 'bar';
-      expect(serializer.serialize(model), JSON.encode({'foo': 'bar'}));
     });
 
     test('Serialize With CustomModelName', () {
