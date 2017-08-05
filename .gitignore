@@ -9,4 +9,3 @@ pubspec.lock
 .dart_tool
 serialize.iml
 doc/
-test/**/*.g.dart
