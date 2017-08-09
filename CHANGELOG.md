@@ -7,7 +7,24 @@
 
 ## 0.4.0
 
-- Angular style annotations
+***Breaking Changes***
+- Generator is now in a separate [package](https://pub.dartlang.org/packages/jaguar_serializer_cli)
+- Angular style annotations, only one annotation
+```dart
+@GenSerializer(
+  fields: const {
+    'field': const EncodeOnly('f')
+  }, 
+  ignore: const [
+    'ignoreField'
+  ], 
+  processors: const {
+   'dates': const DateTimeProcessor(),
+  }, 
+  serializers: const [
+   FieldSerializer,
+])
+```
 
 ## 0.3.16
 
