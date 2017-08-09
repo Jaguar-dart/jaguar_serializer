@@ -24,13 +24,13 @@ void main() {
       new Author()..name = 'Teja Hackborn',
       new Author()..name = 'Kleak',
     ];
-    serializer = new JsonRepo();
+    serializer = new JsonRepo(withType: true);
     serializer.add(new BookSerializer());
   });
 
   group('toJson', () {
     test('Book', () {
-      String encode = serializer.serialize(book);
+      String encode = serializer.serialize(book, withType: false);
       expect(
           encode,
           equals('{'
@@ -42,7 +42,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encode = serializer.serialize(book.authors);
+      String encode = serializer.serialize(book.authors, withType: false);
       expect(encode, equals('[{"name":"Teja Hackborn"},{"name":"Kleak"}]'));
     });
 
@@ -52,7 +52,7 @@ void main() {
         1: new Author()..name = 'Teja Hackborn',
         2: new Author()..name = 'Kleak',
       };
-      String encode = serializer.serialize(tester.values);
+      String encode = serializer.serialize(tester.values, withType: false);
       expect(encode, equals('[{"name":"Teja Hackborn"},{"name":"Kleak"}]'));
     });
   });
@@ -90,7 +90,7 @@ void main() {
   group("json with type info", () {
     test('Book', () {
       book.publishedDates = null;
-      String encoded = serializer.serialize(book, withType: true);
+      String encoded = serializer.serialize(book);
       Book bookTest = serializer.deserialize(encoded);
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
@@ -102,7 +102,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded = serializer.serialize(book.authors, withType: true);
+      String encoded = serializer.serialize(book.authors);
       List<Author> authors = serializer.deserialize(encoded);
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));
@@ -113,7 +113,7 @@ void main() {
   group('Root map', () {
     test('encode', () {
       book.publishedDates = null;
-      String encode = serializer.serialize({'Book': book}, withType: true);
+      String encode = serializer.serialize({'Book': book});
       expect(encode,
           '{"Book":{"name":"Dawn of AI: The last few centuries of humanity","tags":["AI","Humanity","SciFi"],"authors":[{"name":"Teja Hackborn","@t":"Author"},{"name":"Kleak","@t":"Author"}],"@t":"Book"},"@t":"Map"}');
     });
@@ -140,7 +140,7 @@ void main() {
         {'field3': 'string', 'field4': 55},
         {'book': book},
       ];
-      String encoded = serializer.serialize(model, withType: true);
+      String encoded = serializer.serialize(model);
       expect(encoded,
           r'[{"field1":"string","field2":5,"@t":"Map"},{"field3":"string","field4":55,"@t":"Map"},{"book":{"name":"Dawn of AI: The last few centuries of humanity","tags":["AI","Humanity","SciFi"],"authors":[{"name":"Teja Hackborn","@t":"Author"},{"name":"Kleak","@t":"Author"}],"@t":"Book"},"@t":"Map"}]');
     });
