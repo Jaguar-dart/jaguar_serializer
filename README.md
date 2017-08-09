@@ -9,7 +9,7 @@ Format agnostic Serializer library that can be used in server and client for JSO
 
 ## Install
 
-`pub global activate jaguar_serializer`
+`pub global activate jaguar_serializer_cli`
 
 ## Add it to your project
 

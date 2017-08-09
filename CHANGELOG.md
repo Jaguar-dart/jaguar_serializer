@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.1
+
+- Added docs
+- Fixed README
+
+## 0.4.0
+
+- Angular style annotations
+
 ## 0.3.16
 
 - `to`, `from`, `serialize`, `deserialize` methods now handle `null` values correctly

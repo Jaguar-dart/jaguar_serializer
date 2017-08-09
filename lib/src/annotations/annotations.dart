@@ -2,20 +2,26 @@ library jaguar_serializer.annotations;
 
 import 'package:jaguar_serializer/src/serializer/serializer.dart';
 
-const String kLibAnnotations = 'jaguar_serializer.annotations';
-
 /// Annotation used to request generation of serializer
 class GenSerializer {
+  /// Supply optional modelName
   final String modelName;
 
+  /// Should fields be included by default?
+  ///
+  /// Defaults to [true]
   final bool includeByDefault;
 
+  /// Specify whether a property could be encoded, only, decoded only or both
   final Map<String, Property> fields;
 
+  /// List of properties that shall be ignored
   final List<String> ignore;
 
+  /// [FieldProcessor] that shall be used to encode and decode specified property
   final Map<String, FieldProcessor> processors;
 
+  /// Supplies [Serializer]s to use when unknown PODO type is encountered
   final List<Type> serializers;
 
   const GenSerializer(
