@@ -2,12 +2,11 @@ library serializer.test.benchmark;
 
 import 'dart:io';
 import 'dart:convert';
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part "benchmark.g.dart";
 
-@GenSerializer()
-@ProvideSerializer(InnerTest, InnerTestSerializer)
+@GenSerializer(serializers: const [InnerTestSerializer])
 class ModelTestSerializer extends Serializer<ModelTest>
     with _$ModelTestSerializer {
   @override

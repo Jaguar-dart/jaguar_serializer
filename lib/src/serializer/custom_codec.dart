@@ -31,11 +31,6 @@ part of jaguar_serializer.serializer;
 ///        DateTime birthday;
 ///     }
 abstract class FieldProcessor<FromType, ToType> {
-  /// Field in the model to be processed
-  Symbol get field;
-
-  /// fixme? (lejard_h) do we really need to store the symbole here ?
-
   /// Called to process field before decoding
   FromType deserialize(ToType value);
 
@@ -58,11 +53,8 @@ abstract class FieldProcessor<FromType, ToType> {
 ///     class Model {
 ///        Map<String, dynamic> data;
 ///     }
-@DefineFieldProcessor()
 class RawData implements FieldProcessor {
-  final Symbol field;
-
-  const RawData(this.field);
+  const RawData();
 
   @override
   dynamic serialize(dynamic value) {

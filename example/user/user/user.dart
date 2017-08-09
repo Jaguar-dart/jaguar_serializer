@@ -1,22 +1,17 @@
 library example.model.user;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:intl/intl.dart';
 import '../book/book.dart';
 
 part 'user.g.dart';
 
-@DefineFieldProcessor()
 class DateTimeSerializer implements FieldProcessor<DateTime, String> {
-  /// Field in the model to be processed
-  final Symbol field;
-
   final String pattern;
 
   final String locale;
 
-  const DateTimeSerializer(this.field,
-      {this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
+  const DateTimeSerializer({this.pattern: 'yyyy-MM-dd HH:mm:ss', this.locale});
 
   /// Called to process field before decoding
   DateTime deserialize(String value) {
@@ -29,19 +24,21 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   }
 }
 
-@GenSerializer(typeInfo: true)
-@DateTimeSerializer(#dob)
-@EncodeField(#id, as: 'Id')
-@DecodeField(#id, from: 'Id')
-@EnDecodeField(#name, asAndFrom: 'N')
-@EnDecodeFields(const {
-  #email: 'Email',
-  #book: 'Book',
-  #dob: 'DoB',
-})
-@IgnoreField(#password)
-@IgnoreFields(const [#passwordHash, #viewSerializer])
-@ProvideSerializer(Book, BookViewSerializer)
+@GenSerializer(fields: const {
+  'id': const EnDecode('Id'),
+  'name': const EnDecode('N'),
+  'email': const EnDecode('Email'),
+  'book': const EnDecode('Book'),
+  'dob': const EnDecode('DoB'),
+  'password': const Ignore(),
+}, ignore: const [
+  'passwordHash',
+  'viewSerializer'
+], processors: const {
+  'dob': const DateTimeSerializer(),
+}, serializers: const [
+  BookViewSerializer,
+])
 class UserViewSerializer extends Serializer<User> with _$UserViewSerializer {
   User createModel() => new User();
 }

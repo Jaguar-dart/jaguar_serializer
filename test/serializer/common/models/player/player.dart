@@ -1,6 +1,6 @@
 library serializer.test.models.player;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'player.g.dart';
 
@@ -11,8 +11,7 @@ class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
   PlayerSerializer();
 }
 
-@GenSerializer()
-@IgnoreField(#emailConfirmed)
+@GenSerializer(ignore: const ['emailConfirmed'])
 class PlayerSerializerIgnore extends Serializer<Player>
     with _$PlayerSerializerIgnore {
   Player createModel() => new Player();
@@ -20,8 +19,7 @@ class PlayerSerializerIgnore extends Serializer<Player>
   PlayerSerializerIgnore();
 }
 
-@GenSerializer()
-@IgnoreFields(const <Symbol>[#emailConfirmed, #age, #email])
+@GenSerializer(ignore: const ['emailConfirmed', 'age', 'email'])
 class PlayerSerializerIgnores extends Serializer<Player>
     with _$PlayerSerializerIgnores {
   Player createModel() => new Player();
@@ -29,15 +27,11 @@ class PlayerSerializerIgnores extends Serializer<Player>
   PlayerSerializerIgnores();
 }
 
-@GenSerializer()
-@EnDecodeField(#name, asAndFrom: 'N')
-/* todo: does not work on browser
-@EnDecodeFields(const {
-  #email: 'E',
-  #age: 'A',
-})*/
-@EncodeField(#score, as: 'S')
-@DecodeField(#emailConfirmed, from: 'eC')
+@GenSerializer(fields: const {
+  'name': const EnDecode('N'),
+  'score': const EncodeOnly('S'),
+  'emailConfirmed': const EnDecode('eC'),
+})
 class PlayerSerializerRename extends Serializer<Player>
     with _$PlayerSerializerRename {
   Player createModel() => new Player();

@@ -2,7 +2,7 @@ library serializer.test.exclude_by_default;
 
 import 'package:test/test.dart';
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'exclude_by_default.g.dart';
 
@@ -22,9 +22,10 @@ class ExcludeByDefault {
   }
 }
 
-@GenSerializer(includeByDefault: false)
-@EnDecodeField(#id, asAndFrom: 'id')
-@EnDecodeField(#name, asAndFrom: 'name')
+@GenSerializer(includeByDefault: false, fields: const {
+  'id': const EnDecode('id'),
+  'name': const EnDecode('name'),
+})
 class ExcludeByDefaultCodec extends Serializer<ExcludeByDefault>
     with _$ExcludeByDefaultCodec {
   ExcludeByDefault createModel() => new ExcludeByDefault();

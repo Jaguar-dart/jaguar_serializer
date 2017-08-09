@@ -1,6 +1,6 @@
 library serializer.test.models.player;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'nested.g.dart';
 
@@ -16,9 +16,9 @@ class InnerModel2Serializer extends Serializer<InnerModel2>
   InnerModel2 createModel() => new InnerModel2();
 }
 
-@GenSerializer()
-@ProvideSerializer(InnerModel1, InnerModel1Serializer)
-@ProvideSerializer(InnerModel2, InnerModel2Serializer)
+@GenSerializer(
+  serializers: const [InnerModel1Serializer, InnerModel2Serializer],
+)
 class OuterModelSerializer extends Serializer<OuterModel>
     with _$OuterModelSerializer {
   OuterModel createModel() => new OuterModel();

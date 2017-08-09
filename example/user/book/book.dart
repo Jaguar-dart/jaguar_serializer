@@ -1,11 +1,12 @@
 library example.model.book;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'book.g.dart';
 
-@GenSerializer()
-@IgnoreField(#viewSerializer)
+@GenSerializer(
+  ignore: const ['viewSerializer'],
+)
 class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {
   Book createModel() => new Book();
 

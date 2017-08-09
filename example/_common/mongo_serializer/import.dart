@@ -1,17 +1,14 @@
 library serializer.mongo_serializer;
 
 import 'package:mongo_dart/mongo_dart.dart' as mgo;
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 abstract class SerializableToMongo {
   Serializer get mongoSerializer;
 }
 
-@DefineFieldProcessor()
 class MongoId implements FieldProcessor<String, mgo.ObjectId> {
-  final Symbol field;
-
-  const MongoId(this.field);
+  const MongoId();
 
   String deserialize(mgo.ObjectId input) {
     return input.toHexString();

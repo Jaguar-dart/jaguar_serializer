@@ -11,8 +11,6 @@ import 'serializer/exclude_by_default/exclude_by_default.dart'
 
 import 'serializer/nested_objects/builtin_to.dart' as nestedObjectTo;
 
-import 'generator/writer/list_map/list_map.dart' as genWriterListMap;
-
 import 'serializer/various/various.dart' as various;
 
 import 'serializer/serializer_json.dart' as serializer_json;
@@ -33,6 +31,4 @@ void main() {
 
   serializer_json.main();
   serializer_yaml.main();
-
-  genWriterListMap.main();
 }

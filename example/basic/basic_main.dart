@@ -1,11 +1,12 @@
 library example.player;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'basic_main.g.dart';
 
-@GenSerializer()
-@ProvideSerializer(Address, AddressSerializer)
+@GenSerializer(serializers: const [
+  AddressSerializer,
+])
 class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
   Player createModel() => new Player();
 }

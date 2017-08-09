@@ -70,9 +70,9 @@ void main() {
     setUp(() {
       m = {};
       m['N'] = 'John';
-      m['E'] = 'john@noemail.com';
-      m['A'] = 25;
-      m['score'] = 1000;
+      m['email'] = 'john@noemail.com';
+      m['age'] = 25;
+      m['S'] = 1000;
       m['eC'] = true;
     });
 
@@ -80,10 +80,9 @@ void main() {
       PlayerSerializerRename serializer = new PlayerSerializerRename();
       Player player = serializer.fromMap(m);
       expect(player.name, 'John');
-      //todo: does not work on browser
-      //expect(player.email, 'john@noemail.com');
-      //expect(player.age, 25);
-      expect(player.score, 1000);
+      expect(player.email, 'john@noemail.com');
+      expect(player.age, 25);
+      expect(player.score, null);
       expect(player.emailConfirmed, true);
     });
   });

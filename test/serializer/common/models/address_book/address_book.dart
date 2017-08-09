@@ -1,11 +1,10 @@
 library test.common.models.address_book;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'address_book.g.dart';
 
-@GenSerializer()
-@ProvideSerializer(Address, Address)
+@GenSerializer(serializers: const [Address])
 class Person extends Serializer<Person> with _$Person {
   String name;
 

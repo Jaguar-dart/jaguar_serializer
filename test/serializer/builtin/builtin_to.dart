@@ -71,7 +71,7 @@ void main() {
       //expect(result, containsPair('E', 'john@noemail.com'));
       //expect(result, containsPair('A', 25));
       expect(result, containsPair('S', 1000));
-      expect(result, containsPair('emailConfirmed', true));
+      expect(result, containsPair('eC', true));
     });
   });
 }
