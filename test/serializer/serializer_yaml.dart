@@ -137,8 +137,7 @@ void main() {
   group("yaml with type info", () {
     test('Book', () {
       book.publishedDates = null;
-      String encoded =
-          serializer.serialize(book, typeKey: "(t)");
+      String encoded = serializer.serialize(book, typeKey: "(t)");
       Book bookTest = serializer.deserialize(encoded, typeKey: "(t)");
       expect(bookTest.name, equals(book.name));
       expect(bookTest.tags, equals(book.tags));
@@ -150,8 +149,7 @@ void main() {
 
     test('List<Author>', () {
       serializer.add(new AuthorSerializer());
-      String encoded =
-          serializer.serialize(book.authors, typeKey: "(t)");
+      String encoded = serializer.serialize(book.authors, typeKey: "(t)");
       List<Author> authors = serializer.deserialize(encoded, typeKey: "(t)");
       expect(authors.length, equals(book.authors.length));
       expect(authors[0].name, equals(book.authors[0].name));

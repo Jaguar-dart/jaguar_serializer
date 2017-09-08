@@ -125,7 +125,7 @@ class SerializerRepo {
     if (object is Map) {
       return _transformMapToDart(object, withType, typeKey);
     } else if (object is Iterable) {
-      return _transformIterableToDart(object,  withType, typeKey);
+      return _transformIterableToDart(object, withType, typeKey);
     } else {
       final Serializer serializer = getByType(type);
 
@@ -137,7 +137,7 @@ class SerializerRepo {
     }
   }
 
-  Map _transformMapToDart(Map object,  bool withType, String typeKey) {
+  Map _transformMapToDart(Map object, bool withType, String typeKey) {
     final mapper = {};
     object.forEach((key, value) {
       final k = to(key, withType: withType, typeKey: typeKey);
@@ -152,12 +152,15 @@ class SerializerRepo {
     return mapper;
   }
 
-  List _transformIterableToDart(Iterable object, bool withType, String typeKey) =>
-      object.map((obj) => to(
-          obj,
-          withType: withType,
-          typeKey: typeKey,
-        )).toList();
+  List _transformIterableToDart(
+          Iterable object, bool withType, String typeKey) =>
+      object
+          .map((obj) => to(
+                obj,
+                withType: withType,
+                typeKey: typeKey,
+              ))
+          .toList();
 
   /// Deserializes Dart built-in object to Dart PODO
   dynamic from(dynamic object, {Type type, String typeKey}) {
