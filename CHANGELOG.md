@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2
+- Better support of ddc
+
 ## 0.4.1
 
 - Added docs

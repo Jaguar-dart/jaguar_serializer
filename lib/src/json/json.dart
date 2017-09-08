@@ -1,13 +1,18 @@
 library jaguar_serializer.json;
 
 import 'dart:convert';
-import 'package:jaguar_serializer/jaguar_serializer.dart';
+
+import '../serializer/serializer.dart';
+import '../serializer/repo.dart';
 
 /// Repository that serialize/deserialize JSON.
 ///
 /// Same usage as [SerializerRepo]
 class JsonRepo extends SerializerRepo {
-  JsonRepo({List<Serializer> serializers, String typeKey: defaultTypeInfoKey, bool withType})
+  JsonRepo(
+      {List<Serializer> serializers,
+      String typeKey: defaultTypeInfoKey,
+      bool withType})
       : super(serializers: serializers, typeKey: typeKey, withType: withType);
 
   ///@nodoc

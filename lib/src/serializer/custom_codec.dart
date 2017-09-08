@@ -1,4 +1,4 @@
-part of jaguar_serializer.serializer;
+library jaguar_serializer.serializer.custom_codec;
 
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]

@@ -1,8 +1,9 @@
 library jaguar_serializer.yaml;
 
-import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yamlicious/yamlicious.dart';
+import '../serializer/repo.dart';
+import '../serializer/serializer.dart';
 
 /**
  * Repository that serialize/deserialize YAML.
