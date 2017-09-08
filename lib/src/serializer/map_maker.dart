@@ -1,5 +1,5 @@
 ///@nodoc
-part of jaguar_serializer.serializer;
+library jaguar_serializer.serializer.map_maker;
 
 class MapMaker<KF, VF, KT, VT> {
   Map<KT, VT> _model;

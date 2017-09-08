@@ -1,7 +1,10 @@
 library jaguar_serializer.json;
 
 import 'dart:convert';
-import 'package:jaguar_serializer/jaguar_serializer.dart';
+
+import '../serializer/serializer.dart';
+import '../serializer/repo.dart';
+
 
 /// Repository that serialize/deserialize JSON.
 ///

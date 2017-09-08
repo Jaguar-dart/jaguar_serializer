@@ -1,8 +1,6 @@
 library jaguar_serializer.serializer;
 
-part 'custom_codec.dart';
-part 'map_maker.dart';
-part 'repo.dart';
+import '../serializer/repo.dart';
 
 /// Extend this class to create a Serializer for a [Type]
 ///

@@ -16,7 +16,11 @@
  */
 library jaguar_serializer;
 
-export 'package:jaguar_serializer/src/annotations/annotations.dart';
-export 'package:jaguar_serializer/src/json/json.dart';
-export 'package:jaguar_serializer/src/serializer/serializer.dart';
-export 'package:jaguar_serializer/src/yaml/yaml.dart';
+export 'src/annotations/annotations.dart';
+export 'src/json/json.dart';
+export 'src/serializer/serializer.dart';
+export 'src/yaml/yaml.dart';
+export 'src/serializer/custom_codec.dart';
+export 'src/serializer/repo.dart';
+export 'src/serializer/map_maker.dart';
+export 'src/serializer/serializer.dart';
