@@ -142,17 +142,19 @@ class WithIgnoreSerializer extends Serializer<WithIgnore>
   WithIgnore createModel() => new WithIgnore(null, null);
 }
 
-@GenSerializer(fields: const {'original': const EnDecode('renamed')})
+@GenSerializer(fields: const {
+  'original': const [const EnDecode('renamed')]
+})
 class ModelRenamedSerializer extends Serializer<ModelRenamed>
     with _$ModelRenamedSerializer {
   @override
   ModelRenamed createModel() => new ModelRenamed(null);
 }
 
-@GenSerializer(processors: const {
-  'dates': const DateTimeProcessor(),
-  'dynamicMap': const RawData(),
-  'dynamicList': const RawData(),
+@GenSerializer(fields: const {
+  'dates': const [const DateTimeProcessor()],
+  'dynamicMap': const [const RawData()],
+  'dynamicList': const [const RawData()],
 }, serializers: const [
   WithIgnoreSerializer,
 ])

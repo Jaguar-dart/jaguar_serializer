@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0
+
+- support disable null check
+- `GenSerializer.fields` can take a `Property` or a `List<Property>`
+- deprecate `GenSerializer.processor` fields, FieldProcessor go into `GenSerializer.fields`
+- support for default value, `String`, `int`, `double`, `bool`, if a field is non nullable, jaguar will use the default value declared in you object constructor
+
 ## 0.4.2
 - Better support of ddc
 

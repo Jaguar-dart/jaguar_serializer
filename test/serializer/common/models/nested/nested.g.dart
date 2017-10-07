@@ -28,7 +28,7 @@ abstract class _$InnerModel1Serializer implements Serializer<InnerModel1> {
     if (model is! InnerModel1) {
       model = createModel();
     }
-    model.number = map["number"];
+    model.number = map["number"] ?? model.number;
     return model;
   }
 
@@ -61,7 +61,7 @@ abstract class _$InnerModel2Serializer implements Serializer<InnerModel2> {
     if (model is! InnerModel2) {
       model = createModel();
     }
-    model.name = map["name"];
+    model.name = map["name"] ?? model.name;
     return model;
   }
 
@@ -118,14 +118,16 @@ abstract class _$OuterModelSerializer implements Serializer<OuterModel> {
     if (model is! OuterModel) {
       model = createModel();
     }
-    model.id = map["id"];
+    model.id = map["id"] ?? model.id;
     model.list = map["list"]
-        ?.map((Map val) =>
-            fromInnerModel1Serializer.fromMap(val, typeKey: typeKey))
-        ?.toList();
+            ?.map((Map val) =>
+                fromInnerModel1Serializer.fromMap(val, typeKey: typeKey))
+            ?.toList() ??
+        model.list;
     model.map = new MapMaker(map["map"], (String key) => key, (Map value) {
-      return fromInnerModel2Serializer.fromMap(value, typeKey: typeKey);
-    }).model as dynamic;
+          return fromInnerModel2Serializer.fromMap(value, typeKey: typeKey);
+        }).model as dynamic ??
+        model.map;
     return model;
   }
 

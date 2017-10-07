@@ -1,5 +1,7 @@
 library jaguar_serializer.serializer.custom_codec;
 
+import '../annotations/annotations.dart';
+
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
 ///
@@ -32,7 +34,7 @@ library jaguar_serializer.serializer.custom_codec;
 ///     class User {
 ///        DateTime birthday;
 ///     }
-abstract class FieldProcessor<FromType, ToType> {
+abstract class FieldProcessor<FromType, ToType> extends Property {
   /// Called to process field before decoding
   FromType deserialize(ToType value);
 

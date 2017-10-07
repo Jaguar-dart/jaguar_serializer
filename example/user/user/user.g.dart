@@ -79,29 +79,36 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     if (model is! User) {
       model = createModel();
     }
-    model.id = map["Id"];
-    model.email = map["Email"];
-    model.name = map["N"];
-    model.dob = dobDateTimeSerializer.deserialize(map["DoB"]);
-    model.book = fromBookViewSerializer.fromMap(map["Book"], typeKey: typeKey);
-    model.listStr = map["listStr"]?.map((String val) => val)?.toList();
+    model.id = map["Id"] ?? model.id;
+    model.email = map["Email"] ?? model.email;
+    model.name = map["N"] ?? model.name;
+    model.dob = dobDateTimeSerializer.deserialize(map["DoB"]) ?? model.dob;
+    model.book =
+        fromBookViewSerializer.fromMap(map["Book"], typeKey: typeKey) ??
+            model.book;
+    model.listStr =
+        map["listStr"]?.map((String val) => val)?.toList() ?? model.listStr;
     model.listBook = map["listBook"]
-        ?.map(
-            (Map val) => fromBookViewSerializer.fromMap(val, typeKey: typeKey))
-        ?.toList();
+            ?.map((Map val) =>
+                fromBookViewSerializer.fromMap(val, typeKey: typeKey))
+            ?.toList() ??
+        model.listBook;
     model.map = new MapMaker(map["map"], (String key) => key, (String value) {
-      return value;
-    }).model as dynamic;
+          return value;
+        }).model as dynamic ??
+        model.map;
     model.mapMap = new MapMaker(map["mapMap"], (String key) => key,
-        (Map<String, String> value) {
-      return new MapMaker(value, (String key) => key, (String value) {
-        return value;
-      }).model as dynamic;
-    }).model as dynamic;
+            (Map<String, String> value) {
+          return new MapMaker(value, (String key) => key, (String value) {
+            return value;
+          }).model as dynamic;
+        }).model as dynamic ??
+        model.mapMap;
     model.mapBook =
         new MapMaker(map["mapBook"], (String key) => key, (Map value) {
-      return fromBookViewSerializer.fromMap(value, typeKey: typeKey);
-    }).model as dynamic;
+              return fromBookViewSerializer.fromMap(value, typeKey: typeKey);
+            }).model as dynamic ??
+            model.mapBook;
     return model;
   }
 

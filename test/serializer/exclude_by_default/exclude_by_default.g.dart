@@ -31,8 +31,8 @@ abstract class _$ExcludeByDefaultCodec implements Serializer<ExcludeByDefault> {
     if (model is! ExcludeByDefault) {
       model = createModel();
     }
-    model.id = map["id"];
-    model.name = map["name"];
+    model.id = map["id"] ?? model.id;
+    model.name = map["name"] ?? model.name;
     return model;
   }
 

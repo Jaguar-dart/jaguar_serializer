@@ -66,8 +66,8 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
               withType: withType, typeKey: typeKey);
         }).model;
       }
-      if (model.passwordHash != null) {
-        ret["passwordHash"] = model.passwordHash;
+      if (model.password != null) {
+        ret["password"] = model.password;
       }
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
@@ -83,30 +83,37 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     if (model is! User) {
       model = createModel();
     }
-    model.id = idMongoId.deserialize(map["id"]);
-    model.email = map["email"];
-    model.name = map["N"];
-    model.dob = dobDateTimeSerializer.deserialize(map["dob"]);
-    model.book = fromBookMongoSerializer.fromMap(map["book"], typeKey: typeKey);
-    model.listStr = map["listStr"]?.map((String val) => val)?.toList();
+    model.id = idMongoId.deserialize(map["id"]) ?? model.id;
+    model.email = map["email"] ?? model.email;
+    model.name = map["N"] ?? model.name;
+    model.dob = dobDateTimeSerializer.deserialize(map["dob"]) ?? model.dob;
+    model.book =
+        fromBookMongoSerializer.fromMap(map["book"], typeKey: typeKey) ??
+            model.book;
+    model.listStr =
+        map["listStr"]?.map((String val) => val)?.toList() ?? model.listStr;
     model.listBook = map["listBook"]
-        ?.map(
-            (Map val) => fromBookMongoSerializer.fromMap(val, typeKey: typeKey))
-        ?.toList();
+            ?.map((Map val) =>
+                fromBookMongoSerializer.fromMap(val, typeKey: typeKey))
+            ?.toList() ??
+        model.listBook;
     model.map = new MapMaker(map["map"], (String key) => key, (String value) {
-      return value;
-    }).model as dynamic;
+          return value;
+        }).model as dynamic ??
+        model.map;
     model.mapMap = new MapMaker(map["mapMap"], (String key) => key,
-        (Map<String, String> value) {
-      return new MapMaker(value, (String key) => key, (String value) {
-        return value;
-      }).model as dynamic;
-    }).model as dynamic;
+            (Map<String, String> value) {
+          return new MapMaker(value, (String key) => key, (String value) {
+            return value;
+          }).model as dynamic;
+        }).model as dynamic ??
+        model.mapMap;
     model.mapBook =
         new MapMaker(map["mapBook"], (String key) => key, (Map value) {
-      return fromBookMongoSerializer.fromMap(value, typeKey: typeKey);
-    }).model as dynamic;
-    model.password = map["password"];
+              return fromBookMongoSerializer.fromMap(value, typeKey: typeKey);
+            }).model as dynamic ??
+            model.mapBook;
+    model.password = map["password"] ?? model.password;
     return model;
   }
 
