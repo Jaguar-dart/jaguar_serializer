@@ -14,3 +14,6 @@ dart:
   - stable
   - dev
 
+cache:
+  directories:
+    - $HOME/.pub-cache
