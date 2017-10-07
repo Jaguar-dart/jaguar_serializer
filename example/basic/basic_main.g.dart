@@ -50,15 +50,14 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     if (model is! Player) {
       model = createModel();
     }
-    model.name = map["name"] ?? model.name;
-    model.email = map["email"] ?? model.email;
-    model.age = map["age"] ?? model.age;
-    model.score = map["score"] ?? model.score;
-    model.emailConfirmed = map["emailConfirmed"] ?? model.emailConfirmed;
-    model.test = map["test"] ?? model.test;
+    model.name = map["name"];
+    model.email = map["email"];
+    model.age = map["age"];
+    model.score = map["score"];
+    model.emailConfirmed = map["emailConfirmed"];
+    model.test = map["test"];
     model.address =
-        fromAddressSerializer.fromMap(map["address"], typeKey: typeKey) ??
-            model.address;
+        fromAddressSerializer.fromMap(map["address"], typeKey: typeKey);
     return model;
   }
 
@@ -100,10 +99,10 @@ abstract class _$AddressSerializer implements Serializer<Address> {
     if (model is! Address) {
       model = createModel();
     }
-    model.street = map["street"] ?? model.street;
-    model.zipcode = map["zipcode"] ?? model.zipcode;
-    model.country = map["country"] ?? model.country;
-    model.city = map["city"] ?? model.city;
+    model.street = map["street"];
+    model.zipcode = map["zipcode"];
+    model.country = map["country"];
+    model.city = map["city"];
     return model;
   }
 

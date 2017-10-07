@@ -35,9 +35,8 @@ abstract class _$Person implements Serializer<Person> {
     if (model is! Person) {
       model = createModel();
     }
-    model.name = map["name"] ?? model.name;
-    model.address =
-        fromAddress.fromMap(map["address"], typeKey: typeKey) ?? model.address;
+    model.name = map["name"];
+    model.address = fromAddress.fromMap(map["address"], typeKey: typeKey);
     return model;
   }
 
@@ -82,11 +81,11 @@ abstract class _$Address implements Serializer<Address> {
     if (model is! Address) {
       model = createModel();
     }
-    model.street = map["street"] ?? model.street;
-    model.houseNum = map["houseNum"] ?? model.houseNum;
-    model.city = map["city"] ?? model.city;
-    model.country = map["country"] ?? model.country;
-    model.pincode = map["pincode"] ?? model.pincode;
+    model.street = map["street"];
+    model.houseNum = map["houseNum"];
+    model.city = map["city"];
+    model.country = map["country"];
+    model.pincode = map["pincode"];
     return model;
   }
 

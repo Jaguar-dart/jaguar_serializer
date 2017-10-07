@@ -13,8 +13,8 @@ part 'user_mongo.g.dart';
   'id': const MongoId(),
   'dob': const DateTimeSerializer(),
 }, fields: const {
-  'name': const [const EnDecode('N')],
-  'viewSerializer': const [const Ignore()],
+  'name': const EnDecode(alias: 'N'),
+  'viewSerializer': ignore
 }, serializers: const [
   BookMongoSerializer,
 ])

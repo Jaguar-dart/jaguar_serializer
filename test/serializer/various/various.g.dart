@@ -31,8 +31,8 @@ abstract class _$ModelIntSerializer implements Serializer<ModelInt> {
     if (model is! ModelInt) {
       model = createModel();
     }
-    model.bar = map["bar"] ?? model.bar;
-    model.clazzA = map["clazzA"] ?? model.clazzA;
+    model.bar = map["bar"];
+    model.clazzA = map["clazzA"];
     return model;
   }
 
@@ -68,8 +68,8 @@ abstract class _$ModelDoubleSerializer implements Serializer<ModelDouble> {
     if (model is! ModelDouble) {
       model = createModel();
     }
-    model.bar = map["bar"] ?? model.bar;
-    model.clazzA = map["clazzA"] ?? model.clazzA;
+    model.bar = map["bar"];
+    model.clazzA = map["clazzA"];
     return model;
   }
 
@@ -105,8 +105,8 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
     if (model is! Inheritance) {
       model = createModel();
     }
-    model.clazzA = map["clazzA"] ?? model.clazzA;
-    model.clazzB = map["clazzB"] ?? model.clazzB;
+    model.clazzA = map["clazzA"];
+    model.clazzB = map["clazzB"];
     return model;
   }
 
@@ -144,8 +144,8 @@ abstract class _$DateSerializer implements Serializer<Date> {
     if (model is! Date) {
       model = createModel();
     }
-    model.date = dateDateTimeProcessor.deserialize(map["date"]) ?? model.date;
-    model.clazzA = map["clazzA"] ?? model.clazzA;
+    model.date = dateDateTimeProcessor.deserialize(map["date"]);
+    model.clazzA = map["clazzA"];
     return model;
   }
 
@@ -194,14 +194,12 @@ abstract class _$NullTestSerializer implements Serializer<NullTest> {
     if (model is! NullTest) {
       model = createModel();
     }
-    model.tests =
-        map["tests"]?.map((String val) => val)?.toList() ?? model.tests;
-    model.test = map["test"] ?? model.test;
+    model.tests = map["tests"]?.map((String val) => val)?.toList();
+    model.test = map["test"];
     model.testModel = map["testModel"]
-            ?.map((Map val) =>
-                fromModelIntSerializer.fromMap(val, typeKey: typeKey))
-            ?.toList() ??
-        model.testModel;
+        ?.map(
+            (Map val) => fromModelIntSerializer.fromMap(val, typeKey: typeKey))
+        ?.toList();
     return model;
   }
 
@@ -234,7 +232,7 @@ abstract class _$WithIgnoreSerializer implements Serializer<WithIgnore> {
     if (model is! WithIgnore) {
       model = createModel();
     }
-    model.a = map["a"] ?? model.a;
+    model.a = map["a"];
     return model;
   }
 
@@ -267,7 +265,7 @@ abstract class _$ModelRenamedSerializer implements Serializer<ModelRenamed> {
     if (model is! ModelRenamed) {
       model = createModel();
     }
-    model.original = map["renamed"] ?? model.original;
+    model.original = map["renamed"];
     return model;
   }
 
@@ -384,57 +382,45 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
     if (model is! Complex) {
       model = createModel();
     }
-    model.nums = map["nums"]?.map((num val) => val)?.toList() ?? model.nums;
-    model.strings =
-        map["strings"]?.map((String val) => val)?.toList() ?? model.strings;
-    model.bools = map["bools"]?.map((bool val) => val)?.toList() ?? model.bools;
-    model.ints = map["ints"]?.map((int val) => val)?.toList() ?? model.ints;
-    model.doubles =
-        map["doubles"]?.map((double val) => val)?.toList() ?? model.doubles;
+    model.nums = map["nums"]?.map((num val) => val)?.toList();
+    model.strings = map["strings"]?.map((String val) => val)?.toList();
+    model.bools = map["bools"]?.map((bool val) => val)?.toList();
+    model.ints = map["ints"]?.map((int val) => val)?.toList();
+    model.doubles = map["doubles"]?.map((double val) => val)?.toList();
     model.ignores = map["ignores"]
-            ?.map((Map val) =>
-                fromWithIgnoreSerializer.fromMap(val, typeKey: typeKey))
-            ?.toList() ??
-        model.ignores;
+        ?.map((Map val) =>
+            fromWithIgnoreSerializer.fromMap(val, typeKey: typeKey))
+        ?.toList();
     model.numSet =
         new MapMaker(map["numSet"], (String key) => key, (num value) {
-              return value;
-            }).model as dynamic ??
-            model.numSet;
+      return value;
+    }).model as dynamic;
     model.stringSet =
         new MapMaker(map["stringSet"], (String key) => key, (String value) {
-              return value;
-            }).model as dynamic ??
-            model.stringSet;
+      return value;
+    }).model as dynamic;
     model.boolSet =
         new MapMaker(map["boolSet"], (String key) => key, (bool value) {
-              return value;
-            }).model as dynamic ??
-            model.boolSet;
+      return value;
+    }).model as dynamic;
     model.intSet =
         new MapMaker(map["intSet"], (String key) => key, (int value) {
-              return value;
-            }).model as dynamic ??
-            model.intSet;
+      return value;
+    }).model as dynamic;
     model.doubleSet =
         new MapMaker(map["doubleSet"], (String key) => key, (double value) {
-              return value;
-            }).model as dynamic ??
-            model.doubleSet;
+      return value;
+    }).model as dynamic;
     model.ignoreSet =
         new MapMaker(map["ignoreSet"], (String key) => key, (Map value) {
-              return fromWithIgnoreSerializer.fromMap(value, typeKey: typeKey);
-            }).model as dynamic ??
-            model.ignoreSet;
+      return fromWithIgnoreSerializer.fromMap(value, typeKey: typeKey);
+    }).model as dynamic;
     model.listInnerMap1 = new MapMaker(
-            map["listInnerMap1"], (String key) => key, (List<String> value) {
-          return value?.map((String val) => val)?.toList();
-        }).model as dynamic ??
-        model.listInnerMap1;
-    model.dynamicMap =
-        dynamicMapRawData.deserialize(map["dynamicMap"]) ?? model.dynamicMap;
-    model.dynamicList =
-        dynamicListRawData.deserialize(map["dynamicList"]) ?? model.dynamicList;
+        map["listInnerMap1"], (String key) => key, (List<String> value) {
+      return value?.map((String val) => val)?.toList();
+    }).model as dynamic;
+    model.dynamicMap = dynamicMapRawData.deserialize(map["dynamicMap"]);
+    model.dynamicList = dynamicListRawData.deserialize(map["dynamicList"]);
     return model;
   }
 
@@ -468,7 +454,7 @@ abstract class _$CustomModelNameSerializer
     if (model is! CustomModelName) {
       model = createModel();
     }
-    model.foo = map["foo"] ?? model.foo;
+    model.foo = map["foo"];
     return model;
   }
 

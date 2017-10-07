@@ -34,9 +34,9 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
     if (model is! Book) {
       model = createModel();
     }
-    model.id = map["id"] ?? model.id;
-    model.name = map["name"] ?? model.name;
-    model.publishedYear = map["publishedYear"] ?? model.publishedYear;
+    model.id = map["id"];
+    model.name = map["name"];
+    model.publishedYear = map["publishedYear"];
     return model;
   }
 

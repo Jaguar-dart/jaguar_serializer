@@ -7,7 +7,10 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'default_value.g.dart';
 
-@GenSerializer(fields: const {'foo': nonNullable, "list": nonNullable})
+@GenSerializer(fields: const {
+  'foo': const Property(valueFromConstructor: true, isNullable: false),
+  "list": const Property(valueFromConstructor: true, isNullable: false)
+})
 class DefaultValue extends Serializer<DefaultValue> with _$DefaultValue {
   String foo;
   String bar;
@@ -19,7 +22,7 @@ class DefaultValue extends Serializer<DefaultValue> with _$DefaultValue {
   DefaultValue createModel() => new DefaultValue();
 }
 
-@GenSerializer(fields: const {'foo': const DefaultStringValue("bar")})
+@GenSerializer(fields: const {'foo': const Property<String>(defaultsTo: "bar")})
 class DefaultString extends Serializer<DefaultString> with _$DefaultString {
   String foo;
   String bar;
@@ -30,7 +33,7 @@ class DefaultString extends Serializer<DefaultString> with _$DefaultString {
   DefaultString createModel() => new DefaultString();
 }
 
-@GenSerializer(fields: const {'foo': const DefaultIntValue(42)})
+@GenSerializer(fields: const {'foo': const Property<int>(defaultsTo: 42)})
 class DefaultInt extends Serializer<DefaultInt> with _$DefaultInt {
   int foo;
   String bar;
@@ -41,7 +44,7 @@ class DefaultInt extends Serializer<DefaultInt> with _$DefaultInt {
   DefaultInt createModel() => new DefaultInt();
 }
 
-@GenSerializer(fields: const {'foo': const DefaultDoubleValue(42.42)})
+@GenSerializer(fields: const {'foo': const Property<double>(defaultsTo: 42.42)})
 class DefaultDouble extends Serializer<DefaultDouble> with _$DefaultDouble {
   double foo;
   String bar;
@@ -52,7 +55,7 @@ class DefaultDouble extends Serializer<DefaultDouble> with _$DefaultDouble {
   DefaultDouble createModel() => new DefaultDouble();
 }
 
-@GenSerializer(fields: const {'foo': const DefaultBoolValue(true)})
+@GenSerializer(fields: const {'foo': const Property<bool>(defaultsTo: true)})
 class DefaultBool extends Serializer<DefaultBool> with _$DefaultBool {
   bool foo;
   String bar;
@@ -64,11 +67,10 @@ class DefaultBool extends Serializer<DefaultBool> with _$DefaultBool {
 }
 
 @GenSerializer(fields: const {
-  'foo': const [
-    const DefaultStringValue("1994-03-29T06:00:00Z"),
-    const DateTimeProcessor(),
-    const EnDecode("f")
-  ]
+  'foo': const EnDecode(
+      alias: 'f',
+      defaultsTo: "1994-03-29T06:00:00Z",
+      processor: const DateTimeProcessor())
 })
 class DefaultDate extends Serializer<DefaultDate> with _$DefaultDate {
   DateTime foo;

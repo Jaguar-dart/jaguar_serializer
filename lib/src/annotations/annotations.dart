@@ -14,7 +14,7 @@ class GenSerializer {
   final bool includeByDefault;
 
   /// Specify whether a property could be encoded, only, decoded only or both
-  final Map<String, /* Property | List<Property> */ dynamic> fields;
+  final Map<String, Property> fields;
 
   /// List of properties that shall be ignored
   final List<String> ignore;
@@ -30,7 +30,7 @@ class GenSerializer {
   final bool nullableFields;
 
   const GenSerializer(
-      {this.fields: const <String, List<Property>>{},
+      {this.fields: const <String, Property>{},
       this.ignore: const <String>[],
       this.processors: const <String, FieldProcessor>{},
       this.serializers: const <Type>[],
@@ -39,69 +39,90 @@ class GenSerializer {
       this.nullableFields: false});
 }
 
-abstract class Property {}
+class Property<T> {
+  final String encodeTo;
+  final String decodeFrom;
+  final bool isNullable;
+  final FieldProcessor<T, dynamic> processor;
+  final T defaultsTo;
+  final bool valueFromConstructor;
 
+  const Property(
+      {this.encodeTo,
+      this.decodeFrom,
+      this.isNullable,
+      this.defaultsTo,
+      this.processor,
+      this.valueFromConstructor});
+}
+
+// can't use inheritance here, [DartObject.getField] does not support getter, only fields
 /// Annotation used to request encoding of a field in model
-class EncodeOnly implements Property {
+class EncodeOnly<T> extends Property<T> {
   /// Optional. Key used to encode the model in the [Map]
   final String alias;
+  final FieldProcessor<T, dynamic> processor;
+  final bool isNullable;
+  final T defaultsTo;
+  final String encodeTo;
+  final bool valueFromConstructor;
 
-  const EncodeOnly([this.alias]);
+  const EncodeOnly(
+      {this.alias,
+      this.isNullable,
+      this.defaultsTo,
+      this.processor,
+      this.valueFromConstructor})
+      : encodeTo = alias;
 }
 
 /// Annotation used to request decoding of a field in model
-class DecodeOnly implements Property {
+class DecodeOnly<T> extends Property<T> {
   /// Optional. Key used to decode the model from the [Map]
   final String alias;
+  final FieldProcessor<T, dynamic> processor;
+  final bool isNullable;
+  final T defaultsTo;
+  final String decodeFrom;
+  final bool valueFromConstructor;
 
-  const DecodeOnly([this.alias]);
+  const DecodeOnly(
+      {this.alias,
+      this.isNullable,
+      this.defaultsTo,
+      this.processor,
+      this.valueFromConstructor})
+      : decodeFrom = alias;
 }
 
 /// Annotation used to request encoding and decoding of a field in model
-class EnDecode implements Property {
+class EnDecode<T> extends Property<T> {
   /// Optional. Key used to decode and encode the model from and to the [Map]
   final String alias;
+  final FieldProcessor<T, dynamic> processor;
+  final bool isNullable;
+  final T defaultsTo;
+  final String encodeTo;
+  final String decodeFrom;
+  final bool valueFromConstructor;
 
-  const EnDecode([this.alias]);
+  const EnDecode(
+      {this.alias,
+      this.isNullable,
+      this.defaultsTo,
+      this.processor,
+      this.valueFromConstructor})
+      : encodeTo = alias,
+        decodeFrom = alias;
 }
 
 /// Annotation to ignore a field while encoding or decoding
-class Ignore implements Property {
+class Ignore extends EnDecode {
   const Ignore();
 }
 
 const ignore = const Ignore();
-
-/// Annotation used to disable null check on field
-class Nullable implements Property {
-  const Nullable();
-}
-
-const nullable = const Nullable();
-
-/// Annotation used to enable null check on field
-class NonNullable implements Property {
-  const NonNullable();
-}
-
-const nonNullable = const NonNullable();
-
-class DefaultStringValue implements Property {
-  final String value;
-  const DefaultStringValue(this.value);
-}
-
-class DefaultDoubleValue implements Property {
-  final double value;
-  const DefaultDoubleValue(this.value);
-}
-
-class DefaultIntValue implements Property {
-  final int value;
-  const DefaultIntValue(this.value);
-}
-
-class DefaultBoolValue implements Property {
-  final bool value;
-  const DefaultBoolValue(this.value);
-}
+const Property nullable = const Property(isNullable: true);
+const Property nonNullable = const Property(isNullable: false);
+const Property useConstructorForDefaultsValue =
+    const Property(valueFromConstructor: true, isNullable: false);

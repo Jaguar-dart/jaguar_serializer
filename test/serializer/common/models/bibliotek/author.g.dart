@@ -28,7 +28,7 @@ abstract class _$AuthorSerializer implements Serializer<Author> {
     if (model is! Author) {
       model = createModel();
     }
-    model.name = map["name"] ?? model.name;
+    model.name = map["name"];
     return model;
   }
 

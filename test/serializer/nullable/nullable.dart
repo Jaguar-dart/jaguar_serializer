@@ -6,7 +6,11 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'nullable.g.dart';
 
-@GenSerializer(nullableFields: true)
+@GenSerializer(nullableFields: true, fields: const {
+  'foo': const Property(valueFromConstructor: true),
+  'list': const Property(valueFromConstructor: true),
+  'bar': const Property(valueFromConstructor: true)
+})
 class NullableGlobal extends Serializer<NullableGlobal> with _$NullableGlobal {
   String foo;
   String bar;
@@ -19,7 +23,8 @@ class NullableGlobal extends Serializer<NullableGlobal> with _$NullableGlobal {
   NullableGlobal createModel() => new NullableGlobal();
 }
 
-@GenSerializer(nullableFields: true, fields: const {'foo': nonNullable})
+@GenSerializer(
+    nullableFields: true, fields: const {'foo': useConstructorForDefaultsValue})
 class NullableGlobal1 extends Serializer<NullableGlobal1>
     with _$NullableGlobal1 {
   String foo;
@@ -31,7 +36,10 @@ class NullableGlobal1 extends Serializer<NullableGlobal1>
   NullableGlobal1 createModel() => new NullableGlobal1();
 }
 
-@GenSerializer()
+@GenSerializer(fields: const {
+  'foo': useConstructorForDefaultsValue,
+  'bar': useConstructorForDefaultsValue
+})
 class NonNullableGlobal extends Serializer<NonNullableGlobal>
     with _$NonNullableGlobal {
   String foo;
@@ -43,7 +51,10 @@ class NonNullableGlobal extends Serializer<NonNullableGlobal>
   NonNullableGlobal createModel() => new NonNullableGlobal();
 }
 
-@GenSerializer(fields: const {'foo': nullable})
+@GenSerializer(fields: const {
+  'foo': const Property(isNullable: true),
+  'bar': useConstructorForDefaultsValue
+})
 class NonNullableGlobal1 extends Serializer<NonNullableGlobal1>
     with _$NonNullableGlobal1 {
   String foo;
@@ -56,7 +67,11 @@ class NonNullableGlobal1 extends Serializer<NonNullableGlobal1>
 }
 
 @GenSerializer(nullableFields: true, fields: const {
-  'foo': const [nonNullable, const TimeToStringProcessor(), const EnDecode("f")]
+  'foo': const EnDecode(
+      alias: "f",
+      isNullable: false,
+      processor: const TimeToStringProcessor(),
+      valueFromConstructor: true)
 })
 class NonNullableComplex extends Serializer<NonNullableComplex>
     with _$NonNullableComplex {
@@ -70,8 +85,11 @@ class NonNullableComplex extends Serializer<NonNullableComplex>
 }
 
 @GenSerializer(fields: const {
-  'bar': nullable,
-  'foo': const [nullable, const TimeToStringProcessor(), const EnDecode("f")]
+  'foo': const EnDecode(
+      alias: "f",
+      isNullable: true,
+      processor: const TimeToStringProcessor(),
+      valueFromConstructor: true)
 })
 class NullableComplex extends Serializer<NullableComplex>
     with _$NullableComplex {

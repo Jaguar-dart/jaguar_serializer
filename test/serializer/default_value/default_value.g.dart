@@ -36,7 +36,7 @@ abstract class _$DefaultValue implements Serializer<DefaultValue> {
       model = createModel();
     }
     model.foo = map["foo"] ?? model.foo;
-    model.bar = map["bar"] ?? model.bar;
+    model.bar = map["bar"];
     model.list = map["list"]?.map((String val) => val)?.toList() ?? model.list;
     return model;
   }
@@ -74,7 +74,7 @@ abstract class _$DefaultString implements Serializer<DefaultString> {
       model = createModel();
     }
     model.foo = map["foo"] ?? "bar";
-    model.bar = map["bar"] ?? model.bar;
+    model.bar = map["bar"];
     return model;
   }
 
@@ -111,7 +111,7 @@ abstract class _$DefaultInt implements Serializer<DefaultInt> {
       model = createModel();
     }
     model.foo = map["foo"] ?? 42;
-    model.bar = map["bar"] ?? model.bar;
+    model.bar = map["bar"];
     return model;
   }
 
@@ -148,7 +148,7 @@ abstract class _$DefaultDouble implements Serializer<DefaultDouble> {
       model = createModel();
     }
     model.foo = map["foo"] ?? 42.42;
-    model.bar = map["bar"] ?? model.bar;
+    model.bar = map["bar"];
     return model;
   }
 
@@ -185,7 +185,7 @@ abstract class _$DefaultBool implements Serializer<DefaultBool> {
       model = createModel();
     }
     model.foo = map["foo"] ?? true;
-    model.bar = map["bar"] ?? model.bar;
+    model.bar = map["bar"];
     return model;
   }
 
@@ -225,7 +225,7 @@ abstract class _$DefaultDate implements Serializer<DefaultDate> {
     }
     model.foo =
         fooDateTimeProcessor.deserialize(map["f"] ?? "1994-03-29T06:00:00Z");
-    model.bar = map["bar"] ?? model.bar;
+    model.bar = map["bar"];
     return model;
   }
 

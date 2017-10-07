@@ -49,16 +49,13 @@ abstract class _$BookSerializer implements Serializer<Book> {
     if (model is! Book) {
       model = createModel();
     }
-    model.name = map["name"] ?? model.name;
-    model.tags = map["tags"]?.map((String val) => val)?.toList() ?? model.tags;
+    model.name = map["name"];
+    model.tags = map["tags"]?.map((String val) => val)?.toList();
     model.publishedDates = publishedDatesMapKeyNumToStringProcessor
-            .deserialize(map["publishedDates"]) ??
-        model.publishedDates;
+        .deserialize(map["publishedDates"]);
     model.authors = map["authors"]
-            ?.map((Map val) =>
-                fromAuthorSerializer.fromMap(val, typeKey: typeKey))
-            ?.toList() ??
-        model.authors;
+        ?.map((Map val) => fromAuthorSerializer.fromMap(val, typeKey: typeKey))
+        ?.toList();
     return model;
   }
 

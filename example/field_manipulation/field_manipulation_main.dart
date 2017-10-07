@@ -6,11 +6,11 @@ part 'field_manipulation_main.g.dart';
 
 @GenSerializer(
   fields: const {
-    'name': const [const EnDecode('N')],
-    'email': const [const EnDecode('E')],
-    'age': const [const EnDecode('A')],
-    'score': const [const EnDecode('S')],
-    'emailConfirmed': const [ignore],
+    'name': const EnDecode(alias: 'N'),
+    'email': const EnDecode(alias: 'E'),
+    'age': const EnDecode(alias: 'A'),
+    'score': const EnDecode(alias: 'S'),
+    'emailConfirmed': ignore,
   },
 )
 class PlayerJsonSerializer extends Serializer<Player>

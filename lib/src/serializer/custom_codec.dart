@@ -34,7 +34,7 @@ import '../annotations/annotations.dart';
 ///     class User {
 ///        DateTime birthday;
 ///     }
-abstract class FieldProcessor<FromType, ToType> extends Property {
+abstract class FieldProcessor<FromType, ToType> {
   /// Called to process field before decoding
   FromType deserialize(ToType value);
 

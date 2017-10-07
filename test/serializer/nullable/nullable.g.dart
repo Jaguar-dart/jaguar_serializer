@@ -199,7 +199,9 @@ abstract class _$NullableComplex implements Serializer<NullableComplex> {
     Map ret = new Map();
     if (model != null) {
       ret["f"] = fooTimeToStringProcessor.serialize(model.foo);
-      ret["bar"] = model.bar;
+      if (model.bar != null) {
+        ret["bar"] = model.bar;
+      }
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }

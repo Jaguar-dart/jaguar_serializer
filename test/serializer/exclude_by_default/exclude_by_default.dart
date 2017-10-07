@@ -23,8 +23,8 @@ class ExcludeByDefault {
 }
 
 @GenSerializer(includeByDefault: false, fields: const {
-  'id': const [const EnDecode('id')],
-  'name': const [const EnDecode('name')],
+  'id': const EnDecode(alias: 'id'),
+  'name': const EnDecode(alias: 'name'),
 })
 class ExcludeByDefaultCodec extends Serializer<ExcludeByDefault>
     with _$ExcludeByDefaultCodec {
