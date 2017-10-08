@@ -174,6 +174,7 @@ abstract class _$PlayerSerializerRename implements Serializer<Player> {
     model.name = map["N"];
     model.email = map["email"];
     model.age = map["age"];
+    model.score = map["score"];
     model.emailConfirmed = map["eC"];
     return model;
   }

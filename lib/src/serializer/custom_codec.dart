@@ -1,5 +1,7 @@
 library jaguar_serializer.serializer.custom_codec;
 
+import '../annotations/annotations.dart';
+
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
 ///

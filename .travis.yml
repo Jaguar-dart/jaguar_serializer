@@ -1,15 +1,19 @@
 sudo: false
 
 language: dart
+dart_task:
+- dartfmt
+- dartanalyzer
+- test: --platform vm
+- test: --platform chrome
+- test: --platform firefox
+- test: --platform dartium
+  install_dartium: true
+
 dart:
   - stable
-  - dev
+#  - dev
 
 cache:
   directories:
     - $HOME/.pub-cache
-
-before_script:
- - chmod +x ./tool/travis.sh
-
-script: ./tool/travis.sh

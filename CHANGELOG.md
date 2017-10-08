@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.0
+
+- support disable null check
+- deprecate `GenSerializer.processor` fields, FieldProcessor go into `GenSerializer.fields` inside `Property`
+- support for default value, `String`, `int`, `double`, `bool`, if a field is non nullable, jaguar will use the default value declared in you object constructor
+
+***Breaking Change***
+`EnDecode`, `DecodeOnly`, `EncodeOnly` does not use optional parameter in constructor anymore,
+
+example: `EnDecode({this.alias, bool isNullable, FieldProcessor<T, dynamic> processor, T defaultsTo})`
+
 ## 0.4.2
 - Better support of ddc
 

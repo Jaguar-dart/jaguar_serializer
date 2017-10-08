@@ -23,6 +23,9 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
       if (model.score != null) {
         ret["S"] = model.score;
       }
+      if (model.emailConfirmed != null) {
+        ret["emailConfirmed"] = model.emailConfirmed;
+      }
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
@@ -41,6 +44,7 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
     model.email = map["E"];
     model.age = map["A"];
     model.score = map["S"];
+    model.emailConfirmed = map["emailConfirmed"];
     return model;
   }
 

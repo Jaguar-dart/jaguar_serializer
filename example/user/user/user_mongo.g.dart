@@ -66,8 +66,8 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
               withType: withType, typeKey: typeKey);
         }).model;
       }
-      if (model.passwordHash != null) {
-        ret["passwordHash"] = model.passwordHash;
+      if (model.password != null) {
+        ret["password"] = model.password;
       }
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();

@@ -16,6 +16,9 @@ import 'serializer/various/various.dart' as various;
 import 'serializer/serializer_json.dart' as serializer_json;
 import 'serializer/serializer_yaml.dart' as serializer_yaml;
 
+import 'serializer/default_value/default_value.dart' as default_value;
+import 'serializer/nullable/nullable.dart' as nullable_field;
+
 void main() {
   builtinTo.main();
   builtinFrom.main();
@@ -31,4 +34,7 @@ void main() {
 
   serializer_json.main();
   serializer_yaml.main();
+
+  default_value.main();
+  nullable_field.main();
 }
