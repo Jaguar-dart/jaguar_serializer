@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.1
+
+- Removed deprecated `processors` field in `GenSerializer` use `processor` 
+field in `Property` instead
+
 ## 0.5.0
 
 - support disable null check

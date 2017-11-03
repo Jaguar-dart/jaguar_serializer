@@ -117,9 +117,7 @@ class InheritanceSerializer extends Serializer<Inheritance>
 }
 
 @GenSerializer(
-  processors: const {
-    'date': const DateTimeProcessor(),
-  },
+  fields: const {'date': const EnDecode(processor: const DateTimeProcessor())},
 )
 class DateSerializer extends Serializer<Date> with _$DateSerializer {
   @override

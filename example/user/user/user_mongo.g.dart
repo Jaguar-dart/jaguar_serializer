@@ -17,7 +17,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     Map ret = new Map();
     if (model != null) {
       if (model.id != null) {
-        ret["id"] = idMongoId.serialize(model.id);
+        ret["_id"] = idMongoId.serialize(model.id);
       }
       if (model.email != null) {
         ret["email"] = model.email;
@@ -83,7 +83,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     if (model is! User) {
       model = createModel();
     }
-    model.id = idMongoId.deserialize(map["id"]);
+    model.id = idMongoId.deserialize(map["_id"]);
     model.email = map["email"];
     model.name = map["N"];
     model.dob = dobDateTimeSerializer.deserialize(map["dob"]);

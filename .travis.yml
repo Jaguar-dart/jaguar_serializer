@@ -2,7 +2,7 @@ sudo: false
 
 language: dart
 dart_task:
-- dartfmt
+- dartfmt: sdk
 - dartanalyzer
 - test: --platform vm
 - test: --platform chrome

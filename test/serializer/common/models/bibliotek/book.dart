@@ -7,11 +7,12 @@ export 'author.dart' show Author, AuthorSerializer;
 
 part 'book.g.dart';
 
-@GenSerializer(serializers: const [
+@GenSerializer(fields: const {
+  'publishedDates':
+      const EnDecode(processor: const MapKeyNumToStringProcessor()),
+}, serializers: const [
   AuthorSerializer,
-], processors: const {
-  'publishedDates': const MapKeyNumToStringProcessor()
-})
+])
 class BookSerializer extends Serializer<Book> with _$BookSerializer {
   Book createModel() => new Book();
 }
