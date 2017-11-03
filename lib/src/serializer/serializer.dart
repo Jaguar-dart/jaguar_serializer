@@ -1,8 +1,6 @@
 library jaguar_serializer.serializer;
 
-part 'custom_codec.dart';
-part 'map_maker.dart';
-part 'repo.dart';
+import '../serializer/repo.dart';
 
 /// Extend this class to create a Serializer for a [Type]
 ///
@@ -55,9 +53,6 @@ abstract class Serializer<ModelType> {
     }
   }
 
-  /// Encodes model to [Map]
-  Map toMap(ModelType model, {bool withType: false, String typeKey});
-
   /// Decodes model from [Map]
   ModelType fromMap(Map map, {ModelType model}) {
     if (model is! ModelType) {
@@ -72,5 +67,13 @@ abstract class Serializer<ModelType> {
   /// Return the associated [String] of the [Type] handle by this [Serializer], used by [typeKey]
   String modelString() => null;
 
+  /// Clone an object using the serializer
+  ModelType clone(ModelType object) => fromMap(toMap(object));
+
+  ////// To implement //////
+
   ModelType createModel();
+
+  /// Encodes model to [Map]
+  Map toMap(ModelType model, {bool withType: false, String typeKey});
 }

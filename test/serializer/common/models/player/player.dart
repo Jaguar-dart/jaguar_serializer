@@ -28,9 +28,9 @@ class PlayerSerializerIgnores extends Serializer<Player>
 }
 
 @GenSerializer(fields: const {
-  'name': const EnDecode('N'),
-  'score': const EncodeOnly('S'),
-  'emailConfirmed': const EnDecode('eC'),
+  'name': const EnDecode(alias: 'N'),
+  'score': const EncodeOnly(alias: 'S'),
+  'emailConfirmed': const EnDecode(alias: 'eC'),
 })
 class PlayerSerializerRename extends Serializer<Player>
     with _$PlayerSerializerRename {

@@ -6,14 +6,14 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part "benchmark.g.dart";
 
-@GenSerializer(serializers: const [InnerTestSerializer])
+@GenSerializer(serializers: const [InnerTestSerializer], nullableFields: true)
 class ModelTestSerializer extends Serializer<ModelTest>
     with _$ModelTestSerializer {
   @override
   ModelTest createModel() => new ModelTest();
 }
 
-@GenSerializer()
+@GenSerializer(nullableFields: true)
 class InnerTestSerializer extends Serializer<InnerTest>
     with _$InnerTestSerializer {
   @override

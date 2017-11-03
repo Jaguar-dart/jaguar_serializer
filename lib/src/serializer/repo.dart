@@ -1,4 +1,6 @@
-part of jaguar_serializer.serializer;
+library jaguar_serializer.serializer.repo;
+
+import '../serializer/serializer.dart';
 
 /// Default key added to a serialize Object to add his [Type]
 const String defaultTypeInfoKey = "@t";
@@ -24,10 +26,16 @@ class SerializerRepo {
   final Map<String, Serializer> _mapperString = {};
 
   SerializerRepo(
-      {List<Serializer> serializers, String typeKey: defaultTypeInfoKey})
-      : _typeKey = typeKey {
+      {List<Serializer> serializers,
+      String typeKey: defaultTypeInfoKey,
+      bool withType: false})
+      : _typeKey = typeKey,
+        _withType = withType {
     if (serializers is List) addAll(serializers);
   }
+
+  /// Enable typeInfoKey or not (false by default)
+  final bool _withType;
 
   /// Key added to a map when serializing an Object
   final String _typeKey;
@@ -78,9 +86,10 @@ class SerializerRepo {
   /// ([typeKey]) with the type of the object as a value.
   ///
   /// The [typeKey] can be override using the [typeKey] option.
-  dynamic serialize(dynamic object, {bool withType: false, String typeKey}) {
-    typeKey ??= _typeKey;
-    return encode(to(object, withType: withType, typeKey: typeKey));
+  dynamic serialize(dynamic object, {bool withType, String typeKey}) {
+    return encode(to(object,
+        withType: withType ?? _withType ?? false,
+        typeKey: typeKey ?? _typeKey));
   }
 
   /// Deserialize the given [Object] ([Map] or [List]).
@@ -105,34 +114,18 @@ class SerializerRepo {
   dynamic decode(dynamic object) => object;
 
   /// Serializes [object] to Dart built-in type
-  dynamic to(dynamic object, {bool withType: false, String typeKey}) {
+  dynamic to(dynamic object, {bool withType, String typeKey}) {
     if (object is String || object is num || object is bool || object == null)
       return object;
 
     typeKey ??= _typeKey;
+    withType ??= _withType ?? false;
     final Type type = object.runtimeType;
 
     if (object is Map) {
-      final map = {};
-      object.forEach((key, value) {
-        final k = to(key, withType: withType, typeKey: typeKey);
-        if (value == null) {
-          map[k] = null;
-          return;
-        }
-        final v = to(value, withType: withType, typeKey: typeKey);
-        map[k] = v;
-      });
-      if (withType) map[typeKey] = 'Map';
-      return map;
+      return _transformMapToDart(object, withType, typeKey);
     } else if (object is Iterable) {
-      return object
-          .map((obj) => to(
-                obj,
-                withType: withType,
-                typeKey: typeKey,
-              ))
-          .toList();
+      return _transformIterableToDart(object, withType, typeKey);
     } else {
       final Serializer serializer = getByType(type);
 
@@ -143,6 +136,31 @@ class SerializerRepo {
       return serializer.serialize(object, withType: withType, typeKey: typeKey);
     }
   }
+
+  Map _transformMapToDart(Map object, bool withType, String typeKey) {
+    final mapper = {};
+    object.forEach((key, value) {
+      final k = to(key, withType: withType, typeKey: typeKey);
+      if (value == null) {
+        mapper[k] = null;
+        return;
+      }
+      final v = to(value, withType: withType, typeKey: typeKey);
+      mapper[k] = v;
+    });
+    if (withType) mapper[typeKey] = 'Map';
+    return mapper;
+  }
+
+  List _transformIterableToDart(
+          Iterable object, bool withType, String typeKey) =>
+      object
+          .map((obj) => to(
+                obj,
+                withType: withType,
+                typeKey: typeKey,
+              ))
+          .toList();
 
   /// Deserializes Dart built-in object to Dart PODO
   dynamic from(dynamic object, {Type type, String typeKey}) {

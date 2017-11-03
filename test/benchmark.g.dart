@@ -14,29 +14,18 @@ abstract class _$ModelTestSerializer implements Serializer<ModelTest> {
   Map toMap(ModelTest model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
-      if (model.name != null) {
-        ret["name"] = model.name;
-      }
-      if (model.number != null) {
-        ret["number"] = model.number;
-      }
-      if (model.names != null) {
-        ret["names"] = model.names
-            ?.map((String val) => val != null ? val : null)
-            ?.toList();
-      }
-      if (model.numbers != null) {
-        ret["numbers"] =
-            model.numbers?.map((num val) => val != null ? val : null)?.toList();
-      }
-      if (model.inner != null) {
-        ret["inner"] = model.inner
-            ?.map((InnerTest val) => val != null
-                ? toInnerTestSerializer.toMap(val,
-                    withType: withType, typeKey: typeKey)
-                : null)
-            ?.toList();
-      }
+      ret["name"] = model.name;
+      ret["number"] = model.number;
+      ret["names"] =
+          model.names?.map((String val) => val != null ? val : null)?.toList();
+      ret["numbers"] =
+          model.numbers?.map((num val) => val != null ? val : null)?.toList();
+      ret["inner"] = model.inner
+          ?.map((InnerTest val) => val != null
+              ? toInnerTestSerializer.toMap(val,
+                  withType: withType, typeKey: typeKey)
+              : null)
+          ?.toList();
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
@@ -74,14 +63,9 @@ abstract class _$InnerTestSerializer implements Serializer<InnerTest> {
   Map toMap(InnerTest model, {bool withType: false, String typeKey}) {
     Map ret = new Map();
     if (model != null) {
-      if (model.name != null) {
-        ret["name"] = model.name;
-      }
-      if (model.names != null) {
-        ret["names"] = model.names
-            ?.map((String val) => val != null ? val : null)
-            ?.toList();
-      }
+      ret["name"] = model.name;
+      ret["names"] =
+          model.names?.map((String val) => val != null ? val : null)?.toList();
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }

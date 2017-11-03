@@ -25,18 +25,16 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 }
 
 @GenSerializer(fields: const {
-  'id': const EnDecode('Id'),
-  'name': const EnDecode('N'),
-  'email': const EnDecode('Email'),
-  'book': const EnDecode('Book'),
-  'dob': const EnDecode('DoB'),
-  'password': const Ignore(),
+  'id': const EnDecode(alias: 'Id'),
+  'name': const EnDecode(alias: 'N'),
+  'email': const EnDecode(alias: 'Email'),
+  'book': const EnDecode(alias: 'Book'),
+  'dob': const EnDecode(alias: 'DoB', processor: const DateTimeSerializer()),
+  'password': ignore,
 }, ignore: const [
   'passwordHash',
   'viewSerializer'
-], processors: const {
-  'dob': const DateTimeSerializer(),
-}, serializers: const [
+], serializers: const [
   BookViewSerializer,
 ])
 class UserViewSerializer extends Serializer<User> with _$UserViewSerializer {
@@ -52,7 +50,7 @@ class User {
 
   DateTime dob;
 
-  String get passwordHash => _passwordHash;
+  String get password => _passwordHash;
 
   String _passwordHash;
 

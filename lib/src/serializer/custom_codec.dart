@@ -1,4 +1,6 @@
-part of jaguar_serializer.serializer;
+library jaguar_serializer.serializer.custom_codec;
+
+import '../annotations/annotations.dart';
 
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
@@ -7,9 +9,8 @@ part of jaguar_serializer.serializer;
 ///
 ///     @DefineFieldProcessor()
 ///     class DateTimeProcessor implements FieldProcessor<DateTime, String> {
-///       final Symbol field;
 ///
-///       const DateTimeProcessor(this.field);
+///       const DateTimeProcessor();
 ///
 ///       DateTime deserialize(String input) {
 ///         return DateTime.parse(input);
@@ -21,8 +22,11 @@ part of jaguar_serializer.serializer;
 ///     }
 ///
 ///
-///     @GenSerializer()
-///     @MongoId(#id)
+///     @GenSerializer(
+///       processors: const {
+///         'dates': const MongoId(),
+///       },
+///     )
 ///     class UserSerializer extends Serializer<User> with _$UserSerializer {
 ///        User createModel() => new User();
 ///     }
@@ -44,8 +48,11 @@ abstract class FieldProcessor<FromType, ToType> {
 ///
 /// Example:
 ///
-///     @GenSerializer()
-///     @RawData(#data)
+///     @GenSerializer(
+///       processors: const {
+///         'data': const RawData(),
+///       },
+///     )
 ///     class ModelSerializer extends Serializer<Model> with _$ModelSerializer {
 ///        User createModel() => new Model();
 ///     }

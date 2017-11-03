@@ -1,8 +1,9 @@
 library jaguar_serializer.yaml;
 
-import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yamlicious/yamlicious.dart';
+import '../serializer/repo.dart';
+import '../serializer/serializer.dart';
 
 /**
  * Repository that serialize/deserialize YAML.
@@ -10,8 +11,11 @@ import 'package:yamlicious/yamlicious.dart';
  * Same usage as [SerializerRepo]
  */
 class YamlRepo extends SerializerRepo {
-  YamlRepo({List<Serializer> serializers, String typeKey: defaultTypeInfoKey})
-      : super(serializers: serializers, typeKey: typeKey);
+  YamlRepo(
+      {List<Serializer> serializers,
+      String typeKey: defaultTypeInfoKey,
+      bool withType: false})
+      : super(serializers: serializers, typeKey: typeKey, withType: withType);
 
   ///@nodoc
   dynamic encode(dynamic object) => toYamlString(object);
@@ -38,6 +42,6 @@ class YamlRepo extends SerializerRepo {
    * See [SerializerRepo.to] for more information.
    */
   @override
-  dynamic serialize(dynamic object, {bool withType: false, String typeKey}) =>
+  dynamic serialize(dynamic object, {bool withType, String typeKey}) =>
       super.serialize(object, withType: withType, typeKey: typeKey);
 }

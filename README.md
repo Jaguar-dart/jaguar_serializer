@@ -15,7 +15,7 @@ Format agnostic Serializer library that can be used in server and client for JSO
 
 ```yaml
 dependencies:
-    jaguar_serializer: ^0.3.0
+    jaguar_serializer: <last-version>
 ```
 
 ## Simple serializer
@@ -25,7 +25,7 @@ Create a file for your model.
 ```dart
 library example.user;
 
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'user.g.dart';
 ```
@@ -90,7 +90,7 @@ A Serializer will convert an instance of object to a Map<String, dynamic>, that 
 
 You can directly use the generated Serializer and apply the conversion.
 ```dart
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'model/user.dart';
 
 void main() {
@@ -108,7 +108,7 @@ void main() {
 You can also use a JSON repository or implement one.
 
 ```dart
-import 'package:jaguar_serializer/serializer.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'model/user.dart';
 
 void main() {

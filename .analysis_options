@@ -16,5 +16,10 @@ analyzer:
   strong-mode: true
 linter:
   rules:
-    - unnecessary_brace_in_string_interp
-    - empty_constructor_bodies
+    - cancel_subscriptions
+    - hash_and_equals
+    - iterable_contains_unrelated_type
+    - list_remove_unrelated_type
+    - test_types_in_equals
+    - unrelated_type_equality_checks
+    - valid_regexps
