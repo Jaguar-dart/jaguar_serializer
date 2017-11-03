@@ -9,11 +9,9 @@ export 'book.dart' show Book;
 part 'book_mongo.g.dart';
 
 @GenSerializer(fields: const {
-  'id': const EnDecode(alias: '_id'),
+  'id': const EnDecode(alias: '_id', processor: const MongoId()),
   'name': const EnDecode(alias: 'N'),
   'viewSerializer': ignore,
-}, processors: const {
-  'id': const MongoId(),
 })
 class BookMongoSerializer extends Serializer<Book> with _$BookMongoSerializer {
   Book createModel() => new Book();

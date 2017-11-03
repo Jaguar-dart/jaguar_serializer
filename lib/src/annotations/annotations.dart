@@ -19,10 +19,6 @@ class GenSerializer {
   /// List of properties that shall be ignored
   final List<String> ignore;
 
-  /// [FieldProcessor] that shall be used to encode and decode specified property
-  @Deprecated("use fields property")
-  final Map<String, FieldProcessor> processors;
-
   /// Supplies [Serializer]s to use when unknown PODO type is encountered
   final List<Type> serializers;
 
@@ -32,7 +28,6 @@ class GenSerializer {
   const GenSerializer(
       {this.fields: const <String, Property>{},
       this.ignore: const <String>[],
-      this.processors: const <String, FieldProcessor>{},
       this.serializers: const <Type>[],
       this.modelName,
       this.includeByDefault: true,

@@ -117,9 +117,7 @@ class InheritanceSerializer extends Serializer<Inheritance>
 }
 
 @GenSerializer(
-  processors: const {
-    'date': const DateTimeProcessor(),
-  },
+  fields: const {'date': const EnDecode(processor: const DateTimeProcessor())},
 )
 class DateSerializer extends Serializer<Date> with _$DateSerializer {
   @override
@@ -424,21 +422,17 @@ void main() {
     });
 
     test("Null Test", () {
-      NullTest d = serializer.deserialize(
-          '''{
+      NullTest d = serializer.deserialize('''{
         "test": "test",
         "testModel": [null]
-      }''',
-          type: NullTest);
+      }''', type: NullTest);
       expect(d.test, "test");
       expect(d.testModel, [null]);
-      d = serializer.deserialize(
-          '''{
+      d = serializer.deserialize('''{
         "test": "test",
         "testModel": [null],
         "${serializer.getTypeKey()}": "NullTest"
-      }''',
-          type: NullTest);
+      }''', type: NullTest);
       expect(d.test, "test");
       expect(d.testModel, [null]);
     });
