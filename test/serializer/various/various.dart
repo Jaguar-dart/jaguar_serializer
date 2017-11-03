@@ -288,7 +288,7 @@ void main() {
         ..bools = [true, false, true]
         ..ints = [1, 2, 3]
         ..doubles = [1.1, 2.2, 3.3]
-      //  ..dates = [new DateTime(2016, 12, 24), new DateTime(2016, 12, 25), new DateTime(2016, 12, 26)]
+        //  ..dates = [new DateTime(2016, 12, 24), new DateTime(2016, 12, 25), new DateTime(2016, 12, 26)]
         ..ignores = [
           new WithIgnore("1337A", "ThisIsASecretA"),
           new WithIgnore("1337B", "ThisIsASecretB")
@@ -298,7 +298,7 @@ void main() {
         ..boolSet = {"ok": true, "nok": false}
         ..intSet = {"intA": 1, "intB": 12}
         ..doubleSet = {"dblA": 1.1, "dblB": 12.1}
-      // ..dateSet = {"fiesta": new DateTime(2016, 12, 24), "christmas": new DateTime(2016, 12, 25)}
+        // ..dateSet = {"fiesta": new DateTime(2016, 12, 24), "christmas": new DateTime(2016, 12, 25)}
         ..ignoreSet = {
           "A": new WithIgnore("1337A", "ThisIsASecretA"),
           "B": new WithIgnore("1337B", "ThisIsASecretB")
@@ -443,14 +443,14 @@ void main() {
 
     test("Ignore attribute", () {
       WithIgnore ignore =
-      serializer.deserialize('{"a": "test"}', type: WithIgnore);
+          serializer.deserialize('{"a": "test"}', type: WithIgnore);
       expect(ignore.a, "test");
       expect(ignore.secret, isNull);
     });
 
     test("Serialized name", () {
       ModelRenamed model =
-      serializer.deserialize('{"renamed": "foo"}', type: ModelRenamed);
+          serializer.deserialize('{"renamed": "foo"}', type: ModelRenamed);
 
       expect(model.original, "foo");
     });
