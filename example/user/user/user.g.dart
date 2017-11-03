@@ -65,9 +65,6 @@ abstract class _$UserViewSerializer implements Serializer<User> {
               withType: withType, typeKey: typeKey);
         }).model;
       }
-      if (model.password != null) {
-        ret["password"] = model.password;
-      }
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
@@ -105,7 +102,6 @@ abstract class _$UserViewSerializer implements Serializer<User> {
         new MapMaker(map["mapBook"], (String key) => key, (Map value) {
       return fromBookViewSerializer.fromMap(value, typeKey: typeKey);
     }).model as dynamic;
-    model.password = map["password"];
     return model;
   }
 
