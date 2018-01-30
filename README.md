@@ -68,7 +68,7 @@ You can trigger the rebuild each time you do a change in you file by using the `
 
 ## Use Serializer
 
-A Serializer will convert an instance of object to a Map<String, dynamic>, that can be used to apply conversion to JSON, YAML ...
+A Serializer will convert an instance of `Object` to a `Map<String, dynamic>`, that can be used to apply conversion to JSON, YAML ...
 
 You can directly use the generated Serializer and apply the conversion.
 ```dart
@@ -76,7 +76,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'model/user.dart';
 
 void main() {
-  UserSerializer userSerializer = new UserSerializer();
+  final userSerializer = new UserSerializer();
   
   User user = userSerializer.fromMap({
         'name': 'John',
@@ -94,10 +94,10 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'model/user.dart';
 
 void main() {
-  SerializerRepo serializer = new JsonRepo()..add(new UserSerializer());
+  final jsonRepository = new JsonRepo()..add(new UserSerializer());
   
-  User user = serializer.deserialize("{'name':'John','age': 25}", type: User);
+  User user = jsonRepository.deserialize("{'name':'John','age': 25}", type: User);
   
-  print(serializer.serialize(user));
+  print(jsonRepository.serialize(user));
 }
 ```
