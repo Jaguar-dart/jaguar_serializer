@@ -3,8 +3,7 @@
 part of example.model.book;
 
 // **************************************************************************
-// Generator: SerializerGenerator
-// Target: class BookViewSerializer
+// Generator: JaguarSerializerGenerator
 // **************************************************************************
 
 abstract class _$BookViewSerializer implements Serializer<Book> {

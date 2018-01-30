@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0-dev1
+
+- update to dart 2
+- support `build.yaml` and `build_runner`
+
 ## 0.5.1
 
 - Removed deprecated `processors` field in `GenSerializer` use `processor` 

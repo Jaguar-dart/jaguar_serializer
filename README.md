@@ -9,13 +9,15 @@ Format agnostic Serializer library that can be used in server and client for JSO
 
 ## Install
 
-`pub global activate jaguar_serializer_cli`
-
-## Add it to your project
 
 ```yaml
+#pubspec.yaml
 dependencies:
-    jaguar_serializer: <last-version>
+  jaguar_serializer: ^1.0.0-dev1
+
+dev_dependencies:
+  build_runner: ^0.7.0
+  jaguar_serializer_cli: ^1.0.0-dev1
 ```
 
 ## Simple serializer
@@ -51,30 +53,10 @@ class UserJsonSerializer extends Serializer<User> with _$UserJsonSerializer {
 
 ## Generate Serializer
 
-### Configuration file (Optional since `0.3.5`)
-
-Jaguar Serializer need a configuration file to know which files have possible Serializer.
-
-On your root directory, declare the `serializer.yaml` file with the following informations.
-
-```yaml
-serializers:
-- lib/model/user.dart
-...
-```
-
-You can use `serializer init` command to generate it.
-
-If no files are provided, `jaguar_serializer` will take all dart files under `lib`, `bin`, `example` and `test` folders.
-
 ### Build
 No you can build you serializer running the command
 
-`serializer build` 
-
-or 
-
-`pub run jaguar_serializer:serializer build`
+`pub run build_runner build` 
 
 This command will create 'user.g.dart' file with the generated Serializer inside.
 
@@ -82,7 +64,7 @@ This command will create 'user.g.dart' file with the generated Serializer inside
 
 You can trigger the rebuild each time you do a change in you file by using the `watch` command.
 
-`serializer watch`
+`pub run build_runner watch`
 
 ## Use Serializer
 
