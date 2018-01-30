@@ -8,20 +8,13 @@ part of example.field_manipulation;
 
 abstract class _$PlayerJsonSerializer implements Serializer<Player> {
   Map toMap(Player model, {bool withType: false, String typeKey}) {
-    Map ret = new Map();
+    Map<String, dynamic> ret;
     if (model != null) {
-      if (model.name != null) {
-        ret["N"] = model.name;
-      }
-      if (model.email != null) {
-        ret["E"] = model.email;
-      }
-      if (model.age != null) {
-        ret["A"] = model.age;
-      }
-      if (model.score != null) {
-        ret["S"] = model.score;
-      }
+      ret = <String, dynamic>{};
+      setNonNullableValue(ret, "N", model.name);
+      setNonNullableValue(ret, "E", model.email);
+      setNonNullableValue(ret, "A", model.age);
+      setNonNullableValue(ret, "S", model.score);
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }

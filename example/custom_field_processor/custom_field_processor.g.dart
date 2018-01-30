@@ -7,20 +7,15 @@ part of example.field_manipulation;
 // **************************************************************************
 
 abstract class _$PlayerMongoSerializer implements Serializer<Player> {
-  final MongoId idMongoId = const MongoId();
+  final _mongoId = const MongoId();
 
   Map toMap(Player model, {bool withType: false, String typeKey}) {
-    Map ret = new Map();
+    Map<String, dynamic> ret;
     if (model != null) {
-      if (model.id != null) {
-        ret["_id"] = idMongoId.serialize(model.id);
-      }
-      if (model.name != null) {
-        ret["name"] = model.name;
-      }
-      if (model.email != null) {
-        ret["email"] = model.email;
-      }
+      ret = <String, dynamic>{};
+      setNonNullableValue(ret, "_id", _mongoId.serialize(model.id));
+      setNonNullableValue(ret, "name", model.name);
+      setNonNullableValue(ret, "email", model.email);
       if (modelString() != null && withType) {
         ret[typeKey ?? defaultTypeInfoKey] = modelString();
       }
@@ -35,7 +30,7 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     if (model is! Player) {
       model = createModel();
     }
-    model.id = idMongoId.deserialize(map["_id"]);
+    model.id = _mongoId.deserialize(map["_id"]);
     model.name = map["name"];
     model.email = map["email"];
     return model;
