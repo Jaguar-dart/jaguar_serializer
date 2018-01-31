@@ -19,6 +19,3 @@ dependencies:
 dev_dependencies:
   test:
   mongo_dart:
-  build_runner: ^0.7.0
-  jaguar_serializer_cli:
-    path: ../jaguar_serializer_cli
