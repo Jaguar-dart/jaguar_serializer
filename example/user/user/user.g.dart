@@ -3,8 +3,7 @@
 part of example.model.user;
 
 // **************************************************************************
-// Generator: SerializerGenerator
-// Target: class UserViewSerializer
+// Generator: JaguarSerializerGenerator
 // **************************************************************************
 
 abstract class _$UserViewSerializer implements Serializer<User> {

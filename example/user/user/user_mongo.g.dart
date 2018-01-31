@@ -3,8 +3,7 @@
 part of example.user.mongo;
 
 // **************************************************************************
-// Generator: SerializerGenerator
-// Target: class UserMongoSerializer
+// Generator: JaguarSerializerGenerator
 // **************************************************************************
 
 abstract class _$UserMongoSerializer implements Serializer<User> {

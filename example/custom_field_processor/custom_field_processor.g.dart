@@ -3,8 +3,7 @@
 part of example.field_manipulation;
 
 // **************************************************************************
-// Generator: SerializerGenerator
-// Target: class PlayerMongoSerializer
+// Generator: JaguarSerializerGenerator
 // **************************************************************************
 
 abstract class _$PlayerMongoSerializer implements Serializer<Player> {

@@ -3,8 +3,7 @@
 part of example.player;
 
 // **************************************************************************
-// Generator: SerializerGenerator
-// Target: class PlayerSerializer
+// Generator: JaguarSerializerGenerator
 // **************************************************************************
 
 abstract class _$PlayerSerializer implements Serializer<Player> {
@@ -63,11 +62,6 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
 
   String modelString() => "Player";
 }
-
-// **************************************************************************
-// Generator: SerializerGenerator
-// Target: class AddressSerializer
-// **************************************************************************
 
 abstract class _$AddressSerializer implements Serializer<Address> {
   Map toMap(Address model, {bool withType: false, String typeKey}) {
