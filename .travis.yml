@@ -4,15 +4,10 @@ language: dart
 dart_task:
 - dartfmt: sdk
 - dartanalyzer
-- test: --platform vm
-- test: --platform chrome
-- test: --platform firefox
-- test: --platform dartium
-  install_dartium: true
 
 dart:
-  - stable
-#  - dev
+#  - stable
+  - dev
 
 cache:
   directories:
