@@ -14,9 +14,7 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
       setNonNullableValue(ret, "id", model.id);
       setNonNullableValue(ret, "name", model.name);
       setNonNullableValue(ret, "publishedYear", model.publishedYear);
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }

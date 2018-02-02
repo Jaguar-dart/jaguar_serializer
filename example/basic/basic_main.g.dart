@@ -24,9 +24,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
           "address",
           _addressSerializer.toMap(model.address,
               withType: withType, typeKey: typeKey));
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
@@ -61,9 +59,7 @@ abstract class _$AddressSerializer implements Serializer<Address> {
       setNonNullableValue(ret, "zipcode", model.zipcode);
       setNonNullableValue(ret, "country", model.country);
       setNonNullableValue(ret, "city", model.city);
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }

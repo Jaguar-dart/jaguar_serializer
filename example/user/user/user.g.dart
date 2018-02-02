@@ -53,9 +53,7 @@ abstract class _$UserViewSerializer implements Serializer<User> {
               (String key) => key,
               (Book value) => _bookViewSerializer.toMap(value,
                   withType: withType, typeKey: typeKey)));
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }

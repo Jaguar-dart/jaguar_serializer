@@ -1,5 +1,4 @@
-import 'field_processor.dart';
-import 'serializer.dart';
+import 'repo.dart';
 
 typedef String KeyMaker<Key>(Key key);
 typedef dynamic ValueMaker<Value>(Value value);
@@ -33,3 +32,10 @@ List safeIterableMapper<T>(Iterable<T> values, callback(T value)) =>
       }
       return callback(value);
     })?.toList();
+
+void setTypeKeyValue(String typeKey, String modelString, bool withType,
+    Map<String, dynamic> map) {
+  if (modelString != null && withType) {
+    map[typeKey ?? defaultTypeInfoKey] = modelString;
+  }
+}

@@ -15,9 +15,7 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
       setNonNullableValue(ret, "E", model.email);
       setNonNullableValue(ret, "A", model.age);
       setNonNullableValue(ret, "S", model.score);
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }

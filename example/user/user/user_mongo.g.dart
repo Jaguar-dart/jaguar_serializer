@@ -55,9 +55,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
               (Book value) => _bookMongoSerializer.toMap(value,
                   withType: withType, typeKey: typeKey)));
       setNonNullableValue(ret, "password", model.password);
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }

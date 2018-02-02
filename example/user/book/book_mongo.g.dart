@@ -16,9 +16,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
       setNonNullableValue(ret, "_id", _mongoId.serialize(model.id));
       setNonNullableValue(ret, "N", model.name);
       setNonNullableValue(ret, "publishedYear", model.publishedYear);
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
