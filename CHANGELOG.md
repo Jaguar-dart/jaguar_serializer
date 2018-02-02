@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-dev2
+
+- simplify and optimize generated code
+
 ## 1.0.0-dev1
 
 - update to dart 2
