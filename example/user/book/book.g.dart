@@ -11,9 +11,9 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNonNullableValue(ret, "id", model.id);
-      setNonNullableValue(ret, "name", model.name);
-      setNonNullableValue(ret, "publishedYear", model.publishedYear);
+      setNullableValue(ret, "id", model.id);
+      setNullableValue(ret, "name", model.name);
+      setNullableValue(ret, "publishedYear", model.publishedYear);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;

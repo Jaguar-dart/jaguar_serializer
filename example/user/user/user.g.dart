@@ -14,43 +14,38 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNonNullableValue(ret, "Id", model.id);
-      setNonNullableValue(ret, "Email", model.email);
-      setNonNullableValue(ret, "N", model.name);
-      setNonNullableValue(ret, "DoB", _dateTimeSerializer.serialize(model.dob));
-      setNonNullableValue(
+      setNullableValue(ret, "Id", model.id);
+      setNullableValue(ret, "Email", model.email);
+      setNullableValue(ret, "N", model.name);
+      setNullableValue(ret, "DoB", _dateTimeSerializer.serialize(model.dob));
+      setNullableValue(
           ret,
           "Book",
           _bookViewSerializer.toMap(model.book,
               withType: withType, typeKey: typeKey));
-      setNonNullableValue(ret, "listStr",
-          safeIterableMapper<String>(model.listStr, (String val) => val));
-      setNonNullableValue(
+      setNullableValue(ret, "listStr",
+          nullableIterableMapper<String>(model.listStr, (String val) => val));
+      setNullableValue(
           ret,
           "listBook",
-          safeIterableMapper<Book>(
+          nullableIterableMapper<Book>(
               model.listBook,
               (Book val) => _bookViewSerializer.toMap(val,
                   withType: withType, typeKey: typeKey)));
-      setNonNullableValue(
-          ret,
-          "map",
-          mapMaker<String, String>(
-              model.map, (String key) => key, (String value) => value));
-      setNonNullableValue(
+      setNullableValue(ret, "map",
+          nullableMapMaker<String>(model.map, (String value) => value));
+      setNullableValue(
           ret,
           "mapMap",
-          mapMaker<String, Map<String, String>>(
+          nullableMapMaker<Map<String, String>>(
               model.mapMap,
-              (String key) => key,
-              (Map<String, String> value) => mapMaker<String, String>(
-                  value, (String key) => key, (String value) => value)));
-      setNonNullableValue(
+              (Map<String, String> value) =>
+                  nullableMapMaker<String>(value, (String value) => value)));
+      setNullableValue(
           ret,
           "mapBook",
-          mapMaker<String, Book>(
+          nullableMapMaker<Book>(
               model.mapBook,
-              (String key) => key,
               (Book value) => _bookViewSerializer.toMap(value,
                   withType: withType, typeKey: typeKey)));
       setTypeKeyValue(typeKey, modelString(), withType, ret);
@@ -71,17 +66,15 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     model.dob = _dateTimeSerializer.deserialize(map["DoB"]);
     model.book = _bookViewSerializer.fromMap(map["Book"], typeKey: typeKey);
     model.listStr =
-        safeIterableMapper<String>(map["listStr"], (String val) => val);
-    model.listBook = safeIterableMapper<Map>(map["listBook"],
+        nullableIterableMapper<String>(map["listStr"], (String val) => val);
+    model.listBook = nullableIterableMapper<Map>(map["listBook"],
         (Map val) => _bookViewSerializer.fromMap(val, typeKey: typeKey));
-    model.map = mapMaker<String, String>(
-        map["map"], (String key) => key, (String value) => value);
-    model.mapMap = mapMaker<String, Map<String, String>>(
+    model.map = nullableMapMaker<String>(map["map"], (String value) => value);
+    model.mapMap = nullableMapMaker<Map<String, String>>(
         map["mapMap"],
-        (String key) => key,
-        (Map<String, String> value) => mapMaker<String, String>(
-            value, (String key) => key, (String value) => value));
-    model.mapBook = mapMaker<String, Map>(map["mapBook"], (String key) => key,
+        (Map<String, String> value) =>
+            nullableMapMaker<String>(value, (String value) => value));
+    model.mapBook = nullableMapMaker<Map>(map["mapBook"],
         (Map value) => _bookViewSerializer.fromMap(value, typeKey: typeKey));
     return model;
   }

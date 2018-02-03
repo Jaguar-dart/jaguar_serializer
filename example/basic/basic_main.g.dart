@@ -13,13 +13,13 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNonNullableValue(ret, "name", model.name);
-      setNonNullableValue(ret, "email", model.email);
-      setNonNullableValue(ret, "age", model.age);
-      setNonNullableValue(ret, "score", model.score);
-      setNonNullableValue(ret, "emailConfirmed", model.emailConfirmed);
-      setNonNullableValue(ret, "test", model.test);
-      setNonNullableValue(
+      setNullableValue(ret, "name", model.name);
+      setNullableValue(ret, "email", model.email);
+      setNullableValue(ret, "age", model.age);
+      setNullableValue(ret, "score", model.score);
+      setNullableValue(ret, "emailConfirmed", model.emailConfirmed);
+      setNullableValue(ret, "test", model.test);
+      setNullableValue(
           ret,
           "address",
           _addressSerializer.toMap(model.address,
@@ -55,10 +55,10 @@ abstract class _$AddressSerializer implements Serializer<Address> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNonNullableValue(ret, "street", model.street);
-      setNonNullableValue(ret, "zipcode", model.zipcode);
-      setNonNullableValue(ret, "country", model.country);
-      setNonNullableValue(ret, "city", model.city);
+      setNullableValue(ret, "street", model.street);
+      setNullableValue(ret, "zipcode", model.zipcode);
+      setNullableValue(ret, "country", model.country);
+      setNullableValue(ret, "city", model.city);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;

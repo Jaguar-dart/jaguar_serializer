@@ -13,9 +13,9 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNonNullableValue(ret, "_id", _mongoId.serialize(model.id));
-      setNonNullableValue(ret, "name", model.name);
-      setNonNullableValue(ret, "email", model.email);
+      setNullableValue(ret, "_id", _mongoId.serialize(model.id));
+      setNullableValue(ret, "name", model.name);
+      setNullableValue(ret, "email", model.email);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
