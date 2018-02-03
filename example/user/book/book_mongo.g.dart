@@ -7,23 +7,16 @@ part of example.book.mongo;
 // **************************************************************************
 
 abstract class _$BookMongoSerializer implements Serializer<Book> {
-  final MongoId idMongoId = const MongoId();
+  final _mongoId = const MongoId();
 
   Map toMap(Book model, {bool withType: false, String typeKey}) {
-    Map ret = new Map();
+    Map<String, dynamic> ret;
     if (model != null) {
-      if (model.id != null) {
-        ret["_id"] = idMongoId.serialize(model.id);
-      }
-      if (model.name != null) {
-        ret["N"] = model.name;
-      }
-      if (model.publishedYear != null) {
-        ret["publishedYear"] = model.publishedYear;
-      }
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      ret = <String, dynamic>{};
+      setNonNullableValue(ret, "_id", _mongoId.serialize(model.id));
+      setNonNullableValue(ret, "N", model.name);
+      setNonNullableValue(ret, "publishedYear", model.publishedYear);
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
@@ -35,7 +28,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
     if (model is! Book) {
       model = createModel();
     }
-    model.id = idMongoId.deserialize(map["_id"]);
+    model.id = _mongoId.deserialize(map["_id"]);
     model.name = map["N"];
     model.publishedYear = map["publishedYear"];
     return model;

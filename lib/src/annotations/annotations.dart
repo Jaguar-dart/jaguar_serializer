@@ -1,7 +1,7 @@
 library jaguar_serializer.annotations;
 
 import '../serializer/serializer.dart';
-import '../serializer/custom_codec.dart';
+import '../serializer/field_processor.dart';
 
 /// Annotation used to request generation of serializer
 class GenSerializer {

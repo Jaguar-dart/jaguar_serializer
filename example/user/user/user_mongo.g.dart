@@ -7,70 +7,55 @@ part of example.user.mongo;
 // **************************************************************************
 
 abstract class _$UserMongoSerializer implements Serializer<User> {
-  final MongoId idMongoId = const MongoId();
-  final DateTimeSerializer dobDateTimeSerializer = const DateTimeSerializer();
-  final BookMongoSerializer toBookMongoSerializer = new BookMongoSerializer();
-  final BookMongoSerializer fromBookMongoSerializer = new BookMongoSerializer();
+  final _mongoId = const MongoId();
+  final _dateTimeSerializer = const DateTimeSerializer();
+  final _bookMongoSerializer = new BookMongoSerializer();
 
   Map toMap(User model, {bool withType: false, String typeKey}) {
-    Map ret = new Map();
+    Map<String, dynamic> ret;
     if (model != null) {
-      if (model.id != null) {
-        ret["_id"] = idMongoId.serialize(model.id);
-      }
-      if (model.email != null) {
-        ret["email"] = model.email;
-      }
-      if (model.name != null) {
-        ret["N"] = model.name;
-      }
-      if (model.dob != null) {
-        ret["dob"] = dobDateTimeSerializer.serialize(model.dob);
-      }
-      if (model.book != null) {
-        ret["book"] = toBookMongoSerializer.toMap(model.book,
-            withType: withType, typeKey: typeKey);
-      }
-      if (model.listStr != null) {
-        ret["listStr"] = model.listStr
-            ?.map((String val) => val != null ? val : null)
-            ?.toList();
-      }
-      if (model.listBook != null) {
-        ret["listBook"] = model.listBook
-            ?.map((Book val) => val != null
-                ? toBookMongoSerializer.toMap(val,
-                    withType: withType, typeKey: typeKey)
-                : null)
-            ?.toList();
-      }
-      if (model.map != null) {
-        ret["map"] =
-            new MapMaker(model.map, (String key) => key, (String value) {
-          return value;
-        }).model;
-      }
-      if (model.mapMap != null) {
-        ret["mapMap"] = new MapMaker(model.mapMap, (String key) => key,
-            (Map<String, String> value) {
-          return new MapMaker(value, (String key) => key, (String value) {
-            return value;
-          }).model;
-        }).model;
-      }
-      if (model.mapBook != null) {
-        ret["mapBook"] =
-            new MapMaker(model.mapBook, (String key) => key, (Book value) {
-          return toBookMongoSerializer.toMap(value,
-              withType: withType, typeKey: typeKey);
-        }).model;
-      }
-      if (model.password != null) {
-        ret["password"] = model.password;
-      }
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      ret = <String, dynamic>{};
+      setNonNullableValue(ret, "_id", _mongoId.serialize(model.id));
+      setNonNullableValue(ret, "email", model.email);
+      setNonNullableValue(ret, "N", model.name);
+      setNonNullableValue(ret, "dob", _dateTimeSerializer.serialize(model.dob));
+      setNonNullableValue(
+          ret,
+          "book",
+          _bookMongoSerializer.toMap(model.book,
+              withType: withType, typeKey: typeKey));
+      setNonNullableValue(ret, "listStr",
+          safeIterableMapper<String>(model.listStr, (String val) => val));
+      setNonNullableValue(
+          ret,
+          "listBook",
+          safeIterableMapper<Book>(
+              model.listBook,
+              (Book val) => _bookMongoSerializer.toMap(val,
+                  withType: withType, typeKey: typeKey)));
+      setNonNullableValue(
+          ret,
+          "map",
+          mapMaker<String, String>(
+              model.map, (String key) => key, (String value) => value));
+      setNonNullableValue(
+          ret,
+          "mapMap",
+          mapMaker<String, Map<String, String>>(
+              model.mapMap,
+              (String key) => key,
+              (Map<String, String> value) => mapMaker<String, String>(
+                  value, (String key) => key, (String value) => value)));
+      setNonNullableValue(
+          ret,
+          "mapBook",
+          mapMaker<String, Book>(
+              model.mapBook,
+              (String key) => key,
+              (Book value) => _bookMongoSerializer.toMap(value,
+                  withType: withType, typeKey: typeKey)));
+      setNonNullableValue(ret, "password", model.password);
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
@@ -82,29 +67,24 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     if (model is! User) {
       model = createModel();
     }
-    model.id = idMongoId.deserialize(map["_id"]);
+    model.id = _mongoId.deserialize(map["_id"]);
     model.email = map["email"];
     model.name = map["N"];
-    model.dob = dobDateTimeSerializer.deserialize(map["dob"]);
-    model.book = fromBookMongoSerializer.fromMap(map["book"], typeKey: typeKey);
-    model.listStr = map["listStr"]?.map((String val) => val)?.toList();
-    model.listBook = map["listBook"]
-        ?.map(
-            (Map val) => fromBookMongoSerializer.fromMap(val, typeKey: typeKey))
-        ?.toList();
-    model.map = new MapMaker(map["map"], (String key) => key, (String value) {
-      return value;
-    }).model as dynamic;
-    model.mapMap = new MapMaker(map["mapMap"], (String key) => key,
-        (Map<String, String> value) {
-      return new MapMaker(value, (String key) => key, (String value) {
-        return value;
-      }).model as dynamic;
-    }).model as dynamic;
-    model.mapBook =
-        new MapMaker(map["mapBook"], (String key) => key, (Map value) {
-      return fromBookMongoSerializer.fromMap(value, typeKey: typeKey);
-    }).model as dynamic;
+    model.dob = _dateTimeSerializer.deserialize(map["dob"]);
+    model.book = _bookMongoSerializer.fromMap(map["book"], typeKey: typeKey);
+    model.listStr =
+        safeIterableMapper<String>(map["listStr"], (String val) => val);
+    model.listBook = safeIterableMapper<Map>(map["listBook"],
+        (Map val) => _bookMongoSerializer.fromMap(val, typeKey: typeKey));
+    model.map = mapMaker<String, String>(
+        map["map"], (String key) => key, (String value) => value);
+    model.mapMap = mapMaker<String, Map<String, String>>(
+        map["mapMap"],
+        (String key) => key,
+        (Map<String, String> value) => mapMaker<String, String>(
+            value, (String key) => key, (String value) => value));
+    model.mapBook = mapMaker<String, Map>(map["mapBook"], (String key) => key,
+        (Map value) => _bookMongoSerializer.fromMap(value, typeKey: typeKey));
     model.password = map["password"];
     return model;
   }

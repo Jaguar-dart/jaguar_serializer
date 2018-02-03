@@ -7,37 +7,24 @@ part of example.player;
 // **************************************************************************
 
 abstract class _$PlayerSerializer implements Serializer<Player> {
-  final AddressSerializer toAddressSerializer = new AddressSerializer();
-  final AddressSerializer fromAddressSerializer = new AddressSerializer();
+  final _addressSerializer = new AddressSerializer();
 
   Map toMap(Player model, {bool withType: false, String typeKey}) {
-    Map ret = new Map();
+    Map<String, dynamic> ret;
     if (model != null) {
-      if (model.name != null) {
-        ret["name"] = model.name;
-      }
-      if (model.email != null) {
-        ret["email"] = model.email;
-      }
-      if (model.age != null) {
-        ret["age"] = model.age;
-      }
-      if (model.score != null) {
-        ret["score"] = model.score;
-      }
-      if (model.emailConfirmed != null) {
-        ret["emailConfirmed"] = model.emailConfirmed;
-      }
-      if (model.test != null) {
-        ret["test"] = model.test;
-      }
-      if (model.address != null) {
-        ret["address"] = toAddressSerializer.toMap(model.address,
-            withType: withType, typeKey: typeKey);
-      }
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      ret = <String, dynamic>{};
+      setNonNullableValue(ret, "name", model.name);
+      setNonNullableValue(ret, "email", model.email);
+      setNonNullableValue(ret, "age", model.age);
+      setNonNullableValue(ret, "score", model.score);
+      setNonNullableValue(ret, "emailConfirmed", model.emailConfirmed);
+      setNonNullableValue(ret, "test", model.test);
+      setNonNullableValue(
+          ret,
+          "address",
+          _addressSerializer.toMap(model.address,
+              withType: withType, typeKey: typeKey));
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
@@ -56,7 +43,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     model.emailConfirmed = map["emailConfirmed"];
     model.test = map["test"];
     model.address =
-        fromAddressSerializer.fromMap(map["address"], typeKey: typeKey);
+        _addressSerializer.fromMap(map["address"], typeKey: typeKey);
     return model;
   }
 
@@ -65,23 +52,14 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
 
 abstract class _$AddressSerializer implements Serializer<Address> {
   Map toMap(Address model, {bool withType: false, String typeKey}) {
-    Map ret = new Map();
+    Map<String, dynamic> ret;
     if (model != null) {
-      if (model.street != null) {
-        ret["street"] = model.street;
-      }
-      if (model.zipcode != null) {
-        ret["zipcode"] = model.zipcode;
-      }
-      if (model.country != null) {
-        ret["country"] = model.country;
-      }
-      if (model.city != null) {
-        ret["city"] = model.city;
-      }
-      if (modelString() != null && withType) {
-        ret[typeKey ?? defaultTypeInfoKey] = modelString();
-      }
+      ret = <String, dynamic>{};
+      setNonNullableValue(ret, "street", model.street);
+      setNonNullableValue(ret, "zipcode", model.zipcode);
+      setNonNullableValue(ret, "country", model.country);
+      setNonNullableValue(ret, "city", model.city);
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
