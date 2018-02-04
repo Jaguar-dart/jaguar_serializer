@@ -3,6 +3,15 @@
 ## 1.0.0-dev2
 
 - simplify and optimize generated code
+- fix processor inside List/Map
+
+*** Breaking Changes ***
+- All Serializers are now nullable by default
+- Drop Map key processor
+- Only `Map<String, dynamic>` can be encode
+- `toMap(null)` return null
+- `fromMap(null)` return null
+- `fromMap({})` return object
 
 ## 1.0.0-dev1
 

@@ -8,9 +8,9 @@ class GenSerializer {
   /// Supply optional modelName
   final String modelName;
 
-  /// Should fields be included by default?
+  /// Should all fields be included by default?
   ///
-  /// Defaults to [true]
+  /// Default to [true]
   final bool includeByDefault;
 
   /// Specify whether a property could be encoded, only, decoded only or both
@@ -22,7 +22,9 @@ class GenSerializer {
   /// Supplies [Serializer]s to use when unknown PODO type is encountered
   final List<Type> serializers;
 
-  /// Enable null check on fields
+  /// Enable null check on fields if false
+  ///
+  /// Default to [true]
   final bool nullableFields;
 
   const GenSerializer(
@@ -31,7 +33,7 @@ class GenSerializer {
       this.serializers: const <Type>[],
       this.modelName,
       this.includeByDefault: true,
-      this.nullableFields: false});
+      this.nullableFields: true});
 }
 
 class Property<T> {
@@ -114,6 +116,28 @@ class EnDecode<T> extends Property<T> {
 /// Annotation to ignore a field while encoding or decoding
 class Ignore extends EnDecode {
   const Ignore();
+}
+
+/// Annotation used to request encoding and decoding of a field in model
+/// shortcup for `const EnDecode(alias: "key")`
+/// become `const Alias("key")`
+class Alias<T> extends Property<T> {
+  /// Optional. Key used to decode and encode the model from and to the [Map]
+  final String alias;
+  final FieldProcessor<T, dynamic> processor;
+  final bool isNullable;
+  final T defaultsTo;
+  final String encodeTo;
+  final String decodeFrom;
+  final bool valueFromConstructor;
+
+  const Alias(this.alias,
+      {this.isNullable,
+      this.defaultsTo,
+      this.processor,
+      this.valueFromConstructor})
+      : encodeTo = alias,
+        decodeFrom = alias;
 }
 
 const ignore = const Ignore();

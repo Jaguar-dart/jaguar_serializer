@@ -11,10 +11,10 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNonNullableValue(ret, "N", model.name);
-      setNonNullableValue(ret, "E", model.email);
-      setNonNullableValue(ret, "A", model.age);
-      setNonNullableValue(ret, "S", model.score);
+      setNullableValue(ret, "N", model.name);
+      setNullableValue(ret, "E", model.email);
+      setNullableValue(ret, "A", model.age);
+      setNullableValue(ret, "S", model.score);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
