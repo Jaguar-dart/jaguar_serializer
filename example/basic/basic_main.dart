@@ -7,16 +7,10 @@ part 'basic_main.g.dart';
 @GenSerializer(serializers: const [
   AddressSerializer,
 ])
-class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {
-  Player createModel() => new Player();
-}
+class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {}
 
 @GenSerializer()
-class AddressSerializer extends Serializer<Address> with _$AddressSerializer {
-  Address createModel() => new Address();
-
-  AddressSerializer();
-}
+class AddressSerializer extends Serializer<Address> with _$AddressSerializer {}
 
 /// Player model for the game
 class Player {

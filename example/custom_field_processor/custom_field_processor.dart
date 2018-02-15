@@ -21,9 +21,7 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
   'id': const EnDecode(alias: '_id', processor: const MongoId())
 })
 class PlayerMongoSerializer extends Serializer<Player>
-    with _$PlayerMongoSerializer {
-  Player createModel() => new Player();
-}
+    with _$PlayerMongoSerializer {}
 
 /// Player model for the game
 class Player {

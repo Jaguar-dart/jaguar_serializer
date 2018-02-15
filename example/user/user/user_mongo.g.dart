@@ -60,7 +60,7 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
       return null;
     }
     if (model is! User) {
-      model = createModel();
+      model = new User();
     }
     model.id = _mongoId.deserialize(map["_id"]);
     model.email = map["email"];

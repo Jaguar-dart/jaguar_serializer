@@ -26,7 +26,7 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
       return null;
     }
     if (model is! Player) {
-      model = createModel();
+      model = new Player();
     }
     model.id = _mongoId.deserialize(map["_id"]);
     model.name = map["name"];

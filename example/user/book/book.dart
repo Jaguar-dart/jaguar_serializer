@@ -7,15 +7,7 @@ part 'book.g.dart';
 @GenSerializer(
   ignore: const ['viewSerializer'],
 )
-class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {
-  Book createModel() => new Book();
-
-  BookViewSerializer();
-
-  BookViewSerializer.FromMap(Map map) {
-    fromMap(map);
-  }
-}
+class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {}
 
 class Book {
   String id;
