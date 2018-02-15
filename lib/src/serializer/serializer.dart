@@ -72,6 +72,7 @@ abstract class Serializer<ModelType> {
 
   ////// To implement //////
 
+  @Deprecated("release 1.0.0")
   ModelType createModel();
 
   /// Encodes model to [Map]

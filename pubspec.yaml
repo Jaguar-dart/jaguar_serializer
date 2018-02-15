@@ -1,5 +1,5 @@
 name: jaguar_serializer
-version: 1.0.0-dev2
+version: 1.0.0-dev3
 description: Platform and format agnostic serializer built using source_gen
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
@@ -20,6 +20,6 @@ dev_dependencies:
   test:
   mongo_dart:
   # test and generate example
-  #build_runner: ^0.7.0
-  #jaguar_serializer_cli:
-  #  path: ../jaguar_serializer_cli
+  build_runner: ^0.7.0
+  jaguar_serializer_cli:
+    path: ../jaguar_serializer_cli
