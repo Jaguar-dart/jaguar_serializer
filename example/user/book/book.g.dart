@@ -24,7 +24,7 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
       return null;
     }
     if (model is! Book) {
-      model = createModel();
+      model = new Book();
     }
     model.id = map["id"];
     model.name = map["name"];

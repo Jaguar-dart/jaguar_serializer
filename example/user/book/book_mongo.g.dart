@@ -26,7 +26,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
       return null;
     }
     if (model is! Book) {
-      model = createModel();
+      model = new Book();
     }
     model.id = _mongoId.deserialize(map["_id"]);
     model.name = map["N"];

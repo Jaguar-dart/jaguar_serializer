@@ -22,7 +22,6 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 })
 class PlayerMongoSerializer extends Serializer<Player>
     with _$PlayerMongoSerializer {
-  Player createModel() => new Player();
 }
 
 /// Player model for the game

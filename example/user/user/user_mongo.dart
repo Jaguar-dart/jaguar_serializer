@@ -18,10 +18,4 @@ part 'user_mongo.g.dart';
   BookMongoSerializer,
 ])
 class UserMongoSerializer extends Serializer<User> with _$UserMongoSerializer {
-  User createModel() => new User();
-
-  UserMongoSerializer();
-
-  factory UserMongoSerializer.FromMap(Map map) =>
-      new UserMongoSerializer()..fromMap(map);
 }

@@ -53,14 +53,6 @@ abstract class Serializer<ModelType> {
     }
   }
 
-  /// Decodes model from [Map]
-  ModelType fromMap(Map map, {ModelType model}) {
-    if (model is! ModelType) {
-      model = createModel();
-    }
-    return model;
-  }
-
   /// Return the [Type] handle by this [Serializer]
   Type modelType() => ModelType;
 
@@ -73,7 +65,10 @@ abstract class Serializer<ModelType> {
   ////// To implement //////
 
   @Deprecated("release 1.0.0")
-  ModelType createModel();
+  ModelType createModel() => null;
+
+  /// Decodes model from [Map]
+  ModelType fromMap(Map map, {ModelType model});
 
   /// Encodes model to [Map]
   Map toMap(ModelType model, {bool withType: false, String typeKey});

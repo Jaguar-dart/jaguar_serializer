@@ -25,7 +25,7 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
       return null;
     }
     if (model is! Player) {
-      model = createModel();
+      model = new Player();
     }
     model.name = map["N"];
     model.email = map["E"];

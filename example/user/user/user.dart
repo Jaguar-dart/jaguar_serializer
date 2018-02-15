@@ -38,7 +38,6 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   BookViewSerializer,
 ])
 class UserViewSerializer extends Serializer<User> with _$UserViewSerializer {
-  User createModel() => new User();
 }
 
 class User {

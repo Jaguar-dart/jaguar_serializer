@@ -8,13 +8,6 @@ part 'book.g.dart';
   ignore: const ['viewSerializer'],
 )
 class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {
-  Book createModel() => new Book();
-
-  BookViewSerializer();
-
-  BookViewSerializer.FromMap(Map map) {
-    fromMap(map);
-  }
 }
 
 class Book {

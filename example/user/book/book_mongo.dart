@@ -14,7 +14,4 @@ part 'book_mongo.g.dart';
   'viewSerializer': ignore,
 })
 class BookMongoSerializer extends Serializer<Book> with _$BookMongoSerializer {
-  Book createModel() => new Book();
-
-  BookMongoSerializer();
 }

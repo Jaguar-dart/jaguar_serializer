@@ -58,7 +58,7 @@ abstract class _$UserViewSerializer implements Serializer<User> {
       return null;
     }
     if (model is! User) {
-      model = createModel();
+      model = new User();
     }
     model.id = map["Id"];
     model.email = map["Email"];

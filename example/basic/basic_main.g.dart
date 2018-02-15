@@ -34,7 +34,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       return null;
     }
     if (model is! Player) {
-      model = createModel();
+      model = new Player();
     }
     model.name = map["name"];
     model.email = map["email"];
@@ -69,7 +69,7 @@ abstract class _$AddressSerializer implements Serializer<Address> {
       return null;
     }
     if (model is! Address) {
-      model = createModel();
+      model = new Address();
     }
     model.street = map["street"];
     model.zipcode = map["zipcode"];

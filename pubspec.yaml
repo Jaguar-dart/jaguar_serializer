@@ -20,6 +20,6 @@ dev_dependencies:
   test:
   mongo_dart:
   # test and generate example
-  build_runner: ^0.7.0
-  jaguar_serializer_cli:
-    path: ../jaguar_serializer_cli
+  #build_runner: ^0.7.0
+  #jaguar_serializer_cli:
+  #  path: ../jaguar_serializer_cli
