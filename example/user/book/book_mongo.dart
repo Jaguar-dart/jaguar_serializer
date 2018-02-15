@@ -13,5 +13,4 @@ part 'book_mongo.g.dart';
   'name': const EnDecode(alias: 'N'),
   'viewSerializer': ignore,
 })
-class BookMongoSerializer extends Serializer<Book> with _$BookMongoSerializer {
-}
+class BookMongoSerializer extends Serializer<Book> with _$BookMongoSerializer {}

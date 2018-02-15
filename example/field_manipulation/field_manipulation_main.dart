@@ -14,8 +14,7 @@ part 'field_manipulation_main.g.dart';
   },
 )
 class PlayerJsonSerializer extends Serializer<Player>
-    with _$PlayerJsonSerializer {
-}
+    with _$PlayerJsonSerializer {}
 
 /// Player model for the game
 class Player {

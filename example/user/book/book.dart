@@ -7,8 +7,7 @@ part 'book.g.dart';
 @GenSerializer(
   ignore: const ['viewSerializer'],
 )
-class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {
-}
+class BookViewSerializer extends Serializer<Book> with _$BookViewSerializer {}
 
 class Book {
   String id;

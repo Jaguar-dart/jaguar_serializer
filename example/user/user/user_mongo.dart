@@ -17,5 +17,4 @@ part 'user_mongo.g.dart';
 }, serializers: const [
   BookMongoSerializer,
 ])
-class UserMongoSerializer extends Serializer<User> with _$UserMongoSerializer {
-}
+class UserMongoSerializer extends Serializer<User> with _$UserMongoSerializer {}

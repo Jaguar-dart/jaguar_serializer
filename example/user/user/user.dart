@@ -37,8 +37,7 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 ], serializers: const [
   BookViewSerializer,
 ])
-class UserViewSerializer extends Serializer<User> with _$UserViewSerializer {
-}
+class UserViewSerializer extends Serializer<User> with _$UserViewSerializer {}
 
 class User {
   String id;
