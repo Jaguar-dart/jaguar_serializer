@@ -27,13 +27,32 @@ class GenSerializer {
   /// Default to [true]
   final bool nullableFields;
 
+  /// Determine the format for a field, [none] by default
+  ///
+  /// Example:
+  ///
+  /// ```dart
+  /// class Model {
+  ///   String myField;
+  /// }
+  ///
+  /// @GenSerializer(fieldFormat: FieldFormat.snakeCase)
+  /// class ModelSerializer extends Serializer ... {}
+  ///
+  /// final map = { 'my_field': 'foo' };
+  /// final model = serializer.fromMap(map);
+  /// print(model.myField); // print 'foo'
+  /// ```
+  final FieldFormat fieldFormat;
+
   const GenSerializer(
       {this.fields: const <String, Property>{},
       this.ignore: const <String>[],
       this.serializers: const <Type>[],
       this.modelName,
       this.includeByDefault: true,
-      this.nullableFields: true});
+      this.nullableFields: true,
+      this.fieldFormat: FieldFormat.none});
 }
 
 class Property<T> {
@@ -145,3 +164,6 @@ const Property nullable = const Property(isNullable: true);
 const Property nonNullable = const Property(isNullable: false);
 const Property useConstructorForDefaultsValue =
     const Property(valueFromConstructor: true, isNullable: false);
+
+/// Determine the outpu format for a field
+enum FieldFormat { none, camelCase, snakeCase, kebabCase }
