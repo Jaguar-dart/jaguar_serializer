@@ -17,7 +17,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       setNullableValue(ret, "email", model.email);
       setNullableValue(ret, "age", model.age);
       setNullableValue(ret, "score", model.score);
-      setNullableValue(ret, "emailConfirmed", model.emailConfirmed);
+      setNullableValue(ret, "email_confirmed", model.emailConfirmed);
       setNullableValue(ret, "test", model.test);
       setNullableValue(
           ret,
@@ -40,7 +40,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     model.email = map["email"];
     model.age = map["age"];
     model.score = map["score"];
-    model.emailConfirmed = map["emailConfirmed"];
+    model.emailConfirmed = map["email_confirmed"];
     model.test = map["test"];
     model.address =
         _addressSerializer.fromMap(map["address"], typeKey: typeKey);

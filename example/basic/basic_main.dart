@@ -1,12 +1,14 @@
 library example.player;
 
+import 'dart:convert';
+
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'basic_main.g.dart';
 
 @GenSerializer(serializers: const [
   AddressSerializer,
-])
+], fieldFormat: FieldFormat.snakeCase)
 class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {}
 
 @GenSerializer()
@@ -46,28 +48,31 @@ class Address {
 }
 
 void json() {
-  SerializerRepo serializer = new JsonRepo();
+  SerializerRepo serializer =
+      new JsonRepo(serializers: [new PlayerSerializer()]);
   {
-    Player player = serializer.deserialize({
+    Player player = serializer.deserialize(JSON.encode({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
       'score': 1000,
-      'emailConfirmed': true,
+      'email_confirmed': true,
       '@t': "Player"
-    });
+    }));
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
 
   {
-    Player player = serializer.deserialize({
-      'name': 'John',
-      'email': 'john@noemail.com',
-      'age': 25,
-      'score': 1000,
-      'emailConfirmed': true
-    }, type: Player);
+    Player player = serializer.deserialize(
+        JSON.encode({
+          'name': 'John',
+          'email': 'john@noemail.com',
+          'age': 25,
+          'score': 1000,
+          'email_confirmed': true
+        }),
+        type: Player);
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
@@ -86,7 +91,8 @@ void json() {
 }
 
 void yaml() {
-  SerializerRepo serializer = new YamlRepo();
+  SerializerRepo serializer =
+      new YamlRepo(serializers: [new PlayerSerializer()]);
   {
     Player player = serializer.deserialize({
       'name': 'John',
@@ -139,5 +145,5 @@ void main() {
   print(pSerializer.toMap(player, withType: true));
 
   json();
-  yaml();
+  //yaml();
 }

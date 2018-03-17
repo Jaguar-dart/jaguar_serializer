@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.0-dev4
+
+- introduce field format to automatically convert field
+  Example:
+
+  ```dart
+  class Model {  
+    String myField;
+  }
+  @GenSerializer(fieldFormat: FieldFormat.snakeCase)
+  class ModelSerializer extends Serializer ... {}
+  
+  final map = { 'my_field': 'foo' };
+  final model = serializer.fromMap(map);
+  print(model.myField); // print 'foo'
+  ```
+
 ## 1.0.0-dev3
 
 - we now support final field deserialization
