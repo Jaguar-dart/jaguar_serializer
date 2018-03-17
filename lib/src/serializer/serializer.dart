@@ -7,9 +7,7 @@ import '../serializer/repo.dart';
 /// Example:
 ///
 ///     @GenSerializer()
-///     class UserSerializer extends Serializer<User> with _$UserSerializer {
-///        User createModel() => new User();
-///     }
+///     class UserSerializer extends Serializer<User> with _$UserSerializer {}
 ///
 /// Both methods, [to] and [from] can handle [Map] or [List].
 abstract class Serializer<ModelType> {

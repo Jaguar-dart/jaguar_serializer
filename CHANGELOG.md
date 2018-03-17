@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.0-dev5
+
+- remove yaml support
+    + easy to reimplement using yamlicious (example/basic/basic_main.dart)
+- add builtins processor (Date, numToString, stringToNum)
+
+
 ## 1.0.0-dev4
 
 - introduce field format to automatically convert field
