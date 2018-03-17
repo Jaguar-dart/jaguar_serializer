@@ -3,6 +3,8 @@ library example.player;
 import 'dart:convert';
 
 import 'package:jaguar_serializer/jaguar_serializer.dart';
+import 'package:yaml/yaml.dart';
+import 'package:yamlicious/yamlicious.dart';
 
 part 'basic_main.g.dart';
 
@@ -92,28 +94,30 @@ void json() {
 
 void yaml() {
   SerializerRepo serializer =
-      new YamlRepo(serializers: [new PlayerSerializer()]);
+      new YamlRepo(serializers: [new PlayerSerializer()], typeKey: "_type");
   {
-    Player player = serializer.deserialize({
+    Player player = serializer.deserialize(toYamlString({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
       'score': 1000,
       'emailConfirmed': true,
-      '@t': "Player"
-    });
+      '_type': "Player"
+    }));
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
 
   {
-    Player player = serializer.deserialize({
-      'name': 'John',
-      'email': 'john@noemail.com',
-      'age': 25,
-      'score': 1000,
-      'emailConfirmed': true
-    }, type: Player);
+    Player player = serializer.deserialize(
+        toYamlString({
+          'name': 'John',
+          'email': 'john@noemail.com',
+          'age': 25,
+          'score': 1000,
+          'emailConfirmed': true
+        }),
+        type: Player);
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
   }
@@ -145,5 +149,46 @@ void main() {
   print(pSerializer.toMap(player, withType: true));
 
   json();
-  //yaml();
+  yaml();
+}
+
+/** 
+ * Repository that serialize/deserialize YAML. 
+ * 
+ * Same usage as [SerializerRepo] 
+ */
+class YamlRepo extends SerializerRepo {
+  YamlRepo(
+      {List<Serializer> serializers,
+      String typeKey: defaultTypeInfoKey,
+      bool withType: false})
+      : super(serializers: serializers, typeKey: typeKey, withType: withType);
+
+  ///@nodoc
+  dynamic encode(dynamic object) => toYamlString(object);
+
+  ///@nodoc
+  dynamic decode(dynamic object) => loadYaml(object);
+
+  /** 
+   * Deserialize a YAML String to an object. 
+   * 
+   * [object] can be a YAML String, a [List] of YAML String. 
+   * 
+   * See [SerializerRepo.from] for more information. 
+   */
+  @override
+  dynamic deserialize(dynamic object, {Type type, String typeKey}) =>
+      super.deserialize(object, type: type, typeKey: typeKey);
+
+  /** 
+   * Serialize an object to a YAML String 
+   * 
+   * [object] can be a [List], [Map] or a serializable object. 
+   * 
+   * See [SerializerRepo.to] for more information. 
+   */
+  @override
+  dynamic serialize(dynamic object, {bool withType, String typeKey}) =>
+      super.serialize(object, withType: withType, typeKey: typeKey);
 }

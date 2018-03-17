@@ -19,7 +19,6 @@ library jaguar_serializer;
 export 'src/annotations/annotations.dart';
 export 'src/json/json.dart';
 export 'src/serializer/serializer.dart';
-export 'src/yaml/yaml.dart';
 export 'src/serializer/field_processor.dart';
 export 'src/serializer/repo.dart';
 export 'src/serializer/utils.dart';
