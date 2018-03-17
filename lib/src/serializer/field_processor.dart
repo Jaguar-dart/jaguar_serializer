@@ -25,9 +25,7 @@ library jaguar_serializer.serializer.field_processor;
 ///         'dates': const MongoId(),
 ///       },
 ///     )
-///     class UserSerializer extends Serializer<User> with _$UserSerializer {
-///        User createModel() => new User();
-///     }
+///     class UserSerializer extends Serializer<User> with _$UserSerializer {}
 ///
 ///     class User {
 ///        DateTime birthday;
@@ -49,14 +47,14 @@ abstract class FieldProcessor<FromType, ToType> {
 ///     @GenSerializer(
 ///       processors: const {
 ///         'data': const RawData(),
+///         'list': const RawData(),
 ///       },
 ///     )
-///     class ModelSerializer extends Serializer<Model> with _$ModelSerializer {
-///        User createModel() => new Model();
-///     }
+///     class ModelSerializer extends Serializer<Model> with _$ModelSerializer {}
 ///
 ///     class Model {
 ///        Map<String, dynamic> data;
+///        List<dynamic> list;
 ///     }
 class RawData implements FieldProcessor {
   const RawData();
@@ -100,3 +98,74 @@ class RawData implements FieldProcessor {
         'Unknown RawData type found ${object.runtimeType}! Only List, Map, String and num are accepted!');
   }
 }
+
+class DateTimeProcessor implements FieldProcessor<DateTime, dynamic> {
+  final bool inMilliseconds;
+  final bool isUtc;
+
+  const DateTimeProcessor({this.inMilliseconds: false, this.isUtc: false});
+
+  const DateTimeProcessor.utc()
+      : isUtc = true,
+        inMilliseconds = false;
+
+  const DateTimeProcessor.utcMilliseconds()
+      : isUtc = true,
+        inMilliseconds = true;
+
+  const DateTimeProcessor.milliseconds()
+      : isUtc = false,
+        inMilliseconds = true;
+
+  DateTime _toUtc(DateTime value) => isUtc ? value.toUtc() : value;
+
+  @override
+  dynamic serialize(DateTime value) => value != null
+      ? (inMilliseconds
+          ? _toUtc(value).millisecondsSinceEpoch
+          : _toUtc(value).toIso8601String())
+      : null;
+
+  @override
+  DateTime deserialize(dynamic value) => value != null
+      ? (inMilliseconds
+          ? new DateTime.fromMillisecondsSinceEpoch(value, isUtc: isUtc)
+          : DateTime.parse(value))
+      : null;
+}
+
+num _stringToNum(String value, bool nullOnError) =>
+    num.parse(value, nullOnError ? (_) => null : null);
+
+class StringToNumProcessor implements FieldProcessor<String, num> {
+  final bool nullOnError;
+
+  const StringToNumProcessor({this.nullOnError: true});
+
+  @override
+  num serialize(String value) => _stringToNum(value, nullOnError);
+
+  @override
+  String deserialize(num value) => value?.toString();
+}
+
+class NumToStringProcessor implements FieldProcessor<num, String> {
+  final bool nullOnError;
+
+  const NumToStringProcessor({this.nullOnError: true});
+
+  @override
+  String serialize(num value) => value?.toString();
+
+  @override
+  num deserialize(String value) => _stringToNum(value, nullOnError);
+}
+
+const dateTimeUtcProcessor = const DateTimeProcessor.utc();
+const dateTimeMillisecondsUtcProcessor =
+    const DateTimeProcessor.utcMilliseconds();
+const dateTimeProcessor = const DateTimeProcessor();
+const dateTimeMillisecondsProcessor = const DateTimeProcessor.milliseconds();
+const numToStringProcessor = const NumToStringProcessor();
+const stringToNumProcessor = const StringToNumProcessor();
+const rawDate = const RawData();
