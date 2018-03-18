@@ -168,7 +168,7 @@ class YamlRepo extends SerializerRepo {
   dynamic encode(dynamic object) => toYamlString(object);
 
   ///@nodoc
-  dynamic decode(dynamic object) => loadYaml(object);
+  dynamic decode(dynamic object) => loadYaml(object as String);
 
   /** 
    * Deserialize a YAML String to an object. 

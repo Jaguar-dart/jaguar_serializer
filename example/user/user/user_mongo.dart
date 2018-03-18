@@ -10,9 +10,9 @@ export 'user.dart' show User;
 part 'user_mongo.g.dart';
 
 @GenSerializer(fields: const {
-  'id': const EnDecode(alias: '_id', processor: const MongoId()),
-  'name': const EnDecode(alias: 'N'),
-  'dob': const EnDecode(processor: const DateTimeSerializer()),
+  'id': const EnDecode<String>(alias: '_id', processor: const MongoId()),
+  'name': const EnDecode<String>(alias: 'N'),
+  'dob': const EnDecode<DateTime>(processor: const DateTimeSerializer()),
   'viewSerializer': ignore
 }, serializers: const [
   BookMongoSerializer,

@@ -56,7 +56,7 @@ abstract class FieldProcessor<FromType, ToType> {
 ///        Map<String, dynamic> data;
 ///        List<dynamic> list;
 ///     }
-class RawData implements FieldProcessor {
+class RawData implements FieldProcessor<dynamic, dynamic> {
   const RawData();
 
   @override
@@ -71,7 +71,7 @@ class RawData implements FieldProcessor {
     return value;
   }
 
-  void _validate(object) {
+  void _validate(dynamic object) {
     if (object == null) return;
 
     if (object is num) return;
@@ -84,7 +84,7 @@ class RawData implements FieldProcessor {
     }
 
     if (object is Map) {
-      object.forEach((key, value) {
+      object.forEach((dynamic key, dynamic value) {
         if (key is! String) {
           throw new Exception('Key of a RawData Map must be a String!');
         }
@@ -129,8 +129,8 @@ class DateTimeProcessor implements FieldProcessor<DateTime, dynamic> {
   @override
   DateTime deserialize(dynamic value) => value != null
       ? (inMilliseconds
-          ? new DateTime.fromMillisecondsSinceEpoch(value, isUtc: isUtc)
-          : DateTime.parse(value))
+          ? new DateTime.fromMillisecondsSinceEpoch(value as int, isUtc: isUtc)
+          : DateTime.parse(value as String))
       : null;
 }
 

@@ -23,9 +23,6 @@
   final model = serializer.fromMap(map);
   print(model.myField); // print 'foo'
   ```
-
-## 1.0.0-dev3
-
 - we now support final field deserialization
 - `createModel()` in `Serializer` class is now deprecated, it will be remove in the final release of `1.0.0`
 

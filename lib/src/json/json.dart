@@ -19,7 +19,7 @@ class JsonRepo extends SerializerRepo {
   dynamic encode(dynamic object) => JSON.encode(object);
 
   ///@nodoc
-  dynamic decode(dynamic object) => JSON.decode(object);
+  dynamic decode(dynamic object) => JSON.decode(object as String);
 
   /// Deserialize a JSON String to an object.
   ///

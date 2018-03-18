@@ -7,7 +7,8 @@ part of example.field_manipulation;
 // **************************************************************************
 
 abstract class _$PlayerJsonSerializer implements Serializer<Player> {
-  Map toMap(Player model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(Player model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -20,17 +21,17 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeKey}) {
-    if (map is! Map) {
+  Player fromMap(Map<String, dynamic> map, {Player model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! Player) {
       model = new Player();
     }
-    model.name = map["N"];
-    model.email = map["E"];
-    model.age = map["A"];
-    model.score = map["S"];
+    model.name = map["N"] as String;
+    model.email = map["E"] as String;
+    model.age = map["A"] as int;
+    model.score = map["S"] as int;
     return model;
   }
 

@@ -102,9 +102,7 @@ class SerializerRepo {
   /// The [typeKey] can be override using the [typeKey] option.
   dynamic deserialize(dynamic object, {Type type, String typeKey}) {
     typeKey ??= _typeKey;
-    final decoded = decode(object);
-
-    return from(decoded, type: type, typeKey: typeKey);
+    return from(decode(object), type: type, typeKey: typeKey);
   }
 
   ///@nodoc
@@ -123,7 +121,8 @@ class SerializerRepo {
     final Type type = object.runtimeType;
 
     if (object is Map) {
-      return _transformMapToDart(object, withType, typeKey);
+      return _transformMapToDart(
+          object as Map<String, dynamic>, withType, typeKey);
     } else if (object is Iterable) {
       return _transformIterableToDart(object, withType, typeKey);
     } else {
@@ -137,16 +136,16 @@ class SerializerRepo {
     }
   }
 
-  Map _transformMapToDart(Map object, bool withType, String typeKey) {
-    final mapper = {};
-    object.forEach((key, value) {
-      final k = to(key, withType: withType, typeKey: typeKey);
+  Map<String, dynamic> _transformMapToDart(
+      Map<String, dynamic> object, bool withType, String typeKey) {
+    final mapper = <String, dynamic>{};
+    object.forEach((key, dynamic value) {
+      final k = to(key, withType: withType, typeKey: typeKey) as String;
       if (value == null) {
         mapper[k] = null;
         return;
       }
-      final v = to(value, withType: withType, typeKey: typeKey);
-      mapper[k] = v;
+      mapper[k] = to(value, withType: withType, typeKey: typeKey);
     });
     if (withType) mapper[typeKey] = 'Map';
     return mapper;
@@ -155,7 +154,7 @@ class SerializerRepo {
   List _transformIterableToDart(
           Iterable object, bool withType, String typeKey) =>
       object
-          .map((obj) => to(
+          .map<dynamic>((dynamic obj) => to(
                 obj,
                 withType: withType,
                 typeKey: typeKey,
@@ -175,7 +174,7 @@ class SerializerRepo {
     return _from(object, ser: ser, typeKey: typeKey);
   }
 
-  dynamic _from(decoded, {Serializer ser, String typeKey}) {
+  dynamic _from(dynamic decoded, {Serializer ser, String typeKey}) {
     if (decoded is String ||
         decoded is num ||
         decoded is bool ||
@@ -183,7 +182,7 @@ class SerializerRepo {
 
     if (decoded is Iterable) {
       return decoded
-          .map((obj) => _from(obj, ser: ser, typeKey: typeKey))
+          .map<dynamic>((dynamic obj) => _from(obj, ser: ser, typeKey: typeKey))
           .toList();
     } else if (decoded is Map) {
       if (typeKey == null && ser == null) {
@@ -194,7 +193,8 @@ class SerializerRepo {
         if (typeKey != null) {
           if (decoded.containsKey(typeKey) &&
               ser.modelString() != decoded[typeKey]) {
-            return _fromMapWithTypeKey(decoded, typeKey, ser);
+            return _fromMapWithTypeKey(
+                decoded as Map<String, dynamic>, typeKey, ser);
           }
         }
         return ser.deserialize(decoded);
@@ -205,49 +205,49 @@ class SerializerRepo {
         }
 
         if (!decoded.containsKey(typeKey)) {
-          final map = {};
-          decoded.forEach((key, value) {
-            final k = _from(key, ser: ser, typeKey: typeKey);
+          final map = <String, dynamic>{};
+          decoded.forEach((dynamic key, dynamic value) {
+            final k = _from(key, ser: ser, typeKey: typeKey) as String;
             if (value == null) {
               map[k] = null;
               return;
             }
-            final v = _from(value, ser: ser, typeKey: typeKey);
-            map[k] = v;
+            map[k] = _from(value, ser: ser, typeKey: typeKey);
           });
           return map;
         }
 
-        return _fromMapWithTypeKey(decoded, typeKey, ser);
+        return _fromMapWithTypeKey(
+            decoded as Map<String, dynamic>, typeKey, ser);
       }
     } else {
       throw new Exception('Unknown type ${decoded.runtimeType}!');
     }
   }
 
-  dynamic _fromMapWithTypeKey(Map decoded, String typeKey, Serializer ser) {
+  Map<String, dynamic> _fromMapWithTypeKey(
+      Map<String, dynamic> decoded, String typeKey, Serializer ser) {
     if (decoded[typeKey] == 'Map') {
-      final map = {};
-      decoded.forEach((key, value) {
+      final map = <String, dynamic>{};
+      decoded.forEach((dynamic key, dynamic value) {
         if (key == typeKey) return;
-        final k = _from(key, ser: ser, typeKey: typeKey);
+        final k = _from(key, ser: ser, typeKey: typeKey) as String;
         if (value == null) {
           map[k] = null;
           return;
         }
-        final v = _from(value, ser: ser, typeKey: typeKey);
-        map[k] = v;
+        map[k] = _from(value, ser: ser, typeKey: typeKey);
       });
       return map;
     }
 
-    final Serializer serializer = getByTypeKey(decoded[typeKey]);
+    final Serializer serializer = getByTypeKey(decoded[typeKey] as String);
 
     if (serializer == null) {
       throw new Exception(
           "Cannot find serializer for typeKey ${decoded[typeKey]}");
     }
 
-    return serializer.deserialize(decoded);
+    return serializer.deserialize(decoded) as Map<String, dynamic>;
   }
 }

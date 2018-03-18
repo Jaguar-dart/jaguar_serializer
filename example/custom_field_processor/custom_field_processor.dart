@@ -18,7 +18,7 @@ class MongoId implements FieldProcessor<String, mgo.ObjectId> {
 }
 
 @GenSerializer(fields: const {
-  'id': const EnDecode(alias: '_id', processor: const MongoId())
+  'id': const EnDecode<String>(alias: '_id', processor: const MongoId())
 })
 class PlayerMongoSerializer extends Serializer<Player>
     with _$PlayerMongoSerializer {}
@@ -39,7 +39,7 @@ class Player {
 void main() {
   {
     PlayerMongoSerializer serializer = new PlayerMongoSerializer();
-    Player player = serializer.fromMap({
+    Player player = serializer.fromMap(<String, dynamic>{
       '_id': new mgo.ObjectId(),
       'name': 'John',
       'email': 'john@noemail.com',

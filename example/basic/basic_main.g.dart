@@ -9,7 +9,8 @@ part of example.player;
 abstract class _$PlayerSerializer implements Serializer<Player> {
   final _addressSerializer = new AddressSerializer();
 
-  Map toMap(Player model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(Player model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -29,21 +30,21 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeKey}) {
-    if (map is! Map) {
+  Player fromMap(Map<String, dynamic> map, {Player model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! Player) {
       model = new Player();
     }
-    model.name = map["name"];
-    model.email = map["email"];
-    model.age = map["age"];
-    model.score = map["score"];
-    model.emailConfirmed = map["email_confirmed"];
-    model.test = map["test"];
-    model.address =
-        _addressSerializer.fromMap(map["address"], typeKey: typeKey);
+    model.name = map["name"] as String;
+    model.email = map["email"] as String;
+    model.age = map["age"] as int;
+    model.score = map["score"] as int;
+    model.emailConfirmed = map["email_confirmed"] as bool;
+    model.test = map["test"] as int;
+    model.address = _addressSerializer
+        .fromMap(map["address"] as Map<String, dynamic>, typeKey: typeKey);
     return model;
   }
 
@@ -51,7 +52,8 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
 }
 
 abstract class _$AddressSerializer implements Serializer<Address> {
-  Map toMap(Address model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(Address model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -64,17 +66,17 @@ abstract class _$AddressSerializer implements Serializer<Address> {
     return ret;
   }
 
-  Address fromMap(Map map, {Address model, String typeKey}) {
-    if (map is! Map) {
+  Address fromMap(Map<String, dynamic> map, {Address model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! Address) {
       model = new Address();
     }
-    model.street = map["street"];
-    model.zipcode = map["zipcode"];
-    model.country = map["country"];
-    model.city = map["city"];
+    model.street = map["street"] as String;
+    model.zipcode = map["zipcode"] as String;
+    model.country = map["country"] as String;
+    model.city = map["city"] as String;
     return model;
   }
 

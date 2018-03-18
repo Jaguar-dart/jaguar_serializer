@@ -9,7 +9,8 @@ part of example.field_manipulation;
 abstract class _$PlayerMongoSerializer implements Serializer<Player> {
   final _mongoId = const MongoId();
 
-  Map toMap(Player model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(Player model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -21,16 +22,16 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     return ret;
   }
 
-  Player fromMap(Map map, {Player model, String typeKey}) {
-    if (map is! Map) {
+  Player fromMap(Map<String, dynamic> map, {Player model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! Player) {
       model = new Player();
     }
     model.id = _mongoId.deserialize(map["_id"]);
-    model.name = map["name"];
-    model.email = map["email"];
+    model.name = map["name"] as String;
+    model.email = map["email"] as String;
     return model;
   }
 

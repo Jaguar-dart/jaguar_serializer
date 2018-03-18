@@ -1,7 +1,7 @@
 import 'user/user.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-const Map<String, dynamic> kUserMap1 = const {
+const Map<String, dynamic> kUserMap1 = const <String, dynamic>{
   'Id': "111111111111111111111111",
   "N": "Somebody",
   "Email": "somebody@somebody.com",
@@ -26,7 +26,7 @@ const Map<String, dynamic> kUserMap1 = const {
   */
 };
 
-main() {
+void main() {
   SerializerRepo serializer = new JsonRepo();
   serializer.add(new UserViewSerializer());
 

@@ -7,7 +7,8 @@ part of example.model.book;
 // **************************************************************************
 
 abstract class _$BookViewSerializer implements Serializer<Book> {
-  Map toMap(Book model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(Book model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -19,16 +20,16 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
     return ret;
   }
 
-  Book fromMap(Map map, {Book model, String typeKey}) {
-    if (map is! Map) {
+  Book fromMap(Map<String, dynamic> map, {Book model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! Book) {
       model = new Book();
     }
-    model.id = map["id"];
-    model.name = map["name"];
-    model.publishedYear = map["publishedYear"];
+    model.id = map["id"] as String;
+    model.name = map["name"] as String;
+    model.publishedYear = map["publishedYear"] as int;
     return model;
   }
 

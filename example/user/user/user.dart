@@ -25,11 +25,12 @@ class DateTimeSerializer implements FieldProcessor<DateTime, String> {
 }
 
 @GenSerializer(fields: const {
-  'id': const EnDecode(alias: 'Id'),
-  'name': const EnDecode(alias: 'N'),
-  'email': const EnDecode(alias: 'Email'),
-  'book': const EnDecode(alias: 'Book'),
-  'dob': const EnDecode(alias: 'DoB', processor: const DateTimeSerializer()),
+  'id': const EnDecode<String>(alias: 'Id'),
+  'name': const EnDecode<String>(alias: 'N'),
+  'email': const EnDecode<String>(alias: 'Email'),
+  'book': const EnDecode<Book>(alias: 'Book'),
+  'dob': const EnDecode<DateTime>(
+      alias: 'DoB', processor: const DateTimeSerializer()),
   'password': ignore,
 }, ignore: const [
   'passwordHash',

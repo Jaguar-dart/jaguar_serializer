@@ -10,7 +10,8 @@ abstract class _$UserViewSerializer implements Serializer<User> {
   final _dateTimeSerializer = const DateTimeSerializer();
   final _bookViewSerializer = new BookViewSerializer();
 
-  Map toMap(User model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(User model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -53,29 +54,34 @@ abstract class _$UserViewSerializer implements Serializer<User> {
     return ret;
   }
 
-  User fromMap(Map map, {User model, String typeKey}) {
-    if (map is! Map) {
+  User fromMap(Map<String, dynamic> map, {User model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! User) {
       model = new User();
     }
-    model.id = map["Id"];
-    model.email = map["Email"];
-    model.name = map["N"];
+    model.id = map["Id"] as String;
+    model.email = map["Email"] as String;
+    model.name = map["N"] as String;
     model.dob = _dateTimeSerializer.deserialize(map["DoB"]);
-    model.book = _bookViewSerializer.fromMap(map["Book"], typeKey: typeKey);
-    model.listStr =
-        nullableIterableMapper<String>(map["listStr"], (String val) => val);
-    model.listBook = nullableIterableMapper<Map>(map["listBook"],
-        (Map val) => _bookViewSerializer.fromMap(val, typeKey: typeKey));
-    model.map = nullableMapMaker<String>(map["map"], (String value) => value);
+    model.book = _bookViewSerializer
+        .fromMap(map["Book"] as Map<String, dynamic>, typeKey: typeKey);
+    model.listStr = nullableIterableMapper<String>(
+        map["listStr"], (listValue) => listValue);
+    model.listBook = nullableIterableMapper<Map>(
+        map["listBook"],
+        (listValue) => _bookViewSerializer
+            .fromMap(listValue as Map<String, dynamic>, typeKey: typeKey));
+    model.map = nullableMapMaker<String>(map["map"], (mapValue) => mapValue);
     model.mapMap = nullableMapMaker<Map<String, String>>(
         map["mapMap"],
-        (Map<String, String> value) =>
-            nullableMapMaker<String>(value, (String value) => value));
-    model.mapBook = nullableMapMaker<Map>(map["mapBook"],
-        (Map value) => _bookViewSerializer.fromMap(value, typeKey: typeKey));
+        (mapValue) =>
+            nullableMapMaker<String>(mapValue, (mapValue) => mapValue));
+    model.mapBook = nullableMapMaker<Map>(
+        map["mapBook"],
+        (mapValue) => _bookViewSerializer
+            .fromMap(mapValue as Map<String, dynamic>, typeKey: typeKey));
     return model;
   }
 
