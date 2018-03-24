@@ -1,22 +1,22 @@
 import 'repo.dart';
 
 typedef String KeyMaker<Key>(Key key);
-typedef dynamic ValueMaker<Value>(Value value);
+typedef Value ValueMaker<Value>(value);
 
-Map<String, dynamic> nullableMapMaker<Value>(
+Map<String, Value> nullableMapMaker<Value>(
     Map<String, dynamic> map, ValueMaker<Value> valueMaker) {
-  Map<String, dynamic> ret;
+  Map<String, Value> ret;
   if (map != null) {
-    ret = <String, dynamic>{};
+    ret = <String, Value>{};
     for (final key in map.keys) {
-      ret[key] = valueMaker(map[key] as Value);
+      ret[key] = valueMaker(map[key]);
     }
   }
   return ret;
 }
 
-Map<String, dynamic> nonNullableMapMaker<Value>(Map<String, dynamic> map,
-        ValueMaker<Value> valueMaker, Map<String, dynamic> defaultValues) =>
+Map<String, Value> nonNullableMapMaker<Value>(Map<String, dynamic> map,
+        ValueMaker<Value> valueMaker, Map<String, Value> defaultValues) =>
     nullableMapMaker<Value>(map, valueMaker) ?? defaultValues;
 
 void setNullableValue(Map<String, dynamic> map, String key, dynamic value) {
@@ -29,12 +29,12 @@ void setNonNullableValue(Map<String, dynamic> map, String key, dynamic value) {
   }
 }
 
-List nullableIterableMapper<T>(Iterable<T> values, dynamic callback(T value)) =>
-    values?.map<dynamic>(callback)?.toList();
+List<T> nullableIterableMapper<T>(Iterable values, T callback(value)) =>
+    values?.map<T>(callback)?.toList();
 
-List nonNullableIterableMapper<T>(
-        Iterable<T> values, dynamic callback(T value), List<T> defaultValues) =>
-    nullableIterableMapper<T>(values, callback) ?? defaultValues;
+List<T> nonNullableIterableMapper<T>(
+        Iterable values, T callback(value), List<T> defaultValues) =>
+    nullableIterableMapper(values, callback) ?? defaultValues;
 
 void setTypeKeyValue(String typeKey, String modelString, bool withType,
     Map<String, dynamic> map) {

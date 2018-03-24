@@ -1,19 +1,19 @@
 library example.field_manipulation;
 
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-import 'package:mongo_dart/mongo_dart.dart' as mgo;
+import 'package:mongo_dart/mongo_dart.dart';
 
 part 'custom_field_processor.g.dart';
 
-class MongoId implements FieldProcessor<String, mgo.ObjectId> {
+class MongoId implements FieldProcessor<String, ObjectId> {
   const MongoId();
 
-  String deserialize(mgo.ObjectId input) {
+  String deserialize(ObjectId input) {
     return input.toHexString();
   }
 
-  mgo.ObjectId serialize(String value) {
-    return new mgo.ObjectId.fromHexString(value);
+  ObjectId serialize(String value) {
+    return new ObjectId.fromHexString(value);
   }
 }
 
@@ -40,7 +40,7 @@ void main() {
   {
     PlayerMongoSerializer serializer = new PlayerMongoSerializer();
     Player player = serializer.fromMap(<String, dynamic>{
-      '_id': new mgo.ObjectId(),
+      '_id': new ObjectId(),
       'name': 'John',
       'email': 'john@noemail.com',
     });

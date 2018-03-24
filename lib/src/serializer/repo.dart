@@ -225,7 +225,7 @@ class SerializerRepo {
     }
   }
 
-  Map<String, dynamic> _fromMapWithTypeKey(
+  dynamic _fromMapWithTypeKey(
       Map<String, dynamic> decoded, String typeKey, Serializer ser) {
     if (decoded[typeKey] == 'Map') {
       final map = <String, dynamic>{};
@@ -248,6 +248,6 @@ class SerializerRepo {
           "Cannot find serializer for typeKey ${decoded[typeKey]}");
     }
 
-    return serializer.deserialize(decoded) as Map<String, dynamic>;
+    return serializer.deserialize(decoded);
   }
 }

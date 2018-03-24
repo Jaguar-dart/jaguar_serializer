@@ -23,8 +23,10 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       setNullableValue(
           ret,
           "address",
-          _addressSerializer.toMap(model.address,
-              withType: withType, typeKey: typeKey));
+          nullableIterableMapper(
+              model.address,
+              (val) => _addressSerializer.toMap(val as Address,
+                  withType: withType, typeKey: typeKey)));
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
@@ -43,8 +45,10 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     model.score = map["score"] as int;
     model.emailConfirmed = map["email_confirmed"] as bool;
     model.test = map["test"] as int;
-    model.address = _addressSerializer
-        .fromMap(map["address"] as Map<String, dynamic>, typeKey: typeKey);
+    model.address = nullableIterableMapper<Address>(
+        map["address"] as Iterable,
+        (val) => _addressSerializer.fromMap(val as Map<String, dynamic>,
+            typeKey: typeKey));
     return model;
   }
 

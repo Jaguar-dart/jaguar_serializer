@@ -99,39 +99,38 @@ class RawData implements FieldProcessor<dynamic, dynamic> {
   }
 }
 
-class DateTimeProcessor implements FieldProcessor<DateTime, dynamic> {
-  final bool inMilliseconds;
+DateTime _toUtc(DateTime value, bool isUtc) => isUtc ? value.toUtc() : value;
+
+class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
   final bool isUtc;
 
-  const DateTimeProcessor({this.inMilliseconds: false, this.isUtc: false});
+  const DateTimeMillisecondsProcessor({this.isUtc: false});
 
-  const DateTimeProcessor.utc()
-      : isUtc = true,
-        inMilliseconds = false;
+  const DateTimeMillisecondsProcessor.utc() : isUtc = true;
 
-  const DateTimeProcessor.utcMilliseconds()
-      : isUtc = true,
-        inMilliseconds = true;
-
-  const DateTimeProcessor.milliseconds()
-      : isUtc = false,
-        inMilliseconds = true;
-
-  DateTime _toUtc(DateTime value) => isUtc ? value.toUtc() : value;
+  int serialize(DateTime value) =>
+      value != null ? _toUtc(value, isUtc).millisecondsSinceEpoch : null;
 
   @override
-  dynamic serialize(DateTime value) => value != null
-      ? (inMilliseconds
-          ? _toUtc(value).millisecondsSinceEpoch
-          : _toUtc(value).toIso8601String())
+  DateTime deserialize(int value) => value != null
+      ? new DateTime.fromMillisecondsSinceEpoch(value, isUtc: isUtc)
       : null;
+}
+
+class DateTimeProcessor implements FieldProcessor<DateTime, String> {
+  final bool isUtc;
+
+  const DateTimeProcessor({this.isUtc: false});
+
+  const DateTimeProcessor.utc() : isUtc = true;
 
   @override
-  DateTime deserialize(dynamic value) => value != null
-      ? (inMilliseconds
-          ? new DateTime.fromMillisecondsSinceEpoch(value as int, isUtc: isUtc)
-          : DateTime.parse(value as String))
-      : null;
+  String serialize(DateTime value) =>
+      value != null ? _toUtc(value, isUtc).toIso8601String() : null;
+
+  @override
+  DateTime deserialize(String value) =>
+      value != null ? DateTime.parse(value) : null;
 }
 
 num _stringToNum(String value, bool nullOnError) =>
@@ -163,9 +162,9 @@ class NumToStringProcessor implements FieldProcessor<num, String> {
 
 const dateTimeUtcProcessor = const DateTimeProcessor.utc();
 const dateTimeMillisecondsUtcProcessor =
-    const DateTimeProcessor.utcMilliseconds();
+    const DateTimeMillisecondsProcessor.utc();
 const dateTimeProcessor = const DateTimeProcessor();
-const dateTimeMillisecondsProcessor = const DateTimeProcessor.milliseconds();
+const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const rawDate = const RawData();

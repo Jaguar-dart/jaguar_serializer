@@ -29,7 +29,7 @@ abstract class _$BookMongoSerializer implements Serializer<Book> {
     if (model is! Book) {
       model = new Book();
     }
-    model.id = _mongoId.deserialize(map["_id"]);
+    model.id = _mongoId.deserialize(map["_id"] as ObjectId);
     model.name = map["N"] as String;
     model.publishedYear = map["publishedYear"] as int;
     return model;
