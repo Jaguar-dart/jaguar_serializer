@@ -20,8 +20,8 @@ dev_dependencies:
   yaml: ">=2.1.10 <3.0.0"
   # test and generate example
   #build_runner: ^0.7.0
-  #jaguar_serializer_cli:
-  #  path: ../jaguar_serializer_cli
+  jaguar_serializer_cli:
+    path: ../jaguar_serializer_cli
 
 web:
   compiler:
