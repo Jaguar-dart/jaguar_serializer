@@ -35,7 +35,6 @@ while (( "$#" )); do
     echo -e 'pub run test --run-skipped'
     pub run test --run-skipped
     pub run test -p chrome --run-skipped
-    pub run test -p firefox --run-skipped
     ;;
   *) echo -e "\033[31mNot expecting TASK '${TASK}'. Error!\033[0m"
     exit 1
