@@ -133,7 +133,7 @@ class EnDecode<T> extends Property<T> {
 }
 
 /// Annotation to ignore a field while encoding or decoding
-class Ignore extends EnDecode {
+class Ignore extends EnDecode<dynamic> {
   const Ignore();
 }
 
@@ -160,10 +160,10 @@ class Alias<T> extends Property<T> {
 }
 
 const ignore = const Ignore();
-const Property nullable = const Property(isNullable: true);
-const Property nonNullable = const Property(isNullable: false);
+const Property nullable = const Property<dynamic>(isNullable: true);
+const Property nonNullable = const Property<dynamic>(isNullable: false);
 const Property useConstructorForDefaultsValue =
-    const Property(valueFromConstructor: true, isNullable: false);
+    const Property<dynamic>(valueFromConstructor: true, isNullable: false);
 
 /// Determine the outpu format for a field
 enum FieldFormat { none, camelCase, snakeCase, kebabCase }

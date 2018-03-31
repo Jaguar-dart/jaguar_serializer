@@ -6,10 +6,10 @@ part 'field_manipulation_main.g.dart';
 
 @GenSerializer(
   fields: const {
-    'name': const EnDecode(alias: 'N'),
-    'email': const EnDecode(alias: 'E'),
-    'age': const EnDecode(alias: 'A'),
-    'score': const EnDecode(alias: 'S'),
+    'name': const EnDecode<String>(alias: 'N'),
+    'email': const EnDecode<String>(alias: 'E'),
+    'age': const EnDecode<int>(alias: 'A'),
+    'score': const EnDecode<int>(alias: 'S'),
     'emailConfirmed': ignore,
   },
 )
@@ -41,7 +41,7 @@ class Player {
 void main() {
   {
     PlayerJsonSerializer serializer = new PlayerJsonSerializer();
-    Player player = serializer.fromMap({
+    Player player = serializer.fromMap(<String, dynamic>{
       'N': 'John',
       'E': 'john@noemail.com',
       'A': 25,

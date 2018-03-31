@@ -8,9 +8,8 @@ import 'package:yamlicious/yamlicious.dart';
 
 part 'basic_main.g.dart';
 
-@GenSerializer(serializers: const [
-  AddressSerializer,
-], fieldFormat: FieldFormat.snakeCase)
+@GenSerializer(
+    serializers: const [AddressSerializer], fieldFormat: FieldFormat.snakeCase)
 class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {}
 
 @GenSerializer()
@@ -37,7 +36,7 @@ class Player {
 
   int test;
 
-  Address address;
+  List<Address> address;
 
   String toString() => 'Player($name, $email, $age, $score, $emailConfirmed)';
 }
@@ -49,17 +48,25 @@ class Address {
   String city;
 }
 
-void json() {
+void jsonCodec() {
   SerializerRepo serializer =
       new JsonRepo(serializers: [new PlayerSerializer()]);
   {
-    Player player = serializer.deserialize(JSON.encode({
+    Player player = serializer.deserialize(json.encode({
       'name': 'John',
       'email': 'john@noemail.com',
       'age': 25,
       'score': 1000,
       'email_confirmed': true,
-      '@t': "Player"
+      '@t': "Player",
+      "address": [
+        {
+          'city': 'Paris',
+        },
+        {
+          'city': 'London',
+        },
+      ]
     }));
     // Player(John, john@noemail.com, 25, 1000, true)
     print(player);
@@ -67,7 +74,7 @@ void json() {
 
   {
     Player player = serializer.deserialize(
-        JSON.encode({
+        json.encode({
           'name': 'John',
           'email': 'john@noemail.com',
           'age': 25,
@@ -86,7 +93,7 @@ void json() {
       ..age = 25
       ..score = 1000
       ..emailConfirmed = true
-      ..address = (new Address()..city = "Paris");
+      ..address = [(new Address()..city = "Paris")];
     print(serializer.serialize(player));
     print(serializer.serialize(player, withType: true));
   }
@@ -129,7 +136,7 @@ void yaml() {
       ..age = 25
       ..score = 1000
       ..emailConfirmed = true
-      ..address = (new Address()..city = "Paris");
+      ..address = [(new Address()..city = "Paris")];
     print(serializer.serialize(player));
     print(serializer.serialize(player, withType: true));
   }
@@ -144,12 +151,12 @@ void main() {
     ..age = 25
     ..score = 1000
     ..emailConfirmed = true
-    ..address = (new Address()..city = "Paris");
+    ..address = [(new Address()..city = "Paris")];
   print(pSerializer.toMap(player));
   print(pSerializer.toMap(player, withType: true));
 
-  json();
-  yaml();
+  jsonCodec();
+  //yaml();
 }
 
 /** 
@@ -168,7 +175,7 @@ class YamlRepo extends SerializerRepo {
   dynamic encode(dynamic object) => toYamlString(object);
 
   ///@nodoc
-  dynamic decode(dynamic object) => loadYaml(object);
+  dynamic decode(dynamic object) => loadYaml(object as String);
 
   /** 
    * Deserialize a YAML String to an object. 

@@ -11,7 +11,8 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
   final _dateTimeSerializer = const DateTimeSerializer();
   final _bookMongoSerializer = new BookMongoSerializer();
 
-  Map toMap(User model, {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(User model,
+      {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -25,29 +26,29 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
           _bookMongoSerializer.toMap(model.book,
               withType: withType, typeKey: typeKey));
       setNullableValue(ret, "listStr",
-          nullableIterableMapper<String>(model.listStr, (String val) => val));
+          nullableIterableMapper(model.listStr, (val) => val as String));
       setNullableValue(
           ret,
           "listBook",
-          nullableIterableMapper<Book>(
+          nullableIterableMapper(
               model.listBook,
-              (Book val) => _bookMongoSerializer.toMap(val,
+              (val) => _bookMongoSerializer.toMap(val as Book,
                   withType: withType, typeKey: typeKey)));
-      setNullableValue(ret, "map",
-          nullableMapMaker<String>(model.map, (String value) => value));
+      setNullableValue(
+          ret, "map", nullableMapMaker(model.map, (val) => val as String));
       setNullableValue(
           ret,
           "mapMap",
-          nullableMapMaker<Map<String, String>>(
+          nullableMapMaker(
               model.mapMap,
-              (Map<String, String> value) =>
-                  nullableMapMaker<String>(value, (String value) => value)));
+              (val) => nullableMapMaker(
+                  val as Map<String, dynamic>, (val) => val as String)));
       setNullableValue(
           ret,
           "mapBook",
-          nullableMapMaker<Book>(
+          nullableMapMaker(
               model.mapBook,
-              (Book value) => _bookMongoSerializer.toMap(value,
+              (val) => _bookMongoSerializer.toMap(val as Book,
                   withType: withType, typeKey: typeKey)));
       setNullableValue(ret, "password", model.password);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
@@ -55,30 +56,36 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     return ret;
   }
 
-  User fromMap(Map map, {User model, String typeKey}) {
-    if (map is! Map) {
+  User fromMap(Map<String, dynamic> map, {User model, String typeKey}) {
+    if (map == null) {
       return null;
     }
     if (model is! User) {
       model = new User();
     }
-    model.id = _mongoId.deserialize(map["_id"]);
-    model.email = map["email"];
-    model.name = map["N"];
-    model.dob = _dateTimeSerializer.deserialize(map["dob"]);
-    model.book = _bookMongoSerializer.fromMap(map["book"], typeKey: typeKey);
-    model.listStr =
-        nullableIterableMapper<String>(map["listStr"], (String val) => val);
-    model.listBook = nullableIterableMapper<Map>(map["listBook"],
-        (Map val) => _bookMongoSerializer.fromMap(val, typeKey: typeKey));
-    model.map = nullableMapMaker<String>(map["map"], (String value) => value);
+    model.id = _mongoId.deserialize(map["_id"] as ObjectId);
+    model.email = map["email"] as String;
+    model.name = map["N"] as String;
+    model.dob = _dateTimeSerializer.deserialize(map["dob"] as String);
+    model.book = _bookMongoSerializer
+        .fromMap(map["book"] as Map<String, dynamic>, typeKey: typeKey);
+    model.listStr = nullableIterableMapper<String>(
+        map["listStr"] as Iterable, (val) => val as String);
+    model.listBook = nullableIterableMapper<Book>(
+        map["listBook"] as Iterable,
+        (val) => _bookMongoSerializer.fromMap(val as Map<String, dynamic>,
+            typeKey: typeKey));
+    model.map = nullableMapMaker<String>(
+        map["map"] as Map<String, dynamic>, (val) => val as String);
     model.mapMap = nullableMapMaker<Map<String, String>>(
-        map["mapMap"],
-        (Map<String, String> value) =>
-            nullableMapMaker<String>(value, (String value) => value));
-    model.mapBook = nullableMapMaker<Map>(map["mapBook"],
-        (Map value) => _bookMongoSerializer.fromMap(value, typeKey: typeKey));
-    model.password = map["password"];
+        map["mapMap"] as Map<String, dynamic>,
+        (val) => nullableMapMaker<String>(
+            val as Map<String, dynamic>, (val) => val as String));
+    model.mapBook = nullableMapMaker<Book>(
+        map["mapBook"] as Map<String, dynamic>,
+        (val) => _bookMongoSerializer.fromMap(val as Map<String, dynamic>,
+            typeKey: typeKey));
+    model.password = map["password"] as String;
     return model;
   }
 

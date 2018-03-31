@@ -1,6 +1,7 @@
 # This file allows you to configure the Dart analyzer.
 analyzer:
-  strong-mode: true
+  strong-mode:
+    implicit-casts: false
 linter:
   rules:
     - cancel_subscriptions

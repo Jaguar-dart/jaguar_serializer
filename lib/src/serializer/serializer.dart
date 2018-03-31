@@ -41,9 +41,11 @@ abstract class Serializer<ModelType> {
   /// An instance of the resulting object can be passed with the [model] option.
   dynamic deserialize(dynamic object, {ModelType model}) {
     if (object is Map) {
-      return fromMap(object, model: model);
+      return fromMap(object as Map<String, dynamic>, model: model);
     } else if (object is List<Map>) {
-      return object.map((Map map) => fromMap(map)).toList();
+      return object
+          .map((Map map) => fromMap(map as Map<String, dynamic>))
+          .toList();
     } else if (object == null) {
       return null;
     } else {
@@ -66,8 +68,9 @@ abstract class Serializer<ModelType> {
   ModelType createModel() => null;
 
   /// Decodes model from [Map]
-  ModelType fromMap(Map map, {ModelType model});
+  ModelType fromMap(Map<String, dynamic> map, {ModelType model});
 
   /// Encodes model to [Map]
-  Map toMap(ModelType model, {bool withType: false, String typeKey});
+  Map<String, dynamic> toMap(ModelType model,
+      {bool withType: false, String typeKey});
 }
