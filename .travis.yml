@@ -1,3 +1,7 @@
+sudo: required
+addons:
+  chrome: stable
+
 # Created with https://github.com/dart-lang/mono_repo
 language: dart
 
