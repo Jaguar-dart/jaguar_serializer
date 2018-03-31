@@ -1,0 +1,22 @@
+sudo: required
+addons:
+  chrome: stable
+
+before_script:
+- pub run build_runner build --delete-conflicting-outputs
+
+language: dart
+dart_task:
+- dartfmt
+- dartanalyzer
+- test: --platform vm
+- test: --platform chrome
+- test: --platform firefox
+
+dart:
+#- stable
+  - dev
+
+cache:
+  directories:
+    - $HOME/.pub-cache
