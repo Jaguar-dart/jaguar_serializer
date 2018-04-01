@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example.user.mongo;
+part of 'user_mongo.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

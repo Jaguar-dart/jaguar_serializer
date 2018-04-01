@@ -9,4 +9,4 @@ import 'src/generator.dart';
 Builder jaguarSerializer(BuilderOptions options) => jaguarSerializerPartBuilder(
     header: options.config['header'] as String,
     requireLibraryDirective:
-        options.config['require_library_directive'] as bool ?? true);
+        options.config['require_library_directive'] as bool ?? false);

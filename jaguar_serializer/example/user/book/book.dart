@@ -1,5 +1,3 @@
-library example.model.book;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'book.g.dart';

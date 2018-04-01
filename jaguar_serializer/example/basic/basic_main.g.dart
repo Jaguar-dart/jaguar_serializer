@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example.player;
+part of 'basic_main.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

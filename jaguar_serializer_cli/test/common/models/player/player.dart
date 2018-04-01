@@ -1,5 +1,3 @@
-library serializer.test.models.player;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'player.g.dart';

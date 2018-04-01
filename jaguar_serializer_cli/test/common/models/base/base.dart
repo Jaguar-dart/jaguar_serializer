@@ -1,5 +1,3 @@
-library serializer.test.base;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'base.g.dart';

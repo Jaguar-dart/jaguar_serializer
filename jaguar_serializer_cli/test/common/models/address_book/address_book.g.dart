@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of test.common.models.address_book;
+part of 'address_book.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

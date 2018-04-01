@@ -1,5 +1,3 @@
-library test.common.models.address_book;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'address_book.g.dart';

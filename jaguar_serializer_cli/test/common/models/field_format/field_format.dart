@@ -1,5 +1,3 @@
-library field_format;
-
 import "package:jaguar_serializer/jaguar_serializer.dart";
 
 part 'field_format.g.dart';

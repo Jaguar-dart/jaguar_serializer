@@ -1,5 +1,3 @@
-library serializer.test.models.book;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'author.dart';
 

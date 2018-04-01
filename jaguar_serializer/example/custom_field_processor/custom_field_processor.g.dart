@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example.field_manipulation;
+part of 'custom_field_processor.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

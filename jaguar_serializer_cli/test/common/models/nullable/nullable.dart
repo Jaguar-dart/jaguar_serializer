@@ -1,5 +1,3 @@
-library serializer.test.nullable;
-
 import '../base/base.dart';
 
 import 'package:jaguar_serializer/jaguar_serializer.dart';

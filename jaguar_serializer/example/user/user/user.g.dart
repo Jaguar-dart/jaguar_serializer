@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example.model.user;
+part of 'user.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator
