@@ -1,0 +1,9 @@
+# Read about `build.yaml` at https://pub.dartlang.org/packages/build_config
+builders:
+  jaguar_serializer_cli:
+    target: ":jaguar_serializer_cli"
+    import: "package:jaguar_serializer_cli/jaguar_serializer_cli.dart"
+    builder_factories: ["jaguarSerializer"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: root_package
+    build_to: source
