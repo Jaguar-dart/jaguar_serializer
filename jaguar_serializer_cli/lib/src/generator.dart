@@ -49,9 +49,5 @@ class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
   }
 }
 
-Builder jaguarSerializerPartBuilder(
-    {String header, bool requireLibraryDirective: true}) {
-  requireLibraryDirective ??= true;
-  return new PartBuilder([new JaguarSerializerGenerator()],
-      header: header, requireLibraryDirective: requireLibraryDirective);
-}
+Builder jaguarSerializerPartBuilder({String header}) =>
+    new PartBuilder([new JaguarSerializerGenerator()], header: header);
