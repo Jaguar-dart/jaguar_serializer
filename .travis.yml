@@ -1,18 +1,60 @@
-sudo: false
+sudo: required
+addons:
+  chrome: stable
 
+# Created with https://github.com/dart-lang/mono_repo
 language: dart
-dart_task:
-- dartfmt: sdk
-- dartanalyzer
-- test: --platform vm
-- test: --platform chrome
-- test: --platform firefox
-- test: --platform dartium
-  install_dartium: true
 
-dart:
-  - stable
-#  - dev
+jobs:
+  include:
+#    - stage: analyzer_and_format
+#      script: ./tool/travis.sh dartfmt
+#      env: PKG="example"
+#      dart: dev
+#    - stage: analyzer_and_format
+#      script: ./tool/travis.sh dartanalyzer
+#      env: PKG="example"
+#      dart: dev
+#    - stage: unit_test
+#      script: ./tool/travis.sh test
+#      env: PKG="example"
+#      dart: dev
+    - stage: analyzer_and_format
+      script: ./tool/travis.sh dartfmt
+      env: PKG="jaguar_serializer"
+      dart: dev
+#    - stage: analyzer_and_format
+#      script: ./tool/travis.sh dartfmt
+#      env: PKG="jaguar_serializer"
+#      dart: stable
+    - stage: analyzer_and_format
+      script: ./tool/travis.sh dartanalyzer
+      env: PKG="jaguar_serializer"
+      dart: dev
+#    - stage: analyzer_and_format
+#      script: ./tool/travis.sh dartanalyzer
+#      env: PKG="jaguar_serializer"
+#      dart: stable
+    - stage: analyzer_and_format
+      script: ./tool/travis.sh dartfmt
+      env: PKG="jaguar_serializer_cli"
+      dart: dev
+#    - stage: analyzer_and_format
+#      script: ./tool/travis.sh dartanalyzer
+#      env: PKG="jaguar_serializer_cli"
+#      dart: stable
+    - stage: unit_test
+      script: ./tool/travis.sh test
+      env: PKG="jaguar_serializer_cli"
+      dart: dev
+
+stages:
+  - analyzer_and_format
+  - unit_test
+
+# Only building master means that we don't run two builds for each pull request.
+branches:
+  only: [master]
 
 cache:
   directories:
