@@ -54,7 +54,7 @@ class UserJsonSerializer extends Serializer<User> with _$UserJsonSerializer {
 ## Generate Serializer
 
 ### Build
-No you can build you serializer running the command
+Now you can build you serializer running the command
 
 `pub run build_runner build` 
 
