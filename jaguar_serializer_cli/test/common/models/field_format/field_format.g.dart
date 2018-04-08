@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of field_format;
+part of 'field_format.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

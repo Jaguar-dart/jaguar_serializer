@@ -18,8 +18,7 @@ dev_dependencies:
   intl: ">=0.15.0 <0.16.0"
   yamlicious: ^0.0.5 
   yaml: ">=2.1.10 <3.0.0"
-  # test and generate example
-  #build_runner: ^0.7.0
+  build_runner: ^0.8.0
   jaguar_serializer_cli:
     path: ../jaguar_serializer_cli
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-dev6
+
+- update source_gen and build
+
 ## 1.0.0-dev5
 
 - Dart2 compliance

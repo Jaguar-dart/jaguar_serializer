@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of serializer.test.models.player;
+part of 'nested.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

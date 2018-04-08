@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of example.model.book;
+part of 'book.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

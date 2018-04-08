@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of serializer.test.models.Author;
+part of 'author.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

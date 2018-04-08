@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of serializer.test.complex;
+part of 'complex.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator

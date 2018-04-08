@@ -1,5 +1,3 @@
-library example.model.user;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:intl/intl.dart';
 import '../book/book.dart';

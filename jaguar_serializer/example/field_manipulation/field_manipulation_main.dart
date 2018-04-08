@@ -1,5 +1,3 @@
-library example.field_manipulation;
-
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'field_manipulation_main.g.dart';

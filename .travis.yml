@@ -42,7 +42,7 @@ jobs:
 #    - stage: analyzer_and_format
 #      script: ./tool/travis.sh dartanalyzer
 #      env: PKG="jaguar_serializer_cli"
-#      dart: dev
+#      dart: stable
     - stage: unit_test
       script: ./tool/travis.sh test
       env: PKG="jaguar_serializer_cli"

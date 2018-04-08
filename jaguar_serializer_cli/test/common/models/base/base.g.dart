@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of serializer.test.base;
+part of 'base.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator
@@ -98,8 +98,8 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "clazzA", model.clazzA);
       setNullableValue(ret, "clazzB", model.clazzB);
+      setNullableValue(ret, "clazzA", model.clazzA);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
@@ -113,8 +113,8 @@ abstract class _$InheritanceSerializer implements Serializer<Inheritance> {
     if (model is! Inheritance) {
       model = new Inheritance();
     }
-    model.clazzA = map["clazzA"] as String;
     model.clazzB = map["clazzB"] as String;
+    model.clazzA = map["clazzA"] as String;
     return model;
   }
 
