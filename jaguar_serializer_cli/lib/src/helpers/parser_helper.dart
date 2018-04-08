@@ -135,14 +135,14 @@ class AnnotationParser {
   SerializerInfo parse() {
     final bool nullable = obj.peek('nullableFields')?.boolValue ?? false;
 
-    _makeName();
-    _makeModelType();
-    _makeIncludeByDefault();
-    _makeModelString();
-    _makeFields();
-    _makeIgnore();
-    _makeSerializers();
-    _makeFieldFormat();
+    _parseName();
+    _parseModelType();
+    _parseIncludeByDefault();
+    _parseModelString();
+    _parseFields();
+    _parseIgnore();
+    _parseSerializers();
+    _parseFieldFormatters();
 
     final ret = new SerializerInfo(name, modelType,
         includeByDefault: includeByDefault,
@@ -158,12 +158,12 @@ class AnnotationParser {
         defaultValuesFromConstructor: defaultValueFromConstructor,
         fieldFormatter: fieldFormatter);
     ret.model =
-        _parseFields(modelType.element as ClassElement, ret, includeByDefault);
+        _parseModel(modelType.element as ClassElement, ret, includeByDefault);
     _makeCtor(modelType.element as ClassElement, ret.model);
     return ret;
   }
 
-  void _makeFieldFormat() {
+  void _parseFieldFormatters() {
     final index =
         obj.peek('fieldFormat').objectValue.getField("index").toIntValue();
     final format = FieldFormat.values[index];
@@ -177,9 +177,11 @@ class AnnotationParser {
     }
   }
 
-  void _makeName() => name = element.name;
+  /// Parses the [name] of the Serializer
+  void _parseName() => name = element.name;
 
-  void _makeModelType() {
+  /// Parses [modelType] of the Serializer
+  void _parseModelType() {
     if (!isSerializer.isSuperTypeOf(element.type)) {
       throw new JaguarCliException(
           'serializers must be sub-type of Serializer!');
@@ -194,12 +196,15 @@ class AnnotationParser {
     }
   }
 
-  void _makeIncludeByDefault() =>
+  /// Parses [includeByDefault] of Serializer
+  void _parseIncludeByDefault() =>
       includeByDefault = obj.peek('includeByDefault')?.boolValue ?? true;
 
-  void _makeModelString() => modelString = obj.peek('modelName')?.stringValue;
+  /// Parses [modelString] of the Serializer
+  void _parseModelString() => modelString = obj.peek('modelName')?.stringValue;
 
-  void _makeFields() {
+  /// Parses [to] and [from] fields of the Serializer
+  void _parseFields() {
     final Map<DartObject, DartObject> map = obj.peek('fields')?.mapValue ?? {};
     map.forEach((DartObject dKey, DartObject dV) {
       if (isIgnore.isAssignableFromType(dV.type)) {
@@ -262,7 +267,7 @@ class AnnotationParser {
     }
   }
 
-  void _makeIgnore() {
+  void _parseIgnore() {
     final List<DartObject> list = obj.peek('ignore')?.listValue ?? [];
     list.map((DartObject v) => v.toStringValue()).forEach((String key) {
       if (from.containsKey(key)) {
@@ -273,7 +278,7 @@ class AnnotationParser {
     });
   }
 
-  void _makeSerializers() {
+  void _parseSerializers() {
     final List<DartObject> list = obj.peek('serializers')?.listValue ?? [];
     list.map((DartObject obj) => obj.toTypeValue()).forEach((DartType t) {
       if (!isSerializer.isSuperTypeOf(t)) {
@@ -291,7 +296,7 @@ class AnnotationParser {
     });
   }
 
-  Model _parseFields(
+  Model _parseModel(
       ClassElement el, SerializerInfo info, bool includeByDefault) {
     final mod = new Model();
 
@@ -306,6 +311,8 @@ class AnnotationParser {
         .forEach((PropertyAccessorElement field) {
       if (field.displayName == 'runtimeType') return;
       if (field.displayName == 'hashCode') return;
+
+      print(field.name + ' ${field.isStatic}');
 
       if (field.isGetter) {
         if (info.to[field.displayName] != null ||
@@ -324,7 +331,7 @@ class AnnotationParser {
       }
     });
 
-    el.fields.where((f) => f.isFinal).forEach((FieldElement f) {
+    el.fields.where((f) => f.isFinal && !f.isStatic).forEach((FieldElement f) {
       mod.addFrom(
           new Field(f.displayName, f.type as InterfaceType, isFinal: true));
     });
