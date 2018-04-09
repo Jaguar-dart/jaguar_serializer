@@ -312,8 +312,6 @@ class AnnotationParser {
       if (field.displayName == 'runtimeType') return;
       if (field.displayName == 'hashCode') return;
 
-      print(field.name + ' ${field.isStatic}');
-
       if (field.isGetter) {
         if (info.to[field.displayName] != null ||
             (includeByDefault && !info.to.containsKey(field.displayName))) {
