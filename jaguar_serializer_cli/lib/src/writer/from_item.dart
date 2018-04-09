@@ -78,7 +78,7 @@ class FromItemWriter {
       _w.write(")");
     } else if (leaf is SerializedPropertyFrom) {
       _w.write("_${firstCharToLowerCase(leaf.instantiationString)}" +
-          '.fromMap($reference as Map<String, dynamic>, typeKey: typeKey)');
+          '.fromMap($reference as Map<String, dynamic>)');
     }
     if (defaultValueRef != null) {
       _w.writeln("?? $defaultValueRef");

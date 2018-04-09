@@ -7,27 +7,28 @@ part of 'author.dart';
 // **************************************************************************
 
 abstract class _$AuthorSerializer implements Serializer<Author> {
+  @override
   Map<String, dynamic> toMap(Author model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "name", model.name);
+      setNullableValue(ret, 'name', model.name);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
-  Author fromMap(Map<String, dynamic> map, {Author model, String typeKey}) {
+  @override
+  Author fromMap(Map<String, dynamic> map, {Author model}) {
     if (map == null) {
       return null;
     }
-    if (model is! Author) {
-      model = new Author();
-    }
-    model.name = map["name"] as String;
-    return model;
+    final obj = model ?? new Author();
+    obj.name = map['name'] as String;
+    return obj;
   }
 
-  String modelString() => "Author";
+  @override
+  String modelString() => 'Author';
 }
