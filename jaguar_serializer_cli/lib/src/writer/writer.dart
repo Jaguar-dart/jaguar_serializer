@@ -34,7 +34,8 @@ class Writer {
 
     _fromWriter();
 
-    _w.writeln('String modelString() => "${info.modelString}";');
+    _w.writeln('@override');
+    _w.writeln("String modelString() => '${info.modelString}';");
 
     _w.writeln('}');
   }
@@ -94,6 +95,7 @@ class Writer {
   }
 
   void _toWriter() {
+    _w.writeln('@override');
     _w.writeln(
         'Map<String, dynamic> toMap($modelName model, {bool withType: false, String typeKey}) {');
     _w.writeln(r'Map<String, dynamic> ret;');
@@ -115,7 +117,7 @@ class Writer {
     } else {
       _w.writeln('setNonNullableValue(ret,');
     }
-    _w.writeln('"${item.key}",');
+    _w.writeln("'${item.key}',");
     final writer = new ToItemWriter(item);
     _w.writeln(writer.generate('model.${item.name}'));
     _w.writeln(');');
@@ -143,25 +145,24 @@ class Writer {
   }
 
   void _fromWriter() {
+    _w.writeln('@override');
     _w.writeln(
-        '$modelName fromMap(Map<String, dynamic> map, {$modelName model, String typeKey}) {');
+        '$modelName fromMap(Map<String, dynamic> map, {$modelName model}) {');
     _w.writeln(r'if(map == null) {');
     _w.writeln(r'return null;');
     _w.writeln(r'}');
 
-    _w.writeln('if(model is! $modelName) {');
-    _w.writeln(r'model =');
+    _w.writeln("final obj = model ?? ");
     _ctorWriter();
-    _w.writeln(r'}');
 
     final froms = info.from.where((f) => f.isFinal != true);
     for (FieldFrom item in froms) {
-      _w.write('model.${item.name} = ');
+      _w.write('obj.${item.name} = ');
       _fromItemWriter(item);
       _w.write(';');
     }
 
-    _w.writeln(r'return model;');
+    _w.writeln(r'return obj;');
     _w.writeln(r'}');
   }
 
@@ -169,11 +170,11 @@ class Writer {
     FromItemWriter writer = new FromItemWriter(item);
 
     if (!item.nullable && item.defaultValue != null) {
-      _w.write(writer.generate('map["${item.key}"]', "${item.defaultValue}"));
+      _w.write(writer.generate("map['${item.key}']", "${item.defaultValue}"));
     } else if (!item.nullable && item.defaultValueFromConstructor) {
-      _w.write(writer.generate('map["${item.key}"]', "model.${item.name}"));
+      _w.write(writer.generate("map['${item.key}']", "obj.${item.name}"));
     } else {
-      _w.write(writer.generate('map["${item.key}"]'));
+      _w.write(writer.generate("map['${item.key}']"));
     }
   }
 }
