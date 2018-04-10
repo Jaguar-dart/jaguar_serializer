@@ -139,9 +139,9 @@ class AnnotationParser {
     _parseModelType();
     _parseIncludeByDefault();
     _parseModelString();
-    _parseFields();
     _parseIgnore();
     _parseSerializers();
+    _parseFields();
     _parseFieldFormatters();
 
     final ret = new SerializerInfo(name, modelType,
@@ -207,10 +207,12 @@ class AnnotationParser {
   void _parseFields() {
     final Map<DartObject, DartObject> map = obj.peek('fields')?.mapValue ?? {};
     map.forEach((DartObject dKey, DartObject dV) {
+      final key = dKey.toStringValue();
       if (isIgnore.isAssignableFromType(dV.type)) {
-        to[dKey.toStringValue()] = null;
-        from[dKey.toStringValue()] = null;
-      } else {
+        to[key] = null;
+        from[key] = null;
+      } else if (!to.containsKey(key) && !from.containsKey(key)) {
+        // if contains key it means they are ignored in _parseIgnore
         _processField(dKey, dV);
       }
     });
@@ -329,7 +331,9 @@ class AnnotationParser {
       }
     });
 
-    el.fields.where((f) => f.isFinal && !f.isStatic).forEach((FieldElement f) {
+    el.fields
+        .where((f) => f.isFinal && !f.isStatic && !f.isPrivate)
+        .forEach((FieldElement f) {
       mod.addFrom(
           new Field(f.displayName, f.type as InterfaceType, isFinal: true));
     });

@@ -7,150 +7,150 @@ part of 'default_value.dart';
 // **************************************************************************
 
 abstract class _$DefaultValue implements Serializer<DefaultValue> {
+  @override
   Map<String, dynamic> toMap(DefaultValue model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "foo", model.foo);
-      setNullableValue(ret, "bar", model.bar);
-      setNullableValue(ret, "list",
+      setNullableValue(ret, 'foo', model.foo);
+      setNullableValue(ret, 'bar', model.bar);
+      setNullableValue(ret, 'list',
           nullableIterableMapper(model.list, (val) => val as String));
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
-  DefaultValue fromMap(Map<String, dynamic> map,
-      {DefaultValue model, String typeKey}) {
+  @override
+  DefaultValue fromMap(Map<String, dynamic> map, {DefaultValue model}) {
     if (map == null) {
       return null;
     }
-    if (model is! DefaultValue) {
-      model = new DefaultValue();
-    }
-    model.foo = map["foo"] as String ?? model.foo;
-    model.bar = map["bar"] as String;
-    model.list = nonNullableIterableMapper<String>(
-        map["list"] as Iterable, (val) => val as String, model.list);
-    return model;
+    final obj = model ?? new DefaultValue();
+    obj.foo = map['foo'] as String ?? obj.foo;
+    obj.bar = map['bar'] as String;
+    obj.list = nonNullableIterableMapper<String>(
+        map['list'] as Iterable, (val) => val as String, obj.list);
+    return obj;
   }
 
-  String modelString() => "DefaultValue";
+  @override
+  String modelString() => 'DefaultValue';
 }
 
 abstract class _$DefaultString implements Serializer<DefaultString> {
+  @override
   Map<String, dynamic> toMap(DefaultString model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "foo", model.foo);
-      setNullableValue(ret, "bar", model.bar);
+      setNullableValue(ret, 'foo', model.foo);
+      setNullableValue(ret, 'bar', model.bar);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
-  DefaultString fromMap(Map<String, dynamic> map,
-      {DefaultString model, String typeKey}) {
+  @override
+  DefaultString fromMap(Map<String, dynamic> map, {DefaultString model}) {
     if (map == null) {
       return null;
     }
-    if (model is! DefaultString) {
-      model = new DefaultString();
-    }
-    model.foo = map["foo"] as String ?? "bar";
-    model.bar = map["bar"] as String;
-    return model;
+    final obj = model ?? new DefaultString();
+    obj.foo = map['foo'] as String ?? "bar";
+    obj.bar = map['bar'] as String;
+    return obj;
   }
 
-  String modelString() => "DefaultString";
+  @override
+  String modelString() => 'DefaultString';
 }
 
 abstract class _$DefaultInt implements Serializer<DefaultInt> {
+  @override
   Map<String, dynamic> toMap(DefaultInt model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "foo", model.foo);
-      setNullableValue(ret, "bar", model.bar);
+      setNullableValue(ret, 'foo', model.foo);
+      setNullableValue(ret, 'bar', model.bar);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
-  DefaultInt fromMap(Map<String, dynamic> map,
-      {DefaultInt model, String typeKey}) {
+  @override
+  DefaultInt fromMap(Map<String, dynamic> map, {DefaultInt model}) {
     if (map == null) {
       return null;
     }
-    if (model is! DefaultInt) {
-      model = new DefaultInt();
-    }
-    model.foo = map["foo"] as int ?? 42;
-    model.bar = map["bar"] as String;
-    return model;
+    final obj = model ?? new DefaultInt();
+    obj.foo = map['foo'] as int ?? 42;
+    obj.bar = map['bar'] as String;
+    return obj;
   }
 
-  String modelString() => "DefaultInt";
+  @override
+  String modelString() => 'DefaultInt';
 }
 
 abstract class _$DefaultDouble implements Serializer<DefaultDouble> {
+  @override
   Map<String, dynamic> toMap(DefaultDouble model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "foo", model.foo);
-      setNullableValue(ret, "bar", model.bar);
+      setNullableValue(ret, 'foo', model.foo);
+      setNullableValue(ret, 'bar', model.bar);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
-  DefaultDouble fromMap(Map<String, dynamic> map,
-      {DefaultDouble model, String typeKey}) {
+  @override
+  DefaultDouble fromMap(Map<String, dynamic> map, {DefaultDouble model}) {
     if (map == null) {
       return null;
     }
-    if (model is! DefaultDouble) {
-      model = new DefaultDouble();
-    }
-    model.foo = map["foo"] as double ?? 42.42;
-    model.bar = map["bar"] as String;
-    return model;
+    final obj = model ?? new DefaultDouble();
+    obj.foo = map['foo'] as double ?? 42.42;
+    obj.bar = map['bar'] as String;
+    return obj;
   }
 
-  String modelString() => "DefaultDouble";
+  @override
+  String modelString() => 'DefaultDouble';
 }
 
 abstract class _$DefaultBool implements Serializer<DefaultBool> {
+  @override
   Map<String, dynamic> toMap(DefaultBool model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
-      setNullableValue(ret, "foo", model.foo);
-      setNullableValue(ret, "bar", model.bar);
+      setNullableValue(ret, 'foo', model.foo);
+      setNullableValue(ret, 'bar', model.bar);
       setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
-  DefaultBool fromMap(Map<String, dynamic> map,
-      {DefaultBool model, String typeKey}) {
+  @override
+  DefaultBool fromMap(Map<String, dynamic> map, {DefaultBool model}) {
     if (map == null) {
       return null;
     }
-    if (model is! DefaultBool) {
-      model = new DefaultBool();
-    }
-    model.foo = map["foo"] as bool ?? true;
-    model.bar = map["bar"] as String;
-    return model;
+    final obj = model ?? new DefaultBool();
+    obj.foo = map['foo'] as bool ?? true;
+    obj.bar = map['bar'] as String;
+    return obj;
   }
 
-  String modelString() => "DefaultBool";
+  @override
+  String modelString() => 'DefaultBool';
 }

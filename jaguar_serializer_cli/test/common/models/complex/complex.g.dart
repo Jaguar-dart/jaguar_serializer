@@ -10,60 +10,61 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
   final _rawData = const RawData();
   final _withIgnoreSerializer = new WithIgnoreSerializer();
 
+  @override
   Map<String, dynamic> toMap(Complex model,
       {bool withType: false, String typeKey}) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
       setNullableValue(
-          ret, "nums", nullableIterableMapper(model.nums, (val) => val as num));
-      setNullableValue(ret, "strings",
+          ret, 'nums', nullableIterableMapper(model.nums, (val) => val as num));
+      setNullableValue(ret, 'strings',
           nullableIterableMapper(model.strings, (val) => val as String));
-      setNullableValue(ret, "bools",
+      setNullableValue(ret, 'bools',
           nullableIterableMapper(model.bools, (val) => val as bool));
       setNullableValue(
-          ret, "ints", nullableIterableMapper(model.ints, (val) => val as int));
-      setNullableValue(ret, "doubles",
+          ret, 'ints', nullableIterableMapper(model.ints, (val) => val as int));
+      setNullableValue(ret, 'doubles',
           nullableIterableMapper(model.doubles, (val) => val as double));
       setNullableValue(
           ret,
-          "ignores",
+          'ignores',
           nullableIterableMapper(
               model.ignores,
               (val) => _withIgnoreSerializer.toMap(val as WithIgnore,
                   withType: withType, typeKey: typeKey)));
       setNullableValue(
-          ret, "numSet", nullableMapMaker(model.numSet, (val) => val as num));
-      setNullableValue(ret, "stringSet",
+          ret, 'numSet', nullableMapMaker(model.numSet, (val) => val as num));
+      setNullableValue(ret, 'stringSet',
           nullableMapMaker(model.stringSet, (val) => val as String));
-      setNullableValue(ret, "boolSet",
+      setNullableValue(ret, 'boolSet',
           nullableMapMaker(model.boolSet, (val) => val as bool));
       setNullableValue(
-          ret, "intSet", nullableMapMaker(model.intSet, (val) => val as int));
-      setNullableValue(ret, "doubleSet",
+          ret, 'intSet', nullableMapMaker(model.intSet, (val) => val as int));
+      setNullableValue(ret, 'doubleSet',
           nullableMapMaker(model.doubleSet, (val) => val as double));
       setNullableValue(
           ret,
-          "ignoreSet",
+          'ignoreSet',
           nullableMapMaker(
               model.ignoreSet,
               (val) => _withIgnoreSerializer.toMap(val as WithIgnore,
                   withType: withType, typeKey: typeKey)));
       setNullableValue(
           ret,
-          "listInnerMap1",
+          'listInnerMap1',
           nullableMapMaker(
               model.listInnerMap1,
               (val) => nullableIterableMapper(
                   val as Iterable, (val) => val as String)));
       setNullableValue(
           ret,
-          "dynamicMap",
+          'dynamicMap',
           nullableMapMaker(
               model.dynamicMap, (val) => _rawData.serialize(val as dynamic)));
       setNullableValue(
           ret,
-          "dynamicList",
+          'dynamicList',
           nullableIterableMapper(
               model.dynamicList, (val) => _rawData.serialize(val as dynamic)));
       setTypeKeyValue(typeKey, modelString(), withType, ret);
@@ -71,52 +72,49 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
     return ret;
   }
 
-  Complex fromMap(Map<String, dynamic> map, {Complex model, String typeKey}) {
+  @override
+  Complex fromMap(Map<String, dynamic> map, {Complex model}) {
     if (map == null) {
       return null;
     }
-    if (model is! Complex) {
-      model = new Complex();
-    }
-    model.nums = nullableIterableMapper<num>(
-        map["nums"] as Iterable, (val) => val as num);
-    model.strings = nullableIterableMapper<String>(
-        map["strings"] as Iterable, (val) => val as String);
-    model.bools = nullableIterableMapper<bool>(
-        map["bools"] as Iterable, (val) => val as bool);
-    model.ints = nullableIterableMapper<int>(
-        map["ints"] as Iterable, (val) => val as int);
-    model.doubles = nullableIterableMapper<double>(
-        map["doubles"] as Iterable, (val) => val as double);
-    model.ignores = nullableIterableMapper<WithIgnore>(
-        map["ignores"] as Iterable,
-        (val) => _withIgnoreSerializer.fromMap(val as Map<String, dynamic>,
-            typeKey: typeKey));
-    model.numSet = nullableMapMaker<num>(
-        map["numSet"] as Map<String, dynamic>, (val) => val as num);
-    model.stringSet = nullableMapMaker<String>(
-        map["stringSet"] as Map<String, dynamic>, (val) => val as String);
-    model.boolSet = nullableMapMaker<bool>(
-        map["boolSet"] as Map<String, dynamic>, (val) => val as bool);
-    model.intSet = nullableMapMaker<int>(
-        map["intSet"] as Map<String, dynamic>, (val) => val as int);
-    model.doubleSet = nullableMapMaker<double>(
-        map["doubleSet"] as Map<String, dynamic>, (val) => val as double);
-    model.ignoreSet = nullableMapMaker<WithIgnore>(
-        map["ignoreSet"] as Map<String, dynamic>,
-        (val) => _withIgnoreSerializer.fromMap(val as Map<String, dynamic>,
-            typeKey: typeKey));
-    model.listInnerMap1 = nullableMapMaker<List<String>>(
-        map["listInnerMap1"] as Map<String, dynamic>,
+    final obj = model ?? new Complex();
+    obj.nums = nullableIterableMapper<num>(
+        map['nums'] as Iterable, (val) => val as num);
+    obj.strings = nullableIterableMapper<String>(
+        map['strings'] as Iterable, (val) => val as String);
+    obj.bools = nullableIterableMapper<bool>(
+        map['bools'] as Iterable, (val) => val as bool);
+    obj.ints = nullableIterableMapper<int>(
+        map['ints'] as Iterable, (val) => val as int);
+    obj.doubles = nullableIterableMapper<double>(
+        map['doubles'] as Iterable, (val) => val as double);
+    obj.ignores = nullableIterableMapper<WithIgnore>(map['ignores'] as Iterable,
+        (val) => _withIgnoreSerializer.fromMap(val as Map<String, dynamic>));
+    obj.numSet = nullableMapMaker<num>(
+        map['numSet'] as Map<String, dynamic>, (val) => val as num);
+    obj.stringSet = nullableMapMaker<String>(
+        map['stringSet'] as Map<String, dynamic>, (val) => val as String);
+    obj.boolSet = nullableMapMaker<bool>(
+        map['boolSet'] as Map<String, dynamic>, (val) => val as bool);
+    obj.intSet = nullableMapMaker<int>(
+        map['intSet'] as Map<String, dynamic>, (val) => val as int);
+    obj.doubleSet = nullableMapMaker<double>(
+        map['doubleSet'] as Map<String, dynamic>, (val) => val as double);
+    obj.ignoreSet = nullableMapMaker<WithIgnore>(
+        map['ignoreSet'] as Map<String, dynamic>,
+        (val) => _withIgnoreSerializer.fromMap(val as Map<String, dynamic>));
+    obj.listInnerMap1 = nullableMapMaker<List<String>>(
+        map['listInnerMap1'] as Map<String, dynamic>,
         (val) => nullableIterableMapper<String>(
             val as Iterable, (val) => val as String));
-    model.dynamicMap = nullableMapMaker<dynamic>(
-        map["dynamicMap"] as Map<String, dynamic>,
+    obj.dynamicMap = nullableMapMaker<dynamic>(
+        map['dynamicMap'] as Map<String, dynamic>,
         (val) => _rawData.deserialize(val));
-    model.dynamicList = nullableIterableMapper<dynamic>(
-        map["dynamicList"] as Iterable, (val) => _rawData.deserialize(val));
-    return model;
+    obj.dynamicList = nullableIterableMapper<dynamic>(
+        map['dynamicList'] as Iterable, (val) => _rawData.deserialize(val));
+    return obj;
   }
 
-  String modelString() => "Complex";
+  @override
+  String modelString() => 'Complex';
 }
