@@ -76,7 +76,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'model/user.dart';
 
 void main() {
-  final userSerializer = new UserSerializer();
+  final userSerializer = new UserJsonSerializer();
   
   User user = userSerializer.fromMap({
         'name': 'John',
