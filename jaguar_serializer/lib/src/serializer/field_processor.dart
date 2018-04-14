@@ -99,7 +99,7 @@ class RawData implements FieldProcessor<dynamic, dynamic> {
   }
 }
 
-DateTime _toUtc(DateTime value, bool isUtc) => isUtc ? value.toUtc() : value;
+DateTime _toUtc(DateTime value, bool isUtc) => isUtc ? value?.toUtc() : value;
 
 class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
   final bool isUtc;
@@ -134,7 +134,7 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
 }
 
 num _stringToNum(String value, bool nullOnError) =>
-    num.parse(value, nullOnError ? (_) => null : null);
+    value != null ? num.parse(value, nullOnError ? (_) => null : null) : null;
 
 class StringToNumProcessor implements FieldProcessor<String, num> {
   final bool nullOnError;

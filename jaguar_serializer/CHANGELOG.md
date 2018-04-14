@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-dev6
+
+- null safe processors
+
 ## 1.0.0-dev5
 
 - remove yaml support
