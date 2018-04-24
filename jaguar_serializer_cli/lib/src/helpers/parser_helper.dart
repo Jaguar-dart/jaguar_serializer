@@ -164,9 +164,7 @@ class AnnotationParser {
   }
 
   void _parseFieldFormatters() {
-    final index =
-        obj.peek('fieldFormat').objectValue.getField("index").toIntValue();
-    final format = FieldFormat.values[index];
+    final format = obj.peek('fieldFormat')?.stringValue;
     fieldFormatter = (str) => str;
     if (format == FieldFormat.camelCase) {
       fieldFormatter = toCamelCase;

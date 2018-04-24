@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-dev8
+
+- fix flutter --release build
+
 ## 1.0.0-dev7
 
 - fix issues on static and private field

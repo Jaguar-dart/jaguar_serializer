@@ -41,7 +41,7 @@ class GenSerializer {
   /// final model = serializer.fromMap(map);
   /// print(model.myField); // print 'foo'
   /// ```
-  final FieldFormat fieldFormat;
+  final String fieldFormat;
 
   const GenSerializer(
       {this.fields: const <String, Property>{},
@@ -50,7 +50,7 @@ class GenSerializer {
       this.modelName,
       this.includeByDefault: true,
       this.nullableFields: true,
-      this.fieldFormat: FieldFormat.none});
+      this.fieldFormat});
 }
 
 class Property<T> {
@@ -176,4 +176,8 @@ const Property useConstructorForDefaultsValue =
 ///    {
 ///       "camel_case": "bar"
 ///    }
-enum FieldFormat { none, camelCase, snakeCase, kebabCase }
+class FieldFormat {
+  static const camelCase = 'camelCase';
+  static const snakeCase = 'snakeCase';
+  static const kebabCase = 'kebabCase';
+}
