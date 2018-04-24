@@ -1,5 +1,3 @@
-library jaguar_serializer.serializer;
-
 import '../serializer/repo.dart';
 
 /// Extend this class to create a Serializer for a [Type]
