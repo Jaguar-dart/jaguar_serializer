@@ -118,3 +118,38 @@ abstract class _$ComplexSerializer implements Serializer<Complex> {
   @override
   String modelString() => 'Complex';
 }
+
+abstract class _$DataResponseJsonSerializer
+    implements Serializer<DataResponse> {
+  final _dataResponseProcessor = const DataResponseProcessor();
+
+  @override
+  Map<String, dynamic> toMap(DataResponse model,
+      {bool withType: false, String typeKey}) {
+    Map<String, dynamic> ret;
+    if (model != null) {
+      ret = <String, dynamic>{};
+      setNullableValue(
+          ret,
+          'allData',
+          nullableIterableMapper(model.allData,
+              (val) => _dataResponseProcessor.serialize(val as List)));
+      setTypeKeyValue(typeKey, modelString(), withType, ret);
+    }
+    return ret;
+  }
+
+  @override
+  DataResponse fromMap(Map<String, dynamic> map, {DataResponse model}) {
+    if (map == null) {
+      return null;
+    }
+    final obj = model ?? new DataResponse();
+    obj.allData = nullableIterableMapper(map['allData'] as Iterable,
+        (val) => _dataResponseProcessor.deserialize(val as String));
+    return obj;
+  }
+
+  @override
+  String modelString() => 'DataResponse';
+}

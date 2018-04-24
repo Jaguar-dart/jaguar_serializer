@@ -3,6 +3,7 @@
 ## 1.0.0-dev8
 
 - fix flutter --release build
+- support generics
 
 ## 1.0.0-dev7
 
