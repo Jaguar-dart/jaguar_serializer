@@ -1,5 +1,3 @@
-library jaguar_serializer.annotations;
-
 import '../serializer/serializer.dart';
 import '../serializer/field_processor.dart';
 
@@ -165,5 +163,17 @@ const Property nonNullable = const Property<dynamic>(isNullable: false);
 const Property useConstructorForDefaultsValue =
     const Property<dynamic>(valueFromConstructor: true, isNullable: false);
 
-/// Determine the outpu format for a field
+/// Determine the output format for a field
+/// Example:
+///     class Foo {
+///         String camelCase = "bar";
+///     }
+///
+///     @GenSerializer(fieldFormat: FieldFormat.snakeCase)
+///     class FooSerializer ...
+///
+/// will produce
+///    {
+///       "camel_case": "bar"
+///    }
 enum FieldFormat { none, camelCase, snakeCase, kebabCase }
