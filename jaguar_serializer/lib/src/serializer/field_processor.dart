@@ -134,7 +134,7 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
 }
 
 num _stringToNum(String value, bool nullOnError) =>
-    value != null ? num.parse(value, nullOnError ? (_) => null : null) : null;
+    value != null ? num.tryParse(value) : null;
 
 class StringToNumProcessor implements FieldProcessor<String, num> {
   final bool nullOnError;

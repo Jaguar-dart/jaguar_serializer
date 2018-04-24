@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/Jaguar-dart/jaguar_serializer.svg?branch=master)](https://travis-ci.org/Jaguar-dart/jaguar_serializer)
 
 # jaguar_serializer
-Format agnostic Serializer library that can be used in server and client for JSON, mongodb, postgresql, etc
+Format agnostic Serializer library that can be used in vm, browser and flutter for JSON, mongodb, postgresql, etc
 
 - [Documentations](https://github.com/Jaguar-dart/jaguar_serializer/wiki)
 
@@ -53,7 +53,12 @@ class UserJsonSerializer extends Serializer<User> with _$UserJsonSerializer {
 ### Build
 Now you can build you serializer running the command
 
-`pub run build_runner build` 
+```
+pub run build_runner build
+
+# flutter
+flutter packages pub run build_runner build
+``` 
 
 This command will create 'user.g.dart' file with the generated Serializer inside.
 
@@ -61,7 +66,12 @@ This command will create 'user.g.dart' file with the generated Serializer inside
 
 You can trigger the rebuild each time you do a change in you file by using the `watch` command.
 
-`pub run build_runner watch`
+```
+pub run build_runner watch
+
+# flutter
+flutter packages pub run build_runner watch
+```
 
 ## Use Serializer
 
