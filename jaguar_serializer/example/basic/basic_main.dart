@@ -4,7 +4,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yamlicious/yamlicious.dart';
 
-part 'basic_main.g.dart';
+part 'basic_main.jser.dart';
 
 @GenSerializer(
     serializers: const [AddressSerializer], fieldFormat: FieldFormat.snakeCase)

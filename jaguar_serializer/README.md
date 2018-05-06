@@ -27,7 +27,7 @@ Create a file for your model.
 ```dart
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'user.g.dart';
+part 'user.jser.dart';
 ```
 
 Create you model.
@@ -60,7 +60,7 @@ pub run build_runner build
 flutter packages pub run build_runner build
 ``` 
 
-This command will create 'user.g.dart' file with the generated Serializer inside.
+This command will create 'user.jser.dart' file with the generated Serializer inside.
 
 ### Watch
 
