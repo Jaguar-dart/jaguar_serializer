@@ -9,6 +9,7 @@ class Author {
   /// Name of the author
   String name;
 
+  @override
   bool operator ==(Object other) {
     if (other is Author) {
       return name == other.name;
@@ -16,4 +17,7 @@ class Author {
 
     return false;
   }
+
+  @override
+  int get hashCode => name.hashCode;
 }
