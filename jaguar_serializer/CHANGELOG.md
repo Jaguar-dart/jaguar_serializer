@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-dev8
+
+- Add SafeNumberProcessor
+
 ## 1.0.0-dev7
 
 - fix flutter --release build

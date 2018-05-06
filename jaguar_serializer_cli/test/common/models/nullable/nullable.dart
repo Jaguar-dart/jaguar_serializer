@@ -2,7 +2,7 @@ import '../base/base.dart';
 
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'nullable.g.dart';
+part 'nullable.jser.dart';
 
 class Model {
   String foo;

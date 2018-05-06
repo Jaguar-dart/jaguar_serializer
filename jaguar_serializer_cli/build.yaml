@@ -4,6 +4,6 @@ builders:
     target: ":jaguar_serializer_cli"
     import: "package:jaguar_serializer_cli/jaguar_serializer_cli.dart"
     builder_factories: ["jaguarSerializer"]
-    build_extensions: {".dart": [".g.dart"]}
+    build_extensions: {".dart": [".jser.dart"]}
     auto_apply: root_package
     build_to: source
