@@ -162,13 +162,24 @@ class SafeNumProcessor implements FieldProcessor<num, dynamic> {
   const SafeNumProcessor();
 
   @override
-  num deserialize(final value) => value is String
-      ? (num.tryParse(value) ?? double.nan)
-      : (value is num ? value : double.nan);
+  num deserialize(final value) {
+    if (value is String) {
+      return num.tryParse(value) ?? double.nan;
+    } else if (value is num) {
+      return value;
+    } else if (value != null) {
+      return double.nan;
+    }
+    return null;
+  }
 
   @override
-  dynamic serialize(num value) =>
-      value?.isNaN == true || value?.isInfinite == true ? '$value' : value;
+  dynamic serialize(num value) {
+    if (value?.isNaN == true || value?.isInfinite == true) {
+      return '$value';
+    }
+    return value;
+  }
 }
 
 const dateTimeUtcProcessor = const DateTimeProcessor.utc();
