@@ -12,19 +12,23 @@ class FromItemWriter {
     final outputTypeStr = prop.itemTypeStr;
 
     if (field.nullable) {
-      _w.write("nullableIterableMapper<$outputTypeStr>(");
+      _w.write("nullableIterableMapper");
     } else {
-      _w.write("nonNullableIterableMapper<$outputTypeStr>(");
+      _w.write("nonNullableIterableMapper");
     }
 
-    _w.write('$reference as Iterable,');
+    if (outputTypeStr != null) {
+      _w.write('<$outputTypeStr>');
+    }
+
+    _w.write('($reference as Iterable,');
     _w.write('(val) => ');
     _w.write(writeFromProperty('val', prop.value, null, castValue: true));
     if (!field.nullable) {
       if (defaultValueRef != null) {
         _w.writeln(", $defaultValueRef");
       } else {
-        _w.writeln(", <$outputTypeStr>[]");
+        _w.writeln(", <${outputTypeStr ?? 'dynamic'}>[]");
       }
     }
     _w.write(')');
@@ -39,19 +43,23 @@ class FromItemWriter {
     final outputTypeStr = map.valueTypeStr;
 
     if (field.nullable) {
-      _w.write('nullableMapMaker<$outputTypeStr>(');
+      _w.write('nullableMapMaker');
     } else {
-      _w.write('nonNullableMapMaker<$outputTypeStr>(');
+      _w.write('nonNullableMapMaker');
     }
 
-    _w.write('$reference as Map<String, dynamic>,');
+    if (outputTypeStr != null) {
+      _w.write('<$outputTypeStr>');
+    }
+
+    _w.write('($reference as Map<String, dynamic>,');
     _w.write('(val) =>');
     _w.write(writeFromProperty('val', map.value, null, castValue: true));
     if (!field.nullable) {
       if (defaultValueRef != null) {
         _w.writeln(", $defaultValueRef");
       } else {
-        _w.writeln(", <String, $outputTypeStr>{}");
+        _w.writeln(", <String, ${outputTypeStr ?? 'dynamic'}>{}");
       }
     }
     _w.write(')');

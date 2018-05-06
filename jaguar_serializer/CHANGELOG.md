@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.0-dev7
+
+- fix flutter --release build
+
 ## 1.0.0-dev6
 
 - null safe processors

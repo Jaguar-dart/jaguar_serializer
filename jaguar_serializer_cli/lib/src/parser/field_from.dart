@@ -78,9 +78,9 @@ class SerializedPropertyFrom implements LeafPropertyFrom {
 PropertyFrom _parsePropertyFrom(
     SerializerInfo info, String fieldName, DartType type) {
   if (type is InterfaceType && isList.isExactlyType(type)) {
-    final param = type.typeArguments.first;
-    return new ListPropertyFrom(
-        _parsePropertyFrom(info, fieldName, param), param.displayName);
+    var param = type.typeArguments.first;
+    return new ListPropertyFrom(_parsePropertyFrom(info, fieldName, param),
+        param.element is TypeParameterElement ? null : param.displayName);
   } else if (type is InterfaceType && isMap.isExactlyType(type)) {
     final key = type.typeArguments.first;
     final value = type.typeArguments[1];
@@ -88,11 +88,12 @@ PropertyFrom _parsePropertyFrom(
       throw new JaguarCliException(
           'Serializer only support "String" key for a Map of property $fieldName!');
     }
+
     return new MapPropertyFrom(
         _parsePropertyFrom(info, fieldName, key),
         key.displayName,
         _parsePropertyFrom(info, fieldName, value),
-        value.displayName);
+        value.element is TypeParameterElement ? null : value.displayName);
   } else if (info.processors.containsKey(fieldName)) {
     final p = info.processors[fieldName];
     return new CustomPropertyFrom(
@@ -117,7 +118,7 @@ PropertyFrom _parsePropertyFrom(
   if (ser == null) {
     throw new JaguarCliException(
         "Serializer not found for '${type.displayName} $fieldName'  in '${info
-              .modelType}'");
+            .modelType}'");
   }
 
   return new SerializedPropertyFrom(ser.displayName);
