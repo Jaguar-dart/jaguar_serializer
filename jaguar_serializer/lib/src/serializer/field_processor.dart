@@ -158,6 +158,30 @@ class NumToStringProcessor implements FieldProcessor<num, String> {
   num deserialize(String value) => _stringToNum(value, nullOnError);
 }
 
+class SafeNumProcessor implements FieldProcessor<num, dynamic> {
+  const SafeNumProcessor();
+
+  @override
+  num deserialize(final value) {
+    if (value is String) {
+      return num.tryParse(value) ?? double.nan;
+    } else if (value is num) {
+      return value;
+    } else if (value != null) {
+      return double.nan;
+    }
+    return null;
+  }
+
+  @override
+  dynamic serialize(num value) {
+    if (value?.isNaN == true || value?.isInfinite == true) {
+      return '$value';
+    }
+    return value;
+  }
+}
+
 const dateTimeUtcProcessor = const DateTimeProcessor.utc();
 const dateTimeMillisecondsUtcProcessor =
     const DateTimeMillisecondsProcessor.utc();
@@ -166,3 +190,4 @@ const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const rawDate = const RawData();
+const safeNumProcessor = const SafeNumProcessor();
