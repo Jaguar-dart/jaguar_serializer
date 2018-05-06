@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'default_value.g.dart';
+part 'default_value.jser.dart';
 
 @GenSerializer(fields: const {
   'foo': const Property<String>(valueFromConstructor: true),

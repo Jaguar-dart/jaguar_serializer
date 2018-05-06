@@ -6,7 +6,7 @@ import '../book/book_mongo.dart';
 
 export 'user.dart' show User;
 
-part 'user_mongo.g.dart';
+part 'user_mongo.jser.dart';
 
 @GenSerializer(fields: const {
   'id': const EnDecode<String>(alias: '_id', processor: const MongoId()),
