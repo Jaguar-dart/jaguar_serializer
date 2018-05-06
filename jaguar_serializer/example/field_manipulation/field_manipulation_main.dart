@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'field_manipulation_main.g.dart';
+part 'field_manipulation_main.jser.dart';
 
 @GenSerializer(
   fields: const {

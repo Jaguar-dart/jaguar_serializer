@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'nested.g.dart';
+part 'nested.jser.dart';
 
 @GenSerializer()
 class InnerModel1Serializer extends Serializer<InnerModel1>
