@@ -48,7 +48,7 @@ class SerializerRepo {
     if (_mapperType.containsKey(type)) {
       return _mapperType[type];
     }
-    throw new Exception("No Serializer found for $type");
+    return null;
   }
 
   /// Return a [Serializer] for a String representing his [Type]
@@ -164,10 +164,7 @@ class SerializerRepo {
     typeKey ??= _typeKey;
 
     Serializer ser;
-
-    if (type != null) {
-      ser = getByType(type);
-    }
+    if (type != null) ser = getByType(type);
 
     return _from(object, ser: ser, typeKey: typeKey);
   }
