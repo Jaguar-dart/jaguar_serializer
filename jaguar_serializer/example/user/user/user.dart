@@ -2,7 +2,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:intl/intl.dart';
 import '../book/book.dart';
 
-part 'user.g.dart';
+part 'user.jser.dart';
 
 class DateTimeSerializer implements FieldProcessor<DateTime, String> {
   final String pattern;

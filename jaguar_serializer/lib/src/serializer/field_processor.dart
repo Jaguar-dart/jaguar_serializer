@@ -1,5 +1,3 @@
-library jaguar_serializer.serializer.field_processor;
-
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
 ///
@@ -99,7 +97,7 @@ class RawData implements FieldProcessor<dynamic, dynamic> {
   }
 }
 
-DateTime _toUtc(DateTime value, bool isUtc) => isUtc ? value.toUtc() : value;
+DateTime _toUtc(DateTime value, bool isUtc) => isUtc ? value?.toUtc() : value;
 
 class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
   final bool isUtc;
@@ -134,7 +132,7 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
 }
 
 num _stringToNum(String value, bool nullOnError) =>
-    num.parse(value, nullOnError ? (_) => null : null);
+    value != null ? num.tryParse(value) : null;
 
 class StringToNumProcessor implements FieldProcessor<String, num> {
   final bool nullOnError;
@@ -160,6 +158,30 @@ class NumToStringProcessor implements FieldProcessor<num, String> {
   num deserialize(String value) => _stringToNum(value, nullOnError);
 }
 
+class SafeNumProcessor implements FieldProcessor<num, dynamic> {
+  const SafeNumProcessor();
+
+  @override
+  num deserialize(final value) {
+    if (value is String) {
+      return num.tryParse(value) ?? double.nan;
+    } else if (value is num) {
+      return value;
+    } else if (value != null) {
+      return double.nan;
+    }
+    return null;
+  }
+
+  @override
+  dynamic serialize(num value) {
+    if (value?.isNaN == true || value?.isInfinite == true) {
+      return '$value';
+    }
+    return value;
+  }
+}
+
 const dateTimeUtcProcessor = const DateTimeProcessor.utc();
 const dateTimeMillisecondsUtcProcessor =
     const DateTimeMillisecondsProcessor.utc();
@@ -168,3 +190,4 @@ const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const rawDate = const RawData();
+const safeNumProcessor = const SafeNumProcessor();

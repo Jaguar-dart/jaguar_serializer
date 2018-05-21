@@ -1,5 +1,3 @@
-library jaguar_serializer.serializer.repo;
-
 import '../serializer/serializer.dart';
 
 /// Default key added to a serialize Object to add his [Type]

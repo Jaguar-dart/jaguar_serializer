@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'book.g.dart';
+part 'book.jser.dart';
 
 @GenSerializer(
   ignore: const ['viewSerializer'],

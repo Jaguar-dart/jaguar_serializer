@@ -1,5 +1,3 @@
-library jaguar_serializer.codec;
-
 import 'dart:convert';
 
 import '../serializer/serializer.dart';

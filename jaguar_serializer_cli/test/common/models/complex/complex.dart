@@ -1,7 +1,7 @@
 import '../base/base.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'complex.g.dart';
+part 'complex.jser.dart';
 
 class Complex {
   List<num> nums;
@@ -32,3 +32,24 @@ class Complex {
   WithIgnoreSerializer,
 ])
 class ComplexSerializer extends Serializer<Complex> with _$ComplexSerializer {}
+
+class DataResponse<T> {
+  List<T> allData = <T>[];
+}
+
+@GenSerializer(fields: const {
+  'allData': const EnDecode(processor: const DataResponseProcessor())
+})
+class DataResponseJsonSerializer extends Serializer<DataResponse>
+    with _$DataResponseJsonSerializer {}
+
+class DataResponseProcessor implements FieldProcessor<List, String> {
+  const DataResponseProcessor();
+
+  List deserialize(String object) {
+    final l = object?.split(",");
+    return l?.map((s) => num.tryParse(s) ?? s)?.toList();
+  }
+
+  String serialize(List allObjects) => allObjects?.map((s) => '$s')?.join(',');
+}

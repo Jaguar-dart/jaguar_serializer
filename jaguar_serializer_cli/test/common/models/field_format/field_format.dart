@@ -1,6 +1,6 @@
 import "package:jaguar_serializer/jaguar_serializer.dart";
 
-part 'field_format.g.dart';
+part 'field_format.jser.dart';
 
 class FieldFormatTest {
   String fooBar = "42";

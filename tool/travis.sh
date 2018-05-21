@@ -32,8 +32,7 @@ while (( "$#" )); do
     ;;
   test) echo
     echo -e '\033[1mTASK: test\033[22m'
-    pub run build_runner test --delete-conflicting-outputs
-    pub run test -p chrome --run-skipped
+    pub run build_runner test --delete-conflicting-outputs -- -p vm -p chrome 
     ;;
   *) echo -e "\033[31mNot expecting TASK '${TASK}'. Error!\033[0m"
     exit 1

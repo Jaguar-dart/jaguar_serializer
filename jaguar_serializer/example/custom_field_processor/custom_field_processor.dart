@@ -1,7 +1,7 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
-part 'custom_field_processor.g.dart';
+part 'custom_field_processor.jser.dart';
 
 class MongoId implements FieldProcessor<String, ObjectId> {
   const MongoId();

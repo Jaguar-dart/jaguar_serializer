@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0-dev8
+
+- Add SafeNumberProcessor
+
+## 1.0.0-dev7
+
+- fix flutter --release build
+
+## 1.0.0-dev6
+
+- null safe processors
+
 ## 1.0.0-dev5
 
 - remove yaml support

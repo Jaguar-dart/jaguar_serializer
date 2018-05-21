@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'player.g.dart';
+part 'player.jser.dart';
 
 @GenSerializer(
     fields: const {'emailConfirmed': const Property<bool>(isNullable: false)})

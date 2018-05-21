@@ -3,7 +3,7 @@ import 'author.dart';
 
 export 'author.dart' show Author, AuthorSerializer;
 
-part 'book.g.dart';
+part 'book.jser.dart';
 
 @GenSerializer(serializers: const [
   AuthorSerializer,

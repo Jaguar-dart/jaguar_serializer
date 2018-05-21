@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'immutable.g.dart';
+part 'immutable.jser.dart';
 
 class Foo {
   final String bar;
