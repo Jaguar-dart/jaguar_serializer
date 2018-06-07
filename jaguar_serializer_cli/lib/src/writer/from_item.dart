@@ -1,5 +1,6 @@
 part of jaguar_serializer.generator.writer;
 
+/* TODO
 class FromItemWriter {
   final FieldFrom field;
 
@@ -114,3 +115,4 @@ class FromItemWriter {
         castValue: true);
   }
 }
+*/

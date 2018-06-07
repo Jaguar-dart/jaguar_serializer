@@ -85,7 +85,7 @@ PropertyFrom _parsePropertyFrom(
     final key = type.typeArguments.first;
     final value = type.typeArguments[1];
     if (key.displayName != "String") {
-      throw new JaguarCliException(
+      throw new JCException(
           'Serializer only support "String" key for a Map of property $fieldName!');
     }
 
@@ -101,10 +101,10 @@ PropertyFrom _parsePropertyFrom(
   } else if (isBuiltin(type)) {
     return new BuiltinLeafPropertyFrom(type.displayName);
   } else if (type.isDynamic) {
-    throw new JaguarCliException(
+    throw new JCException(
         'Cannot serialize "dynamic" type for property $fieldName!');
   } else if (type.isObject) {
-    throw new JaguarCliException(
+    throw new JCException(
         'Cannot serialize "Object" type for property $fieldName!');
   }
   DartType ser;
@@ -116,7 +116,7 @@ PropertyFrom _parsePropertyFrom(
   });
 
   if (ser == null) {
-    throw new JaguarCliException(
+    throw new JCException(
         "Serializer not found for '${type.displayName} $fieldName'  in '${info
             .modelType}'");
   }

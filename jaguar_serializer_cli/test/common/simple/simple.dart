@@ -3,8 +3,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'simple.jser.dart';
 
-@GenSerializer(
-    fields: const {'boolF': const Field<bool>(isNullable: false)})
+@GenSerializer(fields: const {'boolF': const Field(isNullable: false)})
 class SimpleSerializer extends Serializer<Simple> with _$SimpleSerializer {}
 
 @GenSerializer(ignore: const ['boolF'])
@@ -16,16 +15,16 @@ class SimpleSerializerIgnores extends Serializer<Simple>
     with _$SimpleSerializerIgnores {}
 
 @GenSerializer(fields: const {
-  'stringF': const EnDecode<String>(alias: 'S'),
-  'doubleF': const EncodeOnly<int>(alias: 'D'),
-  'boolF': const EnDecode<bool>(alias: 'B'),
+  'stringF': const EnDecode(alias: 'S'),
+  'doubleF': const Field.encode(alias: 'D'),
+  'boolF': const EnDecode(alias: 'B'),
 })
 class SimpleSerializerRename extends Serializer<Simple>
     with _$SimpleSerializerRename {}
 
 @GenSerializer(fields: const {
-  'stringF': const EnDecode<String>(),
-  'intF': const EncodeOnly<int>(),
+  'stringF': const EnDecode(),
+  'intF': const EncodeOnly(),
 }, includeByDefault: false)
 class SimpleSerializerExcludeDef extends Serializer<Simple>
     with _$SimpleSerializerExcludeDef {}

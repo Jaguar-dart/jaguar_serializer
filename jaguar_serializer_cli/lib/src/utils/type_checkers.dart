@@ -1,4 +1,6 @@
-part of jaguar_serializer.generator.helpers;
+import 'package:source_gen/source_gen.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
+import 'package:analyzer/dart/element/type.dart';
 
 const isSerializer = const TypeChecker.fromRuntime(Serializer);
 

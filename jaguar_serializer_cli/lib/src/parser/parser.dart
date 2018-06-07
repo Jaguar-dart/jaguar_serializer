@@ -6,7 +6,9 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
 
-import '../helpers/helpers.dart';
+import 'package:jaguar_serializer_cli/src/info/info.dart';
+import 'package:jaguar_serializer_cli/src/utils/type_checkers.dart';
+import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
 
 part 'field_to.dart';
 
@@ -38,7 +40,7 @@ class WriterInfo {
       String fieldName = field.name;
       String fieldKey = field.name;
 
-      if (info.to[fieldName] != null) fieldKey = info.to[fieldName];
+      if (info.encodeTo[fieldName] != null) fieldKey = info.encodeTo[fieldName];
 
       tos.add(_parseFieldTo(info, field, fieldKey));
     }
@@ -48,7 +50,7 @@ class WriterInfo {
     final List<Field> setters = info.model.setters();
     for (Field field in setters) {
       String fieldKey = field.name;
-      if (info.from[fieldKey] != null) fieldKey = info.from[fieldKey];
+      if (info.decodeFrom[fieldKey] != null) fieldKey = info.decodeFrom[fieldKey];
       froms.add(_parseFieldFrom(info, field, fieldKey));
     }
 

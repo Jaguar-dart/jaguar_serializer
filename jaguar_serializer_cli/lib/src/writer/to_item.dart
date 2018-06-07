@@ -1,10 +1,15 @@
 part of jaguar_serializer.generator.writer;
 
 class ToItemWriter {
-  final FieldTo field;
+  final Field field;
 
   ToItemWriter(this.field);
 
+  TypeInfo get typeInfo => field.typeInfo;
+
+  String get base => 'model.${field.name}';
+
+  /* TODO
   String writeToListProperty(String reference, ListPropertyTo prop,
       {bool castReference: false}) {
     StringBuffer _w = new StringBuffer();
@@ -20,7 +25,7 @@ class ToItemWriter {
     }
     _w.write(",");
     _w.write('(val) => ');
-    _w.write(writeToProperty('val', prop.value, castValue: true));
+    _w.write(_makeValue('val', prop.value, castValue: true));
     if (!field.nullable) {
       _w.write(", []");
     }
@@ -44,7 +49,7 @@ class ToItemWriter {
     }
     _w.write(",");
     _w.write('(val) =>');
-    _w.write(writeToProperty('val', map.value, castValue: true));
+    _w.write(_makeValue('val', map.value, castValue: true));
 
     if (!field.nullable) {
       _w.write(", <String, dynamic>{}");
@@ -80,21 +85,33 @@ class ToItemWriter {
 
     return _w.toString();
   }
+  */
 
-  String writeToProperty(String reference, PropertyTo prop,
-      {bool castValue: false}) {
-    if (prop is ListPropertyTo) {
-      return writeToListProperty(reference, prop, castReference: castValue);
-    } else if (prop is MapPropertyTo) {
-      return writeToMapProperty(reference, prop, castReference: castValue);
-    } else if (prop is LeafPropertyTo) {
-      return writeToLeafProperty(reference, prop, castValue: castValue);
-    } else {
-      throw new JaguarCliException('Dont know how to handle this!');
+  String _makeValue({bool castValue: false}) {
+    if (typeInfo == null) {
+      return base;
+    } else if (typeInfo is ListTypeInfo) {
+      // TODO return writeToListProperty(reference, prop, castReference: castValue);
+    } else if (typeInfo is MapTypeInfo) {
+      // TODO return writeToMapProperty(reference, prop, castReference: castValue);
+    } else if (typeInfo is ProcessedTypeInfo) {
+      // TODO return writeToLeafProperty(reference, prop, castValue: castValue);
+    } else if (typeInfo is SerializedTypeInfo) {
+      // TODO return writeToLeafProperty(reference, prop, castValue: castValue);
     }
+    throw new JCException('Dont know how to handle this!');
   }
 
-  String generate(String reference) {
-    return writeToProperty(reference, field.property);
+  String generate() {
+    var sb = new StringBuffer();
+    if (field.isNullable) {
+      sb.write('setNullableValue(ret,');
+    } else {
+      sb.write('setNonNullableValue(ret,');
+    }
+    sb.write("'${field.encodeTo}',");
+    sb.write(_makeValue());
+    sb.write(");");
+    return sb.toString();
   }
 }

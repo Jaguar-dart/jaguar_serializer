@@ -50,13 +50,26 @@ class GenSerializer {
 }
 
 class Field<T> {
+  /// Alias used while encoding
   final String encodeTo;
+
+  /// Alias used while decoding
   final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
   final bool isNullable;
+
+  /// The field processor used to encode/decode this field
   final FieldProcessor<T, dynamic> processor;
+
+  /// The value used when the field has null value
   final T defaultsTo;
   final bool valueFromConstructor;
+
+  /// Should the field be included during encoding?
   final bool dontEncode;
+
+  /// Should the field be included during decoding?
   final bool dontDecode;
 
   const Field(
@@ -69,23 +82,25 @@ class Field<T> {
       this.dontDecode: false,
       this.dontEncode: false});
 
-  const Field.onlyEncode(
-      {this.encodeTo,
+  const Field.encode(
+      {String alias,
       this.isNullable,
       this.defaultsTo,
       this.processor,
       this.valueFromConstructor})
-      : dontEncode = false,
+      : encodeTo = alias,
+        dontEncode = false,
         decodeFrom = null,
         dontDecode = true;
 
-  const Field.onlyDecode(
-      {this.decodeFrom,
+  const Field.decode(
+      {String alias,
       this.isNullable,
       this.defaultsTo,
       this.processor,
       this.valueFromConstructor})
-      : dontEncode = true,
+      : decodeFrom = alias,
+        dontEncode = true,
         encodeTo = null,
         dontDecode = false;
 
@@ -100,28 +115,21 @@ class Field<T> {
         dontDecode = true;
 }
 
-// can't use inheritance here, [DartObject.getField] does not support getter,
-// only fields
-
 /// Annotation used to request encoding and decoding of a field in model
 class EnDecode<T> extends Field<T> {
-  /// Optional. Key used to decode and encode the model from and to the [Map]
-  final String alias;
-  final FieldProcessor<T, dynamic> processor;
-  final bool isNullable;
-  final T defaultsTo;
-  final String encodeTo;
-  final String decodeFrom;
-  final bool valueFromConstructor;
-
   const EnDecode(
-      {this.alias,
-      this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor})
-      : encodeTo = alias,
-        decodeFrom = alias;
+      {String alias,
+      bool isNullable,
+      FieldProcessor<T, dynamic> processor,
+      T defaultsTo,
+      bool valueFromConstructor})
+      : super(
+            encodeTo: alias,
+            decodeFrom: alias,
+            isNullable: isNullable,
+            processor: processor,
+            defaultsTo: defaultsTo,
+            valueFromConstructor: valueFromConstructor);
 }
 
 /// Annotation to ignore a field while encoding or decoding

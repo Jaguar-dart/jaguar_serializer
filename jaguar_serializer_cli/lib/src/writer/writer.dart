@@ -1,15 +1,15 @@
 ///@nodoc
 library jaguar_serializer.generator.writer;
 
-import '../helpers/helpers.dart';
-import '../parser/parser.dart';
+import 'package:jaguar_serializer_cli/src/info/info.dart';
+import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
 
 part 'to_item.dart';
 
 part 'from_item.dart';
 
 class Writer {
-  final WriterInfo info;
+  final SerializerInfo info;
 
   List<String> _providers = [];
 
@@ -37,6 +37,7 @@ class Writer {
     _w.writeln('}');
   }
 
+  /* TODO
   void _serializedPropertyToWriter(PropertyTo to) {
     if (to is SerializedPropertyTo) {
       final fieldName = "_${firstCharToLowerCase(to.instantiationString)}";
@@ -79,8 +80,10 @@ class Writer {
           'final $fieldName = const ${customProcessor.instantiationString}();');
     }
   }
+  */
 
   void _providerWriter() {
+    /* TODO
     info.processors.forEach(_serializedPropertyCustomWriter);
     info.to.forEach((FieldTo item) {
       _serializedPropertyToWriter(item.property);
@@ -89,37 +92,27 @@ class Writer {
       _serializedPropertyFromWriter(item.property);
     });
     _w.writeln("");
+    */
   }
 
   void _toWriter() {
     _w.writeln('@override');
-    _w.writeln(
-        'Map<String, dynamic> toMap($modelName model) {');
-    _w.writeln(r'Map<String, dynamic> ret;');
-
-    _w.writeln('if(model != null) {');
-    _w.writeln('ret = <String, dynamic>{};');
-    for (FieldTo item in info.to) {
+    _w.writeln('Map<String, dynamic> toMap($modelName model) {');
+    _w.writeln('if(model == null) return null;');
+    _w.writeln(r'Map<String, dynamic> ret = <String, dynamic>{};');
+    for (Field item in info.fields.values.where((f) => !f.dontEncode)) {
       _toItemWriter(item);
     }
-    _w.writeln('}');
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
   }
 
-  void _toItemWriter(FieldTo item) {
-    if (item.nullable == true) {
-      _w.writeln('setNullableValue(ret,');
-    } else {
-      _w.writeln('setNonNullableValue(ret,');
-    }
-    _w.writeln("'${item.key}',");
-    final writer = new ToItemWriter(item);
-    _w.writeln(writer.generate('model.${item.name}'));
-    _w.writeln(');');
+  void _toItemWriter(Field item) {
+    _w.writeln(new ToItemWriter(item).generate());
   }
 
   void _ctorWriter() {
+    /* TODO
     _w.write('new $modelName(');
     bool first = true;
     info.ctorArguments.forEach((param) {
@@ -138,9 +131,11 @@ class Writer {
       _fromItemWriter(info.from.firstWhere((f) => f.name == param.name));
     });
     _w.write(');');
+    */
   }
 
   void _fromWriter() {
+    /* TODO
     _w.writeln('@override');
     _w.writeln('$modelName fromMap(Map map, {$modelName model}) {');
     _w.writeln(r'if(map == null) {');
@@ -159,8 +154,10 @@ class Writer {
 
     _w.writeln(r'return obj;');
     _w.writeln(r'}');
+    */
   }
 
+  /* TODO
   void _fromItemWriter(FieldFrom item) {
     FromItemWriter writer = new FromItemWriter(item);
 
@@ -172,4 +169,5 @@ class Writer {
       _w.write(writer.generate("map['${item.key}']"));
     }
   }
+  */
 }

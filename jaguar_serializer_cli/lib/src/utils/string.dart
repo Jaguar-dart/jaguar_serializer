@@ -1,4 +1,8 @@
-part of jaguar_serializer.generator.helpers;
+String firstCharToUpperCase(String str) =>
+    "${str[0].toUpperCase()}${str.substring(1)}";
+
+String firstCharToLowerCase(String str) =>
+    "${str[0].toLowerCase()}${str.substring(1)}";
 
 final RegExp _camelCaseRegexp = new RegExp(r'^[a-z][A-Za-z\d]*$');
 final RegExp _snakeCaseRegexp = new RegExp(r'^[a-z]+[a-z\d]*(?:_[\w\d]+)*$');
