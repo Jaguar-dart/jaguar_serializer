@@ -1,7 +1,19 @@
+/*
 import '../base/base.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 part 'complex.jser.dart';
+
+class WithIgnore {
+  String a;
+  String secret;
+
+  WithIgnore([this.a, this.secret]);
+}
+
+@GenSerializer(ignore: const ['secret'])
+class WithIgnoreSerializer extends Serializer<WithIgnore>
+    with _$WithIgnoreSerializer {}
 
 class Complex {
   List<num> nums;
@@ -26,8 +38,8 @@ class Complex {
 }
 
 @GenSerializer(fields: const {
-  'dynamicMap': const Property<dynamic>(processor: const RawData()),
-  'dynamicList': const Property<dynamic>(processor: const RawData()),
+  'dynamicMap': const Field<dynamic>(processor: const RawData()),
+  'dynamicList': const Field<dynamic>(processor: const RawData()),
 }, serializers: const [
   WithIgnoreSerializer,
 ])
@@ -53,3 +65,4 @@ class DataResponseProcessor implements FieldProcessor<List, String> {
 
   String serialize(List allObjects) => allObjects?.map((s) => '$s')?.join(',');
 }
+*/

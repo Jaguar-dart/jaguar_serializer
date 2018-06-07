@@ -52,9 +52,6 @@ class SerializerInfo {
   /// Should fields be included by default
   final bool includeByDefault;
 
-  /// Model string
-  final String modelString;
-
   /// From field names
   final Map<String, String> from;
 
@@ -79,7 +76,6 @@ class SerializerInfo {
 
   SerializerInfo(this.name, this.modelType,
       {this.includeByDefault,
-      this.modelString,
       this.from,
       this.to,
       this.processors,
@@ -106,9 +102,6 @@ class AnnotationParser {
 
   /// Should fields be included by default
   bool includeByDefault;
-
-  /// Model string
-  String modelString;
 
   /// From field names
   Map<String, String> from = {};
@@ -138,7 +131,6 @@ class AnnotationParser {
     _parseName();
     _parseModelType();
     _parseIncludeByDefault();
-    _parseModelString();
     _parseIgnore();
     _parseSerializers();
     _parseFields();
@@ -146,7 +138,6 @@ class AnnotationParser {
 
     final ret = new SerializerInfo(name, modelType,
         includeByDefault: includeByDefault,
-        modelString: modelString,
         from: from,
         to: to,
         processors: processors,
@@ -197,9 +188,6 @@ class AnnotationParser {
   /// Parses [includeByDefault] of Serializer
   void _parseIncludeByDefault() =>
       includeByDefault = obj.peek('includeByDefault')?.boolValue ?? true;
-
-  /// Parses [modelString] of the Serializer
-  void _parseModelString() => modelString = obj.peek('modelName')?.stringValue;
 
   /// Parses [to] and [from] fields of the Serializer
   void _parseFields() {

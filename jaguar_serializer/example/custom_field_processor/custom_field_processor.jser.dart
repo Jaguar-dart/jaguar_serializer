@@ -18,13 +18,12 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
       setNullableValue(ret, '_id', _mongoId.serialize(model.id));
       setNullableValue(ret, 'name', model.name);
       setNullableValue(ret, 'email', model.email);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  Player fromMap(Map<String, dynamic> map, {Player model}) {
+  Player fromMap(Map map, {Player model}) {
     if (map == null) {
       return null;
     }
@@ -34,7 +33,4 @@ abstract class _$PlayerMongoSerializer implements Serializer<Player> {
     obj.email = map['email'] as String;
     return obj;
   }
-
-  @override
-  String modelString() => 'Player';
 }

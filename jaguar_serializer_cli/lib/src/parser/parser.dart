@@ -17,8 +17,6 @@ class WriterInfo {
 
   final String modelName;
 
-  final String modelString;
-
   final List<FieldTo> to;
 
   final List<FieldFrom> from;
@@ -29,8 +27,8 @@ class WriterInfo {
 
   final List<ParameterElement> ctorNamedArguments;
 
-  WriterInfo(this.name, this.modelName, this.modelString, this.to, this.from,
-      this.processors, this.ctorArguments, this.ctorNamedArguments);
+  WriterInfo(this.name, this.modelName, this.to, this.from, this.processors,
+      this.ctorArguments, this.ctorNamedArguments);
 
   factory WriterInfo.fromInfo(SerializerInfo info) {
     List<FieldTo> tos = <FieldTo>[];
@@ -47,27 +45,16 @@ class WriterInfo {
 
     List<FieldFrom> froms = <FieldFrom>[];
 
-    final setters = info.model.setters();
+    final List<Field> setters = info.model.setters();
     for (Field field in setters) {
-      String fieldName = field.name;
       String fieldKey = field.name;
-
-      if (info.from[fieldName] != null) fieldKey = info.from[fieldName];
-
+      if (info.from[fieldKey] != null) fieldKey = info.from[fieldKey];
       froms.add(_parseFieldFrom(info, field, fieldKey));
     }
 
     final String modelName = info.modelType.name;
-    final String modelString = info.modelString ?? modelName;
 
-    return new WriterInfo(
-        info.name,
-        modelName,
-        modelString,
-        tos,
-        froms,
-        info.processors,
-        info.model.ctorArguments,
-        info.model.ctorNamedArguments);
+    return new WriterInfo(info.name, modelName, tos, froms, info.processors,
+        info.model.ctorArguments, info.model.ctorNamedArguments);
   }
 }

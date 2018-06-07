@@ -8,54 +8,44 @@ part of 'immutable.dart';
 
 abstract class _$FooSerializer implements Serializer<Foo> {
   @override
-  Map<String, dynamic> toMap(Foo model,
-      {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(Foo model) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
       setNullableValue(ret, 'bar', model.bar);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  Foo fromMap(Map<String, dynamic> map, {Foo model}) {
+  Foo fromMap(Map map, {Foo model}) {
     if (map == null) {
       return null;
     }
     final obj = model ?? new Foo(map['bar'] as String);
     return obj;
   }
-
-  @override
-  String modelString() => 'Foo';
 }
 
 abstract class _$FooNamedSerializer implements Serializer<FooNamed> {
   @override
-  Map<String, dynamic> toMap(FooNamed model,
-      {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(FooNamed model) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
       setNullableValue(ret, 'bar', model.bar);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  FooNamed fromMap(Map<String, dynamic> map, {FooNamed model}) {
+  FooNamed fromMap(Map map, {FooNamed model}) {
     if (map == null) {
       return null;
     }
     final obj = model ?? new FooNamed(bar: map['bar'] as String);
     return obj;
   }
-
-  @override
-  String modelString() => 'FooNamed';
 }
 
 abstract class _$ComplexConstructorSerializer
@@ -64,8 +54,7 @@ abstract class _$ComplexConstructorSerializer
   final _fooNamedSerializer = new FooNamedSerializer();
 
   @override
-  Map<String, dynamic> toMap(ComplexConstructor model,
-      {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(ComplexConstructor model) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -74,23 +63,15 @@ abstract class _$ComplexConstructorSerializer
       setNullableValue(ret, 'is_okay', model.isOkay);
       setNullableValue(ret, 'toto', model.toto);
       setNullableValue(
-          ret,
-          'foo_object',
-          _fooSerializer.toMap(model.fooObject,
-              withType: withType, typeKey: typeKey));
-      setNullableValue(
-          ret,
-          'fooNamedObject',
-          _fooNamedSerializer.toMap(model.fooNamedObject,
-              withType: withType, typeKey: typeKey));
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
+          ret, 'foo_object', _fooSerializer.toMap(model.fooObject));
+      setNullableValue(ret, 'fooNamedObject',
+          _fooNamedSerializer.toMap(model.fooNamedObject));
     }
     return ret;
   }
 
   @override
-  ComplexConstructor fromMap(Map<String, dynamic> map,
-      {ComplexConstructor model}) {
+  ComplexConstructor fromMap(Map map, {ComplexConstructor model}) {
     if (map == null) {
       return null;
     }
@@ -103,7 +84,4 @@ abstract class _$ComplexConstructorSerializer
                 .fromMap(map['fooNamedObject'] as Map<String, dynamic>));
     return obj;
   }
-
-  @override
-  String modelString() => 'ComplexConstructor';
 }

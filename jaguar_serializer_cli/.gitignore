@@ -11,3 +11,4 @@ doc/api/
 .idea
 jaguar_serializer_cli.iml
 .dart_tool
+*.jser.dart

@@ -1,25 +1,22 @@
-import 'dart:convert';
-
-import '../serializer/serializer.dart';
 import '../serializer/repo.dart';
 
 /// Repository that serialize/deserialize using provided Codec.
 ///
 /// Same usage as [SerializerRepo]
-class CodecRepo extends SerializerRepo {
-  final Codec codec;
-
-  CodecRepo(this.codec,
-      {List<Serializer> serializers,
-      String typeKey: defaultTypeInfoKey,
-      bool withType})
-      : super(serializers: serializers, typeKey: typeKey, withType: withType);
-
+abstract class CodecRepo<S> extends SerializerRepo {
   ///@nodoc
   /// use [serialize]
-  dynamic encode(dynamic object) => codec.encode(object);
+  S encode(dynamic object);
 
   ///@nodoc
   /// use [deserialize]
-  dynamic decode(dynamic object) => codec.decode(object as String);
+  dynamic decode<T>(S object);
+
+  ///@nodoc
+  /// use [deserialize]
+  T decodeOne<T>(S object);
+
+  ///@nodoc
+  /// use [deserialize]
+  List<T> decodeList<T>(S object);
 }

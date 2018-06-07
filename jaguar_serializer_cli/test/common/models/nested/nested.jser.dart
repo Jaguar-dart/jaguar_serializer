@@ -8,19 +8,17 @@ part of 'nested.dart';
 
 abstract class _$InnerModel1Serializer implements Serializer<InnerModel1> {
   @override
-  Map<String, dynamic> toMap(InnerModel1 model,
-      {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(InnerModel1 model) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
       setNullableValue(ret, 'number', model.number);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  InnerModel1 fromMap(Map<String, dynamic> map, {InnerModel1 model}) {
+  InnerModel1 fromMap(Map map, {InnerModel1 model}) {
     if (map == null) {
       return null;
     }
@@ -28,26 +26,21 @@ abstract class _$InnerModel1Serializer implements Serializer<InnerModel1> {
     obj.number = map['number'] as int;
     return obj;
   }
-
-  @override
-  String modelString() => 'InnerModel1';
 }
 
 abstract class _$InnerModel2Serializer implements Serializer<InnerModel2> {
   @override
-  Map<String, dynamic> toMap(InnerModel2 model,
-      {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(InnerModel2 model) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
       setNullableValue(ret, 'name', model.name);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  InnerModel2 fromMap(Map<String, dynamic> map, {InnerModel2 model}) {
+  InnerModel2 fromMap(Map map, {InnerModel2 model}) {
     if (map == null) {
       return null;
     }
@@ -55,9 +48,6 @@ abstract class _$InnerModel2Serializer implements Serializer<InnerModel2> {
     obj.name = map['name'] as String;
     return obj;
   }
-
-  @override
-  String modelString() => 'InnerModel2';
 }
 
 abstract class _$OuterModelSerializer implements Serializer<OuterModel> {
@@ -65,8 +55,7 @@ abstract class _$OuterModelSerializer implements Serializer<OuterModel> {
   final _innerModel2Serializer = new InnerModel2Serializer();
 
   @override
-  Map<String, dynamic> toMap(OuterModel model,
-      {bool withType: false, String typeKey}) {
+  Map<String, dynamic> toMap(OuterModel model) {
     Map<String, dynamic> ret;
     if (model != null) {
       ret = <String, dynamic>{};
@@ -74,24 +63,19 @@ abstract class _$OuterModelSerializer implements Serializer<OuterModel> {
       setNullableValue(
           ret,
           'list',
-          nullableIterableMapper(
-              model.list,
-              (val) => _innerModel1Serializer.toMap(val as InnerModel1,
-                  withType: withType, typeKey: typeKey)));
+          nullableIterableMapper(model.list,
+              (val) => _innerModel1Serializer.toMap(val as InnerModel1)));
       setNullableValue(
           ret,
           'map',
-          nullableMapMaker(
-              model.map,
-              (val) => _innerModel2Serializer.toMap(val as InnerModel2,
-                  withType: withType, typeKey: typeKey)));
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
+          nullableMapMaker(model.map,
+              (val) => _innerModel2Serializer.toMap(val as InnerModel2)));
     }
     return ret;
   }
 
   @override
-  OuterModel fromMap(Map<String, dynamic> map, {OuterModel model}) {
+  OuterModel fromMap(Map map, {OuterModel model}) {
     if (map == null) {
       return null;
     }
@@ -103,7 +87,4 @@ abstract class _$OuterModelSerializer implements Serializer<OuterModel> {
         (val) => _innerModel2Serializer.fromMap(val as Map<String, dynamic>));
     return obj;
   }
-
-  @override
-  String modelString() => 'OuterModel';
 }

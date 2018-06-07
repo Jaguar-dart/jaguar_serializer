@@ -1,4 +1,4 @@
-import 'common/models/field_format/field_format.dart';
+import '../../common/models/field_format/field_format.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -6,14 +6,9 @@ void main() {
   test("field format", () {
     final obj = new FieldFormatTest();
 
-    final map = _serializer.serialize(obj) as Map<String, dynamic>;
+    final map = _serializer.toMap(obj);
 
     expect(map["foo_bar"], equals("42"));
     expect(map["my_field"], equals(42));
-
-    final decoded = _serializer.fromMap(map);
-
-    expect(decoded.fooBar, equals("42"));
-    expect(decoded.myField, equals(42));
   });
 }

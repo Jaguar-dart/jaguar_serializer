@@ -20,20 +20,14 @@ abstract class _$UserViewSerializer implements Serializer<User> {
       setNullableValue(ret, 'Email', model.email);
       setNullableValue(ret, 'N', model.name);
       setNullableValue(ret, 'DoB', _dateTimeSerializer.serialize(model.dob));
-      setNullableValue(
-          ret,
-          'Book',
-          _bookViewSerializer.toMap(model.book,
-              withType: withType, typeKey: typeKey));
+      setNullableValue(ret, 'Book', _bookViewSerializer.toMap(model.book));
       setNullableValue(ret, 'listStr',
           nullableIterableMapper(model.listStr, (val) => val as String));
       setNullableValue(
           ret,
           'listBook',
           nullableIterableMapper(
-              model.listBook,
-              (val) => _bookViewSerializer.toMap(val as Book,
-                  withType: withType, typeKey: typeKey)));
+              model.listBook, (val) => _bookViewSerializer.toMap(val as Book)));
       setNullableValue(
           ret, 'map', nullableMapMaker(model.map, (val) => val as String));
       setNullableValue(
@@ -47,16 +41,13 @@ abstract class _$UserViewSerializer implements Serializer<User> {
           ret,
           'mapBook',
           nullableMapMaker(
-              model.mapBook,
-              (val) => _bookViewSerializer.toMap(val as Book,
-                  withType: withType, typeKey: typeKey)));
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
+              model.mapBook, (val) => _bookViewSerializer.toMap(val as Book)));
     }
     return ret;
   }
 
   @override
-  User fromMap(Map<String, dynamic> map, {User model}) {
+  User fromMap(Map map, {User model}) {
     if (map == null) {
       return null;
     }
@@ -80,7 +71,4 @@ abstract class _$UserViewSerializer implements Serializer<User> {
         (val) => _bookViewSerializer.fromMap(val as Map<String, dynamic>));
     return obj;
   }
-
-  @override
-  String modelString() => 'User';
 }

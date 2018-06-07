@@ -30,7 +30,7 @@ void main() {
   SerializerRepo serializer = new JsonRepo();
   serializer.add(new UserViewSerializer());
 
-  User user = serializer.deserialize(kUserMap1, type: User);
+  User user = serializer.from<User>(kUserMap1);
 
-  print(serializer.serialize(user));
+  print(serializer.to(user));
 }

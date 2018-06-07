@@ -1,3 +1,5 @@
+import 'package:date_format/date_format.dart';
+
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
 ///
@@ -125,6 +127,22 @@ class DateTimeProcessor implements FieldProcessor<DateTime, String> {
   @override
   String serialize(DateTime value) =>
       value != null ? _toUtc(value, isUtc).toIso8601String() : null;
+
+  @override
+  DateTime deserialize(String value) =>
+      value != null ? DateTime.parse(value) : null;
+}
+
+class DateProcessor implements FieldProcessor<DateTime, String> {
+  final bool isUtc;
+
+  const DateProcessor({this.isUtc: false});
+
+  const DateProcessor.utc() : isUtc = true;
+
+  @override
+  String serialize(DateTime value) =>
+      value != null ? formatDate(value, [yyyy, '-', mm, '-', dd]) : null;
 
   @override
   DateTime deserialize(String value) =>

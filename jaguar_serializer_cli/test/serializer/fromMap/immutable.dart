@@ -1,5 +1,5 @@
 import "package:test/test.dart";
-import "common/models/immutable/immutable.dart";
+import "../../common/models/immutable/immutable.dart";
 
 void main() {
   group("Immutable", () {

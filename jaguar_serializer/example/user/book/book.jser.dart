@@ -16,13 +16,12 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
       setNullableValue(ret, 'id', model.id);
       setNullableValue(ret, 'name', model.name);
       setNullableValue(ret, 'publishedYear', model.publishedYear);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  Book fromMap(Map<String, dynamic> map, {Book model}) {
+  Book fromMap(Map map, {Book model}) {
     if (map == null) {
       return null;
     }
@@ -32,7 +31,4 @@ abstract class _$BookViewSerializer implements Serializer<Book> {
     obj.publishedYear = map['publishedYear'] as int;
     return obj;
   }
-
-  @override
-  String modelString() => 'Book';
 }

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'basic_main.dart';
+part of 'model.dart';
 
 // **************************************************************************
 // Generator: JaguarSerializerGenerator
@@ -24,17 +24,14 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
       setNullableValue(
           ret,
           'address',
-          nullableIterableMapper(
-              model.address,
-              (val) => _addressSerializer.toMap(val as Address,
-                  withType: withType, typeKey: typeKey)));
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
+          nullableIterableMapper(model.address,
+              (val) => _addressSerializer.toMap(val as Address)));
     }
     return ret;
   }
 
   @override
-  Player fromMap(Map<String, dynamic> map, {Player model}) {
+  Player fromMap(Map map, {Player model}) {
     if (map == null) {
       return null;
     }
@@ -49,9 +46,6 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
         (val) => _addressSerializer.fromMap(val as Map<String, dynamic>));
     return obj;
   }
-
-  @override
-  String modelString() => 'Player';
 }
 
 abstract class _$AddressSerializer implements Serializer<Address> {
@@ -65,13 +59,12 @@ abstract class _$AddressSerializer implements Serializer<Address> {
       setNullableValue(ret, 'zipcode', model.zipcode);
       setNullableValue(ret, 'country', model.country);
       setNullableValue(ret, 'city', model.city);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  Address fromMap(Map<String, dynamic> map, {Address model}) {
+  Address fromMap(Map map, {Address model}) {
     if (map == null) {
       return null;
     }
@@ -82,7 +75,4 @@ abstract class _$AddressSerializer implements Serializer<Address> {
     obj.city = map['city'] as String;
     return obj;
   }
-
-  @override
-  String modelString() => 'Address';
 }

@@ -34,9 +34,6 @@ class Writer {
 
     _fromWriter();
 
-    _w.writeln('@override');
-    _w.writeln("String modelString() => '${info.modelString}';");
-
     _w.writeln('}');
   }
 
@@ -97,7 +94,7 @@ class Writer {
   void _toWriter() {
     _w.writeln('@override');
     _w.writeln(
-        'Map<String, dynamic> toMap($modelName model, {bool withType: false, String typeKey}) {');
+        'Map<String, dynamic> toMap($modelName model) {');
     _w.writeln(r'Map<String, dynamic> ret;');
 
     _w.writeln('if(model != null) {');
@@ -105,7 +102,6 @@ class Writer {
     for (FieldTo item in info.to) {
       _toItemWriter(item);
     }
-    _w.writeln('setTypeKeyValue(typeKey, modelString(), withType, ret);');
     _w.writeln('}');
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
@@ -146,8 +142,7 @@ class Writer {
 
   void _fromWriter() {
     _w.writeln('@override');
-    _w.writeln(
-        '$modelName fromMap(Map<String, dynamic> map, {$modelName model}) {');
+    _w.writeln('$modelName fromMap(Map map, {$modelName model}) {');
     _w.writeln(r'if(map == null) {');
     _w.writeln(r'return null;');
     _w.writeln(r'}');

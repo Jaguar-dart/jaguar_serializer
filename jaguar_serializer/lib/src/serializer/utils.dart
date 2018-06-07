@@ -1,5 +1,3 @@
-import 'repo.dart';
-
 typedef String KeyMaker<Key>(Key key);
 typedef Value ValueMaker<Value>(value);
 
@@ -35,10 +33,3 @@ List<T> nullableIterableMapper<T>(Iterable values, T callback(value)) =>
 List<T> nonNullableIterableMapper<T>(
         Iterable values, T callback(value), List<T> defaultValues) =>
     nullableIterableMapper(values, callback) ?? defaultValues;
-
-void setTypeKeyValue(String typeKey, String modelString, bool withType,
-    Map<String, dynamic> map) {
-  if (modelString != null && withType) {
-    map[typeKey ?? defaultTypeInfoKey] = modelString;
-  }
-}

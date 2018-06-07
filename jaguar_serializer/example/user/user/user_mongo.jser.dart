@@ -21,20 +21,14 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
       setNullableValue(ret, 'email', model.email);
       setNullableValue(ret, 'N', model.name);
       setNullableValue(ret, 'dob', _dateTimeSerializer.serialize(model.dob));
-      setNullableValue(
-          ret,
-          'book',
-          _bookMongoSerializer.toMap(model.book,
-              withType: withType, typeKey: typeKey));
+      setNullableValue(ret, 'book', _bookMongoSerializer.toMap(model.book));
       setNullableValue(ret, 'listStr',
           nullableIterableMapper(model.listStr, (val) => val as String));
       setNullableValue(
           ret,
           'listBook',
-          nullableIterableMapper(
-              model.listBook,
-              (val) => _bookMongoSerializer.toMap(val as Book,
-                  withType: withType, typeKey: typeKey)));
+          nullableIterableMapper(model.listBook,
+              (val) => _bookMongoSerializer.toMap(val as Book)));
       setNullableValue(
           ret, 'map', nullableMapMaker(model.map, (val) => val as String));
       setNullableValue(
@@ -48,17 +42,14 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
           ret,
           'mapBook',
           nullableMapMaker(
-              model.mapBook,
-              (val) => _bookMongoSerializer.toMap(val as Book,
-                  withType: withType, typeKey: typeKey)));
+              model.mapBook, (val) => _bookMongoSerializer.toMap(val as Book)));
       setNullableValue(ret, 'password', model.password);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  User fromMap(Map<String, dynamic> map, {User model}) {
+  User fromMap(Map map, {User model}) {
     if (map == null) {
       return null;
     }
@@ -84,7 +75,4 @@ abstract class _$UserMongoSerializer implements Serializer<User> {
     obj.password = map['password'] as String;
     return obj;
   }
-
-  @override
-  String modelString() => 'User';
 }

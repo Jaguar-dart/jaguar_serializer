@@ -7,3 +7,6 @@ builders:
     build_extensions: {".dart": [".jser.dart"]}
     auto_apply: root_package
     build_to: source
+
+sources:
+  - "test/common/**"

@@ -75,7 +75,7 @@ class ToItemWriter {
       if (castValue) {
         _w.write(" as ${leaf.type}");
       }
-      _w.write(', withType: withType, typeKey: typeKey)');
+      _w.write(')');
     }
 
     return _w.toString();

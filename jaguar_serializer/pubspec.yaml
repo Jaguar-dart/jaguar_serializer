@@ -1,5 +1,5 @@
 name: jaguar_serializer
-version: 1.0.0-dev9
+version: 1.2.1
 description: Platform and format agnostic serializer built using source_gen
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
@@ -11,13 +11,16 @@ documentation:
 environment:
   sdk: ">=2.0.0-dev <2.0.0"
 
+dependencies:
+  date_format: ^1.0.4
+
 dev_dependencies:
   browser:
   test:
   mongo_dart:
   intl: ">=0.15.0 <0.16.0"
-  yamlicious: ^0.0.5 
-  yaml: ">=2.1.10 <3.0.0"
+  # yamlicious: ^0.0.5
+  # yaml: ">=2.1.10 <3.0.0"
   build_runner: ^0.8.0
   jaguar_serializer_cli:
     path: ../jaguar_serializer_cli

@@ -4,14 +4,6 @@ const isSerializer = const TypeChecker.fromRuntime(Serializer);
 
 const isGenSerializer = const TypeChecker.fromRuntime(GenSerializer);
 
-const isEncodeOnly = const TypeChecker.fromRuntime(EncodeOnly);
-
-const isDecodeOnly = const TypeChecker.fromRuntime(DecodeOnly);
-
-const isEnDecode = const TypeChecker.fromRuntime(EnDecode);
-
-const isIgnore = const TypeChecker.fromRuntime(Ignore);
-
 const isList = const TypeChecker.fromRuntime(List);
 
 const isMap = const TypeChecker.fromRuntime(Map);
@@ -26,7 +18,7 @@ const isNum = const TypeChecker.fromRuntime(num);
 
 const isBool = const TypeChecker.fromRuntime(bool);
 
-const isProperty = const TypeChecker.fromRuntime(Property);
+const isProperty = const TypeChecker.fromRuntime(Field);
 
 const isFieldProcessor = const TypeChecker.fromRuntime(FieldProcessor);
 

@@ -17,13 +17,12 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
       setNullableValue(ret, 'E', model.email);
       setNullableValue(ret, 'A', model.age);
       setNullableValue(ret, 'S', model.score);
-      setTypeKeyValue(typeKey, modelString(), withType, ret);
     }
     return ret;
   }
 
   @override
-  Player fromMap(Map<String, dynamic> map, {Player model}) {
+  Player fromMap(Map map, {Player model}) {
     if (map == null) {
       return null;
     }
@@ -34,7 +33,4 @@ abstract class _$PlayerJsonSerializer implements Serializer<Player> {
     obj.score = map['S'] as int;
     return obj;
   }
-
-  @override
-  String modelString() => 'Player';
 }
