@@ -24,7 +24,7 @@ class SimpleSerializerRename extends Serializer<Simple>
 
 @GenSerializer(fields: const {
   'stringF': const EnDecode(),
-  'intF': const EncodeOnly(),
+  'intF': const Field.encode(),
 }, includeByDefault: false)
 class SimpleSerializerExcludeDef extends Serializer<Simple>
     with _$SimpleSerializerExcludeDef {}

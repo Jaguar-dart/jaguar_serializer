@@ -108,51 +108,120 @@ class Field<T> {
       : encodeTo = null,
         decodeFrom = null,
         isNullable = null,
-        defaultsTo = null,
         processor = null,
+        defaultsTo = null,
         valueFromConstructor = false,
         dontEncode = true,
         dontDecode = true;
 }
 
 /// Annotation used to request encoding and decoding of a field in model
-class EnDecode<T> extends Field<T> {
+class EnDecode<T> implements Field<T> {
+  /// Alias used while encoding
+  final String encodeTo;
+
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<T, dynamic> processor;
+
+  /// The value used when the field has null value
+  final T defaultsTo;
+  final bool valueFromConstructor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
   const EnDecode(
       {String alias,
-      bool isNullable,
-      FieldProcessor<T, dynamic> processor,
-      T defaultsTo,
-      bool valueFromConstructor})
-      : super(
-            encodeTo: alias,
-            decodeFrom: alias,
-            isNullable: isNullable,
-            processor: processor,
-            defaultsTo: defaultsTo,
-            valueFromConstructor: valueFromConstructor);
+      this.isNullable,
+      this.processor,
+      this.defaultsTo,
+      this.valueFromConstructor})
+      : encodeTo = alias,
+        decodeFrom = alias,
+        dontDecode = false,
+        dontEncode = false;
 }
 
 /// Annotation to ignore a field while encoding or decoding
-class Ignore extends Field<dynamic> {
-  const Ignore() : super(dontEncode: true, dontDecode: true);
+class Ignore implements Field<dynamic> {
+  /// Alias used while encoding
+  final String encodeTo;
+
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<dynamic, dynamic> processor;
+
+  /// The value used when the field has null value
+  final dynamic defaultsTo;
+  final bool valueFromConstructor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
+  const Ignore()
+      : encodeTo = null,
+        decodeFrom = null,
+        isNullable = null,
+        processor = null,
+        defaultsTo = null,
+        valueFromConstructor = null,
+        dontEncode = true,
+        dontDecode = true;
 }
 
 /// Annotation used to request encoding and decoding of a field in model
 /// shortcup for `const EnDecode(alias: "key")`
 /// become `const Alias("key")`
-class Alias<T> extends Field<T> {
+class Alias<T> implements Field<T> {
+  /// Alias used while encoding
+  final String encodeTo;
+
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<T, dynamic> processor;
+
+  /// The value used when the field has null value
+  final T defaultsTo;
+  final bool valueFromConstructor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
   const Alias(
     String alias, {
-    bool isNullable,
-    FieldProcessor<T, dynamic> processor,
-    T defaultsTo,
-    bool valueFromConstructor,
-  }) : super(
-            encodeTo: alias,
-            decodeFrom: alias,
-            isNullable: isNullable,
-            processor: processor,
-            defaultsTo: defaultsTo);
+    this.isNullable,
+    this.processor,
+    this.defaultsTo,
+    this.valueFromConstructor,
+  })  : encodeTo = alias,
+        decodeFrom = alias,
+        dontDecode = false,
+        dontEncode = false;
 }
 
 const ignore = const Ignore();

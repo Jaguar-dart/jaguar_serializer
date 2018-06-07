@@ -203,7 +203,7 @@ class AnnotationParser {
 
   /// Parses fields of the GenSerializer
   void _parseFields() {
-    Map<DartObject, DartObject> map = obj.peek('fields')?.mapValue;
+    Map<DartObject, DartObject> map = obj.peek('fields').mapValue;
     for (DartObject dKey in map.keys)
       _processField(dKey.toStringValue(), map[dKey]);
   }
@@ -223,8 +223,8 @@ class AnnotationParser {
     fields[key] = new $info.Field(
       name: key,
       type: _getTypeOfField(key),
-      dontEncode: dV.getField('dontEncode')?.toBoolValue(),
-      dontDecode: dV.getField('dontDecode')?.toBoolValue(),
+      dontEncode: dV.getField('dontEncode').toBoolValue(),
+      dontDecode: dV.getField('dontDecode').toBoolValue(),
       encodeTo: _getStringField(dV, 'encodeTo') ?? key,
       decodeFrom: _getStringField(dV, 'decodeFrom') ?? key,
       processor: processor,
