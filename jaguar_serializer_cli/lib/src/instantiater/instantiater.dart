@@ -42,11 +42,11 @@ class AnnotationParser {
   AnnotationParser(this.element, this.obj);
 
   SerializerInfo parse() {
-    globalNullable = obj.peek('nullableFields')?.boolValue ?? false;
+    globalNullable = obj.peek('nullableFields').boolValue;
+    includeByDefault = obj.peek('includeByDefault').boolValue;
 
     _parseSerializers();
     _parseModelType();
-    includeByDefault = obj.peek('includeByDefault').boolValue;
     _parseIgnore();
     _parseFields();
     _parseFieldFormatters();
@@ -222,7 +222,7 @@ class AnnotationParser {
 
     fields[key] = new $info.Field(
       name: key,
-      type: null, // TODO
+      type: _getTypeOfField(key),
       dontEncode: dV.getField('dontEncode')?.toBoolValue(),
       dontDecode: dV.getField('dontDecode')?.toBoolValue(),
       encodeTo: _getStringField(dV, 'encodeTo') ?? key,
@@ -255,6 +255,11 @@ class AnnotationParser {
     }
   }
   */
+
+  InterfaceType _getTypeOfField(String name) {
+    return (getters[name]?.returnType ?? setters[name]?.parameters.first.type)
+        as InterfaceType;
+  }
 }
 
 bool _notNull(DartObject obj) => obj != null && obj.isNull == false;
@@ -265,8 +270,7 @@ String _getStringField(DartObject v, String name) =>
 String _mapToString(DartObject v) => v?.toStringValue();
 
 String _parseFieldDefaultValue(DartObject dV) {
-  if (dV == null) return null;
-  print(dV.type);
+  if (!_notNull(dV)) return null;
   if (isString.isExactlyType(dV.type)) {
     return '"${dV.toStringValue()}"';
   } else if (isBool.isExactlyType(dV.type)) {
