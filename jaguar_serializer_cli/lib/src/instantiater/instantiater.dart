@@ -79,6 +79,9 @@ class AnnotationParser {
       String name = field.displayName;
       if (name == 'runtimeType') continue;
       if (name == 'hashCode') continue;
+      if (fields.containsKey(name)) continue;
+
+      PropertyAccessorElement other;
 
       InterfaceType type;
       bool dontEncode = false;
@@ -87,19 +90,37 @@ class AnnotationParser {
       if (field.isGetter) {
         getters[name] = field;
         type = field.returnType as InterfaceType;
+        other = accessors.firstWhere((p) => p.displayName == name && p.isSetter,
+            orElse: () => null);
+        if (other != null)
+          setters[name] = other;
+        else
+          dontDecode = true;
       } else {
-        dontEncode = true;
+        setters[name] = field;
+        type = field.type.parameters.first.type as InterfaceType;
+
+        other = accessors.firstWhere((p) => p.displayName == name && p.isGetter,
+            orElse: () => null);
+        if (other != null)
+          getters[name] = other;
+        else
+          dontEncode = true;
       }
 
       if (field.isSetter) {
-        setters[field.name] = field;
-        type = field.type.parameters.first.type as InterfaceType;
       } else {
         dontDecode = true;
       }
 
       DartObject annot = field.metadata
           .firstWhere(
+              (ElementAnnotation a) =>
+                  isProperty.isSuperOf(a.computeConstantValue().type.element),
+              orElse: () => null)
+          ?.constantValue;
+      annot ??= other?.metadata
+          ?.firstWhere(
               (ElementAnnotation a) =>
                   isProperty.isSuperOf(a.computeConstantValue().type.element),
               orElse: () => null)
@@ -135,7 +156,7 @@ class AnnotationParser {
           decodeFrom: decodeFrom,
           processor: null, // TODO
           provider: null, // TODO
-          isNullable: nullable,
+          isNullable: nullable && defaultValue == null && !fromConstructor,
           defaultValue: defaultValue,
           fromConstructor: fromConstructor,
         );
@@ -166,7 +187,7 @@ class AnnotationParser {
           provider: null,
           isNullable: null,
           defaultValue: null,
-          fromConstructor: null);
+          fromConstructor: false);
     }
   }
 
@@ -220,6 +241,11 @@ class AnnotationParser {
       // TODO verify if it is valid FieldProcessor type
     }
 
+    bool isNullable =
+        dV.getField('isNullable')?.toBoolValue() ?? globalNullable;
+    String defVal = _parseFieldDefaultValue(dV.getField('defaultsTo'));
+    bool valFromCon = dV.getField('valueFromConstructor').toBoolValue();
+
     fields[key] = new $info.Field(
       name: key,
       type: _getTypeOfField(key),
@@ -229,10 +255,9 @@ class AnnotationParser {
       decodeFrom: _getStringField(dV, 'decodeFrom') ?? key,
       processor: processor,
       provider: null, // TODO
-      isNullable: dV.getField('isNullable')?.toBoolValue() ?? globalNullable,
-      defaultValue: _parseFieldDefaultValue(dV.getField('defaultsTo')),
-      fromConstructor:
-          dV.getField('valueFromConstructor')?.toBoolValue() ?? false,
+      isNullable: isNullable && defVal != null && !valFromCon,
+      defaultValue: defVal,
+      fromConstructor: valFromCon,
     );
   }
 

@@ -78,7 +78,7 @@ class Field<T> {
       this.isNullable,
       this.defaultsTo,
       this.processor,
-      this.valueFromConstructor,
+      this.valueFromConstructor: false,
       this.dontDecode: false,
       this.dontEncode: false});
 
@@ -87,7 +87,7 @@ class Field<T> {
       this.isNullable,
       this.defaultsTo,
       this.processor,
-      this.valueFromConstructor})
+      this.valueFromConstructor: false})
       : encodeTo = alias,
         dontEncode = false,
         decodeFrom = null,
@@ -98,7 +98,7 @@ class Field<T> {
       this.isNullable,
       this.defaultsTo,
       this.processor,
-      this.valueFromConstructor})
+      this.valueFromConstructor: false})
       : decodeFrom = alias,
         dontEncode = true,
         encodeTo = null,
@@ -144,7 +144,7 @@ class EnDecode<T> implements Field<T> {
       this.isNullable,
       this.processor,
       this.defaultsTo,
-      this.valueFromConstructor})
+      this.valueFromConstructor: false})
       : encodeTo = alias,
         decodeFrom = alias,
         dontDecode = false,
@@ -181,7 +181,7 @@ class Ignore implements Field<dynamic> {
         isNullable = null,
         processor = null,
         defaultsTo = null,
-        valueFromConstructor = null,
+        valueFromConstructor = false,
         dontEncode = true,
         dontDecode = true;
 }
@@ -217,7 +217,7 @@ class Alias<T> implements Field<T> {
     this.isNullable,
     this.processor,
     this.defaultsTo,
-    this.valueFromConstructor,
+    this.valueFromConstructor: false,
   })  : encodeTo = alias,
         decodeFrom = alias,
         dontDecode = false,
