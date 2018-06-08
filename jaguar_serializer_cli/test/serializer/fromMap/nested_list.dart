@@ -1,5 +1,5 @@
 import 'package:test/test.dart';
-import '../../common/nested/nested.dart';
+import '../../models/nested/nested.dart';
 
 void main() {
   group("Serializer", () {

@@ -33,7 +33,7 @@ class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
       SerializerInfo info =
           new AnnotationParser(element as ClassElement, annotation).parse();
 
-      // todo check info validity
+      // TODO check info validity
       // for example valueFromConstructor == true && isNullable == false is not possible
 
       final writer = new Writer(info);

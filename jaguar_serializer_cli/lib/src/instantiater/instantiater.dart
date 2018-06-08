@@ -50,6 +50,13 @@ class AnnotationParser {
     _parseIgnore();
     _parseFields();
     _parseFieldFormatters();
+
+    for ($info.Field f in fields.values) {
+      if (f.dontEncode && f.dontDecode) continue;
+      if (f.dontEncode && f.dontDecode) continue;
+      f.typeInfo = _expandTypeInfo(f.type, f.processor);
+    }
+
     // TODO _makeCtor(modelType.element as ClassElement, ret.model);
     return new SerializerInfo(element.name, modelClass.displayName, fields);
   }
@@ -108,11 +115,6 @@ class AnnotationParser {
           dontEncode = true;
       }
 
-      if (field.isSetter) {
-      } else {
-        dontDecode = true;
-      }
-
       DartObject annot = field.metadata
           .firstWhere(
               (ElementAnnotation a) =>
@@ -130,7 +132,8 @@ class AnnotationParser {
       String decodeFrom = name;
       bool nullable = globalNullable;
       String defaultValue;
-      bool fromConstructor;
+      bool fromConstructor = false;
+      FieldProcessorInfo processor;
       if (annot != null) {
         dontEncode =
             annot.getField('dontEncode').toBoolValue() ? true : dontEncode;
@@ -144,6 +147,7 @@ class AnnotationParser {
         nullable = annot.getField('isNullable').toBoolValue() ?? nullable;
         defaultValue = _parseFieldDefaultValue(annot.getField('defaultsTo'));
         fromConstructor = annot.getField('valueFromConstructor').toBoolValue();
+        processor = _parseFieldProcessor(annot.getField('processor'));
       }
 
       if (includeByDefault || annot != null) {
@@ -154,7 +158,7 @@ class AnnotationParser {
           type: type,
           encodeTo: encodeTo,
           decodeFrom: decodeFrom,
-          processor: null, // TODO
+          processor: processor,
           provider: null, // TODO
           isNullable: nullable && defaultValue == null && !fromConstructor,
           defaultValue: defaultValue,
@@ -230,17 +234,10 @@ class AnnotationParser {
   }
 
   void _processField(String key, DartObject dV) {
-    FieldProcessorInfo processor;
-    if (_notNull(dV.getField('processor'))) {
-      final pField = dV.getField('processor').type;
-      final supertype = (pField.element as ClassElement).allSupertypes.last;
-      final deserializedType = supertype.typeArguments[0].displayName;
-      final serializedType = supertype.typeArguments[1].displayName;
-      processor = new FieldProcessorInfo(
-          pField.displayName, serializedType, deserializedType);
-      // TODO verify if it is valid FieldProcessor type
-    }
-
+    FieldProcessorInfo processor =
+        _parseFieldProcessor(dV.getField('processor'));
+    // TODO verify if it is valid FieldProcessor type
+    // TODO use default processor for [DateTime] and [Duration]
     bool isNullable =
         dV.getField('isNullable')?.toBoolValue() ?? globalNullable;
     String defVal = _parseFieldDefaultValue(dV.getField('defaultsTo'));
@@ -255,7 +252,7 @@ class AnnotationParser {
       decodeFrom: _getStringField(dV, 'decodeFrom') ?? key,
       processor: processor,
       provider: null, // TODO
-      isNullable: isNullable && defVal != null && !valFromCon,
+      isNullable: isNullable && defVal == null && !valFromCon,
       defaultValue: defVal,
       fromConstructor: valFromCon,
     );
@@ -285,6 +282,54 @@ class AnnotationParser {
     return (getters[name]?.returnType ?? setters[name]?.parameters.first.type)
         as InterfaceType;
   }
+
+  TypeInfo _expandTypeInfo(InterfaceType type, FieldProcessorInfo processor) {
+    final TypeChecker typeChecker = new TypeChecker.fromStatic(type);
+    if (processor != null &&
+        typeChecker.isExactlyType(processor.deserialized)) {
+      return new ProcessedTypeInfo(processor.instantiationString,
+          processor.serializedStr, processor.deserializedStr);
+    }
+
+    if (isBuiltin(type)) {
+      return new BuiltinTypeInfo(type.displayName);
+    } else if (type is InterfaceType && isList.isExactlyType(type)) {
+      final param = type.typeArguments.first as InterfaceType;
+      return new ListTypeInfo(
+          _expandTypeInfo(param, processor), param.displayName);
+    } else if (type is InterfaceType && isMap.isExactlyType(type)) {
+      final key = type.typeArguments.first as InterfaceType;
+      final value = type.typeArguments[1] as InterfaceType;
+
+      if (key.displayName != "String") {
+        // TODO fix this
+        throw new JCException(
+            'Serializer only support "String" key for a Map!');
+      }
+      return new MapTypeInfo(_expandTypeInfo(key, processor), key.displayName,
+          _expandTypeInfo(value, processor), value.displayName);
+    } else if (type.isDynamic) {
+      throw new JCException('Cannot serialize "dynamic" type!');
+    } else if (type.isObject) {
+      throw new JCException('Cannot serialize "Object" type!');
+    }
+
+    if(providers.containsKey(type)) {
+      ClassElement ser = providers[type];
+      return new SerializedTypeInfo(ser.displayName, type.displayName);
+    }
+
+    if (processor == null && isDateTime.isExactlyType(type)) {
+      return new ProcessedTypeInfo(
+          'dateTimeUtcProcessor', 'String', 'DateTime');
+    }
+
+    if (processor == null && isDuration.isExactlyType(type)) {
+      return new ProcessedTypeInfo('durationProcessor', 'int', 'Duration');
+    }
+
+    throw new JCException('Cannot handle field!');
+  }
 }
 
 bool _notNull(DartObject obj) => obj != null && obj.isNull == false;
@@ -308,4 +353,9 @@ String _parseFieldDefaultValue(DartObject dV) {
     // TODO more specific
     throw new JCException("Invalid value for `defaultsTo`");
   }
+}
+
+FieldProcessorInfo _parseFieldProcessor(DartObject processor) {
+  if (!_notNull(processor)) return null;
+  return new FieldProcessorInfo(processor.type);
 }

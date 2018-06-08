@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:jaguar_serializer_cli/src/utils/string.dart';
+import 'package:jaguar_serializer_cli/src/utils/type_checkers.dart';
 
 class SerializerInfo {
   /// Name of the serializer
@@ -15,12 +16,20 @@ class SerializerInfo {
 }
 
 class FieldProcessorInfo {
-  final String instantiationString;
-  final String serializedType;
-  final String deserializedType;
+  String get instantiationString => self.element.displayName;
+  String get serializedStr => serialized.displayName;
+  String get deserializedStr => deserialized.displayName;
 
-  FieldProcessorInfo(
-      this.instantiationString, this.serializedType, this.deserializedType);
+  DartType get serialized => fp.typeArguments[1];
+  DartType get deserialized => fp.typeArguments[0];
+
+  final ParameterizedType self;
+  final InterfaceType fp;
+
+  FieldProcessorInfo(this.self)
+      : fp = (self.element as ClassElement)
+            .allSupertypes
+            .firstWhere((s) => isFieldProcessor.isExactlyType(s));
 }
 
 class Field {
@@ -52,6 +61,8 @@ class Field {
 
   TypeInfo typeInfo;
 
+
+
   // TODO field formatter
 
   Field(
@@ -71,7 +82,7 @@ class Field {
 
 abstract class TypeInfo {}
 
-class MapTypeInfo {
+class MapTypeInfo implements TypeInfo {
   final TypeInfo key;
 
   final String keyTypeString;
@@ -79,23 +90,32 @@ class MapTypeInfo {
   final TypeInfo value;
 
   final String valueTypeStr;
+  MapTypeInfo(this.key, this.keyTypeString, this.value, this.valueTypeStr);
 }
 
-class ListTypeInfo {
+class ListTypeInfo implements TypeInfo {
   final TypeInfo value;
-
   final String itemTypeStr;
+  ListTypeInfo(this.value, this.itemTypeStr);
 }
 
 abstract class LeafTypeInfo implements TypeInfo {}
+
+class BuiltinTypeInfo implements LeafTypeInfo {
+  final String typeStr;
+  BuiltinTypeInfo(this.typeStr);
+}
 
 class ProcessedTypeInfo implements LeafTypeInfo {
   final String instantiationString;
   final String serializedType;
   final String deserializedType;
+  ProcessedTypeInfo(
+      this.instantiationString, this.serializedType, this.deserializedType);
 }
 
 class SerializedTypeInfo implements LeafTypeInfo {
   final String instantiationString;
   final String type;
+  SerializedTypeInfo(this.instantiationString, this.type);
 }

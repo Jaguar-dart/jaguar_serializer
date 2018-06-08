@@ -17,14 +17,12 @@ Map<String, Value> nonNullableMapMaker<Value>(Map<String, dynamic> map,
         ValueMaker<Value> valueMaker, Map<String, Value> defaultValues) =>
     nullableMapMaker<Value>(map, valueMaker) ?? defaultValues;
 
-void setNullableValue(Map<String, dynamic> map, String key, dynamic value) {
+void setMapValue(Map<String, dynamic> map, String key, dynamic value) {
   map[key] = value;
 }
 
-void setNonNullableValue(Map<String, dynamic> map, String key, dynamic value) {
-  if (value != null) {
-    setNullableValue(map, key, value);
-  }
+void setMapValueIfNotNull(Map<String, dynamic> map, String key, dynamic value) {
+  if (value != null) map[key] = value;
 }
 
 List<T> nullableIterableMapper<T>(Iterable values, T callback(value)) =>

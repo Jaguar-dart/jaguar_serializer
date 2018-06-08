@@ -9,5 +9,4 @@ builders:
     build_to: source
 
 sources:
-  - "test/common/simple/simple.dart"
-  # - "test/common/**"
+  - "test/models/**"

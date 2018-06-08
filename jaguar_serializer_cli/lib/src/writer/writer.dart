@@ -3,17 +3,13 @@ library jaguar_serializer.generator.writer;
 
 import 'package:jaguar_serializer_cli/src/info/info.dart';
 import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
+import 'package:jaguar_serializer_cli/src/utils/string.dart';
 
 part 'to_item.dart';
-
 part 'from_item.dart';
 
 class Writer {
   final SerializerInfo info;
-
-  List<String> _providers = [];
-
-  List<String> _customsProcessors = [];
 
   final _w = new StringBuffer();
 
@@ -28,7 +24,7 @@ class Writer {
   void generate() {
     _w.writeln('abstract class _\$$name implements Serializer<$modelName> {');
 
-    _providerWriter();
+    _writeMakers();
 
     _toWriter();
 
@@ -37,62 +33,45 @@ class Writer {
     _w.writeln('}');
   }
 
-  /* TODO
-  void _serializedPropertyToWriter(PropertyTo to) {
-    if (to is SerializedPropertyTo) {
-      final fieldName = "_${firstCharToLowerCase(to.instantiationString)}";
-      if (_providers.contains(fieldName)) {
-        return;
-      }
+  List<String> _providers = [];
+
+  void _providerWriter(TypeInfo prop) {
+    if (prop is SerializedTypeInfo) {
+      final fieldName = "_${firstCharToLowerCase(prop.instantiationString)}";
+      if (_providers.contains(fieldName)) return;
       _providers.add(fieldName);
-      _w.writeln('final $fieldName = new ${to.instantiationString}();');
-    } else if (to is ListPropertyTo) {
-      _serializedPropertyToWriter(to.value);
-    } else if (to is MapPropertyTo) {
-      _serializedPropertyToWriter(to.key);
-      _serializedPropertyToWriter(to.value);
+      _w.writeln('final $fieldName = new ${prop.instantiationString}();');
+    } else if (prop is ListTypeInfo) {
+      _providerWriter(prop.value);
+    } else if (prop is MapTypeInfo) {
+      _providerWriter(prop.key);
+      _providerWriter(prop.value);
     }
   }
 
-  void _serializedPropertyFromWriter(PropertyFrom from) {
-    if (from is SerializedPropertyFrom) {
-      final fieldName = "_${firstCharToLowerCase(from.instantiationString)}";
-      if (_providers.contains(fieldName)) {
-        return;
+  void _writeMakers() {
+    {
+      List<String> written = [];
+      for (Field f in info.fields.values) {
+        if (f.processor == null) continue;
+        if (f.dontDecode && f.dontDecode) continue;
+        final fieldName =
+            "_${firstCharToLowerCase(f.processor.instantiationString)}";
+        if (!written.contains(fieldName)) {
+          written.add(fieldName);
+          _w.writeln(
+              'final $fieldName = const ${f.processor.instantiationString}();');
+        }
       }
-      _providers.add(fieldName);
-      _w.writeln('final $fieldName = new ${from.instantiationString}();');
-    } else if (from is ListPropertyFrom) {
-      _serializedPropertyFromWriter(from.value);
-    } else if (from is MapPropertyFrom) {
-      _serializedPropertyFromWriter(from.key);
-      _serializedPropertyFromWriter(from.value);
     }
-  }
 
-  void _serializedPropertyCustomWriter(
-      String key, FieldProcessorInfo customProcessor) {
-    final fieldName =
-        "_${firstCharToLowerCase(customProcessor.instantiationString)}";
-    if (!_customsProcessors.contains(fieldName)) {
-      _customsProcessors.add(fieldName);
-      _w.writeln(
-          'final $fieldName = const ${customProcessor.instantiationString}();');
+    {
+      _providers.clear();
+      for (Field f in info.fields.values) {
+        if (f.dontDecode && f.dontDecode) continue;
+        _providerWriter(f.typeInfo);
+      }
     }
-  }
-  */
-
-  void _providerWriter() {
-    /* TODO
-    info.processors.forEach(_serializedPropertyCustomWriter);
-    info.to.forEach((FieldTo item) {
-      _serializedPropertyToWriter(item.property);
-    });
-    info.from.forEach((FieldFrom item) {
-      _serializedPropertyFromWriter(item.property);
-    });
-    _w.writeln("");
-    */
   }
 
   void _toWriter() {
@@ -101,19 +80,36 @@ class Writer {
     _w.writeln('if(model == null) return null;');
     _w.writeln(r'Map<String, dynamic> ret = <String, dynamic>{};');
     for (Field item in info.fields.values.where((f) => !f.dontEncode)) {
-      _toItemWriter(item);
+      _w.writeln(new ToItemWriter(item).generate());
     }
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
   }
 
-  void _toItemWriter(Field item) {
-    _w.writeln(new ToItemWriter(item).generate());
+  void _fromWriter() {
+    _w.writeln('@override');
+    _w.writeln('$modelName fromMap(Map map) {');
+    _w.writeln(r'if(map == null) return null;');
+
+    _w.write("final obj = ");
+    _ctorWriter();
+    _w.writeln(';');
+
+    for (Field item in info.fields.values) {
+      if (item.dontDecode) continue;
+      if (item.isFinal) continue;
+      _w.write('obj.${item.name} = ');
+      _w.write(new FromItemWriter(item).generate());
+      _w.write(';');
+    }
+
+    _w.writeln(r'return obj;');
+    _w.writeln(r'}');
   }
 
   void _ctorWriter() {
-    /* TODO
     _w.write('new $modelName(');
+    /* TODO
     bool first = true;
     info.ctorArguments.forEach((param) {
       if (!first) {
@@ -130,44 +126,7 @@ class Writer {
       _w.write('${param.name}: ');
       _fromItemWriter(info.from.firstWhere((f) => f.name == param.name));
     });
-    _w.write(');');
     */
+    _w.write(')');
   }
-
-  void _fromWriter() {
-    /* TODO
-    _w.writeln('@override');
-    _w.writeln('$modelName fromMap(Map map, {$modelName model}) {');
-    _w.writeln(r'if(map == null) {');
-    _w.writeln(r'return null;');
-    _w.writeln(r'}');
-
-    _w.writeln("final obj = model ?? ");
-    _ctorWriter();
-
-    final froms = info.from.where((f) => f.isFinal != true);
-    for (FieldFrom item in froms) {
-      _w.write('obj.${item.name} = ');
-      _fromItemWriter(item);
-      _w.write(';');
-    }
-
-    _w.writeln(r'return obj;');
-    _w.writeln(r'}');
-    */
-  }
-
-  /* TODO
-  void _fromItemWriter(FieldFrom item) {
-    FromItemWriter writer = new FromItemWriter(item);
-
-    if (!item.nullable && item.defaultValue != null) {
-      _w.write(writer.generate("map['${item.key}']", "${item.defaultValue}"));
-    } else if (!item.nullable && item.defaultValueFromConstructor) {
-      _w.write(writer.generate("map['${item.key}']", "obj.${item.name}"));
-    } else {
-      _w.write(writer.generate("map['${item.key}']"));
-    }
-  }
-  */
 }

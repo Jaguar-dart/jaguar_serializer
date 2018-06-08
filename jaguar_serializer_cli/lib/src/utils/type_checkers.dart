@@ -24,6 +24,10 @@ const isProperty = const TypeChecker.fromRuntime(Field);
 
 const isFieldProcessor = const TypeChecker.fromRuntime(FieldProcessor);
 
+const isDateTime = const TypeChecker.fromRuntime(DateTime);
+
+const isDuration = const TypeChecker.fromRuntime(Duration);
+
 bool isBuiltin(DartType type) {
   if (isString.isExactlyType(type)) return true;
   if (isInt.isExactlyType(type)) return true;

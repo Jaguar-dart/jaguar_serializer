@@ -1,18 +1,16 @@
 part of jaguar_serializer.generator.writer;
 
-/* TODO
 class FromItemWriter {
-  final FieldFrom field;
+  final Field field;
 
   FromItemWriter(this.field);
 
-  String writeFromListProperty(String reference, ListPropertyFrom prop,
-      [String defaultValueRef]) {
-    StringBuffer _w = new StringBuffer();
+  String _makeList(String reference, ListTypeInfo prop) {
+    var _w = new StringBuffer();
 
     final outputTypeStr = prop.itemTypeStr;
 
-    if (field.nullable) {
+    if (field.isNullable) {
       _w.write("nullableIterableMapper");
     } else {
       _w.write("nonNullableIterableMapper");
@@ -24,26 +22,19 @@ class FromItemWriter {
 
     _w.write('($reference as Iterable,');
     _w.write('(val) => ');
-    _w.write(writeFromProperty('val', prop.value, null, castValue: true));
-    if (!field.nullable) {
-      if (defaultValueRef != null) {
-        _w.writeln(", $defaultValueRef");
-      } else {
-        _w.writeln(", <${outputTypeStr ?? 'dynamic'}>[]");
-      }
-    }
+    _w.write(_makeValue('val', prop.value, cast: true));
+    if (!field.isNullable) _w.writeln(", <${outputTypeStr ?? 'dynamic'}>[]");
     _w.write(')');
 
     return _w.toString();
   }
 
-  String writeFromMapProperty(String reference, MapPropertyFrom map,
-      [String defaultValueRef]) {
+  String _makeMap(String reference, MapTypeInfo map) {
     StringBuffer _w = new StringBuffer();
 
     final outputTypeStr = map.valueTypeStr;
 
-    if (field.nullable) {
+    if (field.isNullable) {
       _w.write('nullableMapMaker');
     } else {
       _w.write('nonNullableMapMaker');
@@ -55,64 +46,46 @@ class FromItemWriter {
 
     _w.write('($reference as Map<String, dynamic>,');
     _w.write('(val) =>');
-    _w.write(writeFromProperty('val', map.value, null, castValue: true));
-    if (!field.nullable) {
-      if (defaultValueRef != null) {
-        _w.writeln(", $defaultValueRef");
-      } else {
-        _w.writeln(", <String, ${outputTypeStr ?? 'dynamic'}>{}");
-      }
-    }
+    _w.write(_makeValue('val', map.value, cast: true));
+    if (!field.isNullable)
+      _w.writeln(", <String, ${outputTypeStr ?? 'dynamic'}>{}");
     _w.write(')');
 
     return _w.toString();
   }
 
-  String writeFromLeafProperty(
-      String reference, LeafPropertyFrom leaf, String defaultValueRef,
-      {bool castValue: false}) {
-    StringBuffer _w = new StringBuffer();
-
-    if (leaf is BuiltinLeafPropertyFrom) {
-      _w.write(reference);
-      if (castValue == true) {
-        _w.write(" as ${leaf.inputTypeStr}");
-      }
-    } else if (leaf is CustomPropertyFrom) {
-      _w.write("_${firstCharToLowerCase(leaf.instantiationString)}" +
+  String _makeValue(String reference, TypeInfo prop, {bool cast: false}) {
+    if (prop is BuiltinTypeInfo) {
+      return reference + (cast ? ' as ${prop.typeStr}' : '');
+    } else if (prop is ProcessedTypeInfo) {
+      var w = new StringBuffer();
+      w.write("_${firstCharToLowerCase(prop.instantiationString)}" +
           '.deserialize($reference');
-      if (castValue == true && leaf.serializedType != "dynamic") {
-        _w.write(" as ${leaf.serializedType}");
+      if (cast == true && prop.serializedType != "dynamic") {
+        w.write(" as ${prop.serializedType}");
       }
-      _w.write(")");
-    } else if (leaf is SerializedPropertyFrom) {
-      _w.write("_${firstCharToLowerCase(leaf.instantiationString)}" +
-          '.fromMap($reference as Map<String, dynamic>)');
+      w.write(")");
+      return w.toString();
+    } else if (prop is SerializedTypeInfo) {
+      return "_${firstCharToLowerCase(prop.instantiationString)}" +
+          '.fromMap($reference as Map<String, dynamic>)';
+    } else if (prop is ListTypeInfo) {
+      return _makeList(reference, prop);
+    } else if (prop is MapTypeInfo) {
+      return _makeMap(reference, prop);
     }
-    if (defaultValueRef != null) {
-      _w.writeln("?? $defaultValueRef");
-    }
-    return _w.toString();
+    throw new JCException('Dont know how to handle this!');
   }
 
-  String writeFromProperty(
-      String reference, PropertyFrom prop, String defaultValueRef,
-      {bool castValue: false}) {
-    if (prop is ListPropertyFrom) {
-      return writeFromListProperty(reference, prop, defaultValueRef);
-    } else if (prop is MapPropertyFrom) {
-      return writeFromMapProperty(reference, prop, defaultValueRef);
-    } else if (prop is LeafPropertyFrom) {
-      return writeFromLeafProperty(reference, prop, defaultValueRef,
-          castValue: castValue);
-    } else {
-      throw new JaguarCliException('Dont know how to handle this!');
+  String generate() {
+    String defVal;
+    if (field.defaultValue != null) {
+      defVal = field.defaultValue;
+    } else if (field.fromConstructor) {
+      defVal = "obj.${field.name}";
     }
-  }
-
-  String generate(String reference, [String defaultValueRef]) {
-    return writeFromProperty(reference, field.property, defaultValueRef,
-        castValue: true);
+    return _makeValue("map['${field.decodeFrom}']", field.typeInfo,
+            cast: true) +
+        (defVal != null ? ' ?? ${defVal}' : '');
   }
 }
-*/

@@ -31,8 +31,8 @@ class Derived extends Base with Mixin {
 
 @GenSerializer(
   fields: const {
-    'mixed': const EnDecode(alias: 'm'),
-    'based': const EnDecode(alias: 'b'),
+    'mixed': const Alias('m'),
+    'based': const Alias('b'),
   },
 )
 class DerivedSerializer extends Serializer<Derived> with _$DerivedSerializer {}

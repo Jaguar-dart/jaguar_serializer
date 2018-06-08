@@ -1,31 +1,39 @@
 import 'package:test/test.dart';
-import '../../common/nested/nested.dart';
+import '../../models/nested/nested.dart';
 
 void main() {
   group("Serializer", () {
-    group("toMap", () {
+    group("fromMap", () {
       group("NestedMap", () {
         test("Builtins.Normal", () {
           var ser = new NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(strings: {
-                "a": {"1": "String1", "2": "String2"},
-                "b": {"3": "String3", "4": "String4"}
-              })),
-              {
+              ser.fromMap({
                 "strings": {
                   "a": {"1": "String1", "2": "String2"},
                   "b": {"3": "String3", "4": "String4"}
                 },
                 "dates": null,
                 "leafs": null,
-              });
+              }),
+              new NestedMap(strings: {
+                "a": {"1": "String1", "2": "String2"},
+                "b": {"3": "String3", "4": "String4"}
+              }));
         });
 
         test("ProcessedFields.Normal", () {
           var ser = new NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(dates: {
+              ser.fromMap({
+                "dates": {
+                  "a": {"1": "2018-01-01", "2": "2018-01-02"},
+                  "b": {"3": "2018-01-03", "4": "2018-01-04"}
+                },
+                "strings": null,
+                "leafs": null,
+              }),
+              new NestedMap(dates: {
                 "a": {
                   "1": new DateTime(2018, 1, 1),
                   "2": new DateTime(2018, 1, 2)
@@ -34,31 +42,13 @@ void main() {
                   "3": new DateTime(2018, 1, 3),
                   "4": new DateTime(2018, 1, 4)
                 }
-              })),
-              {
-                "dates": {
-                  "a": {"1": "2018-01-01", "2": "2018-01-02"},
-                  "b": {"3": "2018-01-03", "4": "2018-01-04"}
-                },
-                "strings": null,
-                "leafs": null,
-              });
+              }));
         });
 
         test("SerializedObjects.Normal", () {
           var ser = new NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(leafs: {
-                "a": {
-                  "1": new Leaf(color: "Blue"),
-                  "2": new Leaf(color: "Green")
-                },
-                "b": {
-                  "3": new Leaf(color: "Orange"),
-                  "4": new Leaf(color: "Red")
-                }
-              })),
-              {
+              ser.fromMap({
                 "leafs": {
                   "a": {
                     "1": {"color": "Blue"},
@@ -71,18 +61,23 @@ void main() {
                 },
                 "strings": null,
                 "dates": null,
-              });
+              }),
+              new NestedMap(leafs: {
+                "a": {
+                  "1": new Leaf(color: "Blue"),
+                  "2": new Leaf(color: "Green")
+                },
+                "b": {
+                  "3": new Leaf(color: "Orange"),
+                  "4": new Leaf(color: "Red")
+                }
+              }));
         });
 
-        test("Builtins.SomeNull", () {
+        test("Builtins.Normal", () {
           var ser = new NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(strings: {
-                "a": {"1": "String1", "2": "String2"},
-                "b": {"3": "String3", "4": "String4"},
-                "c": null,
-              })),
-              {
+              ser.fromMap({
                 "strings": {
                   "a": {"1": "String1", "2": "String2"},
                   "b": {"3": "String3", "4": "String4"},
@@ -90,13 +85,27 @@ void main() {
                 },
                 "dates": null,
                 "leafs": null,
-              });
+              }),
+              new NestedMap(strings: {
+                "a": {"1": "String1", "2": "String2"},
+                "b": {"3": "String3", "4": "String4"},
+                "c": null,
+              }));
         });
 
         test("ProcessedFields.Normal", () {
           var ser = new NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(dates: {
+              ser.fromMap({
+                "dates": {
+                  "a": {"1": "2018-01-01", "2": "2018-01-02"},
+                  "b": {"3": "2018-01-03", "4": "2018-01-04"},
+                  "c": null,
+                },
+                "strings": null,
+                "leafs": null,
+              }),
+              new NestedMap(dates: {
                 "a": {
                   "1": new DateTime(2018, 1, 1),
                   "2": new DateTime(2018, 1, 2)
@@ -106,33 +115,13 @@ void main() {
                   "4": new DateTime(2018, 1, 4)
                 },
                 "c": null,
-              })),
-              {
-                "dates": {
-                  "a": {"1": "2018-01-01", "2": "2018-01-02"},
-                  "b": {"3": "2018-01-03", "4": "2018-01-04"},
-                  "c": null,
-                },
-                "strings": null,
-                "leafs": null,
-              });
+              }));
         });
 
         test("SerializedObjects.Normal", () {
           var ser = new NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(leafs: {
-                "a": {
-                  "1": new Leaf(color: "Blue"),
-                  "2": new Leaf(color: "Green")
-                },
-                "b": {
-                  "3": new Leaf(color: "Orange"),
-                  "4": new Leaf(color: "Red")
-                },
-                "c": null,
-              })),
-              {
+              ser.fromMap({
                 "leafs": {
                   "a": {
                     "1": {"color": "Blue"},
@@ -146,7 +135,18 @@ void main() {
                 },
                 "strings": null,
                 "dates": null,
-              });
+              }),
+              new NestedMap(leafs: {
+                "a": {
+                  "1": new Leaf(color: "Blue"),
+                  "2": new Leaf(color: "Green")
+                },
+                "b": {
+                  "3": new Leaf(color: "Orange"),
+                  "4": new Leaf(color: "Red")
+                },
+                "c": null,
+              }));
         });
       });
     });

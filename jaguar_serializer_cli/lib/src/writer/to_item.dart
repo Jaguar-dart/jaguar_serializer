@@ -5,99 +5,71 @@ class ToItemWriter {
 
   ToItemWriter(this.field);
 
-  TypeInfo get typeInfo => field.typeInfo;
+  String _makeList(String reference, ListTypeInfo prop, {bool cast: false}) {
+    var w = new StringBuffer();
 
-  String get base => 'model.${field.name}';
-
-  /* TODO
-  String writeToListProperty(String reference, ListPropertyTo prop,
-      {bool castReference: false}) {
-    StringBuffer _w = new StringBuffer();
-
-    if (field.nullable) {
-      _w.write("nullableIterableMapper(");
+    if (field.isNullable) {
+      w.write("nullableIterableMapper(");
     } else {
-      _w.write("nonNullableIterableMapper(");
+      w.write("nonNullableIterableMapper(");
     }
-    _w.write("$reference");
-    if (castReference == true) {
-      _w.write(" as Iterable");
-    }
-    _w.write(",");
-    _w.write('(val) => ');
-    _w.write(_makeValue('val', prop.value, castValue: true));
-    if (!field.nullable) {
-      _w.write(", []");
-    }
-    _w.write(')');
+    w.write("$reference");
+    if (cast == true) w.write(" as Iterable");
+    w.write(",");
 
-    return _w.toString();
+    w.write('(val) => ');
+    w.write(_makeValue('val', prop.value, cast: true));
+    if (!field.isNullable) w.write(", []");
+    w.write(')');
+
+    return w.toString();
   }
 
-  String writeToMapProperty(String reference, MapPropertyTo map,
-      {bool castReference: false}) {
+  String _makeMap(String reference, MapTypeInfo map, {bool cast: false}) {
     StringBuffer _w = new StringBuffer();
 
-    if (field.nullable) {
+    if (field.isNullable) {
       _w.write('nullableMapMaker(');
     } else {
       _w.write('nonNullableMapMaker(');
     }
     _w.write("$reference");
-    if (castReference == true) {
+    if (cast == true) {
       _w.write(" as Map<String, dynamic>");
     }
     _w.write(",");
     _w.write('(val) =>');
-    _w.write(_makeValue('val', map.value, castValue: true));
+    _w.write(_makeValue('val', map.value, cast: true));
 
-    if (!field.nullable) {
-      _w.write(", <String, dynamic>{}");
-    }
+    if (!field.isNullable) _w.write(", <String, dynamic>{}");
     _w.write(')');
 
     return _w.toString();
   }
 
-  String writeToLeafProperty(String reference, LeafPropertyTo leaf,
-      {bool castValue: false}) {
-    StringBuffer _w = new StringBuffer();
-    if (leaf is BuiltinLeafPropertyTo) {
-      _w.write(reference);
-      if (castValue) {
-        _w.write(" as ${leaf.typeStr}");
-      }
-    } else if (leaf is CustomPropertyTo) {
-      _w.write("_${firstCharToLowerCase(leaf.instantiationString)}" +
+  String _makeValue(String reference, TypeInfo type, {bool cast: false}) {
+    if (type is BuiltinTypeInfo) {
+      return reference + (cast ? ' as ${type.typeStr}' : '');
+    } else if (type is ListTypeInfo) {
+      return _makeList(reference, type, cast: cast);
+    } else if (type is MapTypeInfo) {
+      return _makeMap(reference, type, cast: cast);
+    } else if (type is ProcessedTypeInfo) {
+      var w = new StringBuffer();
+      w.write("_${firstCharToLowerCase(type.instantiationString)}" +
           '.serialize($reference');
-      if (castValue) {
-        _w.write(" as ${leaf.deserializedType}");
+      if (cast) w.write(" as ${type.deserializedType}");
+      w.write(")");
+      return w.toString();
+    } else if (type is SerializedTypeInfo) {
+      var w = new StringBuffer();
+      w.write(
+          "_${firstCharToLowerCase(type.instantiationString)}.toMap($reference");
+      if (cast) {
+        w.write(" as ${type.type}");
       }
-      _w.write(")");
-    } else if (leaf is SerializedPropertyTo) {
-      _w.write(
-          "_${firstCharToLowerCase(leaf.instantiationString)}.toMap($reference");
-      if (castValue) {
-        _w.write(" as ${leaf.type}");
-      }
-      _w.write(')');
-    }
-
-    return _w.toString();
-  }
-  */
-
-  String _makeValue({bool castValue: false}) {
-    if (typeInfo == null) {
-      return base;
-    } else if (typeInfo is ListTypeInfo) {
-      // TODO return writeToListProperty(reference, prop, castReference: castValue);
-    } else if (typeInfo is MapTypeInfo) {
-      // TODO return writeToMapProperty(reference, prop, castReference: castValue);
-    } else if (typeInfo is ProcessedTypeInfo) {
-      // TODO return writeToLeafProperty(reference, prop, castValue: castValue);
-    } else if (typeInfo is SerializedTypeInfo) {
-      // TODO return writeToLeafProperty(reference, prop, castValue: castValue);
+      w.write(')');
+      return w.toString();
     }
     throw new JCException('Dont know how to handle this!');
   }
@@ -105,12 +77,12 @@ class ToItemWriter {
   String generate() {
     var sb = new StringBuffer();
     if (field.isNullable) {
-      sb.write('setNullableValue(ret,');
+      sb.write('setMapValue(ret,');
     } else {
-      sb.write('setNonNullableValue(ret,');
+      sb.write('setMapValueIfNotNull(ret,');
     }
     sb.write("'${field.encodeTo}',");
-    sb.write(_makeValue());
+    sb.write(_makeValue('model.${field.name}', field.typeInfo));
     sb.write(");");
     return sb.toString();
   }

@@ -200,6 +200,22 @@ class SafeNumProcessor implements FieldProcessor<num, dynamic> {
   }
 }
 
+class DurationProcessor implements FieldProcessor<Duration, int> {
+  const DurationProcessor();
+
+  @override
+  Duration deserialize(int value) {
+    if(value == null) return null;
+    return new Duration(microseconds: value);
+  }
+
+  @override
+  int serialize(Duration value) {
+    if(value == null) return null;
+    return value.inMicroseconds;
+  }
+}
+
 const dateTimeUtcProcessor = const DateTimeProcessor.utc();
 const dateTimeMillisecondsUtcProcessor =
     const DateTimeMillisecondsProcessor.utc();
@@ -209,3 +225,4 @@ const numToStringProcessor = const NumToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const rawDate = const RawData();
 const safeNumProcessor = const SafeNumProcessor();
+const durationProcessor = const DurationProcessor();

@@ -28,7 +28,7 @@ abstract class Serializer<ModelType> {
   ////// To implement //////
 
   /// Decodes model from [Map]
-  ModelType fromMap(Map map, {ModelType model});
+  ModelType fromMap(Map map);
 
   /// Encodes model to [Map]
   Map<String, dynamic> toMap(ModelType model);
