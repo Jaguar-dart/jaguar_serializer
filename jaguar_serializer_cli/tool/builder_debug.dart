@@ -7,7 +7,7 @@ final _builders = [
   _i1.apply('jaguar_serializer_cli|jaguar_serializer_cli',
       [_i4.jaguarSerializer], _i1.toRoot(),
       defaultGenerateFor: const _i3.InputSet(include: const [
-        'test/models/**',
+        'test/models/immutable/immutable.dart',
       ]),
       hideOutput: false),
 ];

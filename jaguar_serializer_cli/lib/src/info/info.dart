@@ -9,10 +9,11 @@ class SerializerInfo {
   final String name;
   final String modelName;
   final Map<String, Field> fields;
-  final ctorArguments = <ParameterElement>[];
-  final ctorNamedArguments = <ParameterElement>[];
+  final List<ParameterElement> ctorArguments;
+  final List<ParameterElement> ctorNamedArguments;
 
-  SerializerInfo(this.name, this.modelName, this.fields);
+  SerializerInfo(this.name, this.modelName, this.fields,
+      {this.ctorArguments, this.ctorNamedArguments});
 }
 
 class FieldProcessorInfo {
@@ -51,8 +52,6 @@ class Field {
 
   final FieldProcessorInfo processor;
 
-  final ClassElement provider;
-
   final bool isNullable;
 
   final String defaultValue;
@@ -72,7 +71,6 @@ class Field {
       @required this.encodeTo,
       @required this.decodeFrom,
       @required this.processor,
-      @required this.provider,
       @required this.isNullable,
       @required this.defaultValue,
       @required this.fromConstructor});

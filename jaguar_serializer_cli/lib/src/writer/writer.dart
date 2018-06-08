@@ -92,7 +92,7 @@ class Writer {
     _w.writeln(r'if(map == null) return null;');
 
     _w.write("final obj = ");
-    _ctorWriter();
+    _writeCtor();
     _w.writeln(';');
 
     for (Field item in info.fields.values) {
@@ -107,26 +107,24 @@ class Writer {
     _w.writeln(r'}');
   }
 
-  void _ctorWriter() {
+  void _writeCtor() {
     _w.write('new $modelName(');
-    /* TODO
     bool first = true;
     info.ctorArguments.forEach((param) {
-      if (!first) {
-        _w.write(',');
+      if (!first) _w.write(',');
+      if (param == null) {
+        _w.write('null');
+        return;
       }
       first = false;
-      _fromItemWriter(info.from.firstWhere((f) => f.name == param.name));
+      _w.write(new FromItemWriter(info.fields[param.displayName]).generate());
     });
     info.ctorNamedArguments.forEach((param) {
-      if (!first) {
-        _w.write(',');
-      }
+      if (!first) _w.write(',');
       first = false;
       _w.write('${param.name}: ');
-      _fromItemWriter(info.from.firstWhere((f) => f.name == param.name));
+      _w.write(new FromItemWriter(info.fields[param.displayName]).generate());
     });
-    */
     _w.write(')');
   }
 }

@@ -34,6 +34,8 @@ class AnnotationParser {
       <String, PropertyAccessorElement>{};
 
   final Map<String, $info.Field> fields = <String, $info.Field>{};
+  final ctorArguments = <ParameterElement>[];
+  final ctorNamedArguments = <ParameterElement>[];
 
   Map<InterfaceType, ClassElement> providers = {};
 
@@ -56,9 +58,9 @@ class AnnotationParser {
       if (f.dontEncode && f.dontDecode) continue;
       f.typeInfo = _expandTypeInfo(f.type, f.processor);
     }
-
-    // TODO _makeCtor(modelType.element as ClassElement, ret.model);
-    return new SerializerInfo(element.name, modelClass.displayName, fields);
+    _makeCtor();
+    return new SerializerInfo(element.name, modelClass.displayName, fields,
+        ctorArguments: ctorArguments, ctorNamedArguments: ctorNamedArguments);
   }
 
   /// Parses [modelType] of the Serializer
@@ -93,6 +95,7 @@ class AnnotationParser {
       InterfaceType type;
       bool dontEncode = false;
       bool dontDecode = false;
+      bool isFinal = false;
 
       if (field.isGetter) {
         getters[name] = field;
@@ -101,8 +104,13 @@ class AnnotationParser {
             orElse: () => null);
         if (other != null)
           setters[name] = other;
-        else
-          dontDecode = true;
+        else {
+          if (field.isSynthetic) {
+            isFinal = true;
+          } else {
+            dontDecode = true;
+          }
+        }
       } else {
         setters[name] = field;
         type = field.type.parameters.first.type as InterfaceType;
@@ -159,22 +167,13 @@ class AnnotationParser {
           encodeTo: encodeTo,
           decodeFrom: decodeFrom,
           processor: processor,
-          provider: null, // TODO
           isNullable: nullable && defaultValue == null && !fromConstructor,
           defaultValue: defaultValue,
           fromConstructor: fromConstructor,
+          isFinal: isFinal,
         );
       }
     }
-
-    /* TODO
-    modelClass.fields
-        .where((f) => f.isFinal && !f.isStatic && !f.isPrivate)
-        .forEach((FieldElement f) {
-      mod.addFrom(new $info.Field(f.displayName, f.type as InterfaceType,
-          isFinal: true));
-    });
-    */
   }
 
   void _parseIgnore() {
@@ -188,7 +187,6 @@ class AnnotationParser {
           encodeTo: null,
           decodeFrom: null,
           processor: null,
-          provider: null,
           isNullable: null,
           defaultValue: null,
           fromConstructor: false);
@@ -233,54 +231,68 @@ class AnnotationParser {
       _processField(dKey.toStringValue(), map[dKey]);
   }
 
-  void _processField(String key, DartObject dV) {
+  void _processField(String fieldName, DartObject config) {
+    InterfaceType type = _getTypeOfField(fieldName);
+    if (type == null) throw new JCException("Field not found $fieldName!");
     FieldProcessorInfo processor =
-        _parseFieldProcessor(dV.getField('processor'));
-    // TODO verify if it is valid FieldProcessor type
-    // TODO use default processor for [DateTime] and [Duration]
+        _parseFieldProcessor(config.getField('processor'));
     bool isNullable =
-        dV.getField('isNullable')?.toBoolValue() ?? globalNullable;
-    String defVal = _parseFieldDefaultValue(dV.getField('defaultsTo'));
-    bool valFromCon = dV.getField('valueFromConstructor').toBoolValue();
+        config.getField('isNullable')?.toBoolValue() ?? globalNullable;
+    String defVal = _parseFieldDefaultValue(config.getField('defaultsTo'));
+    bool valFromCon = config.getField('valueFromConstructor').toBoolValue();
 
-    fields[key] = new $info.Field(
-      name: key,
-      type: _getTypeOfField(key),
-      dontEncode: dV.getField('dontEncode').toBoolValue(),
-      dontDecode: dV.getField('dontDecode').toBoolValue(),
-      encodeTo: _getStringField(dV, 'encodeTo') ?? key,
-      decodeFrom: _getStringField(dV, 'decodeFrom') ?? key,
+    fields[fieldName] = new $info.Field(
+      name: fieldName,
+      type: type,
+      dontEncode: config.getField('dontEncode').toBoolValue(),
+      dontDecode: config.getField('dontDecode').toBoolValue(),
+      encodeTo: _getStringField(config, 'encodeTo') ?? fieldName,
+      decodeFrom: _getStringField(config, 'decodeFrom') ?? fieldName,
       processor: processor,
-      provider: null, // TODO
       isNullable: isNullable && defVal == null && !valFromCon,
       defaultValue: defVal,
       fromConstructor: valFromCon,
+      isFinal: _getFinalityOfField(fieldName),
     );
   }
 
-  /* TODO
-  void _makeCtor(ClassElement el, Model model) {
-    ConstructorElement ctor = el.unnamedConstructor;
-    if (ctor == null) {
-      throw new JCException(
-          "The class `${el.name}` has no default constructor.");
-    }
+  void _makeCtor() {
+    ConstructorElement ctor =
+        (modelType.element as ClassElement).unnamedConstructor;
+    if (ctor == null)
+      throw new JCException("Model does not have a default constructor!");
+
     for (final arg in ctor.parameters) {
-      final field = model.getFrom(arg.name);
-      if (field?.isFinal == true) {
-        if (arg.parameterKind == ParameterKind.NAMED) {
-          model.ctorNamedArguments.add(arg);
+      final field = fields[arg.name];
+      if (arg.isRequired) {
+        if (field != null) {
+          if (field.isFinal && !field.dontDecode) {
+            ctorArguments.add(arg);
+          } else {
+            ctorArguments.add(null);
+          }
         } else {
-          model.ctorArguments.add(arg);
+          ctorArguments.add(null);
+        }
+      } else {
+        if (arg.parameterKind == ParameterKind.NAMED) {
+          if (field != null && !field.dontDecode) ctorNamedArguments.add(arg);
+        } else {
+          throw new JCException(
+              "Optional positional arguments are not supported in constructor!");
         }
       }
     }
   }
-  */
 
   InterfaceType _getTypeOfField(String name) {
-    return (getters[name]?.returnType ?? setters[name]?.parameters.first.type)
+    return (getters[name]?.returnType ?? setters[name]?.parameters?.first?.type)
         as InterfaceType;
+  }
+
+  bool _getFinalityOfField(String name) {
+    if (getters.containsKey(name)) return getters[name].isSynthetic;
+    return false;
   }
 
   TypeInfo _expandTypeInfo(InterfaceType type, FieldProcessorInfo processor) {
