@@ -21,7 +21,7 @@ class ModelIntSerializer extends Serializer<ModelInt>
     with _$ModelIntSerializer {}
 
 class Model {
-  String buildtIn;
+  String builtIn;
   ModelInt serialized;
   DateTime processed;
   List<ModelInt> serializedList;
@@ -31,7 +31,7 @@ class Model {
 
   bool operator ==(other) {
     if (other is Model)
-      return buildtIn == other.buildtIn &&
+      return builtIn == other.builtIn &&
           serialized == other.serialized &&
           processed == other.processed &&
           new IterableEquality().equals(serializedList, other.serializedList) &&

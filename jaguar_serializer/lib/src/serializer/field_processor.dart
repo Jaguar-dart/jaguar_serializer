@@ -205,13 +205,13 @@ class DurationProcessor implements FieldProcessor<Duration, int> {
 
   @override
   Duration deserialize(int value) {
-    if(value == null) return null;
+    if (value == null) return null;
     return new Duration(microseconds: value);
   }
 
   @override
   int serialize(Duration value) {
-    if(value == null) return null;
+    if (value == null) return null;
     return value.inMicroseconds;
   }
 }

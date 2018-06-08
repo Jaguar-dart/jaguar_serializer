@@ -63,7 +63,7 @@ class SerializerRepo {
   List<T> listFrom<T>(List object) {
     Serializer<T> ser = getByType(T);
     final ret = new List<T>()..length = object.length;
-    for(int i = 0; i < object.length; i++) {
+    for (int i = 0; i < object.length; i++) {
       ret[i] = _deserializeOne(object[i], ser);
     }
     return ret;
@@ -76,10 +76,8 @@ class SerializerRepo {
   }
 
   T _deserializeOne<T>(dynamic object, Serializer<T> ser) {
-    if (object is String ||
-        object is num ||
-        object is bool ||
-        object == null) return object as T;
+    if (object is String || object is num || object is bool || object == null)
+      return object as T;
 
     if (object is Map) {
       if (ser == null) throw new Exception('Type is required to decode!');

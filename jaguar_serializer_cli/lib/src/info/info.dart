@@ -61,8 +61,6 @@ class Field {
 
   TypeInfo typeInfo;
 
-
-
   // TODO field formatter
 
   Field(

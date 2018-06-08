@@ -1,4 +1,4 @@
-import '../../common/models/nullable/nullable.dart';
+import '../../models/nullable/nullable.dart';
 import 'package:test/test.dart';
 
 main() {
@@ -8,27 +8,27 @@ main() {
         test('Filled', () {
           final now = new DateTime.now();
           final model = new Model()
-            ..date = now
-            ..foo = "bar"
-            ..listDates = [now]
-            ..mapDates = {"1": now}
-            ..modelInt = new ModelInt()
-            ..listModelInt = [new ModelInt()]
-            ..mapModelInt = {"1": new ModelInt()};
+            ..builtIn = "bar"
+            ..processed = now
+            ..serialized = new ModelInt()
+            ..processedList = [now]
+            ..processedMap = {"1": now}
+            ..serializedList = [new ModelInt()]
+            ..serializedMap = {"1": new ModelInt()};
 
           expect(
               new NonNullableSerializer().fromMap({
-                'foo': 'bar',
-                'modelInt': {'bar': 42},
-                'date': now.toIso8601String(),
-                'listModelInt': [
+                'builtIn': 'bar',
+                'serialized': {'bar': 42},
+                'processed': now.toIso8601String(),
+                'serializedList': [
                   {'bar': 42}
                 ],
-                'mapModelInt': {
+                'serializedMap': {
                   '1': {'bar': 42}
                 },
-                'listDates': [now.toIso8601String()],
-                'mapDates': {'1': now.toIso8601String()}
+                'processedList': [now.toIso8601String()],
+                'processedMap': {'1': now.toIso8601String()}
               }),
               model);
         });
@@ -37,10 +37,10 @@ main() {
           expect(
               new NonNullableSerializer().fromMap({}),
               new Model()
-                ..listDates = []
-                ..mapDates = {}
-                ..listModelInt = []
-                ..mapModelInt = {});
+                ..processedList = []
+                ..processedMap = {}
+                ..serializedList = []
+                ..serializedMap = {});
         });
       });
     });

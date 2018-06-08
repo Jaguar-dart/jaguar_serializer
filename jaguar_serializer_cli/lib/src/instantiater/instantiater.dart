@@ -314,7 +314,7 @@ class AnnotationParser {
       throw new JCException('Cannot serialize "Object" type!');
     }
 
-    if(providers.containsKey(type)) {
+    if (providers.containsKey(type)) {
       ClassElement ser = providers[type];
       return new SerializedTypeInfo(ser.displayName, type.displayName);
     }

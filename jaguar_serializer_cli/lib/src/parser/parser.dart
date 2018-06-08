@@ -50,7 +50,8 @@ class WriterInfo {
     final List<Field> setters = info.model.setters();
     for (Field field in setters) {
       String fieldKey = field.name;
-      if (info.decodeFrom[fieldKey] != null) fieldKey = info.decodeFrom[fieldKey];
+      if (info.decodeFrom[fieldKey] != null)
+        fieldKey = info.decodeFrom[fieldKey];
       froms.add(_parseFieldFrom(info, field, fieldKey));
     }
 
