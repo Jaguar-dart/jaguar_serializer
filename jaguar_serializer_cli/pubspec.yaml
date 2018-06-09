@@ -1,5 +1,5 @@
 name: jaguar_serializer_cli
-version: 2.0.3
+version: 2.0.4
 description: Platform and format agnostic serializer built using source_gen
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
@@ -15,7 +15,7 @@ dependencies:
   build: ^0.12.0
   logging: ^0.11.0
   source_gen: ">=0.8.0 <0.9.0"
-  jaguar_serializer: ^2.0.2
+  jaguar_serializer: ^2.0.3
   meta: ^1.1.5
   collection: ^1.14.9
 
