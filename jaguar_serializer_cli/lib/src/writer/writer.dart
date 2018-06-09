@@ -74,6 +74,16 @@ class Writer {
         _providerWriter(f.typeInfo);
       }
     }
+
+    if (info.nameFormatter != null) {
+      _w.writeln('var _jserNameMapping = <String, String> {');
+      for (Field f in info.fields.values) {
+        if (f.dontEncode && f.dontDecode) continue;
+        if (f.name != f.encodeTo && f.name != f.decodeFrom) continue;
+        _w.writeln("'${f.name}': ${info.nameFormatter}('${f.name}'),");
+      }
+      _w.writeln('};');
+    }
   }
 
   void _toWriter() {
@@ -82,7 +92,7 @@ class Writer {
     _w.writeln('if(model == null) return null;');
     _w.writeln(r'Map<String, dynamic> ret = <String, dynamic>{};');
     for (Field item in info.fields.values.where((f) => !f.dontEncode)) {
-      _w.writeln(new ToItemWriter(item).generate());
+      _w.writeln(new ToItemWriter(item, info.nameFormatter != null).generate());
     }
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
@@ -101,7 +111,7 @@ class Writer {
       if (item.dontDecode) continue;
       if (item.isFinal) continue;
       _w.write('obj.${item.name} = ');
-      _w.write(new FromItemWriter(item).generate());
+      _w.write(new FromItemWriter(item, info.nameFormatter != null).generate());
       _w.write(';');
     }
 
@@ -119,13 +129,17 @@ class Writer {
         return;
       }
       first = false;
-      _w.write(new FromItemWriter(info.fields[param.displayName]).generate());
+      _w.write(new FromItemWriter(
+              info.fields[param.displayName], info.nameFormatter != null)
+          .generate());
     });
     info.ctorNamedArguments.forEach((param) {
       if (!first) _w.write(',');
       first = false;
       _w.write('${param.name}: ');
-      _w.write(new FromItemWriter(info.fields[param.displayName]).generate());
+      _w.write(new FromItemWriter(
+              info.fields[param.displayName], info.nameFormatter != null)
+          .generate());
     });
     _w.write(')');
   }

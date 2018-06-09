@@ -3,7 +3,9 @@ part of jaguar_serializer.generator.writer;
 class ToItemWriter {
   final Field field;
 
-  ToItemWriter(this.field);
+  final bool hasGlobalNameForamtter;
+
+  ToItemWriter(this.field, this.hasGlobalNameForamtter);
 
   String _makeList(String reference, ListTypeInfo prop, {bool cast: false}) {
     var w = new StringBuffer();
@@ -102,7 +104,12 @@ class ToItemWriter {
     } else {
       sb.write('setMapValueIfNotNull(ret,');
     }
-    sb.write("'${field.encodeTo}',");
+    if (hasGlobalNameForamtter && field.name == field.encodeTo) {
+      sb.write("_jserNameMapping['${field.name}']");
+    } else {
+      sb.write("'${field.encodeTo}'");
+    }
+    sb.write(",");
     sb.write(_makeValue('model.${field.name}', field.typeInfo));
     sb.write(");");
     return sb.toString();

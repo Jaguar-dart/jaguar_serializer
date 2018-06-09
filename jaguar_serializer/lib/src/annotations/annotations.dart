@@ -1,7 +1,7 @@
 import '../serializer/serializer.dart';
 import '../serializer/field_processor.dart';
 
-typedef String FieldFormatter(String fieldName);
+typedef String NameFormatter(String fieldName);
 
 /// Annotation used to request generation of serializer
 class GenSerializer {
@@ -40,7 +40,7 @@ class GenSerializer {
   /// final model = serializer.fromMap(map);
   /// print(model.myField); // print 'foo'
   /// ```
-  final FieldFormatter fieldFormatter;
+  final NameFormatter nameFormatter;
 
   const GenSerializer(
       {this.fields: const <String, Field>{},
@@ -48,7 +48,7 @@ class GenSerializer {
       this.serializers: const <Type>[],
       this.includeByDefault: true,
       this.nullableFields: true,
-      this.fieldFormatter});
+      this.nameFormatter});
 }
 
 class Field<T> {
@@ -231,22 +231,3 @@ const Field nullable = const Field<dynamic>(isNullable: true);
 const Field nonNullable = const Field<dynamic>(isNullable: false);
 const Field useConstructorForDefaultsValue =
     const Field<dynamic>(valueFromConstructor: true, isNullable: false);
-
-/// Determine the output format for a field
-/// Example:
-///     class Foo {
-///         String camelCase = "bar";
-///     }
-///
-///     @GenSerializer(fieldFormat: FieldFormat.snakeCase)
-///     class FooSerializer ...
-///
-/// will produce
-///    {
-///       "camel_case": "bar"
-///    }
-class FieldFormat {
-  static const camelCase = 'camelCase';
-  static const snakeCase = 'snakeCase';
-  static const kebabCase = 'kebabCase';
-}

@@ -10,9 +10,10 @@ class SerializerInfo {
   final Map<String, Field> fields;
   final List<ParameterElement> ctorArguments;
   final List<ParameterElement> ctorNamedArguments;
+  String nameFormatter;
 
   SerializerInfo(this.name, this.modelName, this.fields,
-      {this.ctorArguments, this.ctorNamedArguments});
+      {this.ctorArguments, this.ctorNamedArguments, this.nameFormatter});
 }
 
 class FieldProcessorInfo {
@@ -45,9 +46,9 @@ class Field {
 
   final bool isFinal;
 
-  final String encodeTo;
+  String encodeTo;
 
-  final String decodeFrom;
+  String decodeFrom;
 
   final FieldProcessorInfo processor;
 
@@ -58,8 +59,6 @@ class Field {
   final bool fromConstructor;
 
   TypeInfo typeInfo;
-
-  // TODO field formatter
 
   Field(
       {@required this.name,

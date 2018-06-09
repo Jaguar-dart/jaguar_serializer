@@ -3,7 +3,9 @@ part of jaguar_serializer.generator.writer;
 class FromItemWriter {
   final Field field;
 
-  FromItemWriter(this.field);
+  final bool hasGlobalNameForamtter;
+
+  FromItemWriter(this.field, this.hasGlobalNameForamtter);
 
   String _makeList(String reference, ListTypeInfo prop) {
     var _w = new StringBuffer();
@@ -108,8 +110,11 @@ class FromItemWriter {
     } else if (field.fromConstructor) {
       defVal = "obj.${field.name}";
     }
-    return _makeValue("map['${field.decodeFrom}']", field.typeInfo,
-            cast: true) +
+    String key = "'${field.decodeFrom}'";
+    if (hasGlobalNameForamtter && field.name == field.decodeFrom) {
+      key = "_jserNameMapping['${field.name}']";
+    }
+    return _makeValue("map[$key]", field.typeInfo, cast: true) +
         (defVal != null ? ' ?? ${defVal}' : '');
   }
 }

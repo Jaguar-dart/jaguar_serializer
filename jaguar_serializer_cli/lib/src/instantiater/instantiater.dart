@@ -68,6 +68,7 @@ class AnnotationParser {
       <String, PropertyAccessorElement>{};
 
   final Map<String, $info.Field> fields = <String, $info.Field>{};
+  String nameFormatter;
   final ctorArguments = <ParameterElement>[];
   final ctorNamedArguments = <ParameterElement>[];
 
@@ -92,8 +93,11 @@ class AnnotationParser {
       f.typeInfo = _expandTypeInfo(f.type, f.processor);
     }
     _makeCtor();
+    _parseFieldFormatter(obj.peek('nameFormatter'));
     return new SerializerInfo(element.name, modelClass.displayName, fields,
-        ctorArguments: ctorArguments, ctorNamedArguments: ctorNamedArguments);
+        ctorArguments: ctorArguments,
+        ctorNamedArguments: ctorNamedArguments,
+        nameFormatter: nameFormatter);
   }
 
   /// Parses [modelType] of the Serializer
@@ -248,6 +252,51 @@ class AnnotationParser {
     Map<DartObject, DartObject> map = obj.peek('fields').mapValue;
     for (DartObject dKey in map.keys)
       _processField(dKey.toStringValue(), map[dKey]);
+  }
+
+  void _parseFieldFormatter(ConstantReader obj) {
+    if (obj == null || obj.isNull) return;
+    Uri uri = obj.revive().source;
+    String accessor = obj.revive().accessor;
+    if (uri.pathSegments.length > 0 ||
+        uri.pathSegments.first == 'jaguar_serializer') {
+      NameFormatter nf;
+      switch (accessor) {
+        case 'toCamelCase':
+          nf = toCamelCase;
+          break;
+        case 'toSnakeCase':
+          nf = toSnakeCase;
+          break;
+        case 'toKebabCase':
+          nf = toKebabCase;
+          break;
+        case 'onlyFirstChar':
+          nf = onlyFirstChar;
+          break;
+        case 'onlyFirstCharInCaps':
+          nf = onlyFirstCharInCaps;
+          break;
+        case 'onlyFirstCharInLower':
+          nf = onlyFirstCharInLower;
+          break;
+        case 'withFirstCharInCaps':
+          nf = withFirstCharInCaps;
+          break;
+        case 'withFirstCharInLower':
+          nf = withFirstCharInLower;
+          break;
+      }
+      if (nf != null) {
+        for ($info.Field f in fields.values) {
+          if (f.dontDecode && f.dontEncode) continue;
+          if (f.encodeTo == f.name) f.encodeTo = nf(f.encodeTo);
+          if (f.decodeFrom == f.name) f.decodeFrom = nf(f.decodeFrom);
+        }
+        return;
+      }
+    }
+    nameFormatter = accessor;
   }
 
   void _processField(String fieldName, DartObject config) {
