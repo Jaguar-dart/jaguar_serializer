@@ -1,6 +1,8 @@
 import '../serializer/serializer.dart';
 import '../serializer/field_processor.dart';
 
+typedef String FieldFormatter(String fieldName);
+
 /// Annotation used to request generation of serializer
 class GenSerializer {
   /// Should all fields be included by default?
@@ -38,7 +40,7 @@ class GenSerializer {
   /// final model = serializer.fromMap(map);
   /// print(model.myField); // print 'foo'
   /// ```
-  final String fieldFormat;
+  final FieldFormatter fieldFormatter;
 
   const GenSerializer(
       {this.fields: const <String, Field>{},
@@ -46,7 +48,7 @@ class GenSerializer {
       this.serializers: const <Type>[],
       this.includeByDefault: true,
       this.nullableFields: true,
-      this.fieldFormat});
+      this.fieldFormatter});
 }
 
 class Field<T> {

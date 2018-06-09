@@ -41,3 +41,4 @@ Set<T> codeNonNullSet<T>(Iterable values, T callback(value)) {
   if (values == null) return new Set<T>();
   return new Set<T>.from(values.map<T>(callback));
 }
+

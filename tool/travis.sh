@@ -17,6 +17,8 @@ fi
 pushd $PKG
 pub upgrade
 
+echo `pwd`
+
 while (( "$#" )); do
   TASK=$1
   case $TASK in
