@@ -13,6 +13,8 @@ class Foo {
   }
 
   String toString() => new FooSerializer().toMap(this).toString();
+
+  int get hashCode => 0;
 }
 
 class FooNamed {
@@ -26,6 +28,8 @@ class FooNamed {
   }
 
   String toString() => new FooNamedSerializer().toMap(this).toString();
+
+  int get hashCode => 0;
 }
 
 class ComplexConstructor {
@@ -49,6 +53,8 @@ class ComplexConstructor {
           fooNamedObject == other.fooNamedObject;
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer()

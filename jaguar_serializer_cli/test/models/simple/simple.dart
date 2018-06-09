@@ -74,4 +74,6 @@ class Simple {
   }
 
   String toString() => new SimpleSerializer().toMap(this).toString();
+
+  int get hashCode => 0;
 }

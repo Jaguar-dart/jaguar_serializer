@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:jaguar_serializer_cli/src/utils/string.dart';
 import 'package:jaguar_serializer_cli/src/utils/type_checkers.dart';
 
 class SerializerInfo {

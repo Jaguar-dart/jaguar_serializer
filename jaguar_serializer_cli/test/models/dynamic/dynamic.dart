@@ -17,6 +17,8 @@ class DynamicModel {
           new DeepCollectionEquality().equals(map, other.map);
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer()

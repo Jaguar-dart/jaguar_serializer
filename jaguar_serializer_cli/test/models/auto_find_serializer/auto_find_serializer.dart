@@ -1,16 +1,17 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
+import 'import.dart';
 
-part 'recursive.jser.dart';
+export 'import.dart';
+
+part 'auto_find_serializer.jser.dart';
 
 class A {
-  int field;
+  String field;
 
-  B b;
-
-  A({this.b, this.field});
+  A({this.field});
 
   bool operator ==(other) {
-    if (other is A) return field == other.field && b == other.b;
+    if (other is A) return field == field;
     return false;
   }
 
@@ -18,22 +19,23 @@ class A {
 }
 
 class B {
-  int field;
+  String field;
 
   A a;
+  C c;
 
-  B({this.a, this.field});
+  B({this.field, this.a, this.c});
 
   bool operator ==(other) {
-    if (other is B) return field == other.field && a == other.a;
+    if (other is B) return field == field && a == other.a && c == other.c;
     return false;
   }
 
   int get hashCode => 0;
 }
 
-@GenSerializer(serializers: const [BSerializer])
+@GenSerializer()
 class ASerializer extends Serializer<A> with _$ASerializer {}
 
-@GenSerializer(serializers: const [ASerializer])
+@GenSerializer()
 class BSerializer extends Serializer<B> with _$BSerializer {}

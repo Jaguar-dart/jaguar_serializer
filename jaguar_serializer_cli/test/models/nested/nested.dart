@@ -40,6 +40,8 @@ class NestedList {
     }
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer(
@@ -71,6 +73,8 @@ class NestedMap {
   }
 
   String toString() => new NestedMapSerializer().toMap(this).toString();
+
+  int get hashCode => 0;
 }
 
 @GenSerializer(

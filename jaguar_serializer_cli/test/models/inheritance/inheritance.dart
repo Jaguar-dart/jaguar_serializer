@@ -27,6 +27,8 @@ class Derived extends Base with Mixin {
           derived == other.derived;
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer(

@@ -13,6 +13,40 @@ import 'package:jaguar_serializer_cli/src/utils/string.dart';
 import 'package:jaguar_serializer_cli/src/utils/type_checkers.dart';
 import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
 
+ClassElement _findSerializerInUnit(CompilationUnit unit, DartType type) {
+  for (Declaration dec in unit.declarations) {
+    if (dec is ClassDeclaration) {
+      if (isSerializer.isSuperOf(dec.element)) {
+        final InterfaceType ser = dec.element.allSupertypes
+            .firstWhere((i) => isSerializer.isExactlyType(i));
+        if (new TypeChecker.fromStatic(type)
+            .isExactlyType(ser.typeArguments[0])) {
+          return dec.element;
+        }
+      }
+    }
+  }
+  return null;
+}
+
+List<ClassElement> _findSerializerInLib(LibraryElement lib, DartType type) {
+  final elements = <ClassElement>[];
+  if (lib.isDartCore) return elements;
+
+  for (CompilationUnit unit in lib.units.map((u) => u.unit)) {
+    ClassElement ret = _findSerializerInUnit(unit, type);
+    if (ret != null) elements.add(ret);
+    if (elements.length > 1) return elements;
+  }
+
+  for (LibraryElement ilib in lib.importedLibraries) {
+    elements.addAll(_findSerializerInLib(ilib, type));
+    if (elements.length > 1) return elements;
+  }
+
+  return elements;
+}
+
 /// Instantiates [GenSerializer] from [DartObject]
 class AnnotationParser {
   final ConstantReader obj;
@@ -295,6 +329,15 @@ class AnnotationParser {
           processor.deserializedStr);
     }
 
+    if (processor == null && isDateTime.isExactlyType(type)) {
+      return new ProcessedTypeInfo(
+          'dateTimeUtcProcessor', 'String', 'DateTime');
+    }
+
+    if (processor == null && isDuration.isExactlyType(type)) {
+      return new ProcessedTypeInfo('durationProcessor', 'int', 'Duration');
+    }
+
     if (isBuiltin(type)) {
       return new BuiltinTypeInfo(type.displayName);
     } else if (type is InterfaceType && isList.isExactlyType(type)) {
@@ -325,16 +368,14 @@ class AnnotationParser {
       return new SerializedTypeInfo(ser.displayName, type.displayName);
     }
 
-    if (processor == null && isDateTime.isExactlyType(type)) {
-      return new ProcessedTypeInfo(
-          'dateTimeUtcProcessor', 'String', 'DateTime');
-    }
+    List<ClassElement> ser = _findSerializerInLib(element.library, type);
+    if (ser.length == 1)
+      return new SerializedTypeInfo(ser.first.displayName, type.displayName);
+    if (ser.length > 1)
+      throw new JCException(
+          'Multiple matching serializers found for ${type.displayName} when trying to automatically find serializer!');
 
-    if (processor == null && isDuration.isExactlyType(type)) {
-      return new ProcessedTypeInfo('durationProcessor', 'int', 'Duration');
-    }
-
-    throw new JCException('Cannot handle field!');
+    throw new JCException('Cannot handle ${type.displayName}!');
   }
 }
 

@@ -1,3 +1,4 @@
+import 'auto_find_serializer.dart' as aut;
 import 'dynamic.dart' as dyn;
 import 'nested_list.dart' as nl;
 import 'nested_map.dart' as nm;
@@ -8,6 +9,7 @@ import 'set.dart' as st;
 import 'simple.dart' as sm;
 
 main() {
+  aut.main();
   dyn.main();
   nl.main();
   nm.main();

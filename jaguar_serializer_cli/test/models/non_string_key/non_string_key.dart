@@ -41,6 +41,8 @@ class Model {
       return new MapEquality().equals(intKeyed, other.intKeyed);
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer(fields: const {

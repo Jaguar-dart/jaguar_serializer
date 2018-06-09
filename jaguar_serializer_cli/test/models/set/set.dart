@@ -35,6 +35,8 @@ class HasSet {
           new DeepCollectionEquality().equals(processedMap, other.processedMap);
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer()

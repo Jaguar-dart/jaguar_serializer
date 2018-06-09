@@ -40,6 +40,8 @@ class Model {
           new MapEquality().equals(processedMap, other.processedMap);
     return false;
   }
+
+  int get hashCode => 0;
 }
 
 @GenSerializer(nullableFields: false, serializers: const [ModelIntSerializer])
