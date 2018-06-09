@@ -34,7 +34,7 @@ while (( "$#" )); do
     ;;
   build) echo
     echo -e '\033[1mTASK: test\033[22m'
-    pub run build_runner build
+    dart _tool/builder_debug.dart build
     tree test/models
     ;;
   test) echo
