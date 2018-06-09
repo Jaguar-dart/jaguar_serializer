@@ -24,8 +24,8 @@ while (( "$#" )); do
   case $TASK in
   dartanalyzer) echo
     echo -e '\033[1mTASK: dartanalyzer\033[22m'
-    ls -a test/models/simple
     echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
+    dart _tool/builder_debug.dart build --delete-conflicting-outputs
     dartanalyzer --fatal-infos --fatal-warnings .
     ;;
   dartfmt) echo
@@ -35,8 +35,6 @@ while (( "$#" )); do
     ;;
   build) echo
     echo -e '\033[1mTASK: build\033[22m'
-    dart _tool/builder_debug.dart build --delete-conflicting-outputs
-    ls -a test/models/simple
     ;;
   test) echo
     echo -e '\033[1mTASK: test\033[22m'
