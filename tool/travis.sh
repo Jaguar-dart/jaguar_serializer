@@ -34,8 +34,7 @@ while (( "$#" )); do
     ;;
   build) echo
     echo -e '\033[1mTASK: test\033[22m'
-    dart _tool/builder_debug.dart build
-    tree test/models
+    dart _tool/builder_debug.dart build --delete-conflicting-outputs
     ;;
   test) echo
     echo -e '\033[1mTASK: test\033[22m'
