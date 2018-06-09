@@ -40,7 +40,9 @@ class Writer {
       final fieldName = "_${firstCharToLowerCase(prop.instantiationString)}";
       if (_providers.contains(fieldName)) return;
       _providers.add(fieldName);
-      _w.writeln('final $fieldName = new ${prop.instantiationString}();');
+      _w.writeln('Serializer<${prop.type}> _$fieldName;');
+      _w.writeln(
+          'Serializer<${prop.type}> get $fieldName => _$fieldName ?? new ${prop.instantiationString}();');
     } else if (prop is ListTypeInfo) {
       _providerWriter(prop.value);
     } else if (prop is MapTypeInfo) {
