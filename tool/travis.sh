@@ -30,6 +30,10 @@ while (( "$#" )); do
     echo -e 'dartfmt -n --set-exit-if-changed .'
     dartfmt -n --set-exit-if-changed .
     ;;
+  build) echo
+    echo -e '\033[1mTASK: test\033[22m'
+    pub run build_runner build
+    ;;
   test) echo
     echo -e '\033[1mTASK: test\033[22m'
     pub run build_runner test --delete-conflicting-outputs -- -p vm -p chrome 

@@ -11,6 +11,10 @@ jobs:
       script: ./tool/travis.sh dartfmt
       env: PKG="jaguar_serializer"
       dart: dev
+    - stage: build
+      script: ./tool/travis.sh build
+      env: PKG="jaguar_serializer_cli"
+      dart: dev
     - stage: analyzer
       script: ./tool/travis.sh dartanalyzer
       env: PKG="jaguar_serializer"
@@ -30,6 +34,7 @@ jobs:
 
 stages:
   - format
+  - build
   - analyzer
   - unit_test
 
