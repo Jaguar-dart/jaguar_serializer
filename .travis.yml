@@ -12,7 +12,7 @@ jobs:
       env: PKG="jaguar_serializer"
       dart: dev
     - stage: analyzer
-      script: ./tool/travis.sh dartanalyzer
+      script: ./tool/travis.sh analyze_ser
       env: PKG="jaguar_serializer"
       dart: dev
     - stage: format
@@ -20,7 +20,7 @@ jobs:
       env: PKG="jaguar_serializer_cli"
       dart: dev
     - stage: analyzer
-      script: ./tool/travis.sh dartanalyzer
+      script: ./tool/travis.sh analyze_cli
       env: PKG="jaguar_serializer_cli"
       dart: dev
     - stage: unit_test
@@ -29,9 +29,9 @@ jobs:
       dart: dev
 
 stages:
-  - format
   - analyzer
   - unit_test
+  - format
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
