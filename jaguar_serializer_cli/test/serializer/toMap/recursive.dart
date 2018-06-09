@@ -7,8 +7,8 @@ main() {
       group("Recursive", () {
         test("Normal", () {
           expect(
-              new ASerializer()
-                  .toMap(new A(field: 1, b: new B(field: 2, a: new A(field: 3)))),
+              new ASerializer().toMap(
+                  new A(field: 1, b: new B(field: 2, a: new A(field: 3)))),
               {
                 'field': 1,
                 'b': {

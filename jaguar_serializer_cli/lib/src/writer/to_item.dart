@@ -9,16 +9,16 @@ class ToItemWriter {
     var w = new StringBuffer();
 
     if (field.isNullable) {
-      w.write("nullableIterableMapper(");
+      w.write("codeIterable(");
     } else {
-      w.write("nonNullableIterableMapper(");
+      w.write("codeNonNullIterable(");
     }
     w.write("$reference");
     if (cast == true) w.write(" as Iterable");
     w.write(",");
 
     w.write('(val) => ');
-    w.write(_makeValue('val', prop.value, cast: true));
+    w.write(_makeValue('val', prop.itemInfo, cast: true));
     if (!field.isNullable) w.write(", []");
     w.write(')');
 
@@ -29,9 +29,9 @@ class ToItemWriter {
     StringBuffer _w = new StringBuffer();
 
     if (field.isNullable) {
-      _w.write('nullableMapMaker(');
+      _w.write('codeMap(');
     } else {
-      _w.write('nonNullableMapMaker(');
+      _w.write('codeNonNullMap(');
     }
     _w.write("$reference");
     if (cast == true) {
@@ -39,12 +39,32 @@ class ToItemWriter {
     }
     _w.write(",");
     _w.write('(val) =>');
-    _w.write(_makeValue('val', map.value, cast: true));
+    _w.write(_makeValue('val', map.valueInfo, cast: true));
 
     if (!field.isNullable) _w.write(", <String, dynamic>{}");
     _w.write(')');
 
     return _w.toString();
+  }
+
+  String _makeSet(String reference, SetTypeInfo prop, {bool cast: false}) {
+    var w = new StringBuffer();
+
+    if (field.isNullable) {
+      w.write("codeIterable(");
+    } else {
+      w.write("codeNonNullIterable(");
+    }
+    w.write("$reference");
+    if (cast == true) w.write(" as Iterable");
+    w.write(",");
+
+    w.write('(val) => ');
+    w.write(_makeValue('val', prop.itemInfo, cast: true));
+    if (!field.isNullable) w.write(", []");
+    w.write(')');
+
+    return w.toString();
   }
 
   String _makeValue(String reference, TypeInfo type, {bool cast: false}) {
@@ -54,6 +74,8 @@ class ToItemWriter {
       return _makeList(reference, type, cast: cast);
     } else if (type is MapTypeInfo) {
       return _makeMap(reference, type, cast: cast);
+    } else if (type is SetTypeInfo) {
+      return _makeSet(reference, type, cast: cast);
     } else if (type is ProcessedTypeInfo) {
       var w = new StringBuffer();
       w.write(type.instantiationString + '.serialize($reference');

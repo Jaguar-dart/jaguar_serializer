@@ -10,6 +10,8 @@ const isList = const TypeChecker.fromRuntime(List);
 
 const isMap = const TypeChecker.fromRuntime(Map);
 
+const isSet = const TypeChecker.fromRuntime(Set);
+
 const isString = const TypeChecker.fromRuntime(String);
 
 const isInt = const TypeChecker.fromRuntime(int);

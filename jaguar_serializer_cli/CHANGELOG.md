@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.3
+
++ `Set` is not serializable
+
 ## 2.0.2
 
 + Fixed for recursive models

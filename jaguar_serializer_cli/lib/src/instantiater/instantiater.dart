@@ -312,6 +312,10 @@ class AnnotationParser {
       }
       return new MapTypeInfo(_expandTypeInfo(key, processor), key.displayName,
           _expandTypeInfo(value, processor), value.displayName);
+    } else if (type is InterfaceType && isSet.isExactlyType(type)) {
+      final DartType param = type.typeArguments.first;
+      return new SetTypeInfo(
+          _expandTypeInfo(param, processor), param.displayName);
     } else if (type.isDynamic || type.isObject) {
       return new ProcessedTypeInfo('dynamicProcessor', 'dynamic', 'dynamic');
     }

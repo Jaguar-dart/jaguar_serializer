@@ -9,8 +9,8 @@ class A {
 
   A({this.b, this.field});
 
-  bool operator==(other) {
-    if(other is A) return field == other.field && b == other.b;
+  bool operator ==(other) {
+    if (other is A) return field == other.field && b == other.b;
     return false;
   }
 }
@@ -22,8 +22,8 @@ class B {
 
   B({this.a, this.field});
 
-  bool operator==(other) {
-    if(other is B) return field == other.field && a == other.a;
+  bool operator ==(other) {
+    if (other is B) return field == other.field && a == other.a;
     return false;
   }
 }
@@ -33,4 +33,3 @@ class ASerializer extends Serializer<A> with _$ASerializer {}
 
 @GenSerializer(serializers: const [ASerializer])
 class BSerializer extends Serializer<B> with _$BSerializer {}
-

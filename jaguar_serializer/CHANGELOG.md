@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.2
+
++ `Set` are not serializable
+
 ## 1.0.0-dev8
 
 - Add SafeNumberProcessor

@@ -79,20 +79,27 @@ class Field {
 abstract class TypeInfo {}
 
 class MapTypeInfo implements TypeInfo {
-  final TypeInfo key;
+  final TypeInfo keyInfo;
 
   final String keyTypeString;
 
-  final TypeInfo value;
+  final TypeInfo valueInfo;
 
   final String valueTypeStr;
-  MapTypeInfo(this.key, this.keyTypeString, this.value, this.valueTypeStr);
+  MapTypeInfo(
+      this.keyInfo, this.keyTypeString, this.valueInfo, this.valueTypeStr);
 }
 
 class ListTypeInfo implements TypeInfo {
-  final TypeInfo value;
+  final TypeInfo itemInfo;
   final String itemTypeStr;
-  ListTypeInfo(this.value, this.itemTypeStr);
+  ListTypeInfo(this.itemInfo, this.itemTypeStr);
+}
+
+class SetTypeInfo implements TypeInfo {
+  final TypeInfo itemInfo;
+  final String itemTypeStr;
+  SetTypeInfo(this.itemInfo, this.itemTypeStr);
 }
 
 abstract class LeafTypeInfo implements TypeInfo {}
