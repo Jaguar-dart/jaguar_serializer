@@ -40,14 +40,14 @@ abstract class FieldProcessor<FromType, ToType> {
 
 /// RawData Field Processor
 ///
-/// Useful when no need to decode a List<dynamic> or a Map<String, dynamic>
+/// Useful when no need to decode a dynamic, List<dynamic> or a Map<String, dynamic>
 ///
 /// Example:
 ///
 ///     @GenSerializer(
 ///       processors: const {
-///         'data': const RawData(),
-///         'list': const RawData(),
+///         'data': const DynamicProcessor(),
+///         'list': const DynamicProcessor(),
 ///       },
 ///     )
 ///     class ModelSerializer extends Serializer<Model> with _$ModelSerializer {}
@@ -56,46 +56,40 @@ abstract class FieldProcessor<FromType, ToType> {
 ///        Map<String, dynamic> data;
 ///        List<dynamic> list;
 ///     }
-class RawData implements FieldProcessor<dynamic, dynamic> {
-  const RawData();
+class DynamicProcessor implements FieldProcessor<dynamic, dynamic> {
+  const DynamicProcessor();
 
   @override
-  dynamic serialize(dynamic value) {
-    _validate(value);
-    return value;
-  }
+  dynamic serialize(dynamic value) => _validate(value);
 
   @override
-  dynamic deserialize(dynamic value) {
-    _validate(value);
-    return value;
-  }
+  dynamic deserialize(dynamic value) => _validate(value);
 
-  void _validate(dynamic object) {
-    if (object == null) return;
+  dynamic _validate(dynamic object) {
+    if (object == null) return null;
 
-    if (object is num) return;
-
-    if (object is String) return;
+    if (object is num || object is String || object is bool) return object;
 
     if (object is List) {
-      object.forEach(_validate);
-      return;
+      final ret = new List(object.length);
+      for (int i = 0; i < object.length; i++) {
+        ret[i] = _validate(object[i]);
+      }
+      return ret;
     }
 
     if (object is Map) {
+      final ret = new Map<String, dynamic>();
       object.forEach((dynamic key, dynamic value) {
-        if (key is! String) {
-          throw new Exception('Key of a RawData Map must be a String!');
-        }
+        if (key is! String)
+          throw new Exception('Key of a Map must be a String!');
 
-        _validate(value);
+        ret[key as String] = _validate(value);
       });
-      return;
+      return ret;
     }
 
-    throw new Exception(
-        'Unknown RawData type found ${object.runtimeType}! Only List, Map, String and num are accepted!');
+    throw new Exception('Unknown type found: ${object.runtimeType}!');
   }
 }
 
@@ -223,6 +217,6 @@ const dateTimeProcessor = const DateTimeProcessor();
 const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
-const rawDate = const RawData();
+const dynamicProcessor = const DynamicProcessor();
 const safeNumProcessor = const SafeNumProcessor();
 const durationProcessor = const DurationProcessor();

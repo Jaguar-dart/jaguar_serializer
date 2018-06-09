@@ -6,12 +6,26 @@ class Foo {
   final String bar;
 
   Foo(this.bar);
+
+  bool operator ==(other) {
+    if (other is Foo) return bar == other.bar;
+    return false;
+  }
+
+  String toString() => new FooSerializer().toMap(this).toString();
 }
 
 class FooNamed {
   final String bar;
 
   FooNamed({this.bar});
+
+  bool operator ==(other) {
+    if (other is FooNamed) return bar == other.bar;
+    return false;
+  }
+
+  String toString() => new FooNamedSerializer().toMap(this).toString();
 }
 
 class ComplexConstructor {
@@ -24,6 +38,17 @@ class ComplexConstructor {
 
   ComplexConstructor(this.foo, this.toto, this.fooObject,
       {this.bar, this.isOkay, this.fooNamedObject});
+
+  bool operator ==(other) {
+    if (other is ComplexConstructor)
+      return foo == other.foo &&
+          bar == other.bar &&
+          isOkay == other.isOkay &&
+          toto == other.toto &&
+          fooObject == other.fooObject &&
+          fooNamedObject == other.fooNamedObject;
+    return false;
+  }
 }
 
 @GenSerializer()

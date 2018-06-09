@@ -56,8 +56,7 @@ class ToItemWriter {
       return _makeMap(reference, type, cast: cast);
     } else if (type is ProcessedTypeInfo) {
       var w = new StringBuffer();
-      w.write("_${firstCharToLowerCase(type.instantiationString)}" +
-          '.serialize($reference');
+      w.write(type.instantiationString + '.serialize($reference');
       if (cast) w.write(" as ${type.deserializedType}");
       w.write(")");
       return w.toString();

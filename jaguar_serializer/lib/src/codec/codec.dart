@@ -1,9 +1,9 @@
-import '../serializer/repo.dart';
+import 'package:jaguar_serializer/src/repo/repo.dart';
 
 /// Repository that serialize/deserialize using provided Codec.
 ///
 /// Same usage as [SerializerRepo]
-abstract class CodecRepo<S> extends SerializerRepo {
+abstract class CodecRepo<S> extends SerializerRepoImpl {
   ///@nodoc
   /// use [serialize]
   S encode(dynamic object);

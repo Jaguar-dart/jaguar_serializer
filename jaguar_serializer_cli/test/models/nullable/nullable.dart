@@ -42,24 +42,6 @@ class Model {
   }
 }
 
-@GenSerializer(nullableFields: true, serializers: const [ModelIntSerializer])
-class NullableSerializer extends Serializer<Model> with _$NullableSerializer {}
-
 @GenSerializer(nullableFields: false, serializers: const [ModelIntSerializer])
 class NonNullableSerializer extends Serializer<Model>
     with _$NonNullableSerializer {}
-
-/*
-bool areMapsEqual(Map m1, Map m2) {
-  if (m1 == m2) return true;
-  if (m1 == null && m2 == null) return true;
-  if (m1 == null || m2 == null) return false;
-  if (m1.length != m2.length) return false;
-
-  for (String key in m1.keys) {
-    if (!m2.containsKey(key)) return false;
-    if (m1[key] != m2[key]) return false;
-  }
-  return true;
-}
-*/

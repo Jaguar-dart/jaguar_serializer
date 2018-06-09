@@ -17,7 +17,6 @@ dependencies:
 dev_dependencies:
   browser:
   test:
-  mongo_dart:
   intl: ">=0.15.0 <0.16.0"
   # yamlicious: ^0.0.5
   # yaml: ">=2.1.10 <3.0.0"

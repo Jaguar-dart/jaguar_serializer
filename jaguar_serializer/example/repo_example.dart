@@ -1,7 +1,7 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-import '../basic/model.dart';
+import './example.dart';
 
-void jsonCodec() {
+void main() {
   SerializerRepo serializer =
       new JsonRepo(serializers: [new PlayerSerializer()]);
   {

@@ -21,6 +21,6 @@ export 'src/codec/codec.dart';
 export 'src/codec/json.dart';
 export 'src/serializer/serializer.dart';
 export 'src/serializer/field_processor.dart';
-export 'src/serializer/repo.dart';
+export 'package:jaguar_serializer/src/repo/repo.dart';
 export 'src/serializer/utils.dart';
 export 'src/serializer/serializer.dart';

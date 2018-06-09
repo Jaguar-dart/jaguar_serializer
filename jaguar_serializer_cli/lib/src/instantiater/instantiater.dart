@@ -51,7 +51,6 @@ class AnnotationParser {
     _parseModelType();
     _parseIgnore();
     _parseFields();
-    _parseFieldFormatters();
 
     for ($info.Field f in fields.values) {
       if (f.dontEncode && f.dontDecode) continue;
@@ -92,14 +91,14 @@ class AnnotationParser {
 
       PropertyAccessorElement other;
 
-      InterfaceType type;
+      DartType type;
       bool dontEncode = false;
       bool dontDecode = false;
       bool isFinal = false;
 
       if (field.isGetter) {
         getters[name] = field;
-        type = field.returnType as InterfaceType;
+        type = field.returnType;
         other = accessors.firstWhere((p) => p.displayName == name && p.isSetter,
             orElse: () => null);
         if (other != null)
@@ -113,7 +112,7 @@ class AnnotationParser {
         }
       } else {
         setters[name] = field;
-        type = field.type.parameters.first.type as InterfaceType;
+        type = field.type.parameters.first.type;
 
         other = accessors.firstWhere((p) => p.displayName == name && p.isGetter,
             orElse: () => null);
@@ -193,20 +192,6 @@ class AnnotationParser {
     }
   }
 
-  void _parseFieldFormatters() {
-    /* TODO
-    final format = obj.peek('fieldFormat')?.stringValue;
-    fieldFormatter = (str) => str;
-    if (format == FieldFormat.camelCase) {
-      fieldFormatter = toCamelCase;
-    } else if (format == FieldFormat.snakeCase) {
-      fieldFormatter = toSnakeCase;
-    } else if (format == FieldFormat.kebabCase) {
-      fieldFormatter = toKebabCase;
-    }
-    */
-  }
-
   void _parseSerializers() {
     final List<DartObject> list = obj.peek('serializers')?.listValue ?? [];
     list.map((DartObject obj) => obj.toTypeValue()).forEach((DartType t) {
@@ -264,7 +249,7 @@ class AnnotationParser {
 
     for (final arg in ctor.parameters) {
       final field = fields[arg.name];
-      if (arg.isRequired) {
+      if (arg.parameterKind == ParameterKind.REQUIRED) {
         if (field != null) {
           if (field.isFinal && !field.dontDecode) {
             ctorArguments.add(arg);
@@ -274,13 +259,15 @@ class AnnotationParser {
         } else {
           ctorArguments.add(null);
         }
-      } else {
-        if (arg.parameterKind == ParameterKind.NAMED) {
-          if (field != null && !field.dontDecode) ctorNamedArguments.add(arg);
-        } else {
-          throw new JCException(
-              "Optional positional arguments are not supported in constructor!");
+      } else if (arg.parameterKind == ParameterKind.NAMED) {
+        if (field != null && !field.dontDecode && field.isFinal) {
+          ctorNamedArguments.add(arg);
         }
+      } else {
+        /* TODO
+        throw new JCException(
+            "Optional positional arguments are not supported in constructor!");
+            */
       }
     }
   }
@@ -291,27 +278,32 @@ class AnnotationParser {
   }
 
   bool _getFinalityOfField(String name) {
-    if (getters.containsKey(name)) return getters[name].isSynthetic;
+    if (getters.containsKey(name)) {
+      if (setters.containsKey(name)) return false;
+      return getters[name].isSynthetic;
+    }
     return false;
   }
 
-  TypeInfo _expandTypeInfo(InterfaceType type, FieldProcessorInfo processor) {
+  TypeInfo _expandTypeInfo(DartType type, FieldProcessorInfo processor) {
     final TypeChecker typeChecker = new TypeChecker.fromStatic(type);
     if (processor != null &&
         typeChecker.isExactlyType(processor.deserialized)) {
-      return new ProcessedTypeInfo(processor.instantiationString,
-          processor.serializedStr, processor.deserializedStr);
+      return new ProcessedTypeInfo(
+          "_" + firstCharToLowerCase(processor.instantiationString),
+          processor.serializedStr,
+          processor.deserializedStr);
     }
 
     if (isBuiltin(type)) {
       return new BuiltinTypeInfo(type.displayName);
     } else if (type is InterfaceType && isList.isExactlyType(type)) {
-      final param = type.typeArguments.first as InterfaceType;
+      final DartType param = type.typeArguments.first;
       return new ListTypeInfo(
           _expandTypeInfo(param, processor), param.displayName);
     } else if (type is InterfaceType && isMap.isExactlyType(type)) {
-      final key = type.typeArguments.first as InterfaceType;
-      final value = type.typeArguments[1] as InterfaceType;
+      final DartType key = type.typeArguments.first;
+      final DartType value = type.typeArguments[1];
 
       if (key.displayName != "String") {
         // TODO fix this
@@ -320,10 +312,8 @@ class AnnotationParser {
       }
       return new MapTypeInfo(_expandTypeInfo(key, processor), key.displayName,
           _expandTypeInfo(value, processor), value.displayName);
-    } else if (type.isDynamic) {
-      throw new JCException('Cannot serialize "dynamic" type!');
-    } else if (type.isObject) {
-      throw new JCException('Cannot serialize "Object" type!');
+    } else if (type.isDynamic || type.isObject) {
+      return new ProcessedTypeInfo('dynamicProcessor', 'dynamic', 'dynamic');
     }
 
     if (providers.containsKey(type)) {

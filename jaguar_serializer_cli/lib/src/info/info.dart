@@ -38,7 +38,7 @@ class Field {
   final String name;
 
   /// Type of the field
-  final InterfaceType type;
+  final DartType type;
 
   final bool dontEncode;
 

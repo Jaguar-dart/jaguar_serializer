@@ -59,8 +59,7 @@ class FromItemWriter {
       return reference + (cast ? ' as ${prop.typeStr}' : '');
     } else if (prop is ProcessedTypeInfo) {
       var w = new StringBuffer();
-      w.write("_${firstCharToLowerCase(prop.instantiationString)}" +
-          '.deserialize($reference');
+      w.write(prop.instantiationString + '.deserialize($reference');
       if (cast == true && prop.serializedType != "dynamic") {
         w.write(" as ${prop.serializedType}");
       }

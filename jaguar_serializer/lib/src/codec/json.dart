@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import '../serializer/serializer.dart';
-import '../serializer/repo.dart';
+import 'package:jaguar_serializer/src/repo/repo.dart';
 import "codec.dart";
 
 /// Repository that serialize/deserialize JSON.
 ///
 /// Same usage as [SerializerRepo]
-class JsonRepo extends SerializerRepo implements CodecRepo<String> {
+class JsonRepo extends SerializerRepoImpl implements CodecRepo<String> {
   JsonRepo({List<Serializer> serializers}) : super(serializers: serializers);
 
   ///@nodoc

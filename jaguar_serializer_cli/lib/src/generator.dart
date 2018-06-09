@@ -15,7 +15,7 @@ import 'instantiater/instantiater.dart';
 import 'writer/writer.dart';
 import 'utils/exceptions.dart';
 
-final Logger _log = new Logger("SerializerGenerator");
+final Logger _log = new Logger("JaguarSerializer");
 
 /// source_gen hook to generate serializer
 class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
