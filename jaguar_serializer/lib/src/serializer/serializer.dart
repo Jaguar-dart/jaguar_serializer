@@ -25,6 +25,8 @@ abstract class Serializer<ModelType> {
   /// Clone an object using the serializer
   ModelType clone(ModelType object) => fromMap(toMap(object));
 
+  T getJserDefault<T>(String field) => null;
+
   ////// To implement //////
 
   /// Decodes model from [Map]

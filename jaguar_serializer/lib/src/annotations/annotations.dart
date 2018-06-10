@@ -64,10 +64,6 @@ class Field<T> {
   /// The field processor used to encode/decode this field
   final FieldProcessor<T, dynamic> processor;
 
-  /// The value used when the field has null value
-  final T defaultsTo;
-  final bool valueFromConstructor;
-
   /// Should the field be included during encoding?
   final bool dontEncode;
 
@@ -78,29 +74,17 @@ class Field<T> {
       {this.encodeTo,
       this.decodeFrom,
       this.isNullable,
-      this.defaultsTo,
       this.processor,
-      this.valueFromConstructor: false,
       this.dontDecode: false,
       this.dontEncode: false});
 
-  const Field.encode(
-      {String alias,
-      this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor: false})
+  const Field.encode({String alias, this.isNullable, this.processor})
       : encodeTo = alias,
         dontEncode = false,
         decodeFrom = null,
         dontDecode = true;
 
-  const Field.decode(
-      {String alias,
-      this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor: false})
+  const Field.decode({String alias, this.isNullable, this.processor})
       : decodeFrom = alias,
         dontEncode = true,
         encodeTo = null,
@@ -111,8 +95,6 @@ class Field<T> {
         decodeFrom = null,
         isNullable = null,
         processor = null,
-        defaultsTo = null,
-        valueFromConstructor = false,
         dontEncode = true,
         dontDecode = true;
 }
@@ -131,22 +113,13 @@ class EnDecode<T> implements Field<T> {
   /// The field processor used to encode/decode this field
   final FieldProcessor<T, dynamic> processor;
 
-  /// The value used when the field has null value
-  final T defaultsTo;
-  final bool valueFromConstructor;
-
   /// Should the field be included during encoding?
   final bool dontEncode;
 
   /// Should the field be included during decoding?
   final bool dontDecode;
 
-  const EnDecode(
-      {String alias,
-      this.isNullable,
-      this.processor,
-      this.defaultsTo,
-      this.valueFromConstructor: false})
+  const EnDecode({String alias, this.isNullable, this.processor})
       : encodeTo = alias,
         decodeFrom = alias,
         dontDecode = false,
@@ -167,10 +140,6 @@ class Ignore implements Field<dynamic> {
   /// The field processor used to encode/decode this field
   final FieldProcessor<dynamic, dynamic> processor;
 
-  /// The value used when the field has null value
-  final dynamic defaultsTo;
-  final bool valueFromConstructor;
-
   /// Should the field be included during encoding?
   final bool dontEncode;
 
@@ -182,8 +151,6 @@ class Ignore implements Field<dynamic> {
         decodeFrom = null,
         isNullable = null,
         processor = null,
-        defaultsTo = null,
-        valueFromConstructor = false,
         dontEncode = true,
         dontDecode = true;
 }
@@ -204,10 +171,6 @@ class Alias<T> implements Field<T> {
   /// The field processor used to encode/decode this field
   final FieldProcessor<T, dynamic> processor;
 
-  /// The value used when the field has null value
-  final T defaultsTo;
-  final bool valueFromConstructor;
-
   /// Should the field be included during encoding?
   final bool dontEncode;
 
@@ -218,8 +181,6 @@ class Alias<T> implements Field<T> {
     String alias, {
     this.isNullable,
     this.processor,
-    this.defaultsTo,
-    this.valueFromConstructor: false,
   })  : encodeTo = alias,
         decodeFrom = alias,
         dontDecode = false,
@@ -229,5 +190,3 @@ class Alias<T> implements Field<T> {
 const ignore = const Ignore();
 const Field nullable = const Field<dynamic>(isNullable: true);
 const Field nonNullable = const Field<dynamic>(isNullable: false);
-const Field useConstructorForDefaultsValue =
-    const Field<dynamic>(valueFromConstructor: true, isNullable: false);

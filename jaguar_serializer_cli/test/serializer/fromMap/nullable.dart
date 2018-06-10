@@ -37,6 +37,7 @@ main() {
           expect(
               new NonNullableSerializer().fromMap({}),
               new Model()
+                ..serialized = new ModelInt()
                 ..processedList = []
                 ..processedMap = {}
                 ..serializedList = []

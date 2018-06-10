@@ -176,8 +176,6 @@ class AnnotationParser {
       String encodeTo = name;
       String decodeFrom = name;
       bool nullable = globalNullable;
-      String defaultValue;
-      bool fromConstructor = false;
       FieldProcessorInfo processor;
       if (annot != null) {
         dontEncode =
@@ -190,8 +188,6 @@ class AnnotationParser {
             annot.getField('decodeFrom')?.toStringValue() ?? decodeFrom;
 
         nullable = annot.getField('isNullable').toBoolValue() ?? nullable;
-        defaultValue = _parseFieldDefaultValue(annot.getField('defaultsTo'));
-        fromConstructor = annot.getField('valueFromConstructor').toBoolValue();
         processor = _parseFieldProcessor(annot.getField('processor'));
       }
 
@@ -204,9 +200,7 @@ class AnnotationParser {
           encodeTo: encodeTo,
           decodeFrom: decodeFrom,
           processor: processor,
-          isNullable: nullable && defaultValue == null && !fromConstructor,
-          defaultValue: defaultValue,
-          fromConstructor: fromConstructor,
+          isNullable: nullable,
           isFinal: isFinal,
         );
       }
@@ -224,9 +218,7 @@ class AnnotationParser {
           encodeTo: null,
           decodeFrom: null,
           processor: null,
-          isNullable: null,
-          defaultValue: null,
-          fromConstructor: false);
+          isNullable: null);
     }
   }
 
@@ -306,8 +298,6 @@ class AnnotationParser {
         _parseFieldProcessor(config.getField('processor'));
     bool isNullable =
         config.getField('isNullable')?.toBoolValue() ?? globalNullable;
-    String defVal = _parseFieldDefaultValue(config.getField('defaultsTo'));
-    bool valFromCon = config.getField('valueFromConstructor').toBoolValue();
 
     fields[fieldName] = new $info.Field(
       name: fieldName,
@@ -317,9 +307,7 @@ class AnnotationParser {
       encodeTo: _getStringField(config, 'encodeTo') ?? fieldName,
       decodeFrom: _getStringField(config, 'decodeFrom') ?? fieldName,
       processor: processor,
-      isNullable: isNullable && defVal == null && !valFromCon,
-      defaultValue: defVal,
-      fromConstructor: valFromCon,
+      isNullable: isNullable,
       isFinal: _getFinalityOfField(fieldName),
     );
   }
@@ -398,7 +386,6 @@ class AnnotationParser {
       final DartType value = type.typeArguments[1];
 
       if (key.displayName != "String") {
-        // TODO fix this
         throw new JCException(
             'Serializer only support "String" key for a Map!');
       }
@@ -434,22 +421,6 @@ String _getStringField(DartObject v, String name) =>
     v.getField(name)?.toStringValue();
 
 String _mapToString(DartObject v) => v?.toStringValue();
-
-String _parseFieldDefaultValue(DartObject dV) {
-  if (!_notNull(dV)) return null;
-  if (isString.isExactlyType(dV.type)) {
-    return '"${dV.toStringValue()}"';
-  } else if (isBool.isExactlyType(dV.type)) {
-    return dV.toBoolValue().toString();
-  } else if (isDouble.isExactlyType(dV.type)) {
-    return dV.toDoubleValue().toString();
-  } else if (isInt.isExactlyType(dV.type)) {
-    return dV.toIntValue().toString();
-  } else {
-    // TODO more specific
-    throw new JCException("Invalid value for `defaultsTo`");
-  }
-}
 
 FieldProcessorInfo _parseFieldProcessor(DartObject processor) {
   if (!_notNull(processor)) return null;

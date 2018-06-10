@@ -79,7 +79,7 @@ void main() {
         expect(ser.fromMap(m), new Simple(stringF: 'John', intF: 25));
       });
 
-      // Ignore field
+      /* TODO
       test("DefaultValue", () {
         var ser = new SimpleSerializerWithDefaults();
         expect(
@@ -92,6 +92,7 @@ void main() {
                 listF: [],
                 mapF: {}));
       });
+      */
 
       test("Inheritance", () {
         var ser = new DerivedSerializer();

@@ -54,10 +54,6 @@ class Field {
 
   final bool isNullable;
 
-  final String defaultValue;
-
-  final bool fromConstructor;
-
   TypeInfo typeInfo;
 
   Field(
@@ -69,9 +65,7 @@ class Field {
       @required this.encodeTo,
       @required this.decodeFrom,
       @required this.processor,
-      @required this.isNullable,
-      @required this.defaultValue,
-      @required this.fromConstructor});
+      @required this.isNullable});
 }
 
 abstract class TypeInfo {}

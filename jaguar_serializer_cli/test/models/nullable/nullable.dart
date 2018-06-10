@@ -42,8 +42,16 @@ class Model {
   }
 
   int get hashCode => 0;
+
+  String toString() => new NonNullableSerializer().toMap(this).toString();
 }
 
 @GenSerializer(nullableFields: false, serializers: const [ModelIntSerializer])
 class NonNullableSerializer extends Serializer<Model>
-    with _$NonNullableSerializer {}
+    with _$NonNullableSerializer {
+  @override
+  T getJserDefault<T>(String field) {
+    if (field == 'serialized') return new ModelInt() as T;
+    return null;
+  }
+}

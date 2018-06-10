@@ -5,8 +5,8 @@ import 'package:jaguar_serializer_cli/src/info/info.dart';
 import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
 import 'package:jaguar_serializer_cli/src/utils/string.dart';
 
-part 'to_item.dart';
-part 'from_item.dart';
+part 'to.dart';
+part 'from.dart';
 
 class Writer {
   final SerializerInfo info;
@@ -111,7 +111,8 @@ class Writer {
       if (item.dontDecode) continue;
       if (item.isFinal) continue;
       _w.write('obj.${item.name} = ');
-      _w.write(new FromItemWriter(item, info.nameFormatter != null).generate());
+      _w.write(
+          new FromItemWriter(item, info.nameFormatter != null).generate(false));
       _w.write(';');
     }
 
@@ -125,13 +126,13 @@ class Writer {
     info.ctorArguments.forEach((param) {
       if (!first) _w.write(',');
       if (param == null) {
-        _w.write('null');
+        _w.write("getJserDefault('${param.displayName}')");
         return;
       }
       first = false;
       _w.write(new FromItemWriter(
               info.fields[param.displayName], info.nameFormatter != null)
-          .generate());
+          .generate(true));
     });
     info.ctorNamedArguments.forEach((param) {
       if (!first) _w.write(',');
@@ -139,7 +140,7 @@ class Writer {
       _w.write('${param.name}: ');
       _w.write(new FromItemWriter(
               info.fields[param.displayName], info.nameFormatter != null)
-          .generate());
+          .generate(true));
     });
     _w.write(')');
   }

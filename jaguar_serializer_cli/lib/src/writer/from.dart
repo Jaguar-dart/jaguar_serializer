@@ -103,18 +103,17 @@ class FromItemWriter {
     throw new JCException('Dont know how to handle this!');
   }
 
-  String generate() {
-    String defVal;
-    if (field.defaultValue != null) {
-      defVal = field.defaultValue;
-    } else if (field.fromConstructor) {
-      defVal = "obj.${field.name}";
-    }
+  String generate(bool isCtor) {
     String key = "'${field.decodeFrom}'";
     if (hasGlobalNameForamtter && field.name == field.decodeFrom) {
       key = "_jserNameMapping['${field.name}']";
     }
-    return _makeValue("map[$key]", field.typeInfo, cast: true) +
-        (defVal != null ? ' ?? ${defVal}' : '');
+    String ref = "map[$key]";
+    var sb = new StringBuffer();
+    sb.write(_makeValue(ref, field.typeInfo, cast: true));
+    if (!field.isNullable || isCtor)
+      sb.write(" ?? getJserDefault('${field.name}')");
+    if (!field.isNullable) sb.write(" ?? obj.${field.name}");
+    return sb.toString();
   }
 }

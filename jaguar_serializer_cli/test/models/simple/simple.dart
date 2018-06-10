@@ -29,6 +29,7 @@ class SimpleSerializerRename extends Serializer<Simple>
 class SimpleSerializerExcludeDef extends Serializer<Simple>
     with _$SimpleSerializerExcludeDef {}
 
+/*
 @GenSerializer(fields: const {
   'stringF': const Field<String>(defaultsTo: 'Lejard'),
   'intF': const Field<int>(defaultsTo: 25),
@@ -39,6 +40,7 @@ class SimpleSerializerExcludeDef extends Serializer<Simple>
 })
 class SimpleSerializerWithDefaults extends Serializer<Simple>
     with _$SimpleSerializerWithDefaults {}
+*/
 
 /// A simple model with various built-in typed fields
 class Simple {
