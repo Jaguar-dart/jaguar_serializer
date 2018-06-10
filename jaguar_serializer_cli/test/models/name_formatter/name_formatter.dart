@@ -1,6 +1,6 @@
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
-part 'field_format.jser.dart';
+part 'name_formatter.jser.dart';
 
 String sampleFormatter(String input) => '@$input';
 
