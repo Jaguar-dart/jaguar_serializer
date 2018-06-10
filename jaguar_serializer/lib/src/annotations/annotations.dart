@@ -1,18 +1,17 @@
 import '../serializer/serializer.dart';
 import '../serializer/field_processor.dart';
 
+typedef String NameFormatter(String fieldName);
+
 /// Annotation used to request generation of serializer
 class GenSerializer {
-  /// Supply optional modelName
-  final String modelName;
-
   /// Should all fields be included by default?
   ///
   /// Default to [true]
   final bool includeByDefault;
 
   /// Specify whether a property could be encoded, only, decoded only or both
-  final Map<String, Property> fields;
+  final Map<String, Field> fields;
 
   /// List of properties that shall be ignored
   final List<String> ignore;
@@ -41,143 +40,153 @@ class GenSerializer {
   /// final model = serializer.fromMap(map);
   /// print(model.myField); // print 'foo'
   /// ```
-  final String fieldFormat;
+  final NameFormatter nameFormatter;
 
   const GenSerializer(
-      {this.fields: const <String, Property>{},
+      {this.fields: const <String, Field>{},
       this.ignore: const <String>[],
       this.serializers: const <Type>[],
-      this.modelName,
       this.includeByDefault: true,
       this.nullableFields: true,
-      this.fieldFormat});
+      this.nameFormatter});
 }
 
-class Property<T> {
+class Field<T> {
+  /// Alias used while encoding
   final String encodeTo;
-  final String decodeFrom;
-  final bool isNullable;
-  final FieldProcessor<T, dynamic> processor;
-  final T defaultsTo;
-  final bool valueFromConstructor;
 
-  const Property(
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<T, dynamic> processor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
+  const Field(
       {this.encodeTo,
       this.decodeFrom,
       this.isNullable,
-      this.defaultsTo,
       this.processor,
-      this.valueFromConstructor});
-}
+      this.dontDecode: false,
+      this.dontEncode: false});
 
-// can't use inheritance here, [DartObject.getField] does not support getter, only fields
-/// Annotation used to request encoding of a field in model
-class EncodeOnly<T> extends Property<T> {
-  /// Optional. Key used to encode the model in the [Map]
-  final String alias;
-  final FieldProcessor<T, dynamic> processor;
-  final bool isNullable;
-  final T defaultsTo;
-  final String encodeTo;
-  final bool valueFromConstructor;
+  const Field.encode({String alias, this.isNullable, this.processor})
+      : encodeTo = alias,
+        dontEncode = false,
+        decodeFrom = null,
+        dontDecode = true;
 
-  const EncodeOnly(
-      {this.alias,
-      this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor})
-      : encodeTo = alias;
-}
+  const Field.decode({String alias, this.isNullable, this.processor})
+      : decodeFrom = alias,
+        dontEncode = true,
+        encodeTo = null,
+        dontDecode = false;
 
-/// Annotation used to request decoding of a field in model
-class DecodeOnly<T> extends Property<T> {
-  /// Optional. Key used to decode the model from the [Map]
-  final String alias;
-  final FieldProcessor<T, dynamic> processor;
-  final bool isNullable;
-  final T defaultsTo;
-  final String decodeFrom;
-  final bool valueFromConstructor;
-
-  const DecodeOnly(
-      {this.alias,
-      this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor})
-      : decodeFrom = alias;
+  const Field.ignore()
+      : encodeTo = null,
+        decodeFrom = null,
+        isNullable = null,
+        processor = null,
+        dontEncode = true,
+        dontDecode = true;
 }
 
 /// Annotation used to request encoding and decoding of a field in model
-class EnDecode<T> extends Property<T> {
-  /// Optional. Key used to decode and encode the model from and to the [Map]
-  final String alias;
-  final FieldProcessor<T, dynamic> processor;
-  final bool isNullable;
-  final T defaultsTo;
+class EnDecode<T> implements Field<T> {
+  /// Alias used while encoding
   final String encodeTo;
-  final String decodeFrom;
-  final bool valueFromConstructor;
 
-  const EnDecode(
-      {this.alias,
-      this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor})
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<T, dynamic> processor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
+  const EnDecode({String alias, this.isNullable, this.processor})
       : encodeTo = alias,
-        decodeFrom = alias;
+        decodeFrom = alias,
+        dontDecode = false,
+        dontEncode = false;
 }
 
 /// Annotation to ignore a field while encoding or decoding
-class Ignore extends EnDecode<dynamic> {
-  const Ignore();
+class Ignore implements Field<dynamic> {
+  /// Alias used while encoding
+  final String encodeTo;
+
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<dynamic, dynamic> processor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
+  const Ignore()
+      : encodeTo = null,
+        decodeFrom = null,
+        isNullable = null,
+        processor = null,
+        dontEncode = true,
+        dontDecode = true;
 }
 
 /// Annotation used to request encoding and decoding of a field in model
 /// shortcup for `const EnDecode(alias: "key")`
 /// become `const Alias("key")`
-class Alias<T> extends Property<T> {
-  /// Optional. Key used to decode and encode the model from and to the [Map]
-  final String alias;
-  final FieldProcessor<T, dynamic> processor;
-  final bool isNullable;
-  final T defaultsTo;
+class Alias<T> implements Field<T> {
+  /// Alias used while encoding
   final String encodeTo;
-  final String decodeFrom;
-  final bool valueFromConstructor;
 
-  const Alias(this.alias,
-      {this.isNullable,
-      this.defaultsTo,
-      this.processor,
-      this.valueFromConstructor})
-      : encodeTo = alias,
-        decodeFrom = alias;
+  /// Alias used while decoding
+  final String decodeFrom;
+
+  /// Is it allowed to set the field to null value?
+  final bool isNullable;
+
+  /// The field processor used to encode/decode this field
+  final FieldProcessor<T, dynamic> processor;
+
+  /// Should the field be included during encoding?
+  final bool dontEncode;
+
+  /// Should the field be included during decoding?
+  final bool dontDecode;
+
+  const Alias(
+    String alias, {
+    this.isNullable,
+    this.processor,
+  })  : encodeTo = alias,
+        decodeFrom = alias,
+        dontDecode = false,
+        dontEncode = false;
 }
 
 const ignore = const Ignore();
-const Property nullable = const Property<dynamic>(isNullable: true);
-const Property nonNullable = const Property<dynamic>(isNullable: false);
-const Property useConstructorForDefaultsValue =
-    const Property<dynamic>(valueFromConstructor: true, isNullable: false);
-
-/// Determine the output format for a field
-/// Example:
-///     class Foo {
-///         String camelCase = "bar";
-///     }
-///
-///     @GenSerializer(fieldFormat: FieldFormat.snakeCase)
-///     class FooSerializer ...
-///
-/// will produce
-///    {
-///       "camel_case": "bar"
-///    }
-class FieldFormat {
-  static const camelCase = 'camelCase';
-  static const snakeCase = 'snakeCase';
-  static const kebabCase = 'kebabCase';
-}
+const Field nullable = const Field<dynamic>(isNullable: true);
+const Field nonNullable = const Field<dynamic>(isNullable: false);

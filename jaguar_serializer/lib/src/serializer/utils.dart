@@ -1,9 +1,22 @@
-import 'repo.dart';
-
 typedef String KeyMaker<Key>(Key key);
 typedef Value ValueMaker<Value>(value);
 
-Map<String, Value> nullableMapMaker<Value>(
+void setMapValue(Map<String, dynamic> map, String key, dynamic value) {
+  map[key] = value;
+}
+
+void setMapValueIfNotNull(Map<String, dynamic> map, String key, dynamic value) {
+  if (value != null) map[key] = value;
+}
+
+List<T> codeIterable<T>(Iterable values, T callback(value)) =>
+    values?.map<T>(callback)?.toList();
+
+List<T> codeNonNullIterable<T>(
+        Iterable values, T callback(value), List<T> defaultValues) =>
+    codeIterable(values, callback) ?? defaultValues;
+
+Map<String, Value> codeMap<Value>(
     Map<String, dynamic> map, ValueMaker<Value> valueMaker) {
   Map<String, Value> ret;
   if (map != null) {
@@ -15,30 +28,16 @@ Map<String, Value> nullableMapMaker<Value>(
   return ret;
 }
 
-Map<String, Value> nonNullableMapMaker<Value>(Map<String, dynamic> map,
+Map<String, Value> codeNonNullMap<Value>(Map<String, dynamic> map,
         ValueMaker<Value> valueMaker, Map<String, Value> defaultValues) =>
-    nullableMapMaker<Value>(map, valueMaker) ?? defaultValues;
+    codeMap<Value>(map, valueMaker) ?? defaultValues;
 
-void setNullableValue(Map<String, dynamic> map, String key, dynamic value) {
-  map[key] = value;
+Set<T> codeSet<T>(Iterable values, T callback(value)) {
+  if (values == null) return null;
+  return new Set<T>.from(values.map<T>(callback));
 }
 
-void setNonNullableValue(Map<String, dynamic> map, String key, dynamic value) {
-  if (value != null) {
-    setNullableValue(map, key, value);
-  }
-}
-
-List<T> nullableIterableMapper<T>(Iterable values, T callback(value)) =>
-    values?.map<T>(callback)?.toList();
-
-List<T> nonNullableIterableMapper<T>(
-        Iterable values, T callback(value), List<T> defaultValues) =>
-    nullableIterableMapper(values, callback) ?? defaultValues;
-
-void setTypeKeyValue(String typeKey, String modelString, bool withType,
-    Map<String, dynamic> map) {
-  if (modelString != null && withType) {
-    map[typeKey ?? defaultTypeInfoKey] = modelString;
-  }
+Set<T> codeNonNullSet<T>(Iterable values, T callback(value)) {
+  if (values == null) return new Set<T>();
+  return new Set<T>.from(values.map<T>(callback));
 }

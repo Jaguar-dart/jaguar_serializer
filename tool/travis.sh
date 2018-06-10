@@ -17,12 +17,20 @@ fi
 pushd $PKG
 pub upgrade
 
+echo `pwd`
+
 while (( "$#" )); do
   TASK=$1
   case $TASK in
-  dartanalyzer) echo
+  analyze_ser) echo
     echo -e '\033[1mTASK: dartanalyzer\033[22m'
     echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
+    dartanalyzer --fatal-infos --fatal-warnings .
+    ;;
+  analyze_cli) echo
+    echo -e '\033[1mTASK: dartanalyzer\033[22m'
+    echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
+    dart _tool/builder_debug.dart build --delete-conflicting-outputs
     dartanalyzer --fatal-infos --fatal-warnings .
     ;;
   dartfmt) echo

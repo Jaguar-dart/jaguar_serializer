@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.0.3
+
++ `Set` is not serializable
+
+## 2.0.2
+
++ Fixed for recursive models
+
 ## 1.0.0-dev8
 
 - fix flutter --release build

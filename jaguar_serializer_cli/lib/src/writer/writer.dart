@@ -1,19 +1,15 @@
 ///@nodoc
 library jaguar_serializer.generator.writer;
 
-import '../helpers/helpers.dart';
-import '../parser/parser.dart';
+import 'package:jaguar_serializer_cli/src/info/info.dart';
+import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
+import 'package:jaguar_serializer_cli/src/utils/string.dart';
 
-part 'to_item.dart';
-
-part 'from_item.dart';
+part 'to.dart';
+part 'from.dart';
 
 class Writer {
-  final WriterInfo info;
-
-  List<String> _providers = [];
-
-  List<String> _customsProcessors = [];
+  final SerializerInfo info;
 
   final _w = new StringBuffer();
 
@@ -28,137 +24,95 @@ class Writer {
   void generate() {
     _w.writeln('abstract class _\$$name implements Serializer<$modelName> {');
 
-    _providerWriter();
+    _writeMakers();
 
     _toWriter();
 
     _fromWriter();
 
-    _w.writeln('@override');
-    _w.writeln("String modelString() => '${info.modelString}';");
-
     _w.writeln('}');
   }
 
-  void _serializedPropertyToWriter(PropertyTo to) {
-    if (to is SerializedPropertyTo) {
-      final fieldName = "_${firstCharToLowerCase(to.instantiationString)}";
-      if (_providers.contains(fieldName)) {
-        return;
-      }
-      _providers.add(fieldName);
-      _w.writeln('final $fieldName = new ${to.instantiationString}();');
-    } else if (to is ListPropertyTo) {
-      _serializedPropertyToWriter(to.value);
-    } else if (to is MapPropertyTo) {
-      _serializedPropertyToWriter(to.key);
-      _serializedPropertyToWriter(to.value);
-    }
-  }
+  List<String> _providers = [];
 
-  void _serializedPropertyFromWriter(PropertyFrom from) {
-    if (from is SerializedPropertyFrom) {
-      final fieldName = "_${firstCharToLowerCase(from.instantiationString)}";
-      if (_providers.contains(fieldName)) {
-        return;
-      }
+  void _providerWriter(TypeInfo prop) {
+    if (prop is SerializedTypeInfo) {
+      final fieldName = "_${firstCharToLowerCase(prop.instantiationString)}";
+      if (_providers.contains(fieldName)) return;
       _providers.add(fieldName);
-      _w.writeln('final $fieldName = new ${from.instantiationString}();');
-    } else if (from is ListPropertyFrom) {
-      _serializedPropertyFromWriter(from.value);
-    } else if (from is MapPropertyFrom) {
-      _serializedPropertyFromWriter(from.key);
-      _serializedPropertyFromWriter(from.value);
-    }
-  }
-
-  void _serializedPropertyCustomWriter(
-      String key, FieldProcessorInfo customProcessor) {
-    final fieldName =
-        "_${firstCharToLowerCase(customProcessor.instantiationString)}";
-    if (!_customsProcessors.contains(fieldName)) {
-      _customsProcessors.add(fieldName);
+      _w.writeln('Serializer<${prop.type}> _$fieldName;');
       _w.writeln(
-          'final $fieldName = const ${customProcessor.instantiationString}();');
+          'Serializer<${prop.type}> get $fieldName => _$fieldName ?? new ${prop.instantiationString}();');
+    } else if (prop is ListTypeInfo) {
+      _providerWriter(prop.itemInfo);
+    } else if (prop is MapTypeInfo) {
+      _providerWriter(prop.keyInfo);
+      _providerWriter(prop.valueInfo);
     }
   }
 
-  void _providerWriter() {
-    info.processors.forEach(_serializedPropertyCustomWriter);
-    info.to.forEach((FieldTo item) {
-      _serializedPropertyToWriter(item.property);
-    });
-    info.from.forEach((FieldFrom item) {
-      _serializedPropertyFromWriter(item.property);
-    });
-    _w.writeln("");
+  void _writeMakers() {
+    {
+      List<String> written = [];
+      for (Field f in info.fields.values) {
+        if (f.processor == null) continue;
+        if (f.dontDecode && f.dontDecode) continue;
+        final fieldName =
+            "_${firstCharToLowerCase(f.processor.instantiationString)}";
+        if (!written.contains(fieldName)) {
+          written.add(fieldName);
+          _w.writeln(
+              'final $fieldName = const ${f.processor.instantiationString}();');
+        }
+      }
+    }
+
+    {
+      _providers.clear();
+      for (Field f in info.fields.values) {
+        if (f.dontDecode && f.dontDecode) continue;
+        _providerWriter(f.typeInfo);
+      }
+    }
+
+    if (info.nameFormatter != null) {
+      _w.writeln('var _jserNameMapping = <String, String> {');
+      for (Field f in info.fields.values) {
+        if (f.dontEncode && f.dontDecode) continue;
+        if (f.name != f.encodeTo && f.name != f.decodeFrom) continue;
+        _w.writeln("'${f.name}': ${info.nameFormatter}('${f.name}'),");
+      }
+      _w.writeln('};');
+    }
   }
 
   void _toWriter() {
     _w.writeln('@override');
-    _w.writeln(
-        'Map<String, dynamic> toMap($modelName model, {bool withType: false, String typeKey}) {');
-    _w.writeln(r'Map<String, dynamic> ret;');
-
-    _w.writeln('if(model != null) {');
-    _w.writeln('ret = <String, dynamic>{};');
-    for (FieldTo item in info.to) {
-      _toItemWriter(item);
+    _w.writeln('Map<String, dynamic> toMap($modelName model) {');
+    _w.writeln('if(model == null) return null;');
+    _w.writeln(r'Map<String, dynamic> ret = <String, dynamic>{};');
+    for (Field item in info.fields.values.where((f) => !f.dontEncode)) {
+      _w.writeln(new ToItemWriter(item, info.nameFormatter != null).generate());
     }
-    _w.writeln('setTypeKeyValue(typeKey, modelString(), withType, ret);');
-    _w.writeln('}');
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
   }
 
-  void _toItemWriter(FieldTo item) {
-    if (item.nullable == true) {
-      _w.writeln('setNullableValue(ret,');
-    } else {
-      _w.writeln('setNonNullableValue(ret,');
-    }
-    _w.writeln("'${item.key}',");
-    final writer = new ToItemWriter(item);
-    _w.writeln(writer.generate('model.${item.name}'));
-    _w.writeln(');');
-  }
-
-  void _ctorWriter() {
-    _w.write('new $modelName(');
-    bool first = true;
-    info.ctorArguments.forEach((param) {
-      if (!first) {
-        _w.write(',');
-      }
-      first = false;
-      _fromItemWriter(info.from.firstWhere((f) => f.name == param.name));
-    });
-    info.ctorNamedArguments.forEach((param) {
-      if (!first) {
-        _w.write(',');
-      }
-      first = false;
-      _w.write('${param.name}: ');
-      _fromItemWriter(info.from.firstWhere((f) => f.name == param.name));
-    });
-    _w.write(');');
-  }
-
   void _fromWriter() {
     _w.writeln('@override');
-    _w.writeln(
-        '$modelName fromMap(Map<String, dynamic> map, {$modelName model}) {');
-    _w.writeln(r'if(map == null) {');
-    _w.writeln(r'return null;');
-    _w.writeln(r'}');
+    _w.writeln('$modelName fromMap(Map map) {');
+    _w.writeln(r'if(map == null) return null;');
 
-    _w.writeln("final obj = model ?? ");
-    _ctorWriter();
+    _w.write("final obj = ");
+    _writeCtor();
+    _w.writeln(';');
 
-    final froms = info.from.where((f) => f.isFinal != true);
-    for (FieldFrom item in froms) {
+    for (Field item in info.fields.values) {
+      if (item.dontDecode) continue;
+      if (item.isFinal) continue;
       _w.write('obj.${item.name} = ');
-      _fromItemWriter(item);
+      _w.write(
+          new FromItemWriter(item, info.nameFormatter != null).generate(false));
       _w.write(';');
     }
 
@@ -166,15 +120,28 @@ class Writer {
     _w.writeln(r'}');
   }
 
-  void _fromItemWriter(FieldFrom item) {
-    FromItemWriter writer = new FromItemWriter(item);
-
-    if (!item.nullable && item.defaultValue != null) {
-      _w.write(writer.generate("map['${item.key}']", "${item.defaultValue}"));
-    } else if (!item.nullable && item.defaultValueFromConstructor) {
-      _w.write(writer.generate("map['${item.key}']", "obj.${item.name}"));
-    } else {
-      _w.write(writer.generate("map['${item.key}']"));
-    }
+  void _writeCtor() {
+    _w.write('new $modelName(');
+    bool first = true;
+    info.ctorArguments.forEach((param) {
+      if (!first) _w.write(',');
+      if (param == null) {
+        _w.write("getJserDefault('${param.displayName}')");
+        return;
+      }
+      first = false;
+      _w.write(new FromItemWriter(
+              info.fields[param.displayName], info.nameFormatter != null)
+          .generate(true));
+    });
+    info.ctorNamedArguments.forEach((param) {
+      if (!first) _w.write(',');
+      first = false;
+      _w.write('${param.name}: ');
+      _w.write(new FromItemWriter(
+              info.fields[param.displayName], info.nameFormatter != null)
+          .generate(true));
+    });
+    _w.write(')');
   }
 }
