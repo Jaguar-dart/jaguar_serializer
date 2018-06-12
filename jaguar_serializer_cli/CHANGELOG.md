@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.8
+
++ Support enums
+
+## 2.1.5
+
++ Bug fix for `Field` annotation directly on model class
+
 ## 2.0.3
 
 + `Set` is not serializable

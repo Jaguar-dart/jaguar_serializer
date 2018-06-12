@@ -101,6 +101,11 @@ class BuiltinTypeInfo implements LeafTypeInfo {
   BuiltinTypeInfo(this.typeStr);
 }
 
+class EnumTypeInfo implements LeafTypeInfo {
+  final String typeStr;
+  EnumTypeInfo(this.typeStr);
+}
+
 class ProcessedTypeInfo implements LeafTypeInfo {
   final String instantiationString;
   final String serializedType;

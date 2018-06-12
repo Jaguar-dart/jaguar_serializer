@@ -82,6 +82,8 @@ class FromItemWriter {
   String _makeValue(String reference, TypeInfo prop, {bool cast: false}) {
     if (prop is BuiltinTypeInfo) {
       return reference + (cast ? ' as ${prop.typeStr}' : '');
+    } else if (prop is EnumTypeInfo) {
+      return prop.typeStr + '.values[' + reference + ' as int]';
     } else if (prop is ProcessedTypeInfo) {
       var w = new StringBuffer();
       w.write(prop.instantiationString + '.deserialize($reference');
