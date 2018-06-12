@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.10
+
++ Minor bug fixes
+
 ## 2.1.9
 
 + Minor bug fixes

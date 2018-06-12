@@ -94,7 +94,7 @@ class FromItemWriter {
       return w.toString();
     } else if (prop is SerializedTypeInfo) {
       return "_${firstCharToLowerCase(prop.instantiationString)}" +
-          '.fromMap($reference as Map<String, dynamic>)';
+          '.fromMap($reference as Map)';
     } else if (prop is ListTypeInfo) {
       return _makeList(reference, prop);
     } else if (prop is MapTypeInfo) {
