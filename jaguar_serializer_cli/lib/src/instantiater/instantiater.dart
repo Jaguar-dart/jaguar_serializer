@@ -102,7 +102,7 @@ class AnnotationParser {
 
   /// Parses [modelType] of the Serializer
   void _parseModelType() {
-    if (!isSerializer.isSuperTypeOf(element.type)) {
+    if (!isSerializer.isAssignableFromType(element.type)) {
       throw new JCException('Serializers must be extended from `Serializer`!');
     }
 
@@ -162,14 +162,14 @@ class AnnotationParser {
 
       DartObject annot = field.metadata
           .firstWhere(
-              (ElementAnnotation a) =>
-                  isProperty.isSuperTypeOf(a.computeConstantValue().type),
+              (ElementAnnotation a) => isProperty
+                  .isAssignableFromType(a.computeConstantValue().type),
               orElse: () => null)
           ?.constantValue;
       annot ??= other?.metadata
           ?.firstWhere(
-              (ElementAnnotation a) =>
-                  isProperty.isSuperTypeOf(a.computeConstantValue().type),
+              (ElementAnnotation a) => isProperty
+                  .isAssignableFromType(a.computeConstantValue().type),
               orElse: () => null)
           ?.constantValue;
       if (annot == null) {
