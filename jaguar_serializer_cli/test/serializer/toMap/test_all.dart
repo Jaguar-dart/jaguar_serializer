@@ -1,5 +1,6 @@
 import 'auto_find_serializer.dart' as aut;
 import 'dynamic.dart' as dyn;
+import 'enum.dart' as enu;
 import 'nested_list.dart' as nl;
 import 'nested_map.dart' as nm;
 import 'non_string_key.dart' as nsk;
@@ -11,6 +12,7 @@ import 'simple.dart' as sm;
 main() {
   aut.main();
   dyn.main();
+  enu.main();
   nl.main();
   nm.main();
   nsk.main();

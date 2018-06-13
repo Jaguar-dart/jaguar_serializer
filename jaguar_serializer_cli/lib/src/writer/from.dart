@@ -82,6 +82,8 @@ class FromItemWriter {
   String _makeValue(String reference, TypeInfo prop, {bool cast: false}) {
     if (prop is BuiltinTypeInfo) {
       return reference + (cast ? ' as ${prop.typeStr}' : '');
+    } else if (prop is EnumTypeInfo) {
+      return prop.typeStr + '.values[' + reference + ' as int]';
     } else if (prop is ProcessedTypeInfo) {
       var w = new StringBuffer();
       w.write(prop.instantiationString + '.deserialize($reference');
@@ -92,7 +94,7 @@ class FromItemWriter {
       return w.toString();
     } else if (prop is SerializedTypeInfo) {
       return "_${firstCharToLowerCase(prop.instantiationString)}" +
-          '.fromMap($reference as Map<String, dynamic>)';
+          '.fromMap($reference as Map)';
     } else if (prop is ListTypeInfo) {
       return _makeList(reference, prop);
     } else if (prop is MapTypeInfo) {

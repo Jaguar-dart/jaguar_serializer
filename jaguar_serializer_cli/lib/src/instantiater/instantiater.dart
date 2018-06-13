@@ -16,7 +16,7 @@ import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
 ClassElement _findSerializerInUnit(CompilationUnit unit, DartType type) {
   for (Declaration dec in unit.declarations) {
     if (dec is ClassDeclaration) {
-      if (isSerializer.isSuperOf(dec.element)) {
+      if (isSerializer.isAssignableFrom(dec.element)) {
         final InterfaceType ser = dec.element.allSupertypes
             .firstWhere((i) => isSerializer.isExactlyType(i));
         if (new TypeChecker.fromStatic(type)
@@ -102,7 +102,7 @@ class AnnotationParser {
 
   /// Parses [modelType] of the Serializer
   void _parseModelType() {
-    if (!isSerializer.isSuperTypeOf(element.type)) {
+    if (!isSerializer.isAssignableFromType(element.type)) {
       throw new JCException('Serializers must be extended from `Serializer`!');
     }
 
@@ -162,16 +162,28 @@ class AnnotationParser {
 
       DartObject annot = field.metadata
           .firstWhere(
-              (ElementAnnotation a) =>
-                  isProperty.isSuperOf(a.computeConstantValue().type.element),
+              (ElementAnnotation a) => isProperty
+                  .isAssignableFromType(a.computeConstantValue().type),
               orElse: () => null)
           ?.constantValue;
       annot ??= other?.metadata
           ?.firstWhere(
-              (ElementAnnotation a) =>
-                  isProperty.isSuperOf(a.computeConstantValue().type.element),
+              (ElementAnnotation a) => isProperty
+                  .isAssignableFromType(a.computeConstantValue().type),
               orElse: () => null)
           ?.constantValue;
+      if (annot == null) {
+        FieldElement fe = modelClass.getField(name);
+        if (fe != null) {
+          for (ElementAnnotation ea in fe.metadata) {
+            ParameterizedType eae = ea.computeConstantValue().type;
+            if (isProperty.isAssignableFromType(eae)) {
+              annot = ea.computeConstantValue();
+              break;
+            }
+          }
+        }
+      }
 
       String encodeTo = name;
       String decodeFrom = name;
@@ -225,7 +237,7 @@ class AnnotationParser {
   void _parseSerializers() {
     final List<DartObject> list = obj.peek('serializers')?.listValue ?? [];
     list.map((DartObject obj) => obj.toTypeValue()).forEach((DartType t) {
-      if (!isSerializer.isSuperTypeOf(t)) {
+      if (!isSerializer.isAssignableFromType(t)) {
         throw new JCException('serializers must be sub-type of Serializer!');
       }
 
@@ -395,6 +407,9 @@ class AnnotationParser {
       final DartType param = type.typeArguments.first;
       return new SetTypeInfo(
           _expandTypeInfo(param, processor), param.displayName);
+    } else if (type.element is ClassElement &&
+        (type.element as ClassElement).isEnum) {
+      return new EnumTypeInfo(type.element.displayName);
     } else if (type.isDynamic || type.isObject) {
       return new ProcessedTypeInfo('dynamicProcessor', 'dynamic', 'dynamic');
     }

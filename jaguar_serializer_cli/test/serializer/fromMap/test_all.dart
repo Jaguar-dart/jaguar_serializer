@@ -1,5 +1,6 @@
 import 'auto_find_serializer.dart' as aut;
 import 'dynamic.dart' as dyn;
+import 'enum.dart' as enu;
 import 'immutable.dart' as imm;
 import 'nested_list.dart' as nl;
 import 'nested_map.dart' as nm;
@@ -12,6 +13,7 @@ import 'simple.dart' as sm;
 main() {
   aut.main();
   dyn.main();
+  enu.main();
   imm.main();
   nl.main();
   nm.main();

@@ -62,7 +62,7 @@ class Field<T> {
   final bool isNullable;
 
   /// The field processor used to encode/decode this field
-  final FieldProcessor<T, dynamic> processor;
+  final FieldProcessor processor;
 
   /// Should the field be included during encoding?
   final bool dontEncode;
@@ -111,7 +111,7 @@ class EnDecode<T> implements Field<T> {
   final bool isNullable;
 
   /// The field processor used to encode/decode this field
-  final FieldProcessor<T, dynamic> processor;
+  final FieldProcessor processor;
 
   /// Should the field be included during encoding?
   final bool dontEncode;
@@ -138,7 +138,7 @@ class Ignore implements Field<dynamic> {
   final bool isNullable;
 
   /// The field processor used to encode/decode this field
-  final FieldProcessor<dynamic, dynamic> processor;
+  final FieldProcessor processor;
 
   /// Should the field be included during encoding?
   final bool dontEncode;
@@ -169,7 +169,7 @@ class Alias<T> implements Field<T> {
   final bool isNullable;
 
   /// The field processor used to encode/decode this field
-  final FieldProcessor<T, dynamic> processor;
+  final FieldProcessor processor;
 
   /// Should the field be included during encoding?
   final bool dontEncode;

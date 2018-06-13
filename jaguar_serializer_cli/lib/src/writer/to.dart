@@ -72,6 +72,8 @@ class ToItemWriter {
   String _makeValue(String reference, TypeInfo type, {bool cast: false}) {
     if (type is BuiltinTypeInfo) {
       return reference + (cast ? ' as ${type.typeStr}' : '');
+    } else if (type is EnumTypeInfo) {
+      return reference + '.index' + (cast ? ' as int' : '');
     } else if (type is ListTypeInfo) {
       return _makeList(reference, type, cast: cast);
     } else if (type is MapTypeInfo) {
