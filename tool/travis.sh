@@ -30,7 +30,7 @@ while (( "$#" )); do
   analyze_cli) echo
     echo -e '\033[1mTASK: dartanalyzer\033[22m'
     echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
-    dart _tool/builder_debug.dart build --delete-conflicting-outputs
+    pub run build_runner build --delete-conflicting-outputs
     dartanalyzer --fatal-infos --fatal-warnings .
     ;;
   dartfmt) echo
@@ -40,7 +40,7 @@ while (( "$#" )); do
     ;;
   test) echo
     echo -e '\033[1mTASK: test\033[22m'
-    pub run build_runner test --delete-conflicting-outputs -- -p vm -p chrome 
+    pub run build_runner test --delete-conflicting-outputs -- -p vm -p chrome
     ;;
   *) echo -e "\033[31mNot expecting TASK '${TASK}'. Error!\033[0m"
     exit 1
