@@ -20,6 +20,7 @@ class Model {
       return field == other.field &&
           new IterableEquality().equals(list, other.list) &&
           new MapEquality().equals(map, other.map);
+    return false;
   }
 
   int get hashCode => 0;
