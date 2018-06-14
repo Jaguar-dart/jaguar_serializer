@@ -5,7 +5,6 @@ import 'package:date_format/date_format.dart';
 ///
 /// Example:
 ///
-///     @DefineFieldProcessor()
 ///     class DateTimeProcessor implements FieldProcessor<DateTime, String> {
 ///
 ///       const DateTimeProcessor();
@@ -143,31 +142,60 @@ class DateProcessor implements FieldProcessor<DateTime, String> {
       value != null ? DateTime.parse(value) : null;
 }
 
-num _stringToNum(String value, bool nullOnError) =>
-    value != null ? num.tryParse(value) : null;
+num _stringToNum(String value, bool ignoreErrors) => value != null
+    ? (ignoreErrors ? num.tryParse(value) : num.parse(value))
+    : null;
 
 class StringToNumProcessor implements FieldProcessor<String, num> {
-  final bool nullOnError;
+  final bool ignoreErrors;
 
-  const StringToNumProcessor({this.nullOnError: true});
+  const StringToNumProcessor({this.ignoreErrors: true});
 
   @override
-  num serialize(String value) => _stringToNum(value, nullOnError);
+  num serialize(String value) => _stringToNum(value, ignoreErrors);
 
   @override
   String deserialize(num value) => value?.toString();
 }
 
 class NumToStringProcessor implements FieldProcessor<num, String> {
-  final bool nullOnError;
+  final bool ignoreErrors;
 
-  const NumToStringProcessor({this.nullOnError: true});
+  const NumToStringProcessor({this.ignoreErrors: true});
 
   @override
   String serialize(num value) => value?.toString();
 
   @override
-  num deserialize(String value) => _stringToNum(value, nullOnError);
+  num deserialize(String value) => _stringToNum(value, ignoreErrors);
+}
+
+class IntToStringProcessor implements FieldProcessor<int, String> {
+  final bool ignoreErrors;
+
+  const IntToStringProcessor({this.ignoreErrors: true});
+
+  @override
+  String serialize(int value) => value?.toString();
+
+  @override
+  int deserialize(String value) => value != null
+      ? (ignoreErrors ? int.tryParse(value) : int.parse(value))
+      : null;
+}
+
+class DoubleToStringProcessor implements FieldProcessor<double, String> {
+  final bool ignoreErrors;
+
+  const DoubleToStringProcessor({this.ignoreErrors: true});
+
+  @override
+  String serialize(double value) => value?.toString();
+
+  @override
+  double deserialize(String value) => value != null
+      ? (ignoreErrors ? double.tryParse(value) : double.parse(value))
+      : null;
 }
 
 class SafeNumProcessor implements FieldProcessor<num, dynamic> {
@@ -216,6 +244,8 @@ const dateTimeMillisecondsUtcProcessor =
 const dateTimeProcessor = const DateTimeProcessor();
 const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
+const intToStringProcessor = const IntToStringProcessor();
+const doubleToStringProcessor = const DoubleToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const dynamicProcessor = const DynamicProcessor();
 const safeNumProcessor = const SafeNumProcessor();

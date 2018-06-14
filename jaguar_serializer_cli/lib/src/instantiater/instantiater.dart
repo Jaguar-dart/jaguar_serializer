@@ -387,9 +387,7 @@ class AnnotationParser {
       return new ProcessedTypeInfo('durationProcessor', 'int', 'Duration');
     }
 
-    if (isBuiltin(type)) {
-      return new BuiltinTypeInfo(type.displayName);
-    } else if (type is InterfaceType && isList.isExactlyType(type)) {
+    if (type is InterfaceType && isList.isExactlyType(type)) {
       final DartType param = type.typeArguments.first;
       return new ListTypeInfo(
           _expandTypeInfo(param, processor), param.displayName);
@@ -401,8 +399,17 @@ class AnnotationParser {
         throw new JCException(
             'Serializer only support "String" key for a Map!');
       }
-      return new MapTypeInfo(_expandTypeInfo(key, processor), key.displayName,
+      return new MapTypeInfo(new BuiltinTypeInfo('String'), key.displayName,
           _expandTypeInfo(value, processor), value.displayName);
+    }
+
+    if (processor != null) {
+      throw new JCException(
+          "FieldProcessor ${processor.instantiationString} processes deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}");
+    }
+
+    if (isBuiltin(type)) {
+      return new BuiltinTypeInfo(type.displayName);
     } else if (type is InterfaceType && isSet.isExactlyType(type)) {
       final DartType param = type.typeArguments.first;
       return new SetTypeInfo(

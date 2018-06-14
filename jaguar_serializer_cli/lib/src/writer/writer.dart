@@ -42,7 +42,7 @@ class Writer {
       _providers.add(fieldName);
       _w.writeln('Serializer<${prop.type}> _$fieldName;');
       _w.writeln(
-          'Serializer<${prop.type}> get $fieldName => _$fieldName ?? new ${prop.instantiationString}();');
+          'Serializer<${prop.type}> get $fieldName => _$fieldName ??= new ${prop.instantiationString}();');
     } else if (prop is ListTypeInfo) {
       _providerWriter(prop.itemInfo);
     } else if (prop is MapTypeInfo) {
