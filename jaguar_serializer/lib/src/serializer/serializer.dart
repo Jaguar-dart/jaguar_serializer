@@ -2,10 +2,12 @@
 ///
 /// Example:
 ///
+///     class
+///
 ///     @GenSerializer()
 ///     class UserSerializer extends Serializer<User> with _$UserSerializer {}
 ///
-/// Both methods, [encodeTo] and [decodeFrom] can handle [Map] or [List].
+/// Serialize
 abstract class Serializer<ModelType> {
   const Serializer();
 
