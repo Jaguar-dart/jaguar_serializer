@@ -2,12 +2,14 @@
 ///
 /// Example:
 ///
-///     class
+///     class User {
+///       String name;
+///       int age;
+///     }
 ///
 ///     @GenSerializer()
 ///     class UserSerializer extends Serializer<User> with _$UserSerializer {}
 ///
-/// Serialize
 abstract class Serializer<ModelType> {
   const Serializer();
 

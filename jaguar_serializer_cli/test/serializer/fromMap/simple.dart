@@ -104,6 +104,20 @@ void main() {
             }),
             new Derived(derived: 'Dog', based: 'Animal', mixed: 'Domestic'));
       });
+
+      test("MapNonStringKey", () {
+        m['mapF'] = <dynamic, dynamic>{"1": 1, '2': 2};
+        var ser = new SimpleSerializer();
+        expect(
+            ser.fromMap(m),
+            new Simple(
+                stringF: "John",
+                intF: 25,
+                doubleF: 100.2,
+                boolF: true,
+                listF: ["Friend1", "Friend2"],
+                mapF: {"1": 1, '2': 2}));
+      });
     });
   });
 }

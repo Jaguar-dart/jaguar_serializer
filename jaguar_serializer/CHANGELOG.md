@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.5
+
++ Fixed bug when source is `Map<dynamic, dynamic>`
+
 ## 2.0.2
 
 + `Set` are not serializable
