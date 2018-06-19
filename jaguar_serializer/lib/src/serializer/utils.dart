@@ -16,20 +16,20 @@ List<T> codeNonNullIterable<T>(
         Iterable values, T callback(value), List<T> defaultValues) =>
     codeIterable(values, callback) ?? defaultValues;
 
-Map<String, Value> codeMap<Value>(
-    Map<String, dynamic> map, ValueMaker<Value> valueMaker) {
+Map<String, Value> codeMap<Value>(Map map, ValueMaker<Value> valueMaker) {
   Map<String, Value> ret;
   if (map != null) {
+    Map<String, dynamic> tempSrcMap = map.cast<String, dynamic>();
     ret = <String, Value>{};
-    for (final key in map.keys) {
-      ret[key] = valueMaker(map[key]);
+    for (String key in tempSrcMap.keys) {
+      ret[key] = valueMaker(tempSrcMap[key]);
     }
   }
   return ret;
 }
 
-Map<String, Value> codeNonNullMap<Value>(Map<String, dynamic> map,
-        ValueMaker<Value> valueMaker, Map<String, Value> defaultValues) =>
+Map<String, Value> codeNonNullMap<Value>(Map map, ValueMaker<Value> valueMaker,
+        Map<String, Value> defaultValues) =>
     codeMap<Value>(map, valueMaker) ?? defaultValues;
 
 Set<T> codeSet<T>(Iterable values, T callback(value)) {

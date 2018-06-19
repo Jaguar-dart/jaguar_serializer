@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.14
+
++ Fixed bug when source is `Map<dynamic, dynamic>`
+
 ## 2.1.10
 
 + Minor bug fixes

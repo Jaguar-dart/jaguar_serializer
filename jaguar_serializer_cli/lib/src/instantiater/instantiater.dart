@@ -405,7 +405,7 @@ class AnnotationParser {
 
     if (processor != null) {
       throw new JCException(
-          "FieldProcessor ${processor.instantiationString} processes deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}");
+          "FieldProcessor ${processor.instantiationString} processes deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}.");
     }
 
     if (isBuiltin(type)) {

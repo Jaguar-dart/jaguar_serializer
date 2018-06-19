@@ -46,7 +46,7 @@ class FromItemWriter {
       _w.write('<$outputTypeStr>');
     }
 
-    _w.write('($reference as Map<String, dynamic>,');
+    _w.write('($reference as Map,');
     _w.write('(val) =>');
     _w.write(_makeValue('val', map.valueInfo, cast: true));
     if (!field.isNullable)
