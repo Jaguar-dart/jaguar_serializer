@@ -7,7 +7,7 @@ final _builders = [
   _i1.apply('jaguar_serializer_cli|jaguar_serializer_cli', [jaguarSerializer],
       _i1.toRoot(),
       defaultGenerateFor: const _i3.InputSet(include: const [
-        'test/models/enums/enums.dart',
+        'test/models/dynamic/dynamic.dart',
       ]),
       hideOutput: false),
 ];

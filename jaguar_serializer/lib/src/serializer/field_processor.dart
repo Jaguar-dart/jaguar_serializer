@@ -238,6 +238,17 @@ class DurationProcessor implements FieldProcessor<Duration, int> {
   }
 }
 
+/// Passes values as they are
+class PassProcessor implements FieldProcessor<dynamic, dynamic> {
+  const PassProcessor();
+
+  @override
+  dynamic serialize(dynamic value) => value;
+
+  @override
+  dynamic deserialize(dynamic value) => value;
+}
+
 const dateTimeUtcProcessor = const DateTimeProcessor.utc();
 const dateTimeMillisecondsUtcProcessor =
     const DateTimeMillisecondsProcessor.utc();
