@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.6
+
++ Added `PassProcessor`
+
 ## 2.1.5
 
 + Fixed bug when source is `Map<dynamic, dynamic>`
