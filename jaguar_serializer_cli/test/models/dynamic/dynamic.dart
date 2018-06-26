@@ -26,3 +26,13 @@ class DynamicModelSerializer extends Serializer<DynamicModel>
     with _$DynamicModelSerializer {
   // TODO
 }
+
+@GenSerializer(fields: const {
+  'scalar': const Field(processor: const PassProcessor()),
+  'list': const Field(processor: const PassProcessor()),
+  'map': const Field(processor: const PassProcessor()),
+})
+class DynamicPassSerializer extends Serializer<DynamicModel>
+    with _$DynamicPassSerializer {
+  // TODO
+}

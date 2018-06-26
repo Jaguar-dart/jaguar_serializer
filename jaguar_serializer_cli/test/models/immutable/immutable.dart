@@ -73,3 +73,13 @@ class FooNamedSerializer extends Serializer<FooNamed>
 ])
 class ComplexConstructorSerializer extends Serializer<ComplexConstructor>
     with _$ComplexConstructorSerializer {}
+
+@GenSerializer(fields: const {
+  "fooObject": const Alias<Foo>("foo_object"),
+  "isOkay": const Alias<bool>("is_okay")
+}, serializers: const [
+  FooSerializer,
+  FooNamedSerializer
+], nullableFields: false)
+class NonNullComplexConstructorSerializer extends Serializer<ComplexConstructor>
+    with _$NonNullComplexConstructorSerializer {}
