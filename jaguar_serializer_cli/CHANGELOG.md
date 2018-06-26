@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.18
+
++ Immutable fix
+
 ## 2.1.17
 
 + Fix for dart-dev64.1
