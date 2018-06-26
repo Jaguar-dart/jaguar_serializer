@@ -332,7 +332,7 @@ class AnnotationParser {
 
     for (final arg in ctor.parameters) {
       final field = fields[arg.name];
-      if (arg.parameterKind == ParameterKind.REQUIRED) {
+      if (arg.hasRequired) {
         if (field != null) {
           if (field.isFinal && !field.dontDecode) {
             ctorArguments.add(arg);
@@ -342,7 +342,7 @@ class AnnotationParser {
         } else {
           ctorArguments.add(null);
         }
-      } else if (arg.parameterKind == ParameterKind.NAMED) {
+      } else if (arg.isNamed) {
         if (field != null && !field.dontDecode && field.isFinal) {
           ctorNamedArguments.add(arg);
         }
@@ -407,8 +407,10 @@ class AnnotationParser {
     }
 
     if (processor != null) {
-      throw new JCException(
-          "FieldProcessor ${processor.instantiationString} processes deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}.");
+      throw new JCException("FieldProcessor ${processor
+              .instantiationString} processes deserializes ${processor
+              .deserializedStr} to ${processor
+              .serializedStr}. But field has type ${type.displayName}.");
     }
 
     if (isBuiltin(type)) {
@@ -433,8 +435,8 @@ class AnnotationParser {
     if (ser.length == 1)
       return new SerializedTypeInfo(ser.first.displayName, type.displayName);
     if (ser.length > 1)
-      throw new JCException(
-          'Multiple matching serializers found for ${type.displayName} when trying to automatically find serializer!');
+      throw new JCException('Multiple matching serializers found for ${type
+              .displayName} when trying to automatically find serializer!');
 
     throw new JCException('Cannot handle ${type.displayName}!');
   }
