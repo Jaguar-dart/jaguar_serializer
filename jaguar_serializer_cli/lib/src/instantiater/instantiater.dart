@@ -332,7 +332,7 @@ class AnnotationParser {
 
     for (final arg in ctor.parameters) {
       final field = fields[arg.name];
-      if (arg.hasRequired) {
+      if (arg.isNotOptional) {
         if (field != null) {
           if (field.isFinal && !field.dontDecode) {
             ctorArguments.add(arg);
