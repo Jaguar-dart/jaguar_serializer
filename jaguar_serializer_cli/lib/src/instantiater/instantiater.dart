@@ -304,7 +304,7 @@ class AnnotationParser {
   }
 
   void _processField(String fieldName, DartObject config) {
-    InterfaceType type = _getTypeOfField(fieldName);
+    DartType type = _getTypeOfField(fieldName);
     if (type == null) throw new JCException("Field not found $fieldName!");
     FieldProcessorInfo processor =
         _parseFieldProcessor(config.getField('processor'));
@@ -355,9 +355,9 @@ class AnnotationParser {
     }
   }
 
-  InterfaceType _getTypeOfField(String name) {
-    return (getters[name]?.returnType ?? setters[name]?.parameters?.first?.type)
-        as InterfaceType;
+  DartType _getTypeOfField(String name) {
+    return (getters[name]?.returnType ??
+        setters[name]?.parameters?.first?.type);
   }
 
   bool _getFinalityOfField(String name) {
@@ -370,12 +370,15 @@ class AnnotationParser {
 
   TypeInfo _expandTypeInfo(DartType type, FieldProcessorInfo processor) {
     final TypeChecker typeChecker = new TypeChecker.fromStatic(type);
-    if (processor != null &&
-        typeChecker.isExactlyType(processor.deserialized)) {
-      return new ProcessedTypeInfo(
-          "_" + firstCharToLowerCase(processor.instantiationString),
-          processor.serializedStr,
-          processor.deserializedStr);
+    if (processor != null) {
+      DartType deserType = processor.deserialized;
+      if ((deserType.isDynamic && type.isDynamic) ||
+          typeChecker.isExactlyType(deserType)) {
+        return new ProcessedTypeInfo(
+            "_" + firstCharToLowerCase(processor.instantiationString),
+            processor.serializedStr,
+            processor.deserializedStr);
+      }
     }
 
     if (processor == null && isDateTime.isExactlyType(type)) {

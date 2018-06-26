@@ -9,7 +9,7 @@ part of 'example.dart';
 abstract class _$PlayerSerializer implements Serializer<Player> {
   Serializer<Address> __addressSerializer;
   Serializer<Address> get _addressSerializer =>
-      __addressSerializer ?? new AddressSerializer();
+      __addressSerializer ??= new AddressSerializer();
   @override
   Map<String, dynamic> toMap(Player model) {
     if (model == null) return null;
@@ -33,7 +33,7 @@ abstract class _$PlayerSerializer implements Serializer<Player> {
     obj.email = map['email'] as String;
     obj.score = map['score'] as int;
     obj.address = codeIterable<Address>(map['address'] as Iterable,
-        (val) => _addressSerializer.fromMap(val as Map<String, dynamic>));
+        (val) => _addressSerializer.fromMap(val as Map));
     return obj;
   }
 }
