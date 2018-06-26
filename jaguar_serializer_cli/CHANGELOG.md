@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.16
+
++ dynamic field
+
 ## 2.1.15
 
 + Bug fix: [Final non-nullable contructor](https://github.com/Jaguar-dart/jaguar_serializer/issues/144)
