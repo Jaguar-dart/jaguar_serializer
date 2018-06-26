@@ -115,7 +115,7 @@ class FromItemWriter {
     sb.write(_makeValue(ref, field.typeInfo, cast: true));
     if (!field.isNullable || isCtor)
       sb.write(" ?? getJserDefault('${field.name}')");
-    if (!field.isNullable) sb.write(" ?? obj.${field.name}");
+    if (!field.isNullable && !isCtor) sb.write(" ?? obj.${field.name}");
     return sb.toString();
   }
 }

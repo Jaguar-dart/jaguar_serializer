@@ -10,3 +10,4 @@ pubspec.lock
 serialize.iml
 doc/
 \.DS_Store
+*.iml
