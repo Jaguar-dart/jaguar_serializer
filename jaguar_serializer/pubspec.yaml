@@ -1,5 +1,5 @@
 name: jaguar_serializer
-version: 2.1.9
+version: 2.1.10
 description: Platform and format agnostic serializer built using source_gen
 authors:
 - Ravi Teja Gudapati <tejainece@gmail.com>
@@ -9,7 +9,7 @@ homepage: https://github.com/Jaguar-dart/jaguar_serializer
 documentation:
 
 environment:
-  sdk: ">=2.0.0-dev <2.0.0"
+  sdk: '>=2.0.0-dev.58.1 <2.0.0'
 
 dependencies:
   date_format: ^1.0.4
