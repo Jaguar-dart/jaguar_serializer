@@ -423,7 +423,7 @@ class AnnotationParser {
         (type.element as ClassElement).isEnum) {
       return new EnumTypeInfo(type.element.displayName);
     } else if (type.isDynamic || type.isObject) {
-      return new ProcessedTypeInfo('dynamicProcessor', 'dynamic', 'dynamic');
+      return new ProcessedTypeInfo('passProcessor', 'dynamic', 'dynamic');
     }
 
     if (providers.containsKey(type)) {
