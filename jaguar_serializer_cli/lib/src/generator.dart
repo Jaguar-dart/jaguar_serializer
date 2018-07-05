@@ -40,7 +40,7 @@ class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
 
       writer.generate();
       return writer.toString();
-    } on JCException catch (e, s) {
+    } on Exception catch (e, s) {
       _log.severe(e);
       _log.severe(s);
       return "// $e \n\n";

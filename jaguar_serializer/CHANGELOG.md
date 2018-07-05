@@ -4,6 +4,10 @@
 
 + Added `pass` annotation
 
+## 2.1.9
+
++ Exposed `passProcessor`
+
 ## 2.1.6
 
 + Added `PassProcessor`
