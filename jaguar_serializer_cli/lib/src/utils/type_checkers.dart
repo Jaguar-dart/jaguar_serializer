@@ -24,6 +24,8 @@ const isBool = const TypeChecker.fromRuntime(bool);
 
 const isProperty = const TypeChecker.fromRuntime(Field);
 
+const isPassProcessor = const TypeChecker.fromRuntime(PassProcessor);
+
 const isFieldProcessor = const TypeChecker.fromRuntime(FieldProcessor);
 
 const isDateTime = const TypeChecker.fromRuntime(DateTime);

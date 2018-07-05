@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.14
+
++ Added `pass` annotation
+
 ## 2.1.6
 
 + Added `PassProcessor`

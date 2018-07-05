@@ -29,7 +29,10 @@ ClassElement _findSerializerInUnit(CompilationUnit unit, DartType type) {
   return null;
 }
 
-List<ClassElement> _findSerializerInLib(LibraryElement lib, DartType type) {
+List<ClassElement> _findSerializerInLib(
+    Set<LibraryElement> seen, LibraryElement lib, DartType type) {
+  if (seen.contains(lib)) return <ClassElement>[];
+  seen.add(lib);
   final elements = <ClassElement>[];
   if (lib.isDartCore) return elements;
 
@@ -40,7 +43,7 @@ List<ClassElement> _findSerializerInLib(LibraryElement lib, DartType type) {
   }
 
   for (LibraryElement ilib in lib.importedLibraries) {
-    elements.addAll(_findSerializerInLib(ilib, type));
+    elements.addAll(_findSerializerInLib(seen, ilib, type));
     if (elements.length > 1) return elements;
   }
 
@@ -407,6 +410,9 @@ class AnnotationParser {
     }
 
     if (processor != null) {
+      if (isPassProcessor.isExactlyType(processor.self)) {
+        return new ProcessedTypeInfo('passProcessor', 'dynamic', 'dynamic');
+      }
       throw new JCException("FieldProcessor ${processor
               .instantiationString} processes deserializes ${processor
               .deserializedStr} to ${processor
@@ -423,7 +429,7 @@ class AnnotationParser {
         (type.element as ClassElement).isEnum) {
       return new EnumTypeInfo(type.element.displayName);
     } else if (type.isDynamic || type.isObject) {
-      return new ProcessedTypeInfo('dynamicProcessor', 'dynamic', 'dynamic');
+      return new ProcessedTypeInfo('passProcessor', 'dynamic', 'dynamic');
     }
 
     if (providers.containsKey(type)) {
@@ -431,14 +437,16 @@ class AnnotationParser {
       return new SerializedTypeInfo(ser.displayName, type.displayName);
     }
 
-    List<ClassElement> ser = _findSerializerInLib(element.library, type);
+    List<ClassElement> ser =
+        _findSerializerInLib(new Set<LibraryElement>(), element.library, type);
     if (ser.length == 1)
       return new SerializedTypeInfo(ser.first.displayName, type.displayName);
     if (ser.length > 1)
       throw new JCException('Multiple matching serializers found for ${type
               .displayName} when trying to automatically find serializer!');
 
-    throw new JCException('Cannot handle ${type.displayName}!');
+    throw new JCException(
+        'Cannot handle ${type.displayName} in ${element.displayName}!');
   }
 }
 

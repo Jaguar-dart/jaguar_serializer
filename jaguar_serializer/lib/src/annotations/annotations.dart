@@ -187,6 +187,7 @@ class Alias<T> implements Field<T> {
         dontEncode = false;
 }
 
+const pass = const Field(processor: passProcessor);
 const ignore = const Ignore();
 const Field nullable = const Field<dynamic>(isNullable: true);
 const Field nonNullable = const Field<dynamic>(isNullable: false);

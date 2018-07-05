@@ -259,5 +259,6 @@ const intToStringProcessor = const IntToStringProcessor();
 const doubleToStringProcessor = const DoubleToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const dynamicProcessor = const DynamicProcessor();
+const passProcessor = const PassProcessor();
 const safeNumProcessor = const SafeNumProcessor();
 const durationProcessor = const DurationProcessor();
