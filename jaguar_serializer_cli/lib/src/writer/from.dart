@@ -91,6 +91,9 @@ class FromItemWriter {
         w.write(" as ${prop.serializedType}");
       }
       w.write(")");
+      if (cast == true && prop.deserializedType != "dynamic") {
+        w.write(" as ${prop.deserializedType}");
+      }
       return w.toString();
     } else if (prop is SerializedTypeInfo) {
       return "_${firstCharToLowerCase(prop.instantiationString)}" +

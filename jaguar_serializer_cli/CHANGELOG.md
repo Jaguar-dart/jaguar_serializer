@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.24
+
++ `FieldProcessor`
+
 ## 2.1.18
 
 + Immutable fix

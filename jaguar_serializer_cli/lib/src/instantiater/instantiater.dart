@@ -411,7 +411,8 @@ class AnnotationParser {
 
     if (processor != null) {
       if (isPassProcessor.isExactlyType(processor.self)) {
-        return new ProcessedTypeInfo('passProcessor', 'dynamic', 'dynamic');
+        return new ProcessedTypeInfo(
+            'passProcessor', 'dynamic', type.displayName);
       }
       throw new JCException("FieldProcessor ${processor
               .instantiationString} processes deserializes ${processor

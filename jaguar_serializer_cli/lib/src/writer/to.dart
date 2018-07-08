@@ -83,8 +83,13 @@ class ToItemWriter {
     } else if (type is ProcessedTypeInfo) {
       var w = new StringBuffer();
       w.write(type.instantiationString + '.serialize($reference');
-      if (cast) w.write(" as ${type.deserializedType}");
+      if (cast && type.deserializedType != 'dynamic') {
+        w.write(" as ${type.deserializedType}");
+      }
       w.write(")");
+      if (cast && type.serializedType != 'dynamic') {
+        w.write(" as ${type.serializedType}");
+      }
       return w.toString();
     } else if (type is SerializedTypeInfo) {
       var w = new StringBuffer();
