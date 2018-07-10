@@ -1,0 +1,19 @@
+sudo: false
+
+services:
+  - mongodb
+
+language: dart
+
+dart_task:
+- dartfmt: sdk
+- dartanalyzer
+- test: --platform vm
+
+dart:
+  - stable
+#  - dev
+
+cache:
+  directories:
+    - $HOME/.pub-cache
