@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.2.0
+
++ Dart 2 stable
++ Remove `DateProcessor`, use `DateTimeProcessor` instead
++ Remove `DateTimeProcessor.utc()` constructor
++ Add `DateTimeUtcProcessor()`
++ Remove `date_format` dependency
+
 ## 2.1.14
 
 + Added `pass` annotation

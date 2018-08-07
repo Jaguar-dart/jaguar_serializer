@@ -31,8 +31,14 @@ void main() {
               ])),
               {
                 "dates": [
-                  ["2018-01-01", "2018-01-02"],
-                  ["2018-01-03", "2018-01-04"]
+                  [
+                    new DateTime(2018, 1, 1).toIso8601String(),
+                    new DateTime(2018, 1, 2).toIso8601String()
+                  ],
+                  [
+                    new DateTime(2018, 1, 3).toIso8601String(),
+                    new DateTime(2018, 1, 4).toIso8601String()
+                  ]
                 ],
                 "strings": null,
                 "leafs": null,
@@ -90,9 +96,15 @@ void main() {
               ])),
               {
                 "dates": [
-                  ["2018-01-01", "2018-01-02"],
+                  [
+                    new DateTime(2018, 1, 1).toIso8601String(),
+                    new DateTime(2018, 1, 2).toIso8601String()
+                  ],
                   null,
-                  ["2018-01-03", "2018-01-04"]
+                  [
+                    new DateTime(2018, 1, 3).toIso8601String(),
+                    new DateTime(2018, 1, 4).toIso8601String()
+                  ],
                 ],
                 "strings": null,
                 "leafs": null,

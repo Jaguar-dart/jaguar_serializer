@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.0
+
++ Dart 2 stable
+
+
 ## 2.1.24
 
 + `FieldProcessor`
