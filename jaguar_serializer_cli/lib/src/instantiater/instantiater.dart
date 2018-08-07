@@ -414,10 +414,8 @@ class AnnotationParser {
         return new ProcessedTypeInfo(
             'passProcessor', 'dynamic', type.displayName);
       }
-      throw new JCException("FieldProcessor ${processor
-              .instantiationString} processes deserializes ${processor
-              .deserializedStr} to ${processor
-              .serializedStr}. But field has type ${type.displayName}.");
+      throw new JCException(
+          "FieldProcessor ${processor.instantiationString} processes deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}.");
     }
 
     if (isBuiltin(type)) {
@@ -443,8 +441,8 @@ class AnnotationParser {
     if (ser.length == 1)
       return new SerializedTypeInfo(ser.first.displayName, type.displayName);
     if (ser.length > 1)
-      throw new JCException('Multiple matching serializers found for ${type
-              .displayName} when trying to automatically find serializer!');
+      throw new JCException(
+          'Multiple matching serializers found for ${type.displayName} when trying to automatically find serializer!');
 
     throw new JCException(
         'Cannot handle ${type.displayName} in ${element.displayName}!');
