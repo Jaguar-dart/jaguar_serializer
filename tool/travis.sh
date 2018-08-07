@@ -24,14 +24,14 @@ while (( "$#" )); do
   case $TASK in
   analyze_ser) echo
     echo -e '\033[1mTASK: dartanalyzer\033[22m'
-    echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
+    echo -e 'dartanalyzer --fatal-warnings .'
     dartanalyzer --fatal-warnings .
     ;;
   analyze_cli) echo
     echo -e '\033[1mTASK: dartanalyzer\033[22m'
-    echo -e 'dartanalyzer --fatal-infos --fatal-warnings .'
+    echo -e 'dartanalyzer --fatal-warnings .'
     pub run build_runner build --delete-conflicting-outputs
-    dartanalyzer --fatal-infos --fatal-warnings .
+    dartanalyzer --fatal-warnings .
     ;;
   dartfmt) echo
     echo -e '\033[1mTASK: dartfmt\033[22m'
