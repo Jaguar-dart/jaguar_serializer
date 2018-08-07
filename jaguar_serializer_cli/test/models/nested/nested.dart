@@ -46,7 +46,7 @@ class NestedList {
 
 @GenSerializer(
     serializers: const [LeafSerializer],
-    fields: const {"dates": const Field(processor: const DateProcessor())})
+    fields: const {"dates": const Field(processor: const DateTimeProcessor())})
 class NestedListSerializer extends Serializer<NestedList>
     with _$NestedListSerializer {}
 
@@ -79,6 +79,6 @@ class NestedMap {
 
 @GenSerializer(
     serializers: const [LeafSerializer],
-    fields: const {"dates": const Field(processor: const DateProcessor())})
+    fields: const {"dates": const Field(processor: const DateTimeProcessor())})
 class NestedMapSerializer extends Serializer<NestedMap>
     with _$NestedMapSerializer {}

@@ -1,5 +1,3 @@
-import 'package:date_format/date_format.dart';
-
 /// Interface specification to add custom field decoders
 /// Can be used to basic value like [DateTime] or [ObjectId] to [String]
 ///
@@ -92,50 +90,33 @@ class DynamicProcessor implements FieldProcessor<dynamic, dynamic> {
   }
 }
 
-DateTime _toUtc(DateTime value, bool isUtc) => isUtc ? value?.toUtc() : value;
-
 class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
-  final bool isUtc;
+  const DateTimeMillisecondsProcessor();
 
-  const DateTimeMillisecondsProcessor({this.isUtc: false});
-
-  const DateTimeMillisecondsProcessor.utc() : isUtc = true;
-
-  int serialize(DateTime value) =>
-      value != null ? _toUtc(value, isUtc).millisecondsSinceEpoch : null;
+  int serialize(DateTime value) => value?.millisecondsSinceEpoch;
 
   @override
   DateTime deserialize(int value) => value != null
-      ? new DateTime.fromMillisecondsSinceEpoch(value, isUtc: isUtc)
+      ? new DateTime.fromMillisecondsSinceEpoch(value, isUtc: true)
       : null;
 }
 
 class DateTimeProcessor implements FieldProcessor<DateTime, String> {
-  final bool isUtc;
-
-  const DateTimeProcessor({this.isUtc: false});
-
-  const DateTimeProcessor.utc() : isUtc = true;
+  const DateTimeProcessor();
 
   @override
-  String serialize(DateTime value) =>
-      value != null ? _toUtc(value, isUtc).toIso8601String() : null;
+  String serialize(DateTime value) => value?.toIso8601String();
 
   @override
   DateTime deserialize(String value) =>
       value != null ? DateTime.parse(value) : null;
 }
 
-class DateProcessor implements FieldProcessor<DateTime, String> {
-  final bool isUtc;
-
-  const DateProcessor({this.isUtc: false});
-
-  const DateProcessor.utc() : isUtc = true;
+class DateTimeUtcProcessor implements FieldProcessor<DateTime, String> {
+  const DateTimeUtcProcessor();
 
   @override
-  String serialize(DateTime value) =>
-      value != null ? formatDate(value, [yyyy, '-', mm, '-', dd]) : null;
+  String serialize(DateTime value) => value?.toUtc()?.toIso8601String();
 
   @override
   DateTime deserialize(String value) =>
@@ -249,9 +230,7 @@ class PassProcessor implements FieldProcessor<dynamic, dynamic> {
   dynamic deserialize(dynamic value) => value;
 }
 
-const dateTimeUtcProcessor = const DateTimeProcessor.utc();
-const dateTimeMillisecondsUtcProcessor =
-    const DateTimeMillisecondsProcessor.utc();
+const dateTimeUtcProcessor = const DateTimeUtcProcessor();
 const dateTimeProcessor = const DateTimeProcessor();
 const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();

@@ -37,8 +37,14 @@ void main() {
               })),
               {
                 "dates": {
-                  "a": {"1": "2018-01-01", "2": "2018-01-02"},
-                  "b": {"3": "2018-01-03", "4": "2018-01-04"}
+                  "a": {
+                    "1": new DateTime(2018, 1, 1).toIso8601String(),
+                    "2": new DateTime(2018, 1, 2).toIso8601String()
+                  },
+                  "b": {
+                    "3": new DateTime(2018, 1, 3).toIso8601String(),
+                    "4": new DateTime(2018, 1, 4).toIso8601String()
+                  }
                 },
                 "strings": null,
                 "leafs": null,
@@ -109,8 +115,14 @@ void main() {
               })),
               {
                 "dates": {
-                  "a": {"1": "2018-01-01", "2": "2018-01-02"},
-                  "b": {"3": "2018-01-03", "4": "2018-01-04"},
+                  "a": {
+                    "1": new DateTime(2018, 1, 1).toIso8601String(),
+                    "2": new DateTime(2018, 1, 2).toIso8601String()
+                  },
+                  "b": {
+                    "3": new DateTime(2018, 1, 3).toIso8601String(),
+                    "4": new DateTime(2018, 1, 4).toIso8601String()
+                  },
                   "c": null,
                 },
                 "strings": null,
