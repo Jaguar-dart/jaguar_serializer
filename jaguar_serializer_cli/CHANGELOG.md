@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
++ Fixes when `FieldProcessor`'s `FromType` is `dynamic`
+
 ## 2.2.0
 
 + Dart 2 stable

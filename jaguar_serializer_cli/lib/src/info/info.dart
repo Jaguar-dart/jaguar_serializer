@@ -110,8 +110,9 @@ class ProcessedTypeInfo implements LeafTypeInfo {
   final String instantiationString;
   final String serializedType;
   final String deserializedType;
-  ProcessedTypeInfo(
-      this.instantiationString, this.serializedType, this.deserializedType);
+  final String respType;
+  ProcessedTypeInfo(this.instantiationString, this.serializedType,
+      this.deserializedType, this.respType);
 }
 
 class SerializedTypeInfo implements LeafTypeInfo {

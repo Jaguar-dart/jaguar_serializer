@@ -372,25 +372,25 @@ class AnnotationParser {
   }
 
   TypeInfo _expandTypeInfo(DartType type, FieldProcessorInfo processor) {
-    final TypeChecker typeChecker = new TypeChecker.fromStatic(type);
     if (processor != null) {
       DartType deserType = processor.deserialized;
-      if ((deserType.isDynamic && type.isDynamic) ||
-          typeChecker.isExactlyType(deserType)) {
+      if (deserType.isDynamic || deserType.isSupertypeOf(type)) {
         return new ProcessedTypeInfo(
             "_" + firstCharToLowerCase(processor.instantiationString),
             processor.serializedStr,
-            processor.deserializedStr);
+            processor.deserializedStr,
+            type.displayName);
       }
-    }
+    } else {
+      if (isDateTime.isExactlyType(type)) {
+        return new ProcessedTypeInfo(
+            'dateTimeUtcProcessor', 'String', 'DateTime', type.displayName);
+      }
 
-    if (processor == null && isDateTime.isExactlyType(type)) {
-      return new ProcessedTypeInfo(
-          'dateTimeUtcProcessor', 'String', 'DateTime');
-    }
-
-    if (processor == null && isDuration.isExactlyType(type)) {
-      return new ProcessedTypeInfo('durationProcessor', 'int', 'Duration');
+      if (isDuration.isExactlyType(type)) {
+        return new ProcessedTypeInfo(
+            'durationProcessor', 'int', 'Duration', type.displayName);
+      }
     }
 
     if (type is InterfaceType && isList.isExactlyType(type)) {
@@ -407,28 +407,25 @@ class AnnotationParser {
       }
       return new MapTypeInfo(new BuiltinTypeInfo('String'), key.displayName,
           _expandTypeInfo(value, processor), value.displayName);
-    }
-
-    if (processor != null) {
-      if (isPassProcessor.isExactlyType(processor.self)) {
-        return new ProcessedTypeInfo(
-            'passProcessor', 'dynamic', type.displayName);
-      }
-      throw new JCException(
-          "FieldProcessor ${processor.instantiationString} processes deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}.");
-    }
-
-    if (isBuiltin(type)) {
-      return new BuiltinTypeInfo(type.displayName);
     } else if (type is InterfaceType && isSet.isExactlyType(type)) {
       final DartType param = type.typeArguments.first;
       return new SetTypeInfo(
           _expandTypeInfo(param, processor), param.displayName);
+    }
+
+    if (processor != null) {
+      throw new JCException(
+          "FieldProcessor ${processor.instantiationString} processer deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}.");
+    }
+
+    if (isBuiltin(type)) {
+      return new BuiltinTypeInfo(type.displayName);
     } else if (type.element is ClassElement &&
         (type.element as ClassElement).isEnum) {
       return new EnumTypeInfo(type.element.displayName);
     } else if (type.isDynamic || type.isObject) {
-      return new ProcessedTypeInfo('passProcessor', 'dynamic', 'dynamic');
+      return new ProcessedTypeInfo(
+          'passProcessor', 'dynamic', 'dynamic', type.displayName);
     }
 
     if (providers.containsKey(type)) {
