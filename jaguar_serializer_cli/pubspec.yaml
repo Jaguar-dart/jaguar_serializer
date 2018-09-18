@@ -15,7 +15,7 @@ dependencies:
   build: ^0.12.7
   logging: ^0.11.3
   source_gen: ^0.9.0
-  jaguar_serializer: ^2.2.0
+  jaguar_serializer: ^2.2.2
   meta: ^1.1.5
 
 dev_dependencies:

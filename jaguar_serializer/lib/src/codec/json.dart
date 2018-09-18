@@ -12,7 +12,7 @@ class JsonRepo extends SerializerRepoImpl implements CodecRepo<String> {
 
   ///@nodoc
   /// use [serialize]
-  String encode(dynamic object) => json.encode(object);
+  String encode(dynamic object) => json.encode(to(object));
 
   ///@nodoc
   /// use [deserialize]

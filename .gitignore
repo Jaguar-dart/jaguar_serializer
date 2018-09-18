@@ -7,7 +7,6 @@ pubspec.lock
 .idea
 .atom
 .dart_tool
-serialize.iml
+*.iml
 doc/
 \.DS_Store
-*.iml

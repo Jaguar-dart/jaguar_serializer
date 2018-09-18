@@ -45,20 +45,25 @@ class SerializerRepoImpl implements SerializerRepo {
     }
   }
 
-  /// Deserializes [object] ([List<dynamic>]) to [List<T>]
-  List<T> listFrom<T>(List object) {
-    Serializer<T> ser = getByType(T);
-    final ret = new List<T>()..length = object.length;
-    for (int i = 0; i < object.length; i++) {
-      ret[i] = _deserializeOne(object[i], ser);
-    }
-    return ret;
-  }
-
   /// Deserializes [object] to [T]
   T oneFrom<T>(dynamic object) {
     Serializer<T> ser = getByType(T);
     return _deserializeOne(object, ser);
+  }
+
+  /// Deserializes [object] ([List<dynamic>]) to [List<T>]
+  List<T> listFrom<T>(List object) {
+    Serializer<T> ser = getByType(T);
+    final ret = List<T>()..length = object.length;
+    for (int i = 0; i < object.length; i++)
+      ret[i] = _deserializeOne(object[i], ser);
+    return ret;
+  }
+
+  Map<String, T> mapFrom<T>(Map<String, dynamic> object) {
+    Serializer<T> ser = getByType(T);
+    if (ser == null) return object?.cast<String, T>();
+    return from<T>(object) as Map<String, T>;
   }
 
   T _deserializeOne<T>(dynamic object, Serializer<T> ser) {
@@ -66,11 +71,11 @@ class SerializerRepoImpl implements SerializerRepo {
       return object as T;
 
     if (object is Map) {
-      if (ser == null) throw new Exception('Type is required to decode!');
+      if (ser == null) return object.cast<String, dynamic>() as T;
       return ser.fromMap(object);
     }
 
-    throw new Exception('Unknown type ${object.runtimeType}!');
+    throw Exception('Unknown type ${object.runtimeType}!');
   }
 
   /// Deserializes Dart built-in object to Dart PODO
@@ -90,10 +95,10 @@ class SerializerRepoImpl implements SerializerRepo {
           .map<dynamic>((dynamic obj) => _from(obj, ser: ser))
           .toList();
     } else if (decoded is Map) {
-      if (ser == null) throw new Exception('Type is required to decode!');
+      if (ser == null) return decoded.cast<String, dynamic>();
       return ser.fromMap(decoded);
     } else {
-      throw new Exception('Unknown type ${decoded.runtimeType}!');
+      throw Exception('Unknown type ${decoded.runtimeType}!');
     }
   }
 

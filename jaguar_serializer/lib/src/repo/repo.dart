@@ -41,6 +41,8 @@ abstract class SerializerRepo {
   /// Deserializes [object] ([List<dynamic>]) to [List<T>]
   List<T> listFrom<T>(List object);
 
+  Map<String, T> mapFrom<T>(Map<String, dynamic> object);
+
   /// Deserializes Dart built-in object to Dart PODO
   dynamic from<T>(dynamic object);
 
