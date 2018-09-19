@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.2.4
+
++ Replaced `DateTimeMillisecondsProcessor` with `MillisecondsProcessor`
++ Fixed `MillisecondsProcessor` utc bug
+
 ## 2.2.0
 
 + Dart 2 stable

@@ -68,7 +68,7 @@ class DynamicProcessor implements FieldProcessor<dynamic, dynamic> {
     if (object is num || object is String || object is bool) return object;
 
     if (object is List) {
-      final ret = new List(object.length);
+      final ret = List(object.length);
       for (int i = 0; i < object.length; i++) {
         ret[i] = _validate(object[i]);
       }
@@ -76,20 +76,20 @@ class DynamicProcessor implements FieldProcessor<dynamic, dynamic> {
     }
 
     if (object is Map) {
-      final ret = new Map<String, dynamic>();
+      final ret = Map<String, dynamic>();
       object.forEach((dynamic key, dynamic value) {
-        if (key is! String)
-          throw new Exception('Key of a Map must be a String!');
+        if (key is! String) throw Exception('Key of a Map must be a String!');
 
         ret[key as String] = _validate(value);
       });
       return ret;
     }
 
-    throw new Exception('Unknown type found: ${object.runtimeType}!');
+    throw Exception('Unknown type found: ${object.runtimeType}!');
   }
 }
 
+@deprecated
 class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
   const DateTimeMillisecondsProcessor();
 
@@ -97,7 +97,18 @@ class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
 
   @override
   DateTime deserialize(int value) => value != null
-      ? new DateTime.fromMillisecondsSinceEpoch(value, isUtc: true)
+      ? DateTime.fromMillisecondsSinceEpoch(value, isUtc: true)
+      : null;
+}
+
+class MillisecondsProcessor implements FieldProcessor<DateTime, int> {
+  const MillisecondsProcessor();
+
+  int serialize(DateTime value) => value?.toUtc()?.millisecondsSinceEpoch;
+
+  @override
+  DateTime deserialize(int value) => value != null
+      ? DateTime.fromMillisecondsSinceEpoch(value, isUtc: true)
       : null;
 }
 
@@ -209,7 +220,7 @@ class DurationProcessor implements FieldProcessor<Duration, int> {
   @override
   Duration deserialize(int value) {
     if (value == null) return null;
-    return new Duration(microseconds: value);
+    return Duration(microseconds: value);
   }
 
   @override
@@ -232,7 +243,9 @@ class PassProcessor implements FieldProcessor<dynamic, dynamic> {
 
 const dateTimeUtcProcessor = const DateTimeUtcProcessor();
 const dateTimeProcessor = const DateTimeProcessor();
+@deprecated
 const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
+const millisecondsProcessor = const MillisecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
 const intToStringProcessor = const IntToStringProcessor();
 const doubleToStringProcessor = const DoubleToStringProcessor();
