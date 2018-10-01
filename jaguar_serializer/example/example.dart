@@ -22,7 +22,7 @@ class Address {
   String toString() => 'Address($street, $city)';
 }
 
-@GenSerializer(serializers: const [AddressSerializer])
+@GenSerializer()
 class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {}
 
 @GenSerializer()

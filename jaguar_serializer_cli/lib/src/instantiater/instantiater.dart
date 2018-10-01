@@ -19,8 +19,7 @@ ClassElement _findSerializerInUnit(CompilationUnit unit, DartType type) {
       if (isSerializer.isAssignableFrom(dec.element)) {
         final InterfaceType ser = dec.element.allSupertypes
             .firstWhere((i) => isSerializer.isExactlyType(i));
-        if (new TypeChecker.fromStatic(type)
-            .isExactlyType(ser.typeArguments[0])) {
+        if (TypeChecker.fromStatic(type).isExactlyType(ser.typeArguments[0])) {
           return dec.element;
         }
       }
@@ -31,21 +30,28 @@ ClassElement _findSerializerInUnit(CompilationUnit unit, DartType type) {
 
 List<ClassElement> _findSerializerInLib(
     Set<LibraryElement> seen, LibraryElement lib, DartType type) {
-  if (seen.contains(lib)) return <ClassElement>[];
-  seen.add(lib);
   final elements = <ClassElement>[];
+
+  if (seen.contains(lib)) return elements;
+  seen.add(lib);
+
+  if (lib.isInSdk) return <ClassElement>[];
   if (lib.isDartCore) return elements;
 
-  for (CompilationUnit unit in lib.units.map((u) => u.unit)) {
-    ClassElement ret = _findSerializerInUnit(unit, type);
-    if (ret != null) elements.add(ret);
-    if (elements.length > 1) return elements;
-  }
+  try {
+    for (CompilationUnit unit in lib.units.map((u) => u.unit)) {
+      ClassElement ret = _findSerializerInUnit(unit, type);
+      if (ret != null) elements.add(ret);
+      if (elements.length > 1) return elements;
+    }
+  } catch (e) {}
 
-  for (LibraryElement ilib in lib.importedLibraries) {
-    elements.addAll(_findSerializerInLib(seen, ilib, type));
-    if (elements.length > 1) return elements;
-  }
+  try {
+    for (LibraryElement ilib in lib.importedLibraries) {
+      elements.addAll(_findSerializerInLib(seen, ilib, type));
+      if (elements.length > 1) return elements;
+    }
+  } catch (e) {}
 
   return elements;
 }
@@ -97,7 +103,7 @@ class AnnotationParser {
     }
     _makeCtor();
     _parseFieldFormatter(obj.peek('nameFormatter'));
-    return new SerializerInfo(element.name, modelClass.displayName, fields,
+    return SerializerInfo(element.name, modelClass.displayName, fields,
         ctorArguments: ctorArguments,
         ctorNamedArguments: ctorNamedArguments,
         nameFormatter: nameFormatter);
@@ -106,13 +112,13 @@ class AnnotationParser {
   /// Parses [modelType] of the Serializer
   void _parseModelType() {
     if (!isSerializer.isAssignableFromType(element.type)) {
-      throw new JCException('Serializers must be extended from `Serializer`!');
+      throw JCException('Serializers must be extended from `Serializer`!');
     }
 
     InterfaceType i = element.allSupertypes
         .firstWhere((InterfaceType i) => isSerializer.isExactly(i.element));
     modelType = i.typeArguments.first;
-    if (modelType.isDynamic) throw new JCException('Model cannot be dynamic!');
+    if (modelType.isDynamic) throw JCException('Model cannot be dynamic!');
     modelClass = modelType.element as ClassElement;
 
     bool isNotStaticOrPrivate(PropertyAccessorElement e) =>
@@ -207,7 +213,7 @@ class AnnotationParser {
       }
 
       if (includeByDefault || annot != null) {
-        fields[name] = new $info.Field(
+        fields[name] = $info.Field(
           name: name,
           dontEncode: dontEncode,
           dontDecode: dontDecode,
@@ -225,7 +231,7 @@ class AnnotationParser {
   void _parseIgnore() {
     for (DartObject ig in obj.peek('ignore').listValue) {
       String fieldName = _mapToString(ig);
-      fields[fieldName] = new $info.Field(
+      fields[fieldName] = $info.Field(
           name: fieldName,
           dontEncode: true,
           dontDecode: true,
@@ -241,7 +247,7 @@ class AnnotationParser {
     final List<DartObject> list = obj.peek('serializers')?.listValue ?? [];
     list.map((DartObject obj) => obj.toTypeValue()).forEach((DartType t) {
       if (!isSerializer.isAssignableFromType(t)) {
-        throw new JCException('serializers must be sub-type of Serializer!');
+        throw JCException('serializers must be sub-type of Serializer!');
       }
 
       final ClassElement v = t.element;
@@ -308,13 +314,13 @@ class AnnotationParser {
 
   void _processField(String fieldName, DartObject config) {
     DartType type = _getTypeOfField(fieldName);
-    if (type == null) throw new JCException("Field not found $fieldName!");
+    if (type == null) throw JCException("Field not found $fieldName!");
     FieldProcessorInfo processor =
         _parseFieldProcessor(config.getField('processor'));
     bool isNullable =
         config.getField('isNullable')?.toBoolValue() ?? globalNullable;
 
-    fields[fieldName] = new $info.Field(
+    fields[fieldName] = $info.Field(
       name: fieldName,
       type: type,
       dontEncode: config.getField('dontEncode').toBoolValue(),
@@ -331,7 +337,7 @@ class AnnotationParser {
     ConstructorElement ctor =
         (modelType.element as ClassElement).unnamedConstructor;
     if (ctor == null)
-      throw new JCException("Model does not have a default constructor!");
+      throw JCException("Model does not have a default constructor!");
 
     for (final arg in ctor.parameters) {
       final field = fields[arg.name];
@@ -351,7 +357,7 @@ class AnnotationParser {
         }
       } else {
         /* TODO
-        throw new JCException(
+        throw JCException(
             "Optional positional arguments are not supported in constructor!");
             */
       }
@@ -375,7 +381,7 @@ class AnnotationParser {
     if (processor != null) {
       DartType deserType = processor.deserialized;
       if (deserType.isDynamic || deserType.isSupertypeOf(type)) {
-        return new ProcessedTypeInfo(
+        return ProcessedTypeInfo(
             "_" + firstCharToLowerCase(processor.instantiationString),
             processor.serializedStr,
             processor.deserializedStr,
@@ -383,65 +389,62 @@ class AnnotationParser {
       }
     } else {
       if (isDateTime.isExactlyType(type)) {
-        return new ProcessedTypeInfo(
+        return ProcessedTypeInfo(
             'dateTimeUtcProcessor', 'String', 'DateTime', type.displayName);
       }
 
       if (isDuration.isExactlyType(type)) {
-        return new ProcessedTypeInfo(
+        return ProcessedTypeInfo(
             'durationProcessor', 'int', 'Duration', type.displayName);
       }
     }
 
     if (type is InterfaceType && isList.isExactlyType(type)) {
       final DartType param = type.typeArguments.first;
-      return new ListTypeInfo(
-          _expandTypeInfo(param, processor), param.displayName);
+      return ListTypeInfo(_expandTypeInfo(param, processor), param.displayName);
     } else if (type is InterfaceType && isMap.isExactlyType(type)) {
       final DartType key = type.typeArguments.first;
       final DartType value = type.typeArguments[1];
 
       if (key.displayName != "String") {
-        throw new JCException(
-            'Serializer only support "String" key for a Map!');
+        throw JCException('Serializer only support "String" key for a Map!');
       }
-      return new MapTypeInfo(new BuiltinTypeInfo('String'), key.displayName,
+      return MapTypeInfo(BuiltinTypeInfo('String'), key.displayName,
           _expandTypeInfo(value, processor), value.displayName);
     } else if (type is InterfaceType && isSet.isExactlyType(type)) {
       final DartType param = type.typeArguments.first;
-      return new SetTypeInfo(
-          _expandTypeInfo(param, processor), param.displayName);
+      return SetTypeInfo(_expandTypeInfo(param, processor), param.displayName);
     }
 
     if (processor != null) {
-      throw new JCException(
+      throw JCException(
           "FieldProcessor ${processor.instantiationString} processer deserializes ${processor.deserializedStr} to ${processor.serializedStr}. But field has type ${type.displayName}.");
     }
 
     if (isBuiltin(type)) {
-      return new BuiltinTypeInfo(type.displayName);
+      return BuiltinTypeInfo(type.displayName);
     } else if (type.element is ClassElement &&
         (type.element as ClassElement).isEnum) {
-      return new EnumTypeInfo(type.element.displayName);
+      return EnumTypeInfo(type.element.displayName);
     } else if (type.isDynamic || type.isObject) {
-      return new ProcessedTypeInfo(
+      return ProcessedTypeInfo(
           'passProcessor', 'dynamic', 'dynamic', type.displayName);
     }
 
     if (providers.containsKey(type)) {
       ClassElement ser = providers[type];
-      return new SerializedTypeInfo(ser.displayName, type.displayName);
+      return SerializedTypeInfo(ser.displayName, type.displayName);
     }
 
     List<ClassElement> ser =
-        _findSerializerInLib(new Set<LibraryElement>(), element.library, type);
+        _findSerializerInLib(Set<LibraryElement>(), element.library, type);
     if (ser.length == 1)
-      return new SerializedTypeInfo(ser.first.displayName, type.displayName);
+      return SerializedTypeInfo(ser.first.displayName, type.displayName);
     if (ser.length > 1)
-      throw new JCException(
+      throw JCException(
           'Multiple matching serializers found for ${type.displayName} when trying to automatically find serializer!');
 
-    throw new JCException(
+    throw JCException(
         'Cannot handle ${type.displayName} in ${element.displayName}!');
   }
 }
@@ -455,5 +458,5 @@ String _mapToString(DartObject v) => v?.toStringValue();
 
 FieldProcessorInfo _parseFieldProcessor(DartObject processor) {
   if (!_notNull(processor)) return null;
-  return new FieldProcessorInfo(processor.type);
+  return FieldProcessorInfo(processor.type);
 }

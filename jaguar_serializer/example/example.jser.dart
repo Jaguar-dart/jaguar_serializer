@@ -3,7 +3,7 @@
 part of 'example.dart';
 
 // **************************************************************************
-// Generator: JaguarSerializerGenerator
+// JaguarSerializerGenerator
 // **************************************************************************
 
 abstract class _$PlayerSerializer implements Serializer<Player> {
