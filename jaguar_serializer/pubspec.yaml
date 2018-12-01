@@ -11,6 +11,9 @@ documentation:
 environment:
   sdk: '>=2.0.0 <3.0.0'
 
+dependencies:
+  protobuf:
+
 dev_dependencies:
   build_runner: ^1.0.0
   jaguar_serializer_cli:

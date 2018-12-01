@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 /// Extend this class to create a Serializer for a [Type]
 ///
 /// Example:
@@ -10,32 +12,30 @@
 ///     @GenSerializer()
 ///     class UserSerializer extends Serializer<User> with _$UserSerializer {}
 ///
-abstract class Serializer<ModelType> {
-  const Serializer();
+typedef ToType SerializerFactory<ToType, FromType>(FromType params);
 
-  List<Map> toList(List<ModelType> model) {
-    if (model == null) return null;
-    return model.map(toMap).toList();
-  }
+abstract class Serializer<FromType, ToType> {
+  final SerializerFactory<FromType, ToType> _encodeFactory;
+  final SerializerFactory<ToType, FromType> _decodeFactory;
 
-  List<ModelType> fromList(List<Map> model) {
-    if (model == null) return null;
-    return model.map(fromMap).toList();
-  }
+  Serializer(this._encodeFactory, this._decodeFactory);
 
-  /// Return the [Type] handle by this [Serializer]
-  Type modelType() => ModelType;
+  Type get type => ToType;
+
+  FromType encode(ToType data) => _encodeFactory(data);
+
+  ToType decode(FromType data) => _decodeFactory(data);
 
   /// Clone an object using the serializer
-  ModelType clone(ModelType object) => fromMap(toMap(object));
+  FromType clone(ToType object) => decode(encode(object)) as FromType;
 
   T getJserDefault<T>(String field) => null;
+}
 
-  ////// To implement //////
+abstract class JsonSerializer<FromType, ToType> extends Serializer<FromType, ToType> {
+  JsonSerializer(SerializerFactory<FromType, ToType> to, SerializerFactory<ToType, FromType> from) : super(to, from);
 
-  /// Decodes model from [Map]
-  ModelType fromMap(Map map);
+  String toJson(ToType data) => json.encode(_encodeFactory(data));
 
-  /// Encodes model to [Map]
-  Map<String, dynamic> toMap(ModelType model);
+  ToType fromJson(String data) => _decodeFactory(json.decode(data) as FromType);
 }
