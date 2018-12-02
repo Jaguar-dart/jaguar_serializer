@@ -23,10 +23,14 @@ class Address {
 }
 
 @GenSerializer()
-class PlayerSerializer extends Serializer<Player> with _$PlayerSerializer {}
+class PlayerSerializer extends _$PlayerSerializer {
+
+}
 
 @GenSerializer()
-class AddressSerializer extends Serializer<Address> with _$AddressSerializer {}
+class AddressSerializer extends _$AddressSerializer {
+
+}
 
 void main() {
   // user basic serializer
@@ -37,9 +41,9 @@ void main() {
       score: 1000,
       address: [(new Address(street: 'Skögsangavägen', city: 'Stockholm'))]);
 
-  final Map map = plSer.toMap(player);
+  final Map<String, dynamic> map = plSer.encode(player);
   print(map);
 
-  Player decoded = plSer.fromMap(map);
+  Player decoded = plSer.decode(map);
   print(decoded);
 }

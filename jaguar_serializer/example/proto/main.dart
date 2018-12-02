@@ -3,6 +3,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:jaguar_serializer/src/repo/proto_impl.dart';
 
 import 'test.pb.dart';
+import 'test.serializer.dart';
 
 main() {
   Person data = Person();
@@ -14,7 +15,7 @@ main() {
 
   //ProtoRepo serializer = ProtoRepo(serializers: [TestSerializer()]);
 
-  final serializer = SerializerProtoRepo()..add(PersonSerializer());
+  final serializer = SerializerProtoRepo()..add(TestSerializer());
 
   dynamic person = serializer.from<Person>(buffer);
 
@@ -25,22 +26,4 @@ main() {
   assert(const ListEquality().equals(personData, buffer));
   assert(person.name == 'name');
   assert(personJson.name == 'name');
-}
-
-class PersonSerializer extends Serializer<dynamic, Person> {
-  PersonSerializer() : super(_toBuffer, _fromBuffer);
-
-  static List<int> _toBuffer(Person product) => product.writeToBuffer();
-
-  static Person _fromBuffer(dynamic buffer) {
-    if (buffer is String) {
-      return Person.fromJson(buffer);
-    }
-    return Person.fromBuffer(buffer as List<int>);
-  }
-
-  @override
-  clone(object) {
-    return object.clone();
-  }
 }
