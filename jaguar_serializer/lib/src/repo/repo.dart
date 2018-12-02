@@ -19,22 +19,6 @@ part 'impl.dart';
 ///     user = repository.deserialize(map, type: User);
 ///     List<User> users = repository.deserialize(list, type: User);
 abstract class SerializerRepo {
-  factory SerializerRepo({List<Serializer> serializers}) =>
-      new SerializerRepoImpl(serializers: serializers);
-
-  Iterable<Serializer> get serializers;
-
-  /// Return a [Serializer] for a Type
-  Serializer<T> getByType<T>(Type type);
-
-  /// Add a [Serializer] to the repository.
-  ///
-  /// If a [Serializer] using the same type is already in the repository, it
-  /// won't be override.
-  void add(Serializer serializer);
-
-  void addAll(Iterable<Serializer> serializers) => serializers.forEach(add);
-
   /// Deserializes [object] to [T]
   T oneFrom<T>(dynamic object);
 
