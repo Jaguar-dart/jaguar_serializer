@@ -1,0 +1,17 @@
+name: jaguar_serializer_protobuf_example
+version: 1.0.0
+description: Example for protobuf serializer for jaguar
+authors:
+  - Jimmy Aumard <jimmy.aumard@gmail.com>
+homepage: https://github.com/Jaguar-dart/jaguar_serializer_protobuf
+documentation:
+
+environment:
+  sdk: '>=2.0.0 <3.0.0'
+
+dependencies:
+  jaguar_serializer_protobuf:
+    path: '../'
+  collection:
+
+dev_dependencies:
