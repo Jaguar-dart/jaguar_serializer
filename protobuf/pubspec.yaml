@@ -1,5 +1,5 @@
 name: jaguar_serializer_protobuf
-version: 1.0.0
+version: 2.2.1
 description: Protobuf serializer for jaguar
 authors:
   - Jimmy Aumard <jimmy.aumard@gmail.com>
