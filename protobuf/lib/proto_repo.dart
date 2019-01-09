@@ -8,7 +8,6 @@ typedef T FromProtoBuf<T>(dynamic data);
 /// Jaguar serializer [CodecRepo] to serialize and deserialize protobuf.
 class ProtoCodecRepo extends ProtoSerializerRepo
     implements CodecRepo<Uint8List> {
-
   ProtoCodecRepo({isJsonFormatEnabled = false})
       : super(isJsonFormatEnabled: isJsonFormatEnabled);
 

@@ -1,6 +1,6 @@
 name: jaguar_serializer_protobuf
-version: 2.2.1
-description: Protobuf serializer for jaguar
+version: 2.2.2
+description: Protobuf support for Jaguar serializer. Provides CodecRepo and SerializerRepo.
 authors:
   - Jimmy Aumard <jimmy.aumard@gmail.com>
 homepage: https://github.com/Jaguar-dart/jaguar_serializer_protobuf
