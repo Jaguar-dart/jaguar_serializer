@@ -38,4 +38,6 @@ abstract class Serializer<ModelType> {
 
   /// Encodes model to [Map]
   Map<String, dynamic> toMap(ModelType model);
+
+  List<ModelType> makeList() => List<ModelType>();
 }

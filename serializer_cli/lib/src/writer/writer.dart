@@ -11,7 +11,7 @@ part 'from.dart';
 class Writer {
   final SerializerInfo info;
 
-  final _w = new StringBuffer();
+  final _w = StringBuffer();
 
   Writer(this.info);
 
@@ -42,7 +42,7 @@ class Writer {
       _providers.add(fieldName);
       _w.writeln('Serializer<${prop.type}> _$fieldName;');
       _w.writeln(
-          'Serializer<${prop.type}> get $fieldName => _$fieldName ??= new ${prop.instantiationString}();');
+          'Serializer<${prop.type}> get $fieldName => _$fieldName ??= ${prop.instantiationString}();');
     } else if (prop is ListTypeInfo) {
       _providerWriter(prop.itemInfo);
     } else if (prop is MapTypeInfo) {
@@ -92,7 +92,7 @@ class Writer {
     _w.writeln('if(model == null) return null;');
     _w.writeln(r'Map<String, dynamic> ret = <String, dynamic>{};');
     for (Field item in info.fields.values.where((f) => !f.dontEncode)) {
-      _w.writeln(new ToItemWriter(item, info.nameFormatter != null).generate());
+      _w.writeln(ToItemWriter(item, info.nameFormatter != null).generate());
     }
     _w.writeln(r'return ret;');
     _w.writeln(r'}');
@@ -112,7 +112,7 @@ class Writer {
       if (item.isFinal) continue;
       _w.write('obj.${item.name} = ');
       _w.write(
-          new FromItemWriter(item, info.nameFormatter != null).generate(false));
+          FromItemWriter(item, info.nameFormatter != null).generate(false));
       _w.write(';');
     }
 
@@ -121,7 +121,7 @@ class Writer {
   }
 
   void _writeCtor() {
-    _w.write('new $modelName(');
+    _w.write('$modelName(');
     bool first = true;
     info.ctorArguments.forEach((param) {
       if (!first) _w.write(',');
@@ -130,7 +130,7 @@ class Writer {
         return;
       }
       first = false;
-      _w.write(new FromItemWriter(
+      _w.write(FromItemWriter(
               info.fields[param.displayName], info.nameFormatter != null)
           .generate(true));
     });
@@ -138,7 +138,7 @@ class Writer {
       if (!first) _w.write(',');
       first = false;
       _w.write('${param.name}: ');
-      _w.write(new FromItemWriter(
+      _w.write(FromItemWriter(
               info.fields[param.displayName], info.nameFormatter != null)
           .generate(true));
     });

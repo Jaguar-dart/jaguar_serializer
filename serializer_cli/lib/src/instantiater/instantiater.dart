@@ -352,7 +352,9 @@ class AnnotationParser {
           ctorArguments.add(null);
         }
       } else if (arg.isNamed) {
-        if (field != null && !field.dontDecode && field.isFinal) {
+        if (field != null &&
+            !field.dontDecode &&
+            (field.isFinal || arg.hasRequired)) {
           ctorNamedArguments.add(arg);
         }
       } else {

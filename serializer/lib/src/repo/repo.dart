@@ -32,4 +32,7 @@ abstract class SerializerRepo {
 
   /// Serializes [object] to Dart built-in type
   dynamic to(dynamic object);
+
+  /// Return a [Serializer] for a Type
+  Serializer<T> getByType<T>(Type type);
 }
