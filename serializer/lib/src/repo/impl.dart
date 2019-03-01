@@ -32,6 +32,9 @@ class SerializerRepoImpl implements SerializerRepo {
     final Type type = object.runtimeType;
 
     if (object is Map) {
+      if (object is! Map<String, dynamic>) {
+        object = (object as Map).cast<String, dynamic>();
+      }
       return _transformMapToDart(object as Map<String, dynamic>);
     } else if (object is Iterable) {
       return _transformIterableToDart(object);
