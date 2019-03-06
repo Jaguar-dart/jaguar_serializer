@@ -177,6 +177,26 @@ class NumToStringProcessor implements FieldProcessor<num, String> {
   num deserialize(String value) => _stringToNum(value, ignoreErrors);
 }
 
+class DoubleToNumProcessor implements FieldProcessor<double, num> {
+  const DoubleToNumProcessor();
+
+  @override
+  num serialize(double value) => value;
+
+  @override
+  double deserialize(num value) => value?.toDouble();
+}
+
+class IntToNumProcessor implements FieldProcessor<int, num> {
+  const IntToNumProcessor();
+
+  @override
+  num serialize(int value) => value;
+
+  @override
+  int deserialize(num value) => value?.toInt();
+}
+
 class IntToStringProcessor implements FieldProcessor<int, String> {
   final bool ignoreErrors;
 
@@ -263,6 +283,8 @@ const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const millisecondsProcessor = const MillisecondsProcessor();
 const secondsProcessor = const SecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
+const intToNumProcessor = const IntToNumProcessor();
+const doubleToNumProcessor = const DoubleToNumProcessor();
 const intToStringProcessor = const IntToStringProcessor();
 const doubleToStringProcessor = const DoubleToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
