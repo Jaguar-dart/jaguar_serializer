@@ -112,6 +112,21 @@ class MillisecondsProcessor implements FieldProcessor<DateTime, int> {
       : null;
 }
 
+class SecondsProcessor implements FieldProcessor<DateTime, int> {
+  const SecondsProcessor();
+
+  int serialize(DateTime value) {
+    if (value == null) return null;
+    return value.toUtc().millisecondsSinceEpoch ~/ 1000;
+  }
+
+  @override
+  DateTime deserialize(int value) {
+    if (value != null) return null;
+    return DateTime.fromMillisecondsSinceEpoch(value * 1000, isUtc: true);
+  }
+}
+
 class DateTimeProcessor implements FieldProcessor<DateTime, String> {
   const DateTimeProcessor();
 
@@ -246,6 +261,7 @@ const dateTimeProcessor = const DateTimeProcessor();
 @deprecated
 const dateTimeMillisecondsProcessor = const DateTimeMillisecondsProcessor();
 const millisecondsProcessor = const MillisecondsProcessor();
+const secondsProcessor = const SecondsProcessor();
 const numToStringProcessor = const NumToStringProcessor();
 const intToStringProcessor = const IntToStringProcessor();
 const doubleToStringProcessor = const DoubleToStringProcessor();
