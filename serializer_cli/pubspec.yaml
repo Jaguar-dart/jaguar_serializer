@@ -11,11 +11,11 @@ environment:
   sdk: '>=2.0.0 <3.0.0'
 
 dependencies:
+  jaguar_serializer: ^2.2.2
   analyzer: ^0.34.0
   build: ^1.0.0
   logging: ^0.11.3
   source_gen: ^0.9.0
-  jaguar_serializer: ^2.2.2
   meta: ^1.1.5
 
 dev_dependencies:
