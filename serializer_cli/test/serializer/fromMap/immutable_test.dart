@@ -23,9 +23,7 @@ void main() {
                 "fooNamedObject": {"bar": "bar"}
               }),
               ComplexConstructor("bar", 42, Foo("bar"),
-                  bar: 21,
-                  isOkay: true,
-                  fooNamedObject: FooNamed(bar: 'bar')));
+                  bar: 21, isOkay: true, fooNamedObject: FooNamed(bar: 'bar')));
         });
       });
     });

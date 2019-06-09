@@ -47,10 +47,8 @@ void main() {
       // Ignore fields
       test("IgnoreMany", () {
         var ser = SimpleSerializerIgnores();
-        expect(
-            ser.fromMap(m),
-            Simple(
-                stringF: "John", doubleF: 100.2, mapF: {"1": 1, '2': 2}));
+        expect(ser.fromMap(m),
+            Simple(stringF: "John", doubleF: 100.2, mapF: {"1": 1, '2': 2}));
       });
 
       test("Alias", () {

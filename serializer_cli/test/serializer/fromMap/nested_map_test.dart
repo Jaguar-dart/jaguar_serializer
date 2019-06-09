@@ -34,14 +34,8 @@ void main() {
                 "leafs": null,
               }),
               NestedMap(dates: {
-                "a": {
-                  "1": DateTime(2018, 1, 1),
-                  "2": DateTime(2018, 1, 2)
-                },
-                "b": {
-                  "3": DateTime(2018, 1, 3),
-                  "4": DateTime(2018, 1, 4)
-                }
+                "a": {"1": DateTime(2018, 1, 1), "2": DateTime(2018, 1, 2)},
+                "b": {"3": DateTime(2018, 1, 3), "4": DateTime(2018, 1, 4)}
               }));
         });
 
@@ -63,14 +57,8 @@ void main() {
                 "dates": null,
               }),
               NestedMap(leafs: {
-                "a": {
-                  "1": Leaf(color: "Blue"),
-                  "2": Leaf(color: "Green")
-                },
-                "b": {
-                  "3": Leaf(color: "Orange"),
-                  "4": Leaf(color: "Red")
-                }
+                "a": {"1": Leaf(color: "Blue"), "2": Leaf(color: "Green")},
+                "b": {"3": Leaf(color: "Orange"), "4": Leaf(color: "Red")}
               }));
         });
 
@@ -106,14 +94,8 @@ void main() {
                 "leafs": null,
               }),
               NestedMap(dates: {
-                "a": {
-                  "1": DateTime(2018, 1, 1),
-                  "2": DateTime(2018, 1, 2)
-                },
-                "b": {
-                  "3": DateTime(2018, 1, 3),
-                  "4": DateTime(2018, 1, 4)
-                },
+                "a": {"1": DateTime(2018, 1, 1), "2": DateTime(2018, 1, 2)},
+                "b": {"3": DateTime(2018, 1, 3), "4": DateTime(2018, 1, 4)},
                 "c": null,
               }));
         });
@@ -137,14 +119,8 @@ void main() {
                 "dates": null,
               }),
               NestedMap(leafs: {
-                "a": {
-                  "1": Leaf(color: "Blue"),
-                  "2": Leaf(color: "Green")
-                },
-                "b": {
-                  "3": Leaf(color: "Orange"),
-                  "4": Leaf(color: "Red")
-                },
+                "a": {"1": Leaf(color: "Blue"), "2": Leaf(color: "Green")},
+                "b": {"3": Leaf(color: "Orange"), "4": Leaf(color: "Red")},
                 "c": null,
               }));
         });

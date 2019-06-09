@@ -123,16 +123,17 @@ class Writer {
   void _writeCtor() {
     _w.write('$modelName(');
     bool first = true;
-    info.ctorArguments.forEach((param) {
+    info.ctorArguments.forEach((CtorArgument param) {
       if (!first) _w.write(',');
-      if (param == null) {
-        _w.write("getJserDefault('${param.displayName}')");
+      first = false;
+
+      if (!param.canSerialize) {
+        _w.write("getJserDefault('${param.name}')");
         return;
       }
-      first = false;
-      _w.write(FromItemWriter(
-              info.fields[param.displayName], info.nameFormatter != null)
-          .generate(true));
+      _w.write(
+          FromItemWriter(info.fields[param.name], info.nameFormatter != null)
+              .generate(true));
     });
     info.ctorNamedArguments.forEach((param) {
       if (!first) _w.write(',');

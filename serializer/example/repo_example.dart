@@ -2,8 +2,7 @@ import 'package:jaguar_serializer/jaguar_serializer.dart';
 import './example.dart';
 
 void main() {
-  SerializerRepo serializer =
-      JsonRepo(serializers: [PlayerSerializer()]);
+  SerializerRepo serializer = JsonRepo(serializers: [PlayerSerializer()]);
   {
     Player player = serializer.oneFrom<Player>({
       'name': 'John',

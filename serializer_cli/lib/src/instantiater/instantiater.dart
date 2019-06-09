@@ -70,7 +70,7 @@ class AnnotationParser {
 
   final Map<String, $info.Field> fields = <String, $info.Field>{};
   String nameFormatter;
-  final ctorArguments = <ParameterElement>[];
+  final ctorArguments = <CtorArgument>[];
   final ctorNamedArguments = <ParameterElement>[];
 
   Map<InterfaceType, ClassElement> providers = {};
@@ -336,12 +336,12 @@ class AnnotationParser {
       if (arg.isNotOptional) {
         if (field != null) {
           if (field.isFinal && !field.dontDecode) {
-            ctorArguments.add(arg);
+            ctorArguments.add(CtorArgument(arg, true));
           } else {
-            ctorArguments.add(null);
+            ctorArguments.add(CtorArgument(arg, false));
           }
         } else {
-          ctorArguments.add(null);
+          ctorArguments.add(CtorArgument(arg, false));
         }
       } else if (arg.isNamed) {
         if (field != null &&

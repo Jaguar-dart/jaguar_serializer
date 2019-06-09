@@ -12,8 +12,7 @@ main() {
                 'list': ['5', 'five'],
                 'map': {'5': 'five'}
               }),
-              DynamicModel(
-                  scalar: 5, list: ['5', 'five'], map: {'5': 'five'}));
+              DynamicModel(scalar: 5, list: ['5', 'five'], map: {'5': 'five'}));
         });
         test("Pass", () {
           var dt1 = DateTime.now();

@@ -72,8 +72,8 @@ void main() {
       test("Inheritance", () {
         var ser = DerivedSerializer();
         expect(
-            ser.toMap(Derived(
-                derived: 'Dog', based: 'Animal', mixed: 'Domestic')),
+            ser.toMap(
+                Derived(derived: 'Dog', based: 'Animal', mixed: 'Domestic')),
             {
               'derived': 'Dog',
               'm': 'Domestic',
