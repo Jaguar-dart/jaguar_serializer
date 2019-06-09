@@ -7,7 +7,7 @@ main() {
       group("dynamic", () {
         test("MapListScalar", () {
           expect(
-              new DynamicModelSerializer().toMap(new DynamicModel(
+              DynamicModelSerializer().toMap(DynamicModel(
                   scalar: 5, list: ['5', 'five'], map: {'5': 'five'})),
               {
                 'scalar': 5,
@@ -16,10 +16,10 @@ main() {
               });
         });
         test("Pass", () {
-          var dt1 = new DateTime.now();
-          var dt2 = dt1.add(new Duration(minutes: 1));
+          var dt1 = DateTime.now();
+          var dt2 = dt1.add(Duration(minutes: 1));
           expect(
-              new DynamicPassSerializer().toMap(new DynamicModel(
+              DynamicPassSerializer().toMap(DynamicModel(
                   scalar: dt1,
                   list: ['5', 'five', dt1],
                   map: {'5': 'five', 'date': dt2})),

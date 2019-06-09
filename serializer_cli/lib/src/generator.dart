@@ -15,7 +15,7 @@ import 'instantiater/instantiater.dart';
 import 'writer/writer.dart';
 import 'utils/exceptions.dart';
 
-final Logger _log = new Logger("JaguarSerializer");
+final Logger _log = Logger("JaguarSerializer");
 
 /// source_gen hook to generate serializer
 class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
@@ -27,16 +27,16 @@ class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
   @override
   FutureOr<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) {
-    if (element is! ClassElement) throw new JCException(_onlyClassMsg);
+    if (element is! ClassElement) throw JCException(_onlyClassMsg);
 
     try {
       SerializerInfo info =
-          new AnnotationParser(element as ClassElement, annotation).parse();
+          AnnotationParser(element as ClassElement, annotation).parse();
 
       // TODO check info validity
       // for example valueFromConstructor == true && isNullable == false is not possible
 
-      final writer = new Writer(info);
+      final writer = Writer(info);
 
       writer.generate();
       return writer.toString();
@@ -48,8 +48,8 @@ class JaguarSerializerGenerator extends GeneratorForAnnotation<GenSerializer> {
   }
 }
 
-Builder jaguarSerializerPartBuilder({String header}) => new PartBuilder(
-      [new JaguarSerializerGenerator()],
+Builder jaguarSerializerPartBuilder({String header}) => PartBuilder(
+      [JaguarSerializerGenerator()],
       '.jser.dart',
       header: header,
     );

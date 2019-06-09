@@ -19,10 +19,10 @@ void main() {
       });
 
       test("Normal", () {
-        var ser = new SimpleSerializer();
+        var ser = SimpleSerializer();
         expect(
             ser.fromMap(m),
-            new Simple(
+            Simple(
                 stringF: "John",
                 intF: 25,
                 doubleF: 100.2,
@@ -33,10 +33,10 @@ void main() {
 
       // Ignore field
       test("IgnoreOne", () {
-        var ser = new SimpleSerializerIgnore();
+        var ser = SimpleSerializerIgnore();
         expect(
             ser.fromMap(m),
-            new Simple(
+            Simple(
                 stringF: "John",
                 intF: 25,
                 doubleF: 100.2,
@@ -46,10 +46,10 @@ void main() {
 
       // Ignore fields
       test("IgnoreMany", () {
-        var ser = new SimpleSerializerIgnores();
+        var ser = SimpleSerializerIgnores();
         expect(
             ser.fromMap(m),
-            new Simple(
+            Simple(
                 stringF: "John", doubleF: 100.2, mapF: {"1": 1, '2': 2}));
       });
 
@@ -62,10 +62,10 @@ void main() {
         m["D"] = 100.2;
         m["B"] = true;
 
-        var ser = new SimpleSerializerRename();
+        var ser = SimpleSerializerRename();
         expect(
             ser.fromMap(m),
-            new Simple(
+            Simple(
                 stringF: "John",
                 intF: 25,
                 doubleF: 100.2,
@@ -75,16 +75,16 @@ void main() {
       });
 
       test("ExcludeByDefault", () {
-        var ser = new SimpleSerializerExcludeDef();
-        expect(ser.fromMap(m), new Simple(stringF: 'John', intF: 25));
+        var ser = SimpleSerializerExcludeDef();
+        expect(ser.fromMap(m), Simple(stringF: 'John', intF: 25));
       });
 
       /* TODO
       test("DefaultValue", () {
-        var ser = new SimpleSerializerWithDefaults();
+        var ser = SimpleSerializerWithDefaults();
         expect(
             ser.fromMap({}),
-            new Simple(
+            Simple(
                 stringF: "Lejard",
                 intF: 25,
                 doubleF: 100.0,
@@ -95,22 +95,22 @@ void main() {
       */
 
       test("Inheritance", () {
-        var ser = new DerivedSerializer();
+        var ser = DerivedSerializer();
         expect(
             ser.fromMap({
               'derived': 'Dog',
               'm': 'Domestic',
               'b': 'Animal',
             }),
-            new Derived(derived: 'Dog', based: 'Animal', mixed: 'Domestic'));
+            Derived(derived: 'Dog', based: 'Animal', mixed: 'Domestic'));
       });
 
       test("MapNonStringKey", () {
         m['mapF'] = <dynamic, dynamic>{"1": 1, '2': 2};
-        var ser = new SimpleSerializer();
+        var ser = SimpleSerializer();
         expect(
             ser.fromMap(m),
-            new Simple(
+            Simple(
                 stringF: "John",
                 intF: 25,
                 doubleF: 100.2,

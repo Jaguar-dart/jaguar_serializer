@@ -6,17 +6,17 @@ main() {
     group('nullable', () {
       group('global', () {
         test('Filled', () {
-          final now = new DateTime.now().toUtc();
-          final model = new Model()
+          final now = DateTime.now().toUtc();
+          final model = Model()
             ..processed = now
             ..builtIn = "bar"
             ..processedList = [now]
             ..processedMap = {"1": now}
-            ..serialized = new ModelInt()
-            ..serializedList = [new ModelInt()]
-            ..serializedMap = {"1": new ModelInt()};
+            ..serialized = ModelInt()
+            ..serializedList = [ModelInt()]
+            ..serializedMap = {"1": ModelInt()};
 
-          expect(new NonNullableSerializer().toMap(model), {
+          expect(NonNullableSerializer().toMap(model), {
             'builtIn': 'bar',
             'serialized': {'bar': 42},
             'processed': now.toIso8601String(),
@@ -32,7 +32,7 @@ main() {
         });
 
         test('WhenNull', () {
-          expect(new NonNullableSerializer().toMap(new Model()), {
+          expect(NonNullableSerializer().toMap(Model()), {
             'serializedList': [],
             'serializedMap': {},
             'processedList': [],

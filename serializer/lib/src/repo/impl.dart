@@ -29,7 +29,7 @@ class SerializerRepoImpl implements SerializerRepo {
     if (object is String || object is num || object is bool || object == null)
       return object;
 
-    final Type type = object.runtimeType;
+    final Type type = object.runtimeType as Type;
 
     if (object is Map) {
       if (object is! Map<String, dynamic>) {

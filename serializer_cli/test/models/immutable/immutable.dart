@@ -12,7 +12,7 @@ class Foo {
     return false;
   }
 
-  String toString() => new FooSerializer().toMap(this).toString();
+  String toString() => FooSerializer().toMap(this).toString();
 
   int get hashCode => 0;
 }
@@ -27,7 +27,7 @@ class FooNamed {
     return false;
   }
 
-  String toString() => new FooNamedSerializer().toMap(this).toString();
+  String toString() => FooNamedSerializer().toMap(this).toString();
 
   int get hashCode => 0;
 }

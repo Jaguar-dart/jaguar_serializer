@@ -8,7 +8,7 @@ void main() {
       Simple player;
 
       setUp(() {
-        player = new Simple(
+        player = Simple(
             stringF: "John",
             intF: 25,
             doubleF: 100.2,
@@ -18,7 +18,7 @@ void main() {
       });
 
       test("Normal", () {
-        final ser = new SimpleSerializer();
+        final ser = SimpleSerializer();
         expect(ser.toMap(player), {
           'stringF': 'John',
           'intF': 25,
@@ -30,7 +30,7 @@ void main() {
       });
 
       test("IgnoreOne", () {
-        var ser = new SimpleSerializerIgnore();
+        var ser = SimpleSerializerIgnore();
         expect(ser.toMap(player), {
           'stringF': 'John',
           'intF': 25,
@@ -41,7 +41,7 @@ void main() {
       });
 
       test("IgnoreMany", () {
-        var ser = new SimpleSerializerIgnores();
+        var ser = SimpleSerializerIgnores();
         expect(ser.toMap(player), {
           'stringF': 'John',
           'doubleF': 100.2,
@@ -50,7 +50,7 @@ void main() {
       });
 
       test("Alias", () {
-        final ser = new SimpleSerializerRename();
+        final ser = SimpleSerializerRename();
         expect(ser.toMap(player), {
           'S': 'John',
           'intF': 25,
@@ -62,7 +62,7 @@ void main() {
       });
 
       test("ExcludeByDefault", () {
-        var ser = new SimpleSerializerExcludeDef();
+        var ser = SimpleSerializerExcludeDef();
         expect(ser.toMap(player), {
           'stringF': 'John',
           'intF': 25,
@@ -70,9 +70,9 @@ void main() {
       });
 
       test("Inheritance", () {
-        var ser = new DerivedSerializer();
+        var ser = DerivedSerializer();
         expect(
-            ser.toMap(new Derived(
+            ser.toMap(Derived(
                 derived: 'Dog', based: 'Animal', mixed: 'Domestic')),
             {
               'derived': 'Dog',

@@ -34,16 +34,16 @@ class Model {
       return builtIn == other.builtIn &&
           serialized == other.serialized &&
           processed == other.processed &&
-          new IterableEquality().equals(serializedList, other.serializedList) &&
-          new MapEquality().equals(serializedMap, other.serializedMap) &&
-          new IterableEquality().equals(processedList, other.processedList) &&
-          new MapEquality().equals(processedMap, other.processedMap);
+          IterableEquality().equals(serializedList, other.serializedList) &&
+          MapEquality().equals(serializedMap, other.serializedMap) &&
+          IterableEquality().equals(processedList, other.processedList) &&
+          MapEquality().equals(processedMap, other.processedMap);
     return false;
   }
 
   int get hashCode => 0;
 
-  String toString() => new NonNullableSerializer().toMap(this).toString();
+  String toString() => NonNullableSerializer().toMap(this).toString();
 }
 
 @GenSerializer(nullableFields: false, serializers: const [ModelIntSerializer])
@@ -51,7 +51,7 @@ class NonNullableSerializer extends Serializer<Model>
     with _$NonNullableSerializer {
   @override
   T getJserDefault<T>(String field) {
-    if (field == 'serialized') return new ModelInt() as T;
+    if (field == 'serialized') return ModelInt() as T;
     return null;
   }
 }

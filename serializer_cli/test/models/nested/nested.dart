@@ -34,9 +34,9 @@ class NestedList {
 
   bool operator ==(other) {
     if (other is NestedList) {
-      return new DeepCollectionEquality().equals(strings, other.strings) &&
-          new DeepCollectionEquality().equals(dates, other.dates) &&
-          new DeepCollectionEquality().equals(leafs, other.leafs);
+      return DeepCollectionEquality().equals(strings, other.strings) &&
+          DeepCollectionEquality().equals(dates, other.dates) &&
+          DeepCollectionEquality().equals(leafs, other.leafs);
     }
     return false;
   }
@@ -65,14 +65,14 @@ class NestedMap {
 
   bool operator ==(other) {
     if (other is NestedMap) {
-      return new DeepCollectionEquality().equals(strings, other.strings) &&
-          new DeepCollectionEquality().equals(dates, other.dates) &&
-          new DeepCollectionEquality().equals(leafs, other.leafs);
+      return DeepCollectionEquality().equals(strings, other.strings) &&
+          DeepCollectionEquality().equals(dates, other.dates) &&
+          DeepCollectionEquality().equals(leafs, other.leafs);
     }
     return false;
   }
 
-  String toString() => new NestedMapSerializer().toMap(this).toString();
+  String toString() => NestedMapSerializer().toMap(this).toString();
 
   int get hashCode => 0;
 }

@@ -6,9 +6,9 @@ void main() {
     group("toMap", () {
       group("NestedList", () {
         test("Builtins.Normal", () {
-          var ser = new NestedListSerializer();
+          var ser = NestedListSerializer();
           expect(
-              ser.toMap(new NestedList(strings: [
+              ser.toMap(NestedList(strings: [
                 ["String1", "String2"],
                 ["String3", "String4"]
               ])),
@@ -23,21 +23,21 @@ void main() {
         });
 
         test("ProcessedFields.Normal", () {
-          var ser = new NestedListSerializer();
+          var ser = NestedListSerializer();
           expect(
-              ser.toMap(new NestedList(dates: [
-                [new DateTime(2018, 1, 1), new DateTime(2018, 1, 2)],
-                [new DateTime(2018, 1, 3), new DateTime(2018, 1, 4)]
+              ser.toMap(NestedList(dates: [
+                [DateTime(2018, 1, 1), DateTime(2018, 1, 2)],
+                [DateTime(2018, 1, 3), DateTime(2018, 1, 4)]
               ])),
               {
                 "dates": [
                   [
-                    new DateTime(2018, 1, 1).toIso8601String(),
-                    new DateTime(2018, 1, 2).toIso8601String()
+                    DateTime(2018, 1, 1).toIso8601String(),
+                    DateTime(2018, 1, 2).toIso8601String()
                   ],
                   [
-                    new DateTime(2018, 1, 3).toIso8601String(),
-                    new DateTime(2018, 1, 4).toIso8601String()
+                    DateTime(2018, 1, 3).toIso8601String(),
+                    DateTime(2018, 1, 4).toIso8601String()
                   ]
                 ],
                 "strings": null,
@@ -46,11 +46,11 @@ void main() {
         });
 
         test("SerializedObjects.Normal", () {
-          var ser = new NestedListSerializer();
+          var ser = NestedListSerializer();
           expect(
-              ser.toMap(new NestedList(leafs: [
-                [new Leaf(color: "Blue"), new Leaf(color: "Green")],
-                [new Leaf(color: "Orange"), new Leaf(color: "Red")]
+              ser.toMap(NestedList(leafs: [
+                [Leaf(color: "Blue"), Leaf(color: "Green")],
+                [Leaf(color: "Orange"), Leaf(color: "Red")]
               ])),
               {
                 "leafs": [
@@ -68,9 +68,9 @@ void main() {
               });
         });
         test("Builtins.SomeNull", () {
-          var ser = new NestedListSerializer();
+          var ser = NestedListSerializer();
           expect(
-              ser.toMap(new NestedList(strings: [
+              ser.toMap(NestedList(strings: [
                 ["String1", "String2"],
                 null,
                 ["String3", "String4"]
@@ -87,23 +87,23 @@ void main() {
         });
 
         test("ProcessedFields.SomeNull", () {
-          var ser = new NestedListSerializer();
+          var ser = NestedListSerializer();
           expect(
-              ser.toMap(new NestedList(dates: [
-                [new DateTime(2018, 1, 1), new DateTime(2018, 1, 2)],
+              ser.toMap(NestedList(dates: [
+                [DateTime(2018, 1, 1), DateTime(2018, 1, 2)],
                 null,
-                [new DateTime(2018, 1, 3), new DateTime(2018, 1, 4)]
+                [DateTime(2018, 1, 3), DateTime(2018, 1, 4)]
               ])),
               {
                 "dates": [
                   [
-                    new DateTime(2018, 1, 1).toIso8601String(),
-                    new DateTime(2018, 1, 2).toIso8601String()
+                    DateTime(2018, 1, 1).toIso8601String(),
+                    DateTime(2018, 1, 2).toIso8601String()
                   ],
                   null,
                   [
-                    new DateTime(2018, 1, 3).toIso8601String(),
-                    new DateTime(2018, 1, 4).toIso8601String()
+                    DateTime(2018, 1, 3).toIso8601String(),
+                    DateTime(2018, 1, 4).toIso8601String()
                   ],
                 ],
                 "strings": null,
@@ -112,12 +112,12 @@ void main() {
         });
 
         test("SerializedObjects.SomeNull", () {
-          var ser = new NestedListSerializer();
+          var ser = NestedListSerializer();
           expect(
-              ser.toMap(new NestedList(leafs: [
-                [new Leaf(color: "Blue"), new Leaf(color: "Green")],
+              ser.toMap(NestedList(leafs: [
+                [Leaf(color: "Blue"), Leaf(color: "Green")],
                 null,
-                [new Leaf(color: "Orange"), new Leaf(color: "Red")]
+                [Leaf(color: "Orange"), Leaf(color: "Red")]
               ])),
               {
                 "leafs": [

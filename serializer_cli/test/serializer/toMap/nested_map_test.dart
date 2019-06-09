@@ -6,9 +6,9 @@ void main() {
     group("toMap", () {
       group("NestedMap", () {
         test("Builtins.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(strings: {
+              ser.toMap(NestedMap(strings: {
                 "a": {"1": "String1", "2": "String2"},
                 "b": {"3": "String3", "4": "String4"}
               })),
@@ -23,27 +23,21 @@ void main() {
         });
 
         test("ProcessedFields.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(dates: {
-                "a": {
-                  "1": new DateTime(2018, 1, 1),
-                  "2": new DateTime(2018, 1, 2)
-                },
-                "b": {
-                  "3": new DateTime(2018, 1, 3),
-                  "4": new DateTime(2018, 1, 4)
-                }
+              ser.toMap(NestedMap(dates: {
+                "a": {"1": DateTime(2018, 1, 1), "2": DateTime(2018, 1, 2)},
+                "b": {"3": DateTime(2018, 1, 3), "4": DateTime(2018, 1, 4)}
               })),
               {
                 "dates": {
                   "a": {
-                    "1": new DateTime(2018, 1, 1).toIso8601String(),
-                    "2": new DateTime(2018, 1, 2).toIso8601String()
+                    "1": DateTime(2018, 1, 1).toIso8601String(),
+                    "2": DateTime(2018, 1, 2).toIso8601String()
                   },
                   "b": {
-                    "3": new DateTime(2018, 1, 3).toIso8601String(),
-                    "4": new DateTime(2018, 1, 4).toIso8601String()
+                    "3": DateTime(2018, 1, 3).toIso8601String(),
+                    "4": DateTime(2018, 1, 4).toIso8601String()
                   }
                 },
                 "strings": null,
@@ -52,17 +46,11 @@ void main() {
         });
 
         test("SerializedObjects.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(leafs: {
-                "a": {
-                  "1": new Leaf(color: "Blue"),
-                  "2": new Leaf(color: "Green")
-                },
-                "b": {
-                  "3": new Leaf(color: "Orange"),
-                  "4": new Leaf(color: "Red")
-                }
+              ser.toMap(NestedMap(leafs: {
+                "a": {"1": Leaf(color: "Blue"), "2": Leaf(color: "Green")},
+                "b": {"3": Leaf(color: "Orange"), "4": Leaf(color: "Red")}
               })),
               {
                 "leafs": {
@@ -81,9 +69,9 @@ void main() {
         });
 
         test("Builtins.SomeNull", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(strings: {
+              ser.toMap(NestedMap(strings: {
                 "a": {"1": "String1", "2": "String2"},
                 "b": {"3": "String3", "4": "String4"},
                 "c": null,
@@ -100,28 +88,22 @@ void main() {
         });
 
         test("ProcessedFields.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(dates: {
-                "a": {
-                  "1": new DateTime(2018, 1, 1),
-                  "2": new DateTime(2018, 1, 2)
-                },
-                "b": {
-                  "3": new DateTime(2018, 1, 3),
-                  "4": new DateTime(2018, 1, 4)
-                },
+              ser.toMap(NestedMap(dates: {
+                "a": {"1": DateTime(2018, 1, 1), "2": DateTime(2018, 1, 2)},
+                "b": {"3": DateTime(2018, 1, 3), "4": DateTime(2018, 1, 4)},
                 "c": null,
               })),
               {
                 "dates": {
                   "a": {
-                    "1": new DateTime(2018, 1, 1).toIso8601String(),
-                    "2": new DateTime(2018, 1, 2).toIso8601String()
+                    "1": DateTime(2018, 1, 1).toIso8601String(),
+                    "2": DateTime(2018, 1, 2).toIso8601String()
                   },
                   "b": {
-                    "3": new DateTime(2018, 1, 3).toIso8601String(),
-                    "4": new DateTime(2018, 1, 4).toIso8601String()
+                    "3": DateTime(2018, 1, 3).toIso8601String(),
+                    "4": DateTime(2018, 1, 4).toIso8601String()
                   },
                   "c": null,
                 },
@@ -131,17 +113,11 @@ void main() {
         });
 
         test("SerializedObjects.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
-              ser.toMap(new NestedMap(leafs: {
-                "a": {
-                  "1": new Leaf(color: "Blue"),
-                  "2": new Leaf(color: "Green")
-                },
-                "b": {
-                  "3": new Leaf(color: "Orange"),
-                  "4": new Leaf(color: "Red")
-                },
+              ser.toMap(NestedMap(leafs: {
+                "a": {"1": Leaf(color: "Blue"), "2": Leaf(color: "Green")},
+                "b": {"3": Leaf(color: "Orange"), "4": Leaf(color: "Red")},
                 "c": null,
               })),
               {

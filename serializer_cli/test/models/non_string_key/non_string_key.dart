@@ -37,8 +37,7 @@ class Model {
   Model({this.intKeyed});
 
   bool operator ==(other) {
-    if (other is Model)
-      return new MapEquality().equals(intKeyed, other.intKeyed);
+    if (other is Model) return MapEquality().equals(intKeyed, other.intKeyed);
     return false;
   }
 

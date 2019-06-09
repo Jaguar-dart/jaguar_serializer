@@ -8,7 +8,7 @@ class ToItemWriter {
   ToItemWriter(this.field, this.hasGlobalNameForamtter);
 
   String _makeList(String reference, ListTypeInfo prop, {bool cast: false}) {
-    var w = new StringBuffer();
+    var w = StringBuffer();
 
     if (field.isNullable) {
       w.write("codeIterable(");
@@ -28,7 +28,7 @@ class ToItemWriter {
   }
 
   String _makeMap(String reference, MapTypeInfo map, {bool cast: false}) {
-    StringBuffer _w = new StringBuffer();
+    StringBuffer _w = StringBuffer();
 
     if (field.isNullable) {
       _w.write('codeMap(');
@@ -50,7 +50,7 @@ class ToItemWriter {
   }
 
   String _makeSet(String reference, SetTypeInfo prop, {bool cast: false}) {
-    var w = new StringBuffer();
+    var w = StringBuffer();
 
     if (field.isNullable) {
       w.write("codeIterable(");
@@ -81,7 +81,7 @@ class ToItemWriter {
     } else if (type is SetTypeInfo) {
       return _makeSet(reference, type, cast: cast);
     } else if (type is ProcessedTypeInfo) {
-      var w = new StringBuffer();
+      var w = StringBuffer();
       w.write(type.instantiationString + '.serialize($reference');
       if (cast && type.deserializedType != 'dynamic') {
         w.write(" as ${type.deserializedType}");
@@ -92,7 +92,7 @@ class ToItemWriter {
       }
       return w.toString();
     } else if (type is SerializedTypeInfo) {
-      var w = new StringBuffer();
+      var w = StringBuffer();
       w.write(
           "_${firstCharToLowerCase(type.instantiationString)}.toMap($reference");
       if (cast) {
@@ -101,11 +101,11 @@ class ToItemWriter {
       w.write(')');
       return w.toString();
     }
-    throw new JCException('Dont know how to handle this!');
+    throw JCException('Dont know how to handle this!');
   }
 
   String generate() {
-    var sb = new StringBuffer();
+    var sb = StringBuffer();
     if (field.isNullable) {
       sb.write('setMapValue(ret,');
     } else {
