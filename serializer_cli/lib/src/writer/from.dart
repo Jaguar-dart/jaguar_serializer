@@ -83,7 +83,7 @@ class FromItemWriter {
     if (prop is BuiltinTypeInfo) {
       if (prop.typeStr == 'double')
       {
-        return cast ? '($reference as num).toDouble()' : reference;
+        return cast ? '($reference as num)?.toDouble()' : reference;
       }
       else
       {
