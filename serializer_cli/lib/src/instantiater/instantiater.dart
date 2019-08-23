@@ -192,9 +192,9 @@ class AnnotationParser {
       FieldProcessorInfo processor;
       if (annot != null) {
         dontEncode =
-            annot.getField('dontEncode').toBoolValue() ? true : dontEncode;
+            annot.getField('dontEncode').toBoolValue() ?? false ? true : dontEncode;
         dontDecode =
-            annot.getField('dontDecode').toBoolValue() ? true : dontDecode;
+            annot.getField('dontDecode').toBoolValue() ?? false ? true : dontDecode;
 
         encodeTo = annot.getField('encodeTo')?.toStringValue() ?? encodeTo;
         decodeFrom =
