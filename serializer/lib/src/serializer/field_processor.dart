@@ -225,6 +225,20 @@ class DoubleToStringProcessor implements FieldProcessor<double, String> {
       : null;
 }
 
+class BoolToStringProcessor implements FieldProcessor<bool, String> {
+  const BoolToStringProcessor();
+
+  @override
+  bool deserialize(String value) {
+    return value != null ? value == true.toString() : null;
+  }
+
+  @override
+  String serialize(bool value) {
+    return value?.toString();
+  }
+}
+
 class SafeNumProcessor implements FieldProcessor<num, dynamic> {
   const SafeNumProcessor();
 
@@ -287,6 +301,7 @@ const intToNumProcessor = const IntToNumProcessor();
 const doubleToNumProcessor = const DoubleToNumProcessor();
 const intToStringProcessor = const IntToStringProcessor();
 const doubleToStringProcessor = const DoubleToStringProcessor();
+const boolToStringProcessor = const BoolToStringProcessor();
 const stringToNumProcessor = const StringToNumProcessor();
 const dynamicProcessor = const DynamicProcessor();
 const passProcessor = const PassProcessor();
