@@ -18,8 +18,8 @@ class Model {
   bool operator ==(other) {
     if (other is Model)
       return field == other.field &&
-          new IterableEquality().equals(list, other.list) &&
-          new MapEquality().equals(map, other.map);
+          IterableEquality().equals(list, other.list) &&
+          MapEquality().equals(map, other.map);
     return false;
   }
 

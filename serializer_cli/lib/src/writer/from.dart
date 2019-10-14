@@ -8,7 +8,7 @@ class FromItemWriter {
   FromItemWriter(this.field, this.hasGlobalNameForamtter);
 
   String _makeList(String reference, ListTypeInfo prop) {
-    var _w = new StringBuffer();
+    var _w = StringBuffer();
 
     final outputTypeStr = prop.itemTypeStr;
 
@@ -32,7 +32,7 @@ class FromItemWriter {
   }
 
   String _makeMap(String reference, MapTypeInfo map) {
-    StringBuffer _w = new StringBuffer();
+    StringBuffer _w = StringBuffer();
 
     final outputTypeStr = map.valueTypeStr;
 
@@ -57,7 +57,7 @@ class FromItemWriter {
   }
 
   String _makeSet(String reference, SetTypeInfo prop) {
-    var _w = new StringBuffer();
+    var _w = StringBuffer();
 
     final outputTypeStr = prop.itemTypeStr;
 
@@ -81,11 +81,18 @@ class FromItemWriter {
 
   String _makeValue(String reference, TypeInfo prop, {bool cast: false}) {
     if (prop is BuiltinTypeInfo) {
-      return reference + (cast ? ' as ${prop.typeStr}' : '');
+      if (prop.typeStr == 'double')
+      {
+        return cast ? '($reference as num)?.toDouble()' : reference;
+      }
+      else
+      {
+        return reference + (cast ? ' as ${prop.typeStr}' : '');
+      }
     } else if (prop is EnumTypeInfo) {
       return prop.typeStr + '.values[' + reference + ' as int]';
     } else if (prop is ProcessedTypeInfo) {
-      var w = new StringBuffer();
+      var w = StringBuffer();
       w.write(prop.instantiationString + '.deserialize($reference');
       if (cast == true && prop.serializedType != "dynamic") {
         w.write(" as ${prop.serializedType}");
@@ -106,7 +113,7 @@ class FromItemWriter {
     } else if (prop is SetTypeInfo) {
       return _makeSet(reference, prop);
     }
-    throw new JCException('Dont know how to handle this!');
+    throw JCException('Dont know how to handle this!');
   }
 
   String generate(bool isCtor) {
@@ -115,7 +122,7 @@ class FromItemWriter {
       key = "_jserNameMapping['${field.name}']";
     }
     String ref = "map[$key]";
-    var sb = new StringBuffer();
+    var sb = StringBuffer();
     sb.write(_makeValue(ref, field.typeInfo, cast: true));
     if (!field.isNullable || isCtor)
       sb.write(" ?? getJserDefault('${field.name}')");

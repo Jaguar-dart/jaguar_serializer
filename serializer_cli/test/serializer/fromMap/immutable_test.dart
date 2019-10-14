@@ -6,15 +6,15 @@ void main() {
     group("fromMap", () {
       group("Immutable", () {
         test("RequireParam", () {
-          expect(new FooSerializer().fromMap({"bar": "foo"}), new Foo("foo"));
+          expect(FooSerializer().fromMap({"bar": "foo"}), Foo("foo"));
         });
         test("NamedParam", () {
-          expect(new FooNamedSerializer().fromMap({"bar": "foo"}),
-              new FooNamed(bar: "foo"));
+          expect(FooNamedSerializer().fromMap({"bar": "foo"}),
+              FooNamed(bar: "foo"));
         });
         test("RequiredAndNamedParam", () {
           expect(
-              new ComplexConstructorSerializer().fromMap({
+              ComplexConstructorSerializer().fromMap({
                 "foo": "bar",
                 "bar": 21,
                 "is_okay": true,
@@ -22,10 +22,8 @@ void main() {
                 "foo_object": {"bar": "bar"},
                 "fooNamedObject": {"bar": "bar"}
               }),
-              new ComplexConstructor("bar", 42, new Foo("bar"),
-                  bar: 21,
-                  isOkay: true,
-                  fooNamedObject: new FooNamed(bar: 'bar')));
+              ComplexConstructor("bar", 42, Foo("bar"),
+                  bar: 21, isOkay: true, fooNamedObject: FooNamed(bar: 'bar')));
         });
       });
     });

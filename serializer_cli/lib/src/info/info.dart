@@ -3,12 +3,22 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:jaguar_serializer_cli/src/utils/type_checkers.dart';
 
+class CtorArgument {
+  final ParameterElement param;
+
+  final bool canSerialize;
+
+  CtorArgument(this.param, this.canSerialize);
+
+  String get name => param.displayName;
+}
+
 class SerializerInfo {
   /// Name of the serializer
   final String name;
   final String modelName;
   final Map<String, Field> fields;
-  final List<ParameterElement> ctorArguments;
+  final List<CtorArgument> ctorArguments;
   final List<ParameterElement> ctorNamedArguments;
   String nameFormatter;
 

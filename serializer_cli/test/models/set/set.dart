@@ -26,13 +26,12 @@ class HasSet {
 
   bool operator ==(other) {
     if (other is HasSet)
-      return new IterableEquality().equals(builtIn, other.builtIn) &&
-          new IterableEquality().equals(processed, other.processed) &&
-          new DeepCollectionEquality().equals(builtInList, other.builtInList) &&
-          new DeepCollectionEquality()
-              .equals(processedList, other.processedList) &&
-          new DeepCollectionEquality().equals(builtInMap, other.builtInMap) &&
-          new DeepCollectionEquality().equals(processedMap, other.processedMap);
+      return IterableEquality().equals(builtIn, other.builtIn) &&
+          IterableEquality().equals(processed, other.processed) &&
+          DeepCollectionEquality().equals(builtInList, other.builtInList) &&
+          DeepCollectionEquality().equals(processedList, other.processedList) &&
+          DeepCollectionEquality().equals(builtInMap, other.builtInMap) &&
+          DeepCollectionEquality().equals(processedMap, other.processedMap);
     return false;
   }
 

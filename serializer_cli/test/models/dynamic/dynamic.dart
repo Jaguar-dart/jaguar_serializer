@@ -13,8 +13,8 @@ class DynamicModel {
   bool operator ==(other) {
     if (other is DynamicModel)
       return scalar == other.scalar &&
-          new DeepCollectionEquality().equals(list, other.list) &&
-          new DeepCollectionEquality().equals(map, other.map);
+          DeepCollectionEquality().equals(list, other.list) &&
+          DeepCollectionEquality().equals(map, other.map);
     return false;
   }
 

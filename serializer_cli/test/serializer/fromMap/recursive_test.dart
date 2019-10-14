@@ -7,7 +7,7 @@ main() {
       group("Recursive", () {
         test("Normal", () {
           expect(
-              new ASerializer().fromMap({
+              ASerializer().fromMap({
                 'field': 1,
                 'b': {
                   'field': 2,
@@ -17,7 +17,7 @@ main() {
                   }
                 }
               }),
-              new A(field: 1, b: new B(field: 2, a: new A(field: 3))));
+              A(field: 1, b: B(field: 2, a: A(field: 3))));
         });
       });
     });

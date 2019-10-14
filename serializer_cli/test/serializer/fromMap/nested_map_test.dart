@@ -6,7 +6,7 @@ void main() {
     group("fromMap", () {
       group("NestedMap", () {
         test("Builtins.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
               ser.fromMap({
                 "strings": {
@@ -16,14 +16,14 @@ void main() {
                 "dates": null,
                 "leafs": null,
               }),
-              new NestedMap(strings: {
+              NestedMap(strings: {
                 "a": {"1": "String1", "2": "String2"},
                 "b": {"3": "String3", "4": "String4"}
               }));
         });
 
         test("ProcessedFields.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
               ser.fromMap({
                 "dates": {
@@ -33,20 +33,14 @@ void main() {
                 "strings": null,
                 "leafs": null,
               }),
-              new NestedMap(dates: {
-                "a": {
-                  "1": new DateTime(2018, 1, 1),
-                  "2": new DateTime(2018, 1, 2)
-                },
-                "b": {
-                  "3": new DateTime(2018, 1, 3),
-                  "4": new DateTime(2018, 1, 4)
-                }
+              NestedMap(dates: {
+                "a": {"1": DateTime(2018, 1, 1), "2": DateTime(2018, 1, 2)},
+                "b": {"3": DateTime(2018, 1, 3), "4": DateTime(2018, 1, 4)}
               }));
         });
 
         test("SerializedObjects.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
               ser.fromMap({
                 "leafs": {
@@ -62,20 +56,14 @@ void main() {
                 "strings": null,
                 "dates": null,
               }),
-              new NestedMap(leafs: {
-                "a": {
-                  "1": new Leaf(color: "Blue"),
-                  "2": new Leaf(color: "Green")
-                },
-                "b": {
-                  "3": new Leaf(color: "Orange"),
-                  "4": new Leaf(color: "Red")
-                }
+              NestedMap(leafs: {
+                "a": {"1": Leaf(color: "Blue"), "2": Leaf(color: "Green")},
+                "b": {"3": Leaf(color: "Orange"), "4": Leaf(color: "Red")}
               }));
         });
 
         test("Builtins.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
               ser.fromMap({
                 "strings": {
@@ -86,7 +74,7 @@ void main() {
                 "dates": null,
                 "leafs": null,
               }),
-              new NestedMap(strings: {
+              NestedMap(strings: {
                 "a": {"1": "String1", "2": "String2"},
                 "b": {"3": "String3", "4": "String4"},
                 "c": null,
@@ -94,7 +82,7 @@ void main() {
         });
 
         test("ProcessedFields.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
               ser.fromMap({
                 "dates": {
@@ -105,21 +93,15 @@ void main() {
                 "strings": null,
                 "leafs": null,
               }),
-              new NestedMap(dates: {
-                "a": {
-                  "1": new DateTime(2018, 1, 1),
-                  "2": new DateTime(2018, 1, 2)
-                },
-                "b": {
-                  "3": new DateTime(2018, 1, 3),
-                  "4": new DateTime(2018, 1, 4)
-                },
+              NestedMap(dates: {
+                "a": {"1": DateTime(2018, 1, 1), "2": DateTime(2018, 1, 2)},
+                "b": {"3": DateTime(2018, 1, 3), "4": DateTime(2018, 1, 4)},
                 "c": null,
               }));
         });
 
         test("SerializedObjects.Normal", () {
-          var ser = new NestedMapSerializer();
+          var ser = NestedMapSerializer();
           expect(
               ser.fromMap({
                 "leafs": {
@@ -136,15 +118,9 @@ void main() {
                 "strings": null,
                 "dates": null,
               }),
-              new NestedMap(leafs: {
-                "a": {
-                  "1": new Leaf(color: "Blue"),
-                  "2": new Leaf(color: "Green")
-                },
-                "b": {
-                  "3": new Leaf(color: "Orange"),
-                  "4": new Leaf(color: "Red")
-                },
+              NestedMap(leafs: {
+                "a": {"1": Leaf(color: "Blue"), "2": Leaf(color: "Green")},
+                "b": {"3": Leaf(color: "Orange"), "4": Leaf(color: "Red")},
                 "c": null,
               }));
         });

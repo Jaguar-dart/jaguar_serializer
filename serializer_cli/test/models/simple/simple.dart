@@ -70,12 +70,12 @@ class Simple {
           intF == other.intF &&
           doubleF == other.doubleF &&
           boolF == other.boolF &&
-          new IterableEquality().equals(listF, other.listF) &&
-          new MapEquality().equals(mapF, other.mapF);
+          IterableEquality().equals(listF, other.listF) &&
+          MapEquality().equals(mapF, other.mapF);
     return false;
   }
 
-  String toString() => new SimpleSerializer().toMap(this).toString();
+  String toString() => SimpleSerializer().toMap(this).toString();
 
   int get hashCode => 0;
 }

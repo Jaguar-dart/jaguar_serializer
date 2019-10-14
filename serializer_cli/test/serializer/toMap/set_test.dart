@@ -7,32 +7,32 @@ main() {
     group("toMap", () {
       group("Set", () {
         test("Normal", () async {
-          final now1 = new DateTime.now().toUtc();
-          await new Future.delayed(new Duration(seconds: 2));
-          final now2 = new DateTime.now().toUtc();
-          await new Future.delayed(new Duration(seconds: 2));
-          final now3 = new DateTime.now().toUtc();
-          await new Future.delayed(new Duration(seconds: 2));
-          final now4 = new DateTime.now().toUtc();
+          final now1 = DateTime.now().toUtc();
+          await Future.delayed(Duration(seconds: 2));
+          final now2 = DateTime.now().toUtc();
+          await Future.delayed(Duration(seconds: 2));
+          final now3 = DateTime.now().toUtc();
+          await Future.delayed(Duration(seconds: 2));
+          final now4 = DateTime.now().toUtc();
           expect(
-              new HasSetSerializer().toMap(new HasSet(
-                  builtIn: new Set<int>.from([1, 3, 4, 1, 3]),
-                  processed: new Set.from([now1, now2]),
+              HasSetSerializer().toMap(HasSet(
+                  builtIn: Set<int>.from([1, 3, 4, 1, 3]),
+                  processed: Set.from([now1, now2]),
                   builtInList: [
-                    new Set<int>.from([1, 2, 3]),
-                    new Set<int>.from([4, 5, 6])
+                    Set<int>.from([1, 2, 3]),
+                    Set<int>.from([4, 5, 6])
                   ],
                   processedList: [
-                    new Set.from([now1, now2]),
-                    new Set.from([now3, now4])
+                    Set.from([now1, now2]),
+                    Set.from([now3, now4])
                   ],
                   builtInMap: {
-                    '1': new Set<int>.from([1, 2, 3]),
-                    '2': new Set<int>.from([4, 5, 6])
+                    '1': Set<int>.from([1, 2, 3]),
+                    '2': Set<int>.from([4, 5, 6])
                   },
                   processedMap: {
-                    '1': new Set.from([now1, now2]),
-                    '2': new Set.from([now3, now4])
+                    '1': Set.from([now1, now2]),
+                    '2': Set.from([now3, now4])
                   })),
               {
                 'builtIn': [1, 3, 4],

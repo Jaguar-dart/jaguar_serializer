@@ -7,10 +7,10 @@ main() {
       group("NonStringKey", () {
         test("MapListScalar", () {
           expect(
-              new ModelSerializer().fromMap({
+              ModelSerializer().fromMap({
                 'intKeyed': {'5': 'five'}
               }),
-              new Model(intKeyed: {5: 'five'}));
+              Model(intKeyed: {5: 'five'}));
         });
       });
     });

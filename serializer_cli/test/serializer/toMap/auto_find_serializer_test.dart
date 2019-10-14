@@ -7,8 +7,8 @@ main() {
       group("AutoFindSerializer", () {
         test("Normal", () {
           expect(
-              new BSerializer().toMap(new B(
-                  field: 'b', a: new A(field: 'a'), c: new C(field: 'c'))),
+              BSerializer()
+                  .toMap(B(field: 'b', a: A(field: 'a'), c: C(field: 'c'))),
               {
                 'field': 'b',
                 'a': {'field': 'a'},

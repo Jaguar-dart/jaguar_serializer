@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.8
+
++ Fixed serializer generated constructor bug
+
 ## 2.2.1
 
 + Fixes when `FieldProcessor`'s `FromType` is `dynamic`

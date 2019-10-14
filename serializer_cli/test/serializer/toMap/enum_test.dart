@@ -7,7 +7,7 @@ main() {
       group("Enum", () {
         test("Normal", () {
           expect(
-              new ModelSerializer().toMap(new Model(
+              ModelSerializer().toMap(Model(
                   field: Gender.Male,
                   list: [Gender.Female, Gender.Male],
                   map: {'Boy': Gender.Male})),

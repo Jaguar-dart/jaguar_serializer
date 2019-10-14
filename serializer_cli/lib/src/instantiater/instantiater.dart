@@ -1,6 +1,5 @@
 library jaguar_serializer.generator.helpers;
 
-import 'package:analyzer/analyzer.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/constant/value.dart';
@@ -13,21 +12,6 @@ import 'package:jaguar_serializer_cli/src/utils/string.dart';
 import 'package:jaguar_serializer_cli/src/utils/type_checkers.dart';
 import 'package:jaguar_serializer_cli/src/utils/exceptions.dart';
 
-ClassElement _findSerializerInUnit(CompilationUnit unit, DartType type) {
-  for (Declaration dec in unit.declarations) {
-    if (dec is ClassDeclaration) {
-      if (isSerializer.isAssignableFrom(dec.element)) {
-        final InterfaceType ser = dec.element.allSupertypes
-            .firstWhere((i) => isSerializer.isExactlyType(i));
-        if (TypeChecker.fromStatic(type).isExactlyType(ser.typeArguments[0])) {
-          return dec.element;
-        }
-      }
-    }
-  }
-  return null;
-}
-
 List<ClassElement> _findSerializerInLib(
     Set<LibraryElement> seen, LibraryElement lib, DartType type) {
   final elements = <ClassElement>[];
@@ -39,10 +23,18 @@ List<ClassElement> _findSerializerInLib(
   if (lib.isDartCore) return elements;
 
   try {
-    for (CompilationUnit unit in lib.units.map((u) => u.unit)) {
-      ClassElement ret = _findSerializerInUnit(unit, type);
-      if (ret != null) elements.add(ret);
-      if (elements.length > 1) return elements;
+    for (Element element in lib.topLevelElements) {
+      if (element is ClassElement) {
+        if (isSerializer.isAssignableFrom(element)) {
+          final InterfaceType ser = element.allSupertypes
+              .firstWhere((i) => isSerializer.isExactlyType(i));
+          if (TypeChecker.fromStatic(type)
+              .isExactlyType(ser.typeArguments[0])) {
+            elements.add(element);
+            if (elements.length > 1) return elements;
+          }
+        }
+      }
     }
   } catch (e) {}
 
@@ -78,7 +70,7 @@ class AnnotationParser {
 
   final Map<String, $info.Field> fields = <String, $info.Field>{};
   String nameFormatter;
-  final ctorArguments = <ParameterElement>[];
+  final ctorArguments = <CtorArgument>[];
   final ctorNamedArguments = <ParameterElement>[];
 
   Map<InterfaceType, ClassElement> providers = {};
@@ -200,9 +192,9 @@ class AnnotationParser {
       FieldProcessorInfo processor;
       if (annot != null) {
         dontEncode =
-            annot.getField('dontEncode').toBoolValue() ? true : dontEncode;
+            annot.getField('dontEncode').toBoolValue() ?? false ? true : dontEncode;
         dontDecode =
-            annot.getField('dontDecode').toBoolValue() ? true : dontDecode;
+            annot.getField('dontDecode').toBoolValue() ?? false ? true : dontDecode;
 
         encodeTo = annot.getField('encodeTo')?.toStringValue() ?? encodeTo;
         decodeFrom =
@@ -250,7 +242,7 @@ class AnnotationParser {
         throw JCException('serializers must be sub-type of Serializer!');
       }
 
-      final ClassElement v = t.element;
+      final ClassElement v = t.element as ClassElement;
       final InterfaceType i = v.allSupertypes
           .where((InterfaceType i) => isSerializer.isExactly(i.element))
           .first;
@@ -344,12 +336,12 @@ class AnnotationParser {
       if (arg.isNotOptional) {
         if (field != null) {
           if (field.isFinal && !field.dontDecode) {
-            ctorArguments.add(arg);
+            ctorArguments.add(CtorArgument(arg, true));
           } else {
-            ctorArguments.add(null);
+            ctorArguments.add(CtorArgument(arg, false));
           }
         } else {
-          ctorArguments.add(null);
+          ctorArguments.add(CtorArgument(arg, false));
         }
       } else if (arg.isNamed) {
         if (field != null &&

@@ -6,8 +6,7 @@ main() {
     group("toMap", () {
       group("NonStringKey", () {
         test("MapListScalar", () {
-          expect(
-              new ModelSerializer().toMap(new Model(intKeyed: {5: 'five'})), {
+          expect(ModelSerializer().toMap(Model(intKeyed: {5: 'five'})), {
             'intKeyed': {'5': 'five'}
           });
         });
