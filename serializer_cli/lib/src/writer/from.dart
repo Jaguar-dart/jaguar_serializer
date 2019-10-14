@@ -81,7 +81,14 @@ class FromItemWriter {
 
   String _makeValue(String reference, TypeInfo prop, {bool cast: false}) {
     if (prop is BuiltinTypeInfo) {
-      return reference + (cast ? ' as ${prop.typeStr}' : '');
+      if (prop.typeStr == 'double')
+      {
+        return cast ? '($reference as num)?.toDouble()' : reference;
+      }
+      else
+      {
+        return reference + (cast ? ' as ${prop.typeStr}' : '');
+      }
     } else if (prop is EnumTypeInfo) {
       return prop.typeStr + '.values[' + reference + ' as int]';
     } else if (prop is ProcessedTypeInfo) {
