@@ -97,7 +97,7 @@ class DateTimeMillisecondsProcessor implements FieldProcessor<DateTime, int> {
 
   @override
   DateTime deserialize(int value) => value != null
-      ? DateTime.fromMillisecondsSinceEpoch(value, isUtc: true)
+      ? DateTime.fromMillisecondsSinceEpoch(value, isUtc: true).toLocal()
       : null;
 }
 
@@ -108,7 +108,7 @@ class MillisecondsProcessor implements FieldProcessor<DateTime, int> {
 
   @override
   DateTime deserialize(int value) => value != null
-      ? DateTime.fromMillisecondsSinceEpoch(value, isUtc: true)
+      ? DateTime.fromMillisecondsSinceEpoch(value, isUtc: true).toLocal()
       : null;
 }
 
@@ -122,8 +122,8 @@ class SecondsProcessor implements FieldProcessor<DateTime, int> {
 
   @override
   DateTime deserialize(int value) {
-    if (value != null) return null;
-    return DateTime.fromMillisecondsSinceEpoch(value * 1000, isUtc: true);
+    if (value == null) return null;
+    return DateTime.fromMillisecondsSinceEpoch(value * 1000, isUtc: true).toLocal();
   }
 }
 
