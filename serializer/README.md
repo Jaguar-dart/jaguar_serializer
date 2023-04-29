@@ -56,7 +56,7 @@ part 'user.jser.dart';
 ## Generate Serializer
 
 ### Build
-Now you can build you serializer running the command
+Now you can build your serializer running this command
 
 ```
 pub run build_runner build
